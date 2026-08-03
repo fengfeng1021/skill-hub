@@ -507,29 +507,45 @@ a.endpoint__path:hover {
   margin-bottom: var(--space-4);
 }
 
+/* 好壞的差別由標籤自己講：「這樣寫」配一個勾、「不要這樣寫」配一個叉。
+   卡片側邊那條粗色帶拿掉了 —— 標籤已經寫得很清楚，色帶只是把同一件事再說一次 */
 .rule {
   gap: var(--space-3);
-  border-left: 3px solid var(--border-strong);
-}
-
-.rule--good {
-  border-left-color: var(--accent);
-}
-
-.rule--bad {
-  border-left-color: var(--danger);
 }
 
 .rule__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   font-size: var(--text-xs);
   font-weight: 620;
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
+  color: var(--accent);
+}
+
+.rule--bad .rule__label {
   color: var(--text-faint);
 }
 
-.rule--good .rule__label {
-  color: var(--accent);
+.rule__mark {
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: none;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+}
+
+.rule__mark svg {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.rule--bad .rule__mark {
+  background: var(--danger-soft);
+  color: var(--danger);
 }
 
 .rule__text {
@@ -625,34 +641,93 @@ a.endpoint__path:hover {
   align-items: stretch;
 }
 
-/* 清單模式：單欄、橫向排列 */
+/* 清單模式：一列一個，資訊橫著排。
+   格狀是「一張一張看清楚」，清單是「一次掃很多」。差別在密度，不在功能 ——
+   複製安裝提示詞是這頁的主要動作，兩種檢視都要看得到，不然切過去就少一半能用的東西。 */
 .skill-grid[data-view="list"] {
   grid-template-columns: 1fr;
+  gap: var(--space-2);
 }
 
 .skill-grid[data-view="list"] .skill-card {
   flex-direction: row;
   align-items: center;
   gap: var(--space-4);
-  padding: var(--space-4) var(--space-5);
+  padding: var(--space-3) var(--space-4);
+}
+
+/* 勾選框回到文件流，排在最前面當列首 */
+.skill-grid[data-view="list"] .skill-card__check {
+  position: static;
 }
 
 .skill-grid[data-view="list"] .skill-card__top {
-  flex: 0 0 clamp(180px, 24%, 280px);
-  padding-right: 0; /* 清單模式的勾選框排在最前面，不會蓋到標題 */
+  flex: 0 0 clamp(160px, 22%, 260px);
+  padding-right: 0; /* 勾選框已經不在右上角了 */
 }
 
+/* 一列只給一行。列高一致，視線往下掃才不會被高高低低打斷 */
 .skill-grid[data-view="list"] .skill-card__summary {
   flex: 1 1 auto;
+  min-width: 0;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
 }
 
-.skill-grid[data-view="list"] .skill-card__tags,
+.skill-grid[data-view="list"] .skill-card__tags {
+  flex: 0 1 auto;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+/* 空間不夠要用切的，不能用壓的。標籤被壓窄的話裡面的字會一個字一個字換行，
+   整列就被撐成兩三倍高，清單「每列一樣高」的前提就沒了 */
+.skill-grid[data-view="list"] .skill-card__tags > * {
+  flex: none;
+  white-space: nowrap;
+}
+
+/* 格狀時是卡片底部一整條，清單時縮成右側一小組，上緣的線和留白都不用了 */
 .skill-grid[data-view="list"] .skill-card__foot {
-  display: none;
+  flex: none;
+  gap: var(--space-3);
+  padding-top: 0;
+  border-top: 0;
 }
 
-.skill-grid[data-view="list"] .skill-card__check {
-  position: static;
+.skill-grid[data-view="list"] .skill-card__source {
+  max-width: 12rem;
+}
+
+/* 窄下來就依序讓位：先收標籤，再收來源。名稱、摘要、複製鈕撐到最後 */
+@media (max-width: 1080px) {
+  .skill-grid[data-view="list"] .skill-card__tags {
+    display: none;
+  }
+}
+
+@media (max-width: 820px) {
+  .skill-grid[data-view="list"] .skill-card__source {
+    display: none;
+  }
+}
+
+/* 手機：名稱與複製鈕排第一行，摘要自己占第二行，還是看得到 */
+@media (max-width: 640px) {
+  .skill-grid[data-view="list"] .skill-card {
+    flex-wrap: wrap;
+    row-gap: var(--space-2);
+  }
+  .skill-grid[data-view="list"] .skill-card__top {
+    flex: 1 1 auto;
+  }
+  .skill-grid[data-view="list"] .skill-card__foot {
+    order: 1;
+  }
+  .skill-grid[data-view="list"] .skill-card__summary {
+    order: 2;
+    flex: 1 0 100%;
+  }
 }
 
 /* --------------------------------------------------------------------------

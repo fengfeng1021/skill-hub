@@ -667,15 +667,84 @@ const Motion = (() => {
     return { move };
   }
 
-  /* ---- 篩選重排：有 Flip 就用 Flip，沒有就淡入 --------------------------- */
+  /* ---- 版面重排：Flip ---------------------------------------------------- */
+
+  /**
+   * Flip 的 absolute 會把項目抽離文件流，容器高度瞬間塌成 0，底下整頁先彈上來
+   * 再彈回去 —— 那一下比重排本身還明顯。這裡把容器高度自己接起來。
+   *
+   * 一定要在 Flip.from() 之後才建立，收尾（clearProps）才會排在 Flip 把項目
+   * 放回文件流之後，不然會有一格畫面容器是塌的。
+   */
+  function holdHeight(container, startH, endH, duration) {
+    if (Math.abs(endH - startH) < 1) return;
+    gsap.fromTo(
+      container,
+      { height: startH },
+      { height: endH, duration, ease: D.easeStrong, clearProps: 'height', overwrite: 'auto' }
+    );
+  }
+
+  /** 只挑真的畫在畫面上的，被篩掉（display:none）的不要算進 Flip */
+  const laidOut = (el) => el.getClientRects().length > 0;
+
+  /** 正在跑的重排：container → { items, fading, tl } */
+  const reflows = new WeakMap();
+
+  /**
+   * 開始重排前先把畫面弄乾淨。這是「多切幾次就跑版」的解法。
+   *
+   * 兩種髒狀態：
+   *
+   * 1. 上一輪重排還沒跑完就又按了。Flip 進行中的項目是 position:absolute，
+   *    還帶著 inline 的 top/left/width/height；這時候 getState() 量到的是半路的
+   *    座標，之後每一次切換都以錯的位置為起點，版面就再也回不去了。
+   * 2. 進場動畫（intro 的 y 位移）還在跑。Flip 量到的是位移到一半的位置，
+   *    收尾時 transform 被清掉，卡片就會整個偏掉。
+   *
+   * 前者整輪殺掉並清 inline 樣式，後者直接讓它跑完 —— 使用者都動手了，
+   * 進場動畫本來也該結束了。hover 用的 lift 是 paused 的，不會被掃到。
+   */
+  function settle(container, items) {
+    const prev = reflows.get(container);
+    if (prev) {
+      reflows.delete(container);
+      prev.tl?.kill();
+      Flip.killFlipsOf?.(prev.items);
+      gsap.killTweensOf(container);
+      gsap.killTweensOf(prev.items);
+      gsap.set(prev.items, {
+        clearProps: 'position,top,left,width,height,transform,opacity,visibility',
+      });
+      if (prev.fading.length) {
+        gsap.killTweensOf(prev.fading);
+        gsap.set(prev.fading, { clearProps: 'opacity,visibility' });
+      }
+      container.style.height = '';
+    }
+    for (const t of gsap.getTweensOf(items)) if (t.isActive()) t.progress(1);
+  }
+
+  /** 篩選重排：卡片大小不變，只是位置換了、有的離開，用 scale 帶過就夠 */
   function flip(container, mutate, { itemSelector = ':scope > *' } = {}) {
-    if (!hasGSAP || !Flip || reduced) {
+    if (!hasGSAP || !Flip || reduced || !container) {
       mutate();
       return;
     }
-    const items = container.querySelectorAll(itemSelector);
+    const items = [...container.querySelectorAll(itemSelector)];
+    settle(container, items);
+
+    const run = { items, fading: [], tl: null };
+    reflows.set(container, run);
+    const done = () => {
+      if (reflows.get(container) === run) reflows.delete(container);
+    };
+
+    const startH = container.getBoundingClientRect().height;
     const state = Flip.getState(items, { props: 'opacity' });
     mutate();
+    const endH = container.getBoundingClientRect().height;
+
     Flip.from(state, {
       duration: 0.55,
       ease: D.easeStrong,
@@ -689,7 +758,74 @@ const Motion = (() => {
           { opacity: 1, scale: 1, duration: 0.45, ease: D.easeStrong, stagger: 0.02 }
         ),
       onLeave: (els) => gsap.to(els, { opacity: 0, scale: 0.92, duration: 0.28, ease: D.ease }),
+      onComplete: done,
     });
+    holdHeight(container, startH, endH, 0.55);
+  }
+
+  /**
+   * 檢視模式切換（格狀 ↔ 清單）。
+   *
+   * 跟 flip() 差在卡片本身：篩選時卡片大小沒變，用 scale 假裝就好；切檢視是
+   * 整張卡從直的變橫的，寬高各差三四倍，scale 會把裡面的字整個拉歪。所以這裡
+   * 真的動 width / height，讓卡片內部照著新版面一格一格重排。
+   *
+   * 代價是中間狀態很醜（310px 寬的框硬要排成一列），所以會被擠到的那幾塊先
+   * 淡出、版面定位好再淡回來。勾選框、圖示、名稱全程留著 —— 使用者要看得出
+   * 哪一張卡片跑到哪裡去了，不然就只是一堆方塊在搬家。
+   */
+  function viewSwitch(container, mutate, { itemSelector = ':scope > *', fadeSelector = null } = {}) {
+    if (!hasGSAP || !Flip || !container) {
+      mutate();
+      return;
+    }
+    const items = [...container.querySelectorAll(itemSelector)].filter(laidOut);
+    if (reduced || !items.length) {
+      settle(container, items);
+      mutate();
+      return;
+    }
+    settle(container, items);
+
+    const fading = fadeSelector ? items.flatMap((el) => [...el.querySelectorAll(fadeSelector)]) : [];
+    const run = { items, fading, tl: null };
+    reflows.set(container, run);
+
+    const MORPH = 0.58;
+    const morph = () => {
+      const startH = container.getBoundingClientRect().height;
+      const state = Flip.getState(items);
+      mutate();
+      const endH = container.getBoundingClientRect().height;
+
+      Flip.from(state, {
+        duration: MORPH,
+        ease: D.easeStrong,
+        scale: false, // 真的動寬高，不然文字會被拉扁
+        absolute: true,
+        stagger: { each: 0.014, from: 'start' },
+        onComplete: () => {
+          if (reflows.get(container) === run) reflows.delete(container);
+        },
+      });
+      holdHeight(container, startH, endH, MORPH);
+    };
+
+    if (!fading.length) {
+      morph();
+      return;
+    }
+
+    run.tl = gsap
+      .timeline()
+      // 只動 autoAlpha。加位移的話 Flip 會量到錯的起點，卡片會從歪掉的位置飛出去
+      .to(fading, { autoAlpha: 0, duration: 0.14, ease: D.ease })
+      .add(morph)
+      .to(
+        fading,
+        { autoAlpha: 1, duration: 0.34, ease: D.easeStrong, stagger: { each: 0.01, from: 'start' } },
+        '+=0.2'
+      );
   }
 
   /* ---- 小回饋 ------------------------------------------------------------ */
@@ -775,6 +911,7 @@ const Motion = (() => {
     floatingBar,
     segmented,
     flip,
+    viewSwitch,
     pulse,
     shake,
     swap,

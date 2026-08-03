@@ -5,7 +5,7 @@
 
 import Components from './components.js';
 import Motion from './motion.js';
-import { renderSkillCard } from './skill-card.js';
+import { renderSkillCard, VIEW_SWITCH_OPTIONS } from './skill-card.js';
 import { mountRequestBoxes } from './request-box.js';
 
 /* ---- 色票 --------------------------------------------------------------- */
@@ -92,6 +92,11 @@ function renderCards() {
     Components.setChecked(label, !input.checked);
     card.classList.toggle('is-selected', input.checked);
     Motion.pulse(card.querySelector('.check__box'));
+  });
+
+  // 格狀 ↔ 清單，跟 Skills 庫用的是同一支 recipe 和同一組選擇器
+  document.getElementById('dsViewSwitch')?.addEventListener('segmented:change', (e) => {
+    Motion.viewSwitch(host, () => (host.dataset.view = e.detail.value), VIEW_SWITCH_OPTIONS);
   });
 }
 

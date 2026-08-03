@@ -6,6 +6,17 @@
 
 import { Icons } from './icons.js';
 
+/**
+ * 格狀 ↔ 清單切換要傳給 Motion.viewSwitch() 的選擇器。
+ * 跟模板放在一起，改了結構才不會忘了同步動效。
+ * fadeSelector 是「排成一列時會被擠到」的那幾塊：先淡出，卡片定位好再淡回來。
+ * 勾選框、圖示、名稱不在裡面 —— 全程留著，使用者才看得出哪張卡片跑到哪裡。
+ */
+export const VIEW_SWITCH_OPTIONS = {
+  itemSelector: '.skill-card',
+  fadeSelector: '.skill-card__summary, .skill-card__tags, .skill-card__foot',
+};
+
 export const escapeHTML = (s) =>
   String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 

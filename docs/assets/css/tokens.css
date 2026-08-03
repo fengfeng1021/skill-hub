@@ -143,6 +143,7 @@
 
   --warn: hsl(32 86% 42%);
   --danger: hsl(0 68% 48%);
+  --danger-soft: hsl(0 68% 48% / 0.12);
   --info: hsl(212 80% 46%);
 
   --gradient-surface: linear-gradient(160deg, hsl(0 0% 100%), hsl(220 34% 97%));

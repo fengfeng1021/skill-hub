@@ -14,7 +14,7 @@
 import Components from './components.js';
 import Motion from './motion.js';
 import { mountOverlays } from './overlays.js';
-import { renderSkillCard, escapeHTML, initials } from './skill-card.js';
+import { renderSkillCard, escapeHTML, initials, VIEW_SWITCH_OPTIONS } from './skill-card.js';
 import { Icons } from './icons.js';
 import { mountRequestBoxes } from './request-box.js';
 
@@ -287,10 +287,14 @@ function describeResult(n) {
   return bits.join('　·　');
 }
 
-/** 版面變動後讓 ScrollTrigger 重算位置，合併多次呼叫避免抖動 */
+/**
+ * 版面變動後讓 ScrollTrigger 重算位置，合併多次呼叫避免抖動。
+ * 一定要等動畫跑完 —— Flip 進行中卡片是 absolute 的，這時候 refresh 量到的
+ * 位置全是錯的，畫面會被硬拉一下。檢視切換整段約 0.9 秒，抓 1 秒。
+ */
 function scheduleRefresh() {
   clearTimeout(refreshTimer);
-  refreshTimer = setTimeout(() => Motion.refresh(), 640);
+  refreshTimer = setTimeout(() => Motion.refresh(), 1000);
 }
 
 function syncChips() {
@@ -601,9 +605,13 @@ function bindStaticEvents() {
     } catch {
       /* 忽略 */
     }
-    Motion.flip(el.grid, () => {
-      el.grid.dataset.view = state.view;
-    }, { itemSelector: '.skill-card' });
+    Motion.viewSwitch(
+      el.grid,
+      () => {
+        el.grid.dataset.view = state.view;
+      },
+      VIEW_SWITCH_OPTIONS
+    );
     scheduleRefresh();
   });
 

@@ -285,11 +285,14 @@
   border-color: var(--border-strong);
 }
 
-/* 游標位置追蹤的光暈，座標由 motion.js 寫入 --mx / --my */
+/* 游標位置追蹤的光暈，座標由 motion.js 寫入 --mx / --my。
+   inset 一定要是 0：偽元素是卡片的子層，畫在邊框上面，只要往外一格就會把
+   邊框整條蓋掉 —— 卡片被選取時邊框是主色，蓋掉最明顯。反正外溢的部分本來
+   就會被 overflow: hidden 切掉，往外撐沒有任何好處。 */
 .card--glow::before {
   content: "";
   position: absolute;
-  inset: -1px;
+  inset: 0;
   border-radius: inherit;
   background: radial-gradient(
     260px circle at var(--mx, 50%) var(--my, 50%),
@@ -314,8 +317,13 @@
   padding: var(--space-5) var(--space-5) var(--space-4);
 }
 
+/* 選取時的外圈與光暈畫在卡片外面，會被排在後面的卡片蓋住（清單模式間距只有
+   8px 更明顯）。往上疊一層就好，卡片本來就是 position: relative */
 .skill-card.is-selected {
-  border-color: var(--accent-line);
+  z-index: 1;
+  /* 選取是這一頁最重要的狀態（決定等一下複製到哪些 skill），邊框用滿的主色。
+     --accent-line 只有三成不透明度，一整排卡片裡幾乎看不出來哪幾張被勾了 */
+  border-color: var(--accent);
   box-shadow: var(--shadow-glow);
 }
 

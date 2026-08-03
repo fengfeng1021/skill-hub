@@ -183,7 +183,22 @@
               收藏庫的主角。hover 時 <code class="tag">lift</code> 抬升、<code class="tag">glow</code> 跟著游標亮，
               選取後邊框變色。第三張示範選取狀態。
             </p>
-            <div class="ds-demo ds-demo--grid" data-motion="reveal" id="cardDemo"></div>
+            <div class="ds-demo ds-demo--col" data-motion="reveal">
+              <div class="row" style="justify-content: space-between; gap: var(--space-3)">
+                <span class="ds-label">viewSwitch — 格狀 ↔ 清單</span>
+                <div class="segmented" data-segmented id="dsViewSwitch" role="tablist" aria-label="檢視方式">
+                  <span class="segmented__thumb"></span>
+                  <button class="segmented__item" role="tab" aria-selected="true" data-value="grid">格狀</button>
+                  <button class="segmented__item" role="tab" aria-selected="false" data-value="list">清單</button>
+                </div>
+              </div>
+              <p class="ds-section__desc">
+                卡片整個從直的變橫的，寬高各差三四倍 —— 用 <code class="tag">scale</code> 假裝會把字拉扁，
+                所以真的動 width / height。摘要、標籤、底部那一列先淡出，卡片定位好再淡回來；
+                勾選框、圖示、名稱全程留著，才看得出哪張卡片跑到哪裡。
+              </p>
+              <div class="skill-grid" id="cardDemo" data-view="grid" style="padding-bottom: 0"></div>
+            </div>
           </section>
 
           <!-- ---------- 表單 ---------- -->
