@@ -1,0 +1,57 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同時只跑一個部署；新的 push 不取消進行中的部署
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 沒有相依套件，validate / build 都是純 Node
+      - name: Validate registry
+        run: npm run validate
+
+      - name: Build API + site
+        run: npm run build
+
+      # build 產物如果和 commit 進來的不一致，代表有人手改 docs/api 或忘了 build
+      - name: Check build output is committed
+        run: |
+          if [ -n "$(git status --porcelain docs)" ]; then
+            echo "::warning::docs/ 與 build 產物不一致，已用最新產物部署。記得在本機跑 npm run build 再 commit。"
+            git status --porcelain docs
+          fi
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

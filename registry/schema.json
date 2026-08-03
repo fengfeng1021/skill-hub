@@ -1,0 +1,153 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://skill-hub/registry/schema.json",
+  "title": "Skill Hub Registry Entry",
+  "description": "registry/skills/<id>.json 的資料格式。每個檔案代表一個被收錄的 skill。",
+  "type": "object",
+  "required": ["id", "name", "summary", "category", "tags", "source", "install"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "description": "唯一識別碼，kebab-case。同時作為檔名與網址錨點。"
+    },
+    "name": {
+      "type": "string",
+      "description": "顯示名稱。"
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 120,
+      "description": "一句話摘要，卡片上顯示。建議 40 字內。"
+    },
+    "description": {
+      "type": "string",
+      "description": "完整說明，詳情面板顯示。可多段（用 \\n 分隔）。"
+    },
+    "category": {
+      "type": "string",
+      "description": "分類名稱，直接寫顯示文字，例如「前端 / 動效」。"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "標籤，用於篩選與搜尋。"
+    },
+    "author": { "type": "string", "description": "作者 / 組織。" },
+    "license": { "type": "string", "description": "授權，例如 MIT。" },
+    "version": { "type": "string", "description": "版本字串。" },
+    "official": {
+      "type": "boolean",
+      "description": "是否為官方出品（Anthropic / 原廠）。"
+    },
+    "featured": {
+      "type": "boolean",
+      "description": "是否置頂推薦。"
+    },
+    "source": {
+      "type": "object",
+      "required": ["kind"],
+      "additionalProperties": false,
+      "description": "skill 的來源。決定安裝提示詞怎麼寫。",
+      "properties": {
+        "kind": {
+          "enum": ["github", "local", "url"],
+          "description": "github = 收錄外部 repo；local = 檔案存在本 repo 的 skills/ 底下；url = 單一檔案或壓縮檔網址。"
+        },
+        "url": { "type": "string", "description": "repo 或檔案的完整網址。" },
+        "subdir": {
+          "type": "string",
+          "description": "kind=github 時，skill 位於 repo 內的相對路徑，例如 skills/gsap-core。留空代表 repo 根目錄就是 skill。"
+        },
+        "branch": { "type": "string", "description": "預設 main。" },
+        "path": {
+          "type": "string",
+          "description": "kind=local 時，相對於本 repo 的路徑，例如 skills/my-skill。"
+        }
+      }
+    },
+    "parts": {
+      "type": "array",
+      "description": "這個收錄項目其實是一組要一起安裝的 skill 資料夾。有些 skill 會拆成多個 SKILL.md（例如 GSAP 拆成 core / timeline / scrolltrigger …），但實際上是同一套、AI 也是一起用，就用 parts 收成一筆，安裝時整組一起裝。只有一個資料夾的 skill 不需要這個欄位。",
+      "items": {
+        "type": "object",
+        "required": ["dirName"],
+        "additionalProperties": false,
+        "properties": {
+          "dirName": {
+            "type": "string",
+            "description": "安裝後的資料夾名，必須等於該 SKILL.md frontmatter 的 name。"
+          },
+          "name": { "type": "string", "description": "顯示名稱，例如「ScrollTrigger」。省略時用 dirName。" },
+          "summary": { "type": "string", "description": "這一份負責什麼，一句話。" },
+          "subdir": {
+            "type": "string",
+            "description": "相對於 repo 根目錄的路徑。省略時自動組成 <source.subdir>/<dirName>。"
+          }
+        }
+      }
+    },
+    "install": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dirName": {
+          "type": "string",
+          "description": "安裝後的資料夾名稱，通常等於 SKILL.md frontmatter 的 name。有 parts 時可省略。"
+        },
+        "command": {
+          "type": "string",
+          "description": "一行就能裝完的指令（例如 npx skills add <repo>）。有填的話安裝提示詞會請 AI 優先用它。"
+        },
+        "scope": {
+          "enum": ["user", "project"],
+          "description": "user = 裝到 ~/.claude/skills（全域）；project = 裝到專案的 .claude/skills。預設 user。"
+        },
+        "files": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "此 skill 包含的檔案清單（相對於 skill 資料夾），例如 [\"SKILL.md\", \"references/api.md\"]。"
+        },
+        "requires": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "額外相依，例如 [\"node>=18\", \"pip install pypdf\"]。安裝提示詞會提醒 AI 處理。"
+        },
+        "notes": {
+          "type": "string",
+          "description": "安裝的特殊注意事項，會原樣插進提示詞。"
+        }
+      }
+    },
+    "usage": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "什麼情況會觸發／該用這個 skill。"
+    },
+    "highlights": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "重點功能，條列。"
+    },
+    "prompt": {
+      "type": ["string", "null"],
+      "description": "自訂的 AI 安裝提示詞。留 null 代表由 build 依照 source/install 自動產生。"
+    },
+    "links": {
+      "type": "array",
+      "description": "相關連結。",
+      "items": {
+        "type": "object",
+        "required": ["label", "url"],
+        "additionalProperties": false,
+        "properties": {
+          "label": { "type": "string" },
+          "url": { "type": "string" }
+        }
+      }
+    },
+    "addedAt": { "type": "string", "description": "收錄日期 YYYY-MM-DD。" },
+    "updatedAt": { "type": "string", "description": "最後更新日期 YYYY-MM-DD。" }
+  }
+}

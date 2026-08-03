@@ -1,0 +1,17 @@
+{
+  "name": "skill-hub",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "個人 Claude Skills 收藏庫 — registry + AI 安裝提示詞 + GitHub Pages 展示站",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "validate": "node scripts/validate.mjs",
+    "add": "node scripts/add-skill.mjs",
+    "dev": "node scripts/build.mjs && node scripts/serve.mjs",
+    "serve": "node scripts/serve.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

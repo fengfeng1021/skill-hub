@@ -1,0 +1,19 @@
+{
+  "name": "Skill Hub",
+  "tagline": "我的 Claude Skills 收藏庫",
+  "description": "收錄、整理、一鍵安裝各種 Claude / AI Agent Skills。挑好的 skill，複製提示詞，貼給 AI 就裝好。",
+  "owner": "fengfeng1021",
+  "repo": "skill-hub",
+  "branch": "main",
+  "locale": "zh-TW",
+  "installRoots": {
+    "user": {
+      "posix": "~/.claude/skills",
+      "windows": "%USERPROFILE%\\.claude\\skills"
+    },
+    "project": {
+      "posix": ".claude/skills",
+      "windows": ".claude\\skills"
+    }
+  }
+}

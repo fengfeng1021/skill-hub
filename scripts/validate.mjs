@@ -1,0 +1,147 @@
+#!/usr/bin/env node
+/** 檢查 registry 資料是否合法。收錄完一定要跑過。 */
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { join, basename } from 'node:path';
+import { loadConfig, loadSkills, ROOT, SKILLS_DIR } from './lib/registry.mjs';
+
+const cfg = loadConfig();
+const skills = loadSkills();
+
+const errors = [];
+const warnings = [];
+const seen = new Map();
+
+const REQUIRED = ['id', 'name', 'summary', 'category', 'tags', 'source', 'install'];
+const DIR_NAME = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
+
+for (const s of skills) {
+  const at = s.__file;
+
+  for (const key of REQUIRED) {
+    if (s[key] === undefined || s[key] === null || s[key] === '') {
+      errors.push(`${at}：缺少必填欄位 ${key}`);
+    }
+  }
+  if (!s.id) continue;
+
+  if (!/^[a-z0-9][a-z0-9-]*$/.test(s.id)) {
+    errors.push(`${at}：id "${s.id}" 必須是小寫 kebab-case`);
+  }
+  if (basename(at, '.json') !== s.id) {
+    errors.push(`${at}：檔名必須與 id 一致（應為 ${s.id}.json）`);
+  }
+  if (seen.has(s.id)) {
+    errors.push(`${at}：id "${s.id}" 與 ${seen.get(s.id)} 重複`);
+  }
+  seen.set(s.id, at);
+
+  if (s.summary && [...s.summary].length > 60) {
+    warnings.push(`${at}：summary 有 ${[...s.summary].length} 字，卡片上會被截斷，建議 40 字內`);
+  }
+  if (!Array.isArray(s.tags) || s.tags.length === 0) {
+    warnings.push(`${at}：沒有 tags，篩選時找不到`);
+  }
+
+  // source
+  const kind = s.source?.kind;
+  if (!['github', 'local', 'url'].includes(kind)) {
+    errors.push(`${at}：source.kind 必須是 github / local / url，目前是 "${kind}"`);
+  }
+  if (kind === 'github') {
+    if (!/^https:\/\/github\.com\/[^/]+\/[^/]+/.test(s.source.url ?? '')) {
+      errors.push(`${at}：source.url 不是合法的 GitHub repo 網址`);
+    }
+  }
+  if (kind === 'url' && !/^https?:\/\//.test(s.source.url ?? '')) {
+    errors.push(`${at}：source.url 必須是 http(s) 網址`);
+  }
+  if (kind === 'local') {
+    const rel = s.source.path ?? `skills/${s.id}`;
+    const dir = join(ROOT, rel);
+    if (!existsSync(dir)) {
+      errors.push(`${at}：source.kind=local 但找不到資料夾 ${rel}/`);
+    } else if (!existsSync(join(dir, 'SKILL.md'))) {
+      errors.push(`${at}：${rel}/ 底下沒有 SKILL.md`);
+    } else {
+      // dirName 應與 SKILL.md frontmatter 的 name 一致，否則 Claude Code 載入不到
+      const md = readFileSync(join(dir, 'SKILL.md'), 'utf8');
+      const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(md);
+      if (!fm) {
+        errors.push(`${at}：${rel}/SKILL.md 沒有 frontmatter（--- 區塊）`);
+      } else {
+        const nameLine = /^name:\s*(.+)$/m.exec(fm[1]);
+        const descLine = /^description:\s*(.+)$/m.exec(fm[1]);
+        if (!nameLine) errors.push(`${at}：${rel}/SKILL.md frontmatter 缺少 name`);
+        if (!descLine) errors.push(`${at}：${rel}/SKILL.md frontmatter 缺少 description`);
+        const mdName = nameLine?.[1].trim().replace(/^["']|["']$/g, '');
+        if (mdName && s.install?.dirName && mdName !== s.install.dirName) {
+          errors.push(
+            `${at}：install.dirName "${s.install.dirName}" 與 SKILL.md 的 name "${mdName}" 不一致，Claude Code 會載入不到`
+          );
+        }
+      }
+      // 對照 install.files 是否真的存在
+      for (const f of s.install?.files ?? []) {
+        if (!existsSync(join(dir, f))) {
+          warnings.push(`${at}：install.files 列了 ${f}，但 ${rel}/${f} 不存在`);
+        }
+      }
+    }
+  }
+
+  // 組合包（parts）用 parts[].dirName，單一 skill 用 install.dirName，兩者至少要有一個
+  const parts = s.parts;
+  if (parts !== undefined) {
+    if (!Array.isArray(parts) || parts.length === 0) {
+      errors.push(`${at}：parts 必須是至少一個項目的陣列，只有一個資料夾的 skill 請直接刪掉 parts`);
+    } else {
+      if (parts.length === 1) {
+        warnings.push(`${at}：parts 只有一個項目，用 install.dirName 就好`);
+      }
+      const dirs = new Set();
+      for (const p of parts) {
+        if (!p?.dirName) {
+          errors.push(`${at}：parts 裡有項目缺少 dirName`);
+          continue;
+        }
+        if (!DIR_NAME.test(p.dirName)) {
+          errors.push(`${at}：parts 的 dirName "${p.dirName}" 含有不適合當資料夾名的字元`);
+        }
+        if (dirs.has(p.dirName)) errors.push(`${at}：parts 的 dirName "${p.dirName}" 重複`);
+        dirs.add(p.dirName);
+      }
+    }
+  } else if (!s.install?.dirName) {
+    errors.push(`${at}：缺少 install.dirName（安裝後的資料夾名）`);
+  }
+  if (s.install?.dirName && !DIR_NAME.test(s.install.dirName)) {
+    errors.push(`${at}：install.dirName "${s.install.dirName}" 含有不適合當資料夾名的字元`);
+  }
+  if (s.install?.scope && !['user', 'project'].includes(s.install.scope)) {
+    errors.push(`${at}：install.scope 必須是 user 或 project`);
+  }
+}
+
+// skills/ 底下有資料夾卻沒收錄
+if (existsSync(SKILLS_DIR)) {
+  const registered = new Set(skills.filter((s) => s.source?.kind === 'local').map((s) => s.source.path ?? `skills/${s.id}`));
+  for (const d of readdirSync(SKILLS_DIR, { withFileTypes: true })) {
+    if (d.isDirectory() && !registered.has(`skills/${d.name}`)) {
+      warnings.push(`skills/${d.name}/ 存在但沒有對應的 registry 項目，不會出現在網站上`);
+    }
+  }
+}
+
+if (!cfg.configured) {
+  warnings.push('site.config.json 的 owner 還是 YOUR_GITHUB_USERNAME，安裝提示詞裡的下載網址會是錯的');
+}
+
+for (const w of warnings) console.log(`⚠ ${w}`);
+for (const e of errors) console.log(`✗ ${e}`);
+
+console.log('');
+if (errors.length) {
+  console.log(`驗證失敗：${errors.length} 個錯誤、${warnings.length} 個警告`);
+  process.exit(1);
+}
+console.log(`✓ 驗證通過：${skills.length} 個 skill、${warnings.length} 個警告`);

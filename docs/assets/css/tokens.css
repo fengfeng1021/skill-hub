@@ -1,0 +1,165 @@
+/* ==========================================================================
+   Design Tokens
+   全站唯一的設計變數來源。元件樣式一律引用這裡的變數，
+   不要在 components.css / site.css 裡寫死色碼、秒數或圓角。
+   動畫曲線與 GSAP 的 ease 名稱一一對應，CSS transition 與 JS 動效手感才會一致。
+   ========================================================================== */
+
+:root {
+  /* ---- 色彩：深色為預設 ---------------------------------------------- */
+  --bg: hsl(225 32% 6%);
+  --bg-soft: hsl(225 30% 8%);
+  --surface-1: hsl(225 26% 10%);
+  --surface-2: hsl(225 24% 13%);
+  --surface-3: hsl(225 22% 17%);
+  --surface-glass: hsl(225 26% 10% / 0.72);
+
+  --border: hsl(225 18% 21%);
+  --border-soft: hsl(225 18% 17%);
+  --border-strong: hsl(225 16% 32%);
+
+  --text: hsl(220 24% 96%);
+  --text-muted: hsl(220 12% 66%);
+  --text-faint: hsl(220 10% 46%);
+
+  --accent: hsl(162 82% 50%);
+  --accent-soft: hsl(162 82% 50% / 0.14);
+  --accent-line: hsl(162 82% 50% / 0.32);
+  --accent-ink: hsl(225 40% 6%);
+
+  --accent-2: hsl(266 88% 70%);
+  --accent-2-soft: hsl(266 88% 70% / 0.14);
+
+  --warn: hsl(38 92% 60%);
+  --warn-soft: hsl(38 92% 60% / 0.14);
+  --danger: hsl(0 78% 64%);
+  --danger-soft: hsl(0 78% 64% / 0.14);
+  --info: hsl(210 90% 66%);
+  --info-soft: hsl(210 90% 66% / 0.14);
+
+  --gradient-accent: linear-gradient(120deg, var(--accent), var(--accent-2));
+  --gradient-surface: linear-gradient(160deg, hsl(225 26% 14%), hsl(225 26% 10%));
+
+  /* ---- 字體 ----------------------------------------------------------- */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "JetBrains Mono", "Cascadia Code",
+    Consolas, "Noto Sans TC", monospace;
+
+  --text-2xs: 0.6875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.75rem;
+  --text-4xl: clamp(2.5rem, 6vw, 4.5rem);
+
+  --leading-tight: 1.15;
+  --leading-snug: 1.35;
+  --leading-normal: 1.65;
+
+  --tracking-tight: -0.02em;
+  --tracking-wide: 0.06em;
+  --tracking-wider: 0.14em;
+
+  /* ---- 間距 ----------------------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* ---- 圓角 ----------------------------------------------------------- */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-pill: 999px;
+
+  /* ---- 陰影 ----------------------------------------------------------- */
+  --shadow-sm: 0 1px 2px hsl(225 40% 2% / 0.4);
+  --shadow-md: 0 6px 20px -6px hsl(225 40% 2% / 0.55);
+  --shadow-lg: 0 18px 44px -12px hsl(225 40% 2% / 0.7);
+  --shadow-glow: 0 0 0 1px var(--accent-line), 0 12px 40px -12px hsl(162 82% 50% / 0.4);
+
+  /* ---- 動畫：曲線與 GSAP ease 對應 ------------------------------------ */
+  --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1); /* GSAP power2.out */
+  --ease-out-strong: cubic-bezier(0.165, 0.84, 0.44, 1); /* GSAP power3.out */
+  --ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1); /* GSAP power2.inOut */
+  --ease-back: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* GSAP back.out(1.7) */
+
+  --dur-instant: 0.12s;
+  --dur-fast: 0.2s;
+  --dur-base: 0.32s;
+  --dur-slow: 0.5s;
+  --dur-slower: 0.8s;
+
+  /* ---- 版面 ----------------------------------------------------------- */
+  --container: 1240px;
+  --container-narrow: 780px;
+  --header-h: 64px;
+
+  --z-base: 1;
+  --z-sticky: 100;
+  --z-header: 200;
+  --z-drawer: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-cursor: 600;
+}
+
+/* ---- 淺色模式 --------------------------------------------------------- */
+:root[data-theme="light"] {
+  --bg: hsl(220 36% 97%);
+  --bg-soft: hsl(220 30% 94%);
+  --surface-1: hsl(0 0% 100%);
+  --surface-2: hsl(220 34% 98%);
+  --surface-3: hsl(220 26% 94%);
+  --surface-glass: hsl(0 0% 100% / 0.78);
+
+  --border: hsl(220 20% 87%);
+  --border-soft: hsl(220 22% 91%);
+  --border-strong: hsl(220 16% 74%);
+
+  --text: hsl(225 40% 12%);
+  --text-muted: hsl(225 12% 40%);
+  --text-faint: hsl(225 10% 56%);
+
+  --accent: hsl(162 74% 34%);
+  --accent-soft: hsl(162 74% 34% / 0.12);
+  --accent-line: hsl(162 74% 34% / 0.28);
+  --accent-ink: hsl(0 0% 100%);
+
+  --accent-2: hsl(266 68% 52%);
+  --accent-2-soft: hsl(266 68% 52% / 0.12);
+
+  --warn: hsl(32 86% 42%);
+  --danger: hsl(0 68% 48%);
+  --info: hsl(212 80% 46%);
+
+  --gradient-surface: linear-gradient(160deg, hsl(0 0% 100%), hsl(220 34% 97%));
+
+  --shadow-sm: 0 1px 2px hsl(225 30% 40% / 0.08);
+  --shadow-md: 0 6px 20px -6px hsl(225 30% 40% / 0.16);
+  --shadow-lg: 0 18px 44px -12px hsl(225 30% 40% / 0.22);
+  --shadow-glow: 0 0 0 1px var(--accent-line), 0 12px 40px -14px hsl(162 74% 34% / 0.4);
+}
+
+/* 使用者要求減少動態時，全站關掉 transition；GSAP 端由 motion.js 的 matchMedia 處理 */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-instant: 0.01s;
+    --dur-fast: 0.01s;
+    --dur-base: 0.01s;
+    --dur-slow: 0.01s;
+    --dur-slower: 0.01s;
+  }
+}

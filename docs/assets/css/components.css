@@ -1,0 +1,1028 @@
+/* ==========================================================================
+   Components — 全站共用元件
+   規則：
+   1. 只用 tokens.css 的變數，不寫死色碼／秒數／圓角
+   2. 元件自身不做版面定位（margin、grid 位置交給使用它的頁面）
+   3. hover / press 的「位移類」動效由 motion.js 用 GSAP 處理，
+      這裡只負責顏色、邊框、陰影等不影響 layout 的過場
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Button
+   -------------------------------------------------------------------------- */
+.btn {
+  --btn-bg: var(--surface-2);
+  --btn-fg: var(--text);
+  --btn-border: var(--border);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--btn-border);
+  border-radius: var(--radius-md);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-size: var(--text-sm);
+  font-weight: 560;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  isolation: isolate;
+  transition: background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.btn:hover {
+  --btn-bg: var(--surface-3);
+  --btn-border: var(--border-strong);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.btn__icon {
+  display: grid;
+  place-items: center;
+  width: 1.05em;
+  height: 1.05em;
+  flex: none;
+}
+
+.btn__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* 變體 */
+.btn--primary {
+  --btn-bg: var(--accent);
+  --btn-fg: var(--accent-ink);
+  --btn-border: transparent;
+  font-weight: 620;
+}
+
+.btn--primary:hover {
+  --btn-bg: var(--accent);
+  --btn-border: transparent;
+  box-shadow: 0 8px 26px -10px var(--accent);
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-border: transparent;
+  color: var(--text-muted);
+}
+
+.btn--ghost:hover {
+  --btn-bg: var(--surface-2);
+  --btn-border: var(--border-soft);
+  color: var(--text);
+}
+
+.btn--outline {
+  --btn-bg: transparent;
+  --btn-border: var(--border-strong);
+}
+
+.btn--danger {
+  --btn-bg: var(--danger-soft);
+  --btn-fg: var(--danger);
+  --btn-border: transparent;
+}
+
+/* 尺寸 */
+.btn--sm {
+  padding: 0.4rem 0.75rem;
+  font-size: var(--text-xs);
+  border-radius: var(--radius-sm);
+}
+
+.btn--lg {
+  padding: 0.85rem 1.6rem;
+  font-size: var(--text-base);
+  border-radius: var(--radius-lg);
+}
+
+.btn--icon {
+  padding: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: none;
+}
+
+.btn--icon.btn--sm {
+  width: 1.85rem;
+  height: 1.85rem;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+/* 點擊時 motion.js 會在此插入 ripple 元素 */
+.btn__ripple {
+  position: absolute;
+  inset: auto;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.28;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* primary 上的漸層流光，hover 時由 motion.js 推動 */
+.btn--primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--gradient-accent);
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+
+.btn--primary:hover::before {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Chip — 可切換的篩選標籤
+   -------------------------------------------------------------------------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.36rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-1);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: 550;
+  white-space: nowrap;
+  transition: background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.chip:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.chip[aria-pressed="true"],
+.chip.is-active {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+  color: var(--accent);
+}
+
+.chip__count {
+  padding: 0.05rem 0.4rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  color: var(--text-faint);
+  font-size: var(--text-2xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.chip[aria-pressed="true"] .chip__count,
+.chip.is-active .chip__count {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* --------------------------------------------------------------------------
+   Tag — 靜態標籤
+   -------------------------------------------------------------------------- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-xs);
+  background: var(--surface-3);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.01em;
+}
+
+.tag--accent {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   Badge — 狀態徽章
+   -------------------------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.15rem 0.5rem 0.15rem 0.4rem;
+  border-radius: var(--radius-pill);
+  background: var(--info-soft);
+  color: var(--info);
+  font-size: var(--text-2xs);
+  font-weight: 620;
+  letter-spacing: var(--tracking-wide);
+}
+
+.badge svg {
+  width: 0.85em;
+  height: 0.85em;
+}
+
+.badge--official {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.badge--featured {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+
+.badge--local {
+  background: var(--accent-2-soft);
+  color: var(--accent-2);
+}
+
+/* 一筆收錄項目其實包含多個要一起裝的資料夾 */
+.badge--bundle {
+  padding-inline: 0.5rem;
+  background: var(--surface-3);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* --------------------------------------------------------------------------
+   Card — 通用卡片容器
+   -------------------------------------------------------------------------- */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-5);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  background: var(--gradient-surface);
+  overflow: hidden;
+  transition: border-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out);
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+}
+
+/* 游標位置追蹤的光暈，座標由 motion.js 寫入 --mx / --my */
+.card--glow::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 50%),
+    var(--accent-soft),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out);
+  pointer-events: none;
+}
+
+.card--glow:hover::before {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Skill Card — 收錄項目卡片
+   -------------------------------------------------------------------------- */
+.skill-card {
+  gap: var(--space-3);
+  cursor: pointer;
+  padding: var(--space-5) var(--space-5) var(--space-4);
+}
+
+.skill-card.is-selected {
+  border-color: var(--accent-line);
+  box-shadow: var(--shadow-glow);
+}
+
+.skill-card__top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-right: var(--space-6); /* 讓開右上角的勾選框 */
+}
+
+.skill-card__icon {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-3);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  font-weight: 700;
+}
+
+.skill-card__name {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-md);
+  font-weight: 640;
+  letter-spacing: var(--tracking-tight);
+}
+
+.skill-card__summary {
+  flex: 1 1 auto;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+}
+
+.skill-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.skill-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border-soft);
+  font-size: var(--text-xs);
+  color: var(--text-faint);
+}
+
+.skill-card__source {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.skill-card__source svg {
+  width: 0.95em;
+  height: 0.95em;
+  flex: none;
+}
+
+.skill-card__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: none;
+}
+
+/* 卡片右上角的選取勾選框 */
+.skill-card__check {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  z-index: 2;
+}
+
+/* --------------------------------------------------------------------------
+   Check — 自訂勾選框
+   -------------------------------------------------------------------------- */
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  user-select: none;
+}
+
+.check__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.check__box {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  flex: none;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-xs);
+  background: var(--surface-1);
+  transition: background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.check__box svg {
+  width: 0.8rem;
+  height: 0.8rem;
+  color: var(--accent-ink);
+}
+
+/* 勾勾用 stroke-dashoffset 畫出來，長度由 motion.js 量測後設定 */
+.check__box svg path {
+  stroke-dasharray: var(--check-len, 24);
+  stroke-dashoffset: var(--check-len, 24);
+}
+
+.check__input:checked + .check__box {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.check__input:focus-visible + .check__box {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.check__label {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Field — 輸入框 / 搜尋列
+   -------------------------------------------------------------------------- */
+.field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 0 var(--space-4);
+  height: 2.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+  transition: border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.field:focus-within {
+  border-color: var(--accent-line);
+  background: var(--surface-2);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+.field__icon {
+  display: grid;
+  place-items: center;
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+  color: var(--text-faint);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.field:focus-within .field__icon {
+  color: var(--accent);
+}
+
+.field__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: var(--text-sm);
+}
+
+.field__input::placeholder {
+  color: var(--text-faint);
+}
+
+.field__hint {
+  flex: none;
+  color: var(--text-faint);
+}
+
+.field--lg {
+  height: 3.4rem;
+  border-radius: var(--radius-lg);
+}
+
+.field--lg .field__input {
+  font-size: var(--text-base);
+}
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.4rem;
+  padding: 0.1rem 0.35rem;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: var(--radius-xs);
+  background: var(--surface-3);
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  line-height: 1.4;
+}
+
+/* --------------------------------------------------------------------------
+   Segmented — 分段切換
+   -------------------------------------------------------------------------- */
+.segmented {
+  position: relative;
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+}
+
+/* 滑動的指示塊，位置由 motion.js 計算 */
+.segmented__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  height: calc(100% - 6px);
+  border-radius: calc(var(--radius-md) - 3px);
+  background: var(--surface-3);
+  pointer-events: none;
+}
+
+.segmented__item {
+  position: relative;
+  z-index: 1;
+  padding: 0.4rem 0.9rem;
+  border-radius: calc(var(--radius-md) - 3px);
+  color: var(--text-faint);
+  font-size: var(--text-xs);
+  font-weight: 560;
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.segmented__item:hover {
+  color: var(--text-muted);
+}
+
+.segmented__item[aria-selected="true"] {
+  color: var(--text);
+}
+
+/* --------------------------------------------------------------------------
+   Code block — 提示詞 / 指令顯示
+   -------------------------------------------------------------------------- */
+.code {
+  position: relative;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  background: var(--bg-soft);
+  overflow: hidden;
+}
+
+.code__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--border-soft);
+  background: var(--surface-1);
+}
+
+.code__title {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.code__body {
+  max-height: 22rem;
+  margin: 0;
+  padding: var(--space-4);
+  overflow: auto;
+  font-size: var(--text-xs);
+  line-height: 1.7;
+  color: var(--text-muted);
+  white-space: pre-wrap;
+  word-break: break-word;
+  tab-size: 2;
+}
+
+.code--inline .code__body {
+  max-height: none;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Modal
+   -------------------------------------------------------------------------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: grid;
+  place-items: center;
+  padding: var(--space-5);
+  visibility: hidden;
+}
+
+.modal.is-open {
+  visibility: visible;
+}
+
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: hsl(225 40% 3% / 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+}
+
+.modal__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(720px, 100%);
+  max-height: min(84svh, 900px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  overflow: hidden;
+}
+
+.modal--wide .modal__panel {
+  width: min(980px, 100%);
+}
+
+.modal__head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.modal__title {
+  font-size: var(--text-lg);
+  font-weight: 640;
+}
+
+.modal__body {
+  flex: 1 1 auto;
+  padding: var(--space-5);
+  overflow-y: auto;
+}
+
+.modal__foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-top: 1px solid var(--border-soft);
+  background: var(--surface-2);
+}
+
+/* --------------------------------------------------------------------------
+   Toast
+   -------------------------------------------------------------------------- */
+.toast-stack {
+  position: fixed;
+  right: var(--space-5);
+  bottom: var(--space-5);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 15rem;
+  max-width: min(24rem, calc(100vw - var(--space-6)));
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  box-shadow: var(--shadow-lg);
+  font-size: var(--text-sm);
+  pointer-events: auto;
+}
+
+.toast__icon {
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: none;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.toast__icon svg {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+.toast--error .toast__icon {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.toast--info .toast__icon {
+  background: var(--info-soft);
+  color: var(--info);
+}
+
+/* 自動關閉的進度線 */
+.toast__timer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  transform-origin: left center;
+  background: var(--accent);
+  opacity: 0.5;
+}
+
+.toast {
+  position: relative;
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Selection bar — 多選後浮出的操作列
+   -------------------------------------------------------------------------- */
+.selection-bar {
+  position: fixed;
+  left: 50%;
+  bottom: var(--space-5);
+  z-index: var(--z-drawer);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-5);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-glass);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow: var(--shadow-lg);
+  white-space: nowrap;
+  visibility: hidden;
+}
+
+.selection-bar.is-visible {
+  visibility: visible;
+}
+
+.selection-bar__count {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.selection-bar__num {
+  font-size: var(--text-md);
+  font-weight: 680;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   Tooltip
+   -------------------------------------------------------------------------- */
+.tooltip {
+  position: fixed;
+  z-index: var(--z-toast);
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-3);
+  color: var(--text);
+  font-size: var(--text-2xs);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: var(--shadow-md);
+}
+
+/* --------------------------------------------------------------------------
+   Empty state
+   -------------------------------------------------------------------------- */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-9) var(--space-5);
+  text-align: center;
+  color: var(--text-faint);
+}
+
+.empty__icon {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-lg);
+  color: var(--text-faint);
+}
+
+.empty__title {
+  font-size: var(--text-md);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Skeleton
+   -------------------------------------------------------------------------- */
+.skeleton {
+  position: relative;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, var(--surface-3), transparent);
+  animation: skeleton-sweep 1.4s var(--ease-in-out) infinite;
+}
+
+@keyframes skeleton-sweep {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after {
+    animation: none;
+  }
+}
+
+.skeleton--text {
+  height: 0.8rem;
+}
+
+.skeleton--card {
+  height: 12rem;
+  border-radius: var(--radius-lg);
+}
+
+/* --------------------------------------------------------------------------
+   Stat
+   -------------------------------------------------------------------------- */
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.stat__num {
+  font-size: var(--text-2xl);
+  font-weight: 680;
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat__label {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* --------------------------------------------------------------------------
+   Section head
+   -------------------------------------------------------------------------- */
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-5);
+}
+
+.section-head__title {
+  font-size: var(--text-xl);
+}
+
+.section-head__desc {
+  margin-top: var(--space-2);
+  max-width: 46ch;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/* --------------------------------------------------------------------------
+   Theme toggle
+   -------------------------------------------------------------------------- */
+.theme-toggle {
+  position: relative;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+  color: var(--text-muted);
+  overflow: hidden;
+  transition: border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.theme-toggle:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.theme-toggle svg {
+  position: absolute;
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+/* --------------------------------------------------------------------------
+   Scroll progress
+   -------------------------------------------------------------------------- */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: calc(var(--z-header) + 1);
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: var(--gradient-accent);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Divider / link
+   -------------------------------------------------------------------------- */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--accent);
+  font-size: var(--text-sm);
+  font-weight: 560;
+}
+
+.link-arrow svg {
+  width: 0.9em;
+  height: 0.9em;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.link-arrow:hover svg {
+  transform: translateX(3px);
+}

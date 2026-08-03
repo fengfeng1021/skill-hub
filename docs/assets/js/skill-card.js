@@ -1,0 +1,88 @@
+/* ==========================================================================
+   Skill Card — 卡片模板
+   收藏庫首頁與設計系統展示頁共用同一份模板，
+   確保示範看到的樣子跟實際網站完全一致。
+   ========================================================================== */
+
+import { Icons } from './icons.js';
+
+export const escapeHTML = (s) =>
+  String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+/** 沒有圖示時用名稱開頭當視覺標記 */
+export function initials(name = '') {
+  const cleaned = String(name).replace(/[^\p{L}\p{N}\s-]/gu, '').trim();
+  const parts = cleaned.split(/[\s-]+/).filter(Boolean);
+  if (!parts.length) return '?';
+  if (/^[\x00-\x7F]+$/.test(cleaned)) {
+    return (parts.length > 1 ? parts[0][0] + parts[1][0] : parts[0].slice(0, 2)).toUpperCase();
+  }
+  return cleaned.slice(0, 1);
+}
+
+function badges(skill) {
+  const out = [];
+  if (skill.official) out.push(`<span class="badge badge--official">${Icons.check}官方</span>`);
+  if (skill.source?.kind === 'local') out.push(`<span class="badge badge--local">本庫託管</span>`);
+  // 一筆收錄項目包含多個資料夾時要講清楚，不然使用者會以為只裝一個
+  if (skill.parts?.length > 1) out.push(`<span class="badge badge--bundle">${skill.parts.length} 合 1</span>`);
+  return out.join('');
+}
+
+function sourceLine(skill) {
+  const kind = skill.source?.kind;
+  const icon = kind === 'github' ? Icons.github : kind === 'local' ? Icons.folder : Icons.link;
+  const label = escapeHTML(skill.source?.label ?? '未註明來源');
+  return `<span class="skill-card__source"><span style="width:.95em;height:.95em;flex:none">${icon}</span><span class="truncate">${label}</span></span>`;
+}
+
+/**
+ * 產生一張 skill 卡片。
+ * @param {object} skill    api/index.json 裡的 skill 物件
+ * @param {object} options  { selected: boolean, selectable: boolean }
+ */
+export function renderSkillCard(skill, { selected = false, selectable = true } = {}) {
+  const tags = (skill.tags ?? [])
+    .slice(0, 3)
+    .map((t) => `<span class="tag">${escapeHTML(t)}</span>`)
+    .join('');
+
+  return `
+    <article class="card skill-card${selected ? ' is-selected' : ''}"
+             data-motion="lift"
+             data-skill-id="${escapeHTML(skill.id)}"
+             data-category="${escapeHTML(skill.category ?? '')}"
+             tabindex="0" role="button"
+             aria-label="查看 ${escapeHTML(skill.name)} 的詳細資訊">
+      ${
+        selectable
+          ? `<label class="check skill-card__check" data-check data-select-stop>
+               <input class="check__input" type="checkbox" ${selected ? 'checked' : ''}
+                      aria-label="選取 ${escapeHTML(skill.name)}" />
+               <span class="check__box">${Icons.check}</span>
+             </label>`
+          : ''
+      }
+
+      <div class="skill-card__top">
+        <span class="skill-card__icon" aria-hidden="true">${escapeHTML(initials(skill.name))}</span>
+        <h3 class="skill-card__name"><span class="truncate">${escapeHTML(skill.name)}</span></h3>
+      </div>
+
+      <p class="skill-card__summary clamp-3">${escapeHTML(skill.summary)}</p>
+
+      <div class="skill-card__tags">${badges(skill)}${tags}</div>
+
+      <div class="skill-card__foot">
+        ${sourceLine(skill)}
+        <div class="skill-card__actions">
+          <button class="btn btn--sm btn--ghost" data-copy-skill="${escapeHTML(skill.id)}"
+                  data-motion="press" data-tooltip="複製這個 skill 的安裝提示詞" aria-label="複製安裝提示詞">
+            <span class="btn__icon">${Icons.copy}</span>
+          </button>
+        </div>
+      </div>
+    </article>`;
+}
+
+export default renderSkillCard;

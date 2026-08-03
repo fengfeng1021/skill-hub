@@ -1,0 +1,210 @@
+/* ==========================================================================
+   Design System 展示頁專用版面
+   只有這頁會用到；元件本身的樣式都在 components.css
+   ========================================================================== */
+
+.ds-layout {
+  display: grid;
+  grid-template-columns: 216px minmax(0, 1fr);
+  gap: var(--space-7);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .ds-layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+}
+
+.ds-nav {
+  position: sticky;
+  top: calc(var(--header-h) + var(--space-5));
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+@media (max-width: 900px) {
+  .ds-nav {
+    position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border-soft);
+  }
+}
+
+.ds-nav__link {
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  color: var(--text-faint);
+  font-size: var(--text-sm);
+  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.ds-nav__link:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.ds-nav__link.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.ds-section {
+  scroll-margin-top: calc(var(--header-h) + var(--space-5));
+  padding-block: var(--space-6) var(--space-7);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.ds-section:last-child {
+  border-bottom: none;
+}
+
+.ds-section__title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  font-size: var(--text-xl);
+  margin-bottom: var(--space-2);
+}
+
+.ds-section__file {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--text-faint);
+}
+
+.ds-section__desc {
+  max-width: 60ch;
+  margin-bottom: var(--space-5);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/* 展示區塊 */
+.ds-demo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  background: var(--bg-soft);
+}
+
+.ds-demo + .ds-demo {
+  margin-top: var(--space-3);
+}
+
+.ds-demo--grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  align-items: stretch;
+}
+
+.ds-demo--col {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.ds-demo--tall {
+  min-height: 190px;
+}
+
+.ds-label {
+  width: 100%;
+  margin-bottom: calc(var(--space-2) * -1);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* 色票 */
+.ds-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-3);
+  width: 100%;
+}
+
+.ds-swatch {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ds-swatch__chip {
+  height: 52px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.ds-swatch__name {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+}
+
+/* 字級 */
+.ds-type-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-5);
+  width: 100%;
+  padding-block: var(--space-2);
+  border-bottom: 1px dashed var(--border-soft);
+}
+
+.ds-type-row:last-child {
+  border-bottom: none;
+}
+
+.ds-type-row__name {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--text-faint);
+}
+
+/* 動效示範方塊 */
+.ds-box {
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  text-align: center;
+  cursor: default;
+}
+
+.ds-box--accent {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.ds-marquee {
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.ds-marquee__track {
+  display: flex;
+  gap: var(--space-3);
+  width: max-content;
+}

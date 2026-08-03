@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>元件與動效 · Skill Hub</title>
+    <meta name="description" content="Skill Hub 的設計系統：色彩、字級、元件與共用動效。改設計從這裡開始。" />
+    <meta name="robots" content="noindex" />
+
+    <script>
+      // 先加 .js，讓需要進場的元素預先隱藏，避免內容先閃一下才動。
+      document.documentElement.classList.add('js');
+      try {
+        const t = localStorage.getItem('skill-hub-theme');
+        if (t) document.documentElement.dataset.theme = t;
+      } catch {}
+    </script>
+
+    <link rel="stylesheet" href="./assets/css/tokens.css" />
+    <link rel="stylesheet" href="./assets/css/base.css" />
+    <link rel="stylesheet" href="./assets/css/components.css" />
+    <link rel="stylesheet" href="./assets/css/site.css" />
+    <link rel="stylesheet" href="./assets/css/design-system.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Flip.min.js" defer></script>
+    <script type="module" src="./assets/js/design-system.js"></script>
+  </head>
+
+  <body>
+    <div class="scroll-progress" data-motion="scroll-progress"></div>
+
+    <header class="site-header" data-motion="shrink-header">
+      <div class="container site-header__inner">
+        <a class="site-logo" href="./index.html">
+          <span class="site-logo__mark">SH</span>
+          <span class="site-logo__text">Skill Hub</span>
+          <span class="tag">Design System</span>
+        </a>
+        <nav class="site-nav">
+          <a class="site-nav__link" href="./index.html">收藏庫</a>
+          <a class="site-nav__link is-active" href="./design-system.html">元件</a>
+          <a class="site-nav__link" href="./llms.txt">llms.txt</a>
+          <button class="theme-toggle" data-theme-toggle aria-label="切換主題">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+            </svg>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container" style="padding-block: var(--space-7) var(--space-9)">
+      <div style="max-width: 62ch; margin-bottom: var(--space-7)">
+        <p class="eyebrow" data-intro>Design System</p>
+        <h1 style="font-size: var(--text-3xl); margin-block: var(--space-3)" data-intro>元件與動效</h1>
+        <p class="muted" data-intro>
+          網站上的每個東西都先在這裡定義好樣式與動效，才拿去組頁面。要改設計就改這裡的
+          <code class="tag">tokens.css</code> 或 <code class="tag">components.css</code>，
+          要改動效就改 <code class="tag">motion.js</code> 的 recipe，全站會一起跟著變。
+        </p>
+      </div>
+
+      <div class="ds-layout">
+        <nav class="ds-nav" id="dsNav">
+          <a class="ds-nav__link" href="#colors">色彩</a>
+          <a class="ds-nav__link" href="#type">字級</a>
+          <a class="ds-nav__link" href="#buttons">按鈕</a>
+          <a class="ds-nav__link" href="#chips">標籤</a>
+          <a class="ds-nav__link" href="#cards">卡片</a>
+          <a class="ds-nav__link" href="#forms">表單</a>
+          <a class="ds-nav__link" href="#code">程式碼</a>
+          <a class="ds-nav__link" href="#feedback">回饋</a>
+          <a class="ds-nav__link" href="#states">狀態</a>
+          <a class="ds-nav__link" href="#motion">動效</a>
+        </nav>
+
+        <div>
+          <!-- ---------- 色彩 ---------- -->
+          <section class="ds-section" id="colors">
+            <h2 class="ds-section__title">色彩 <span class="ds-section__file">tokens.css</span></h2>
+            <p class="ds-section__desc">
+              全部用 CSS 變數，深淺色模式各一組。元件不准寫死色碼 —— 右上角切換主題，所有東西都要跟著變才算合格。
+            </p>
+            <div class="ds-demo" data-motion="reveal">
+              <div class="ds-swatches" id="swatches"></div>
+            </div>
+          </section>
+
+          <!-- ---------- 字級 ---------- -->
+          <section class="ds-section" id="type">
+            <h2 class="ds-section__title">字級 <span class="ds-section__file">tokens.css</span></h2>
+            <p class="ds-section__desc">中英混排以中文可讀性優先，字重用 550–680 之間避免過細。</p>
+            <div class="ds-demo ds-demo--col" data-motion="reveal">
+              <div class="ds-type-row"><span style="font-size: var(--text-3xl); font-weight: 680">收藏一個好用的 Skill</span><span class="ds-type-row__name">--text-3xl</span></div>
+              <div class="ds-type-row"><span style="font-size: var(--text-2xl); font-weight: 660">收藏一個好用的 Skill</span><span class="ds-type-row__name">--text-2xl</span></div>
+              <div class="ds-type-row"><span style="font-size: var(--text-xl); font-weight: 640">收藏一個好用的 Skill</span><span class="ds-type-row__name">--text-xl</span></div>
+              <div class="ds-type-row"><span style="font-size: var(--text-lg)">收藏一個好用的 Skill</span><span class="ds-type-row__name">--text-lg</span></div>
+              <div class="ds-type-row"><span style="font-size: var(--text-base)">收藏一個好用的 Skill</span><span class="ds-type-row__name">--text-base</span></div>
+              <div class="ds-type-row"><span style="font-size: var(--text-sm)" class="muted">收藏一個好用的 Skill</span><span class="ds-type-row__name">--text-sm</span></div>
+              <div class="ds-type-row"><span style="font-size: var(--text-xs)" class="faint">收藏一個好用的 Skill</span><span class="ds-type-row__name">--text-xs</span></div>
+              <div class="ds-type-row"><span class="mono">gsap-scrolltrigger / SKILL.md</span><span class="ds-type-row__name">--font-mono</span></div>
+              <div class="ds-type-row"><span class="gradient-text" style="font-size: var(--text-2xl); font-weight: 680">漸層標題</span><span class="ds-type-row__name">.gradient-text</span></div>
+            </div>
+          </section>
+
+          <!-- ---------- 按鈕 ---------- -->
+          <section class="ds-section" id="buttons">
+            <h2 class="ds-section__title">按鈕 <span class="ds-section__file">.btn</span></h2>
+            <p class="ds-section__desc">
+              動效統一：<code class="tag">press</code> 按下縮放、<code class="tag">ripple</code> 點擊漣漪、
+              <code class="tag">magnetic</code> 磁吸。加在 <code class="tag">data-motion</code> 上就有，不用另外寫程式。
+            </p>
+
+            <div class="ds-demo" data-motion="reveal">
+              <span class="ds-label">變體</span>
+              <button class="btn btn--primary" data-motion="press ripple">主要動作</button>
+              <button class="btn" data-motion="press ripple">次要動作</button>
+              <button class="btn btn--outline" data-motion="press">外框</button>
+              <button class="btn btn--ghost" data-motion="press">幽靈</button>
+              <button class="btn btn--danger" data-motion="press">刪除</button>
+              <button class="btn" disabled>停用</button>
+            </div>
+
+            <div class="ds-demo" data-motion="reveal">
+              <span class="ds-label">尺寸與圖示</span>
+              <button class="btn btn--primary btn--lg" data-motion="press ripple">
+                <span class="btn__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
+                複製安裝指令
+              </button>
+              <button class="btn" data-motion="press ripple">預設尺寸</button>
+              <button class="btn btn--sm" data-motion="press">小尺寸</button>
+              <button class="btn btn--icon" data-motion="press" data-tooltip="圖示按鈕">
+                <span class="btn__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+              </button>
+              <button class="btn btn--icon btn--sm" data-motion="press" data-tooltip="小圖示按鈕">
+                <span class="btn__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>
+              </button>
+              <button class="btn btn--primary" data-motion="press magnetic" data-motion-strength="0.3">磁吸按鈕</button>
+            </div>
+          </section>
+
+          <!-- ---------- 標籤 ---------- -->
+          <section class="ds-section" id="chips">
+            <h2 class="ds-section__title">標籤 <span class="ds-section__file">.chip / .tag / .badge</span></h2>
+            <p class="ds-section__desc">chip 可切換，用在篩選；tag 是靜態的；badge 表示狀態。</p>
+
+            <div class="ds-demo" data-motion="reveal">
+              <span class="ds-label">Chip（可切換，點點看）</span>
+              <button class="chip" aria-pressed="true" data-motion="press">全部 <span class="chip__count">24</span></button>
+              <button class="chip" aria-pressed="false" data-motion="press">前端 / 動效 <span class="chip__count">7</span></button>
+              <button class="chip" aria-pressed="false" data-motion="press">文件處理 <span class="chip__count">5</span></button>
+              <button class="chip" aria-pressed="false" data-motion="press">開發工具 <span class="chip__count">9</span></button>
+            </div>
+
+            <div class="ds-demo" data-motion="reveal">
+              <span class="ds-label">Tag 與 Badge</span>
+              <span class="tag">animation</span>
+              <span class="tag">gsap</span>
+              <span class="tag tag--accent">frontend</span>
+              <span class="badge badge--official">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                官方
+              </span>
+              <span class="badge badge--featured">推薦</span>
+              <span class="badge badge--local">本庫託管</span>
+              <span class="badge badge--bundle">8 合 1</span>
+              <span class="badge">MIT</span>
+              <span class="kbd">⌘K</span>
+            </div>
+          </section>
+
+          <!-- ---------- 卡片 ---------- -->
+          <section class="ds-section" id="cards">
+            <h2 class="ds-section__title">卡片 <span class="ds-section__file">.card / .skill-card</span></h2>
+            <p class="ds-section__desc">
+              收藏庫的主角。hover 時 <code class="tag">lift</code> 抬升、<code class="tag">glow</code> 跟著游標亮，
+              選取後邊框變色。第三張示範選取狀態。
+            </p>
+            <div class="ds-demo ds-demo--grid" data-motion="reveal" id="cardDemo"></div>
+          </section>
+
+          <!-- ---------- 表單 ---------- -->
+          <section class="ds-section" id="forms">
+            <h2 class="ds-section__title">表單 <span class="ds-section__file">.field / .check / .segmented</span></h2>
+            <p class="ds-section__desc">勾選框的勾勾是用 stroke-dashoffset 畫出來的，不是直接顯示。</p>
+
+            <div class="ds-demo ds-demo--col" data-motion="reveal">
+              <span class="ds-label">輸入框</span>
+              <label class="field field--lg">
+                <span class="field__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
+                <input class="field__input" type="search" placeholder="搜尋 skill、標籤、用途…" />
+                <span class="field__hint"><span class="kbd">/</span></span>
+              </label>
+              <label class="field">
+                <span class="field__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg></span>
+                <input class="field__input" type="text" placeholder="一般輸入框" />
+              </label>
+            </div>
+
+            <div class="ds-demo" data-motion="reveal">
+              <span class="ds-label">勾選框</span>
+              <label class="check" data-check>
+                <input class="check__input" type="checkbox" />
+                <span class="check__box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <span class="check__label">未勾選</span>
+              </label>
+              <label class="check" data-check>
+                <input class="check__input" type="checkbox" checked />
+                <span class="check__box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <span class="check__label">已勾選</span>
+              </label>
+            </div>
+
+            <div class="ds-demo" data-motion="reveal">
+              <span class="ds-label">分段切換</span>
+              <div class="segmented" data-segmented role="tablist">
+                <span class="segmented__thumb"></span>
+                <button class="segmented__item" role="tab" aria-selected="true" data-value="grid">格狀</button>
+                <button class="segmented__item" role="tab" aria-selected="false" data-value="list">清單</button>
+                <button class="segmented__item" role="tab" aria-selected="false" data-value="compact">精簡</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- ---------- 程式碼 ---------- -->
+          <section class="ds-section" id="code">
+            <h2 class="ds-section__title">程式碼區塊 <span class="ds-section__file">.code</span></h2>
+            <p class="ds-section__desc">安裝提示詞就是靠這個顯示。右上角複製按鈕會有回饋動畫與 toast。</p>
+            <div class="ds-demo ds-demo--col" data-motion="reveal">
+              <div class="code">
+                <div class="code__bar">
+                  <span class="code__title">安裝提示詞</span>
+                  <button class="btn btn--sm btn--ghost" data-copy="closest" data-motion="press">
+                    <span class="btn__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
+                    <span data-copy-label>複製</span>
+                  </button>
+                </div>
+                <pre class="code__body">你是我的 Skill 安裝助手。請幫我安裝下面這個 Claude Skill。
+
+## 安裝規則
+1. 安裝位置 — 每個 skill 是一個資料夾，放在 ~/.claude/skills/&lt;資料夾名&gt;/
+2. 資料夾名不要改
+3. 不要改寫 SKILL.md 的 frontmatter</pre>
+              </div>
+            </div>
+          </section>
+
+          <!-- ---------- 回饋 ---------- -->
+          <section class="ds-section" id="feedback">
+            <h2 class="ds-section__title">回饋 <span class="ds-section__file">Motion.toast / .modal</span></h2>
+            <p class="ds-section__desc">toast 會自己排隊、自己消失，滑鼠移上去會暫停倒數。</p>
+
+            <div class="ds-demo" data-motion="reveal">
+              <span class="ds-label">Toast</span>
+              <button class="btn" data-motion="press ripple" data-demo-toast="success">成功</button>
+              <button class="btn" data-motion="press ripple" data-demo-toast="error">錯誤</button>
+              <button class="btn" data-motion="press ripple" data-demo-toast="info">提示</button>
+            </div>
+
+            <div class="ds-demo" data-motion="reveal">
+              <span class="ds-label">Modal 與浮出操作列</span>
+              <button class="btn btn--primary" data-motion="press ripple" data-modal="#dsModal">開啟 Modal</button>
+              <button class="btn" data-motion="press ripple" id="dsBarToggle">切換浮出操作列</button>
+              <button class="btn btn--ghost" data-motion="press" data-tooltip="這就是 tooltip，hover 或 focus 都會出現">Hover 我</button>
+            </div>
+          </section>
+
+          <!-- ---------- 狀態 ---------- -->
+          <section class="ds-section" id="states">
+            <h2 class="ds-section__title">狀態 <span class="ds-section__file">.empty / .skeleton / .stat</span></h2>
+            <p class="ds-section__desc">載入中、沒東西、數字統計。</p>
+
+            <div class="ds-demo ds-demo--grid" data-motion="reveal">
+              <div class="card">
+                <div class="stack" style="gap: var(--space-3)">
+                  <div class="skeleton skeleton--text" style="width: 40%"></div>
+                  <div class="skeleton skeleton--text" style="width: 85%"></div>
+                  <div class="skeleton skeleton--text" style="width: 65%"></div>
+                </div>
+              </div>
+              <div class="card" style="align-items: center; justify-content: center">
+                <div class="empty" style="padding: var(--space-4)">
+                  <div class="empty__icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
+                  <p class="empty__title">找不到符合的 skill</p>
+                  <p style="font-size: var(--text-xs)">換個關鍵字，或把篩選條件清掉</p>
+                </div>
+              </div>
+              <div class="card">
+                <div class="row" style="gap: var(--space-6); height: 100%; align-items: center">
+                  <div class="stat"><span class="stat__num" data-motion="count" data-motion-to="24">0</span><span class="stat__label">已收錄</span></div>
+                  <div class="stat"><span class="stat__num" data-motion="count" data-motion-to="8">0</span><span class="stat__label">分類</span></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ---------- 動效 ---------- -->
+          <section class="ds-section" id="motion">
+            <h2 class="ds-section__title">動效 recipe <span class="ds-section__file">motion.js</span></h2>
+            <p class="ds-section__desc">
+              全部靠 <code class="tag">data-motion</code> 啟用，可以疊加多個。
+              系統設定「減少動態」時全部自動退化成直接顯示，不會有位移。
+            </p>
+
+            <div class="ds-demo ds-demo--tall" data-motion="reveal">
+              <span class="ds-label">滑鼠互動（把游標移上去、按下去）</span>
+              <div class="ds-box ds-box--accent" data-motion="lift">lift</div>
+              <div class="ds-box ds-box--accent" data-motion="press" style="cursor: pointer">press</div>
+              <div class="ds-box ds-box--accent" data-motion="magnetic">magnetic</div>
+              <div class="ds-box ds-box--accent" data-motion="tilt" data-motion-tilt="12">tilt</div>
+              <div class="ds-box ds-box--accent card--glow" data-motion="glow" style="position: relative">glow</div>
+              <div class="ds-box ds-box--accent" data-motion="float">float</div>
+              <div class="ds-box ds-box--accent" data-motion="lift press ripple" style="cursor: pointer; position: relative; overflow: hidden">三個一起</div>
+            </div>
+
+            <div class="ds-demo ds-demo--col" data-motion="reveal">
+              <span class="ds-label">進場 preset（重整頁面捲下來看）</span>
+              <div class="row row--wrap" style="gap: var(--space-3)">
+                <div class="ds-box" data-motion="reveal" data-motion-preset="up">up</div>
+                <div class="ds-box" data-motion="reveal" data-motion-preset="fade">fade</div>
+                <div class="ds-box" data-motion="reveal" data-motion-preset="scale">scale</div>
+                <div class="ds-box" data-motion="reveal" data-motion-preset="left">left</div>
+                <div class="ds-box" data-motion="reveal" data-motion-preset="right">right</div>
+                <div class="ds-box" data-motion="reveal" data-motion-preset="blur">blur</div>
+              </div>
+            </div>
+
+            <div class="ds-demo ds-demo--col" data-motion="reveal">
+              <span class="ds-label">stagger — 子元素依序進場</span>
+              <div class="row row--wrap" style="gap: var(--space-3)" data-motion="stagger">
+                <div class="ds-box">1</div>
+                <div class="ds-box">2</div>
+                <div class="ds-box">3</div>
+                <div class="ds-box">4</div>
+                <div class="ds-box">5</div>
+              </div>
+            </div>
+
+            <div class="ds-demo ds-demo--col" data-motion="reveal">
+              <span class="ds-label">marquee — 滑鼠移上去會變慢</span>
+              <div class="ds-marquee" data-motion="marquee">
+                <div class="ds-marquee__track">
+                  <span class="tag">gsap-core</span><span class="tag">gsap-timeline</span><span class="tag">scrolltrigger</span>
+                  <span class="tag">pdf</span><span class="tag">docx</span><span class="tag">xlsx</span>
+                  <span class="tag">frontend-design</span><span class="tag">dataviz</span><span class="tag">security-review</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="ds-demo ds-demo--col" data-motion="reveal">
+              <span class="ds-label">flip — 篩選重排（清單會平滑移動到新位置）</span>
+              <div class="row" style="gap: var(--space-2)">
+                <button class="btn btn--sm" data-flip-filter="all" data-motion="press">全部</button>
+                <button class="btn btn--sm" data-flip-filter="a" data-motion="press">只留 A</button>
+                <button class="btn btn--sm" data-flip-filter="b" data-motion="press">只留 B</button>
+              </div>
+              <div class="row row--wrap" style="gap: var(--space-3)" id="flipDemo">
+                <div class="ds-box" data-group="a">A1</div>
+                <div class="ds-box" data-group="b">B1</div>
+                <div class="ds-box" data-group="a">A2</div>
+                <div class="ds-box" data-group="b">B2</div>
+                <div class="ds-box" data-group="a">A3</div>
+                <div class="ds-box" data-group="b">B3</div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal 範例 -->
+    <div class="modal" id="dsModal" role="dialog" aria-modal="true" aria-labelledby="dsModalTitle" tabindex="-1">
+      <div class="modal__backdrop"></div>
+      <div class="modal__panel">
+        <div class="modal__head">
+          <div class="grow">
+            <p class="eyebrow" data-modal-item>Modal</p>
+            <h3 class="modal__title" id="dsModalTitle" data-modal-item>面板標題</h3>
+          </div>
+          <button class="btn btn--icon btn--ghost" data-modal-close aria-label="關閉" data-motion="press">
+            <span class="btn__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>
+          </button>
+        </div>
+        <div class="modal__body stack">
+          <p class="muted" data-modal-item>
+            面板內容會依序淡入 —— 在需要的元素加上 <code class="tag">data-modal-item</code> 就會被納入序列。
+          </p>
+          <p class="muted" data-modal-item>按 Esc 或點背景可以關閉，Tab 鍵會被限制在面板內循環。</p>
+        </div>
+        <div class="modal__foot">
+          <button class="btn btn--ghost" data-modal-close data-motion="press">取消</button>
+          <button class="btn btn--primary" data-modal-close data-motion="press ripple">確定</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 浮出操作列範例 -->
+    <div class="selection-bar" id="dsBar">
+      <span class="selection-bar__count"><span class="selection-bar__num" id="dsBarNum">3</span> 個已選取</span>
+      <div class="row" style="gap: var(--space-2)">
+        <button class="btn btn--ghost btn--sm" data-motion="press">清除</button>
+        <button class="btn btn--primary btn--sm" data-motion="press ripple">複製安裝指令</button>
+      </div>
+    </div>
+
+    <div class="toast-stack"></div>
+  </body>
+</html>

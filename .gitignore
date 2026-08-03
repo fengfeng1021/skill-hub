@@ -1,0 +1,9 @@
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+.tmp/
+.cache/
+
+# 本地暫存的 skill 下載
+.downloads/

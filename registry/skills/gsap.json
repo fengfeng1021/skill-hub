@@ -1,0 +1,100 @@
+{
+  "id": "gsap",
+  "name": "GSAP",
+  "summary": "GreenSock 官方動畫 skill 全套：tween、時間軸、ScrollTrigger、外掛與效能。",
+  "description": "GSAP 官方為 AI 準備的 skill 組合。內容涵蓋核心 tween 與 ease、多步驟時間軸編排、捲動驅動動畫（ScrollTrigger）、Flip／Draggable／SplitText 等外掛、React 與 Vue／Svelte 的正確用法、gsap.utils 工具函式，以及維持 60fps 的效能守則。\n官方 repo 拆成 8 個 SKILL.md 是為了讓 Claude 只在需要時載入對應的那一份，但它們是同一套東西、實際使用時也是互相搭配，所以在這裡收成一筆，安裝時 8 個資料夾一起裝。",
+  "category": "前端 / 動效",
+  "tags": [
+    "animation",
+    "gsap",
+    "javascript",
+    "scroll",
+    "react",
+    "performance"
+  ],
+  "official": true,
+  "featured": true,
+  "author": "GreenSock",
+  "license": "MIT",
+  "usage": [
+    "要寫任何 JS 動畫，不論 vanilla 還是 React／Vue／Svelte",
+    "要做捲動驅動的動畫、pin 釘住或視差",
+    "要編排多步驟、可播放／倒轉／中斷的動畫序列",
+    "要處理 prefers-reduced-motion 與動畫效能"
+  ],
+  "highlights": [
+    "8 份 SKILL.md 一次裝齊，Claude 會依情境自動載入對應的那一份",
+    "官方維護，內容跟著 GSAP 3 最新版本走",
+    "GSAP 3.13 起全部外掛（含 SplitText、ScrollSmoother）都免費"
+  ],
+  "source": {
+    "kind": "github",
+    "url": "https://github.com/greensock/gsap-skills",
+    "branch": "main",
+    "subdir": "skills"
+  },
+  "parts": [
+    {
+      "dirName": "gsap-core",
+      "name": "Core",
+      "summary": "to／from／fromTo、ease、stagger、matchMedia 響應式與 reduced-motion。"
+    },
+    {
+      "dirName": "gsap-timeline",
+      "name": "Timeline",
+      "summary": "多步驟編排：position 參數、標籤、巢狀時間軸與播放控制。"
+    },
+    {
+      "dirName": "gsap-scrolltrigger",
+      "name": "ScrollTrigger",
+      "summary": "捲動驅動：pin 釘住、scrub 跟隨捲動、batch 批次進場、假橫向捲動。"
+    },
+    {
+      "dirName": "gsap-plugins",
+      "name": "Plugins",
+      "summary": "Flip、Draggable、SplitText、ScrollSmoother 等外掛的註冊與用法。"
+    },
+    {
+      "dirName": "gsap-react",
+      "name": "React",
+      "summary": "useGSAP hook、ref、context 與卸載清理。"
+    },
+    {
+      "dirName": "gsap-frameworks",
+      "name": "Frameworks",
+      "summary": "Vue、Svelte 等框架的生命週期、選擇器範圍與清理方式。"
+    },
+    {
+      "dirName": "gsap-utils",
+      "name": "Utils",
+      "summary": "gsap.utils 工具箱：clamp、mapRange、random、snap、wrap、toArray。"
+    },
+    {
+      "dirName": "gsap-performance",
+      "name": "Performance",
+      "summary": "維持 60fps：只動 transform／opacity、quickTo、避免版面重算。"
+    }
+  ],
+  "install": {
+    "command": "npx skills add https://github.com/greensock/gsap-skills",
+    "scope": "user",
+    "files": [
+      "SKILL.md"
+    ],
+    "requires": [],
+    "notes": "Claude Code 也可以改用 `/plugin marketplace add greensock/gsap-skills` 安裝。手動安裝的話 8 個資料夾要全部放進 skills 目錄，缺一份就會少掉對應主題的知識。"
+  },
+  "prompt": null,
+  "links": [
+    {
+      "label": "GSAP AI Skills（官方 repo）",
+      "url": "https://github.com/greensock/gsap-skills"
+    },
+    {
+      "label": "GSAP 官方文件",
+      "url": "https://gsap.com/docs/v3/"
+    }
+  ],
+  "addedAt": "2026-08-03",
+  "updatedAt": "2026-08-03"
+}
