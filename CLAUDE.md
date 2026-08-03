@@ -6,6 +6,9 @@
 > 「這個資料夾是我自己寫的 skill，收錄一下」
 > 「幫我把 abc skill 的說明更新一下」
 
+也可能是網站上那塊「打名字或貼網址」產生的提示詞（`docs/assets/js/request-box.js`）。
+那段話已經把流程列成步驟了，照著做就是下面這一套；**使用者只給名字時，先查出處，找到多個同名的要先讓使用者確認，不要自己挑**。
+
 你的工作就是把它變成 registry 資料、重新 build、然後（使用者同意時）推上 GitHub。
 
 ---
@@ -140,5 +143,5 @@ site.config.json         ← GitHub 帳號、repo 名、安裝路徑設定
 1. **動效一律寫在 `motion.js`**，用 `data-motion="..."` 綁到元素上。不要在頁面裡寫一次性的 `gsap.to()`
 2. **樣式一律用 `tokens.css` 的變數**，不要在 components.css 裡寫死色碼或秒數
 3. 新增元件：先在 `components.css` + `motion.js` 定義，加進 `design-system.html` 展示，**確認沒問題才用到實際頁面**。`design-system.html` 是開發工具，不要加回導覽列或 footer
-4. 三個頁面共用的浮層（詳情、安裝提示詞、多選操作列、toast）寫在 `assets/js/overlays.js`，不要在每個 HTML 各複製一份
+4. 三個頁面共用的東西寫成獨立模組，不要在每個 HTML 各複製一份：浮層（詳情、安裝提示詞、多選操作列、toast）在 `assets/js/overlays.js`，收錄請求輸入框在 `assets/js/request-box.js`
 5. 所有動效都要通過 `prefers-reduced-motion`（`motion.js` 已用 `gsap.matchMedia()` 統一處理，照現有寫法就會自動支援）

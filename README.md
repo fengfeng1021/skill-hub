@@ -52,7 +52,18 @@ npm run validate && npm run build && npm run dev
 
 ## 怎麼收錄新的 skill
 
-**不用手動編輯 JSON。** 開著這個資料夾跟 AI 說就好：
+**不用手動編輯 JSON。** 三頁下方都有一塊「打名字或貼網址」的輸入框：填上 skill 的名字或 GitHub 網址，
+它會產生一段話，複製貼給任何一個 AI，AI 自己去查出處、寫 registry、驗證、build。可以選「只收錄」或「收錄並安裝」。
+
+輸入框會自己判斷你給的是什麼：
+
+| 你輸入 | 判定 |
+| --- | --- |
+| `https://github.com/xxx/yyy` | 網址 |
+| `xxx/yyy` | GitHub repo 簡寫，自動補成完整網址 |
+| `shadcn ui` | 只有名字，產生的提示詞會要求 AI 先找出處、找到多個先讓你確認 |
+
+或者開著這個資料夾直接跟 AI 說：
 
 > 我找到一個不錯的 skill：https://github.com/xxx/yyy，幫我收進去
 
@@ -121,6 +132,7 @@ docs/                       GitHub Pages 根目錄
   assets/js/motion.js       所有 GSAP 共用動效
   assets/js/components.js   元件行為（modal / 複製 / 主題切換 …）
   assets/js/overlays.js     三頁共用的浮層（詳情、安裝提示詞、操作列、toast）
+  assets/js/request-box.js  三頁共用的收錄請求：打名字或貼網址 → 產生給 AI 的提示詞
   assets/js/app.js          首頁與 Skills 庫的資料串接
   assets/js/page.js         AI 接口頁的資料串接
 site.config.json            GitHub 帳號、repo、安裝路徑設定

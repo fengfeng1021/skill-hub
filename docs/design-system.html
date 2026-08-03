@@ -403,6 +403,44 @@
               </div>
             </div>
 
+            <!-- 收錄請求 -->
+            <div class="ds-demo ds-demo--col" data-motion="reveal">
+              <div class="request-box card" data-request-box>
+                <div class="request-box__head">
+                  <p class="eyebrow">收錄新的 skill</p>
+                  <h2 class="request-box__title">打名字或貼網址，其他交給 AI</h2>
+                  <p class="request-box__text">
+                    輸入框會自己判斷你給的是網址、GitHub 簡寫、還是只有名字，下面那段話跟著換。
+                  </p>
+                </div>
+
+                <div class="request-box__form">
+                  <label class="field grow">
+                    <span class="field__icon" data-icon="sparkle"></span>
+                    <input class="field__input" data-request-input type="text"
+                           placeholder="skill 名稱，或 GitHub 網址" autocomplete="off" />
+                  </label>
+                  <div class="segmented" data-segmented data-request-mode role="tablist" aria-label="要做到哪一步">
+                    <span class="segmented__thumb"></span>
+                    <button class="segmented__item" role="tab" aria-selected="true" data-value="catalog">只收錄</button>
+                    <button class="segmented__item" role="tab" aria-selected="false" data-value="install">收錄並安裝</button>
+                  </div>
+                </div>
+
+                <div class="code">
+                  <div class="code__bar">
+                    <span class="code__title">會複製這一段</span>
+                    <span class="request-box__kind" data-request-kind>等你輸入</span>
+                    <button class="btn btn--sm btn--primary" data-request-copy data-motion="press ripple">
+                      <span class="btn__icon" data-icon="copy"></span>
+                      <span data-copy-label>複製提示詞</span>
+                    </button>
+                  </div>
+                  <pre class="code__body request-box__output" data-request-output></pre>
+                </div>
+              </div>
+            </div>
+
             <!-- 行動呼籲 -->
             <div class="ds-demo ds-demo--col" data-motion="reveal">
               <div class="cta card card--glow" data-motion="reveal lift glow" data-motion-preset="scale">

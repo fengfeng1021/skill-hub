@@ -12,6 +12,7 @@ import Components from './components.js';
 import Motion from './motion.js';
 import { Icons } from './icons.js';
 import { escapeHTML } from './skill-card.js';
+import { mountRequestBoxes } from './request-box.js';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 
@@ -45,6 +46,7 @@ function render(data) {
   renderRepoLinks(data);
   renderPrompt(data, base);
   renderEndpoints(data, base);
+  mountRequestBoxes(data.site);
 
   const rule = data.forAI?.howToContribute ?? {};
   setText('#ruleGood', rule.summaryGood);

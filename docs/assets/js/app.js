@@ -16,6 +16,7 @@ import Motion from './motion.js';
 import { mountOverlays } from './overlays.js';
 import { renderSkillCard, escapeHTML, initials } from './skill-card.js';
 import { Icons } from './icons.js';
+import { mountRequestBoxes } from './request-box.js';
 
 const SELECTION_KEY = 'skill-hub-selection';
 const VIEW_KEY = 'skill-hub-view';
@@ -90,6 +91,7 @@ function cacheElements() {
 function hydrate(data) {
   state.site = data.site;
   state.template = data.promptTemplate;
+  mountRequestBoxes(data.site); // 產生的提示詞要帶正確的站台網址，所以等資料到了才掛
   state.skills = sortSkills(data.skills ?? []);
   for (const s of state.skills) {
     // 組合包的各分項也要能搜到（搜 scrolltrigger 要找得到 GSAP 這一筆）

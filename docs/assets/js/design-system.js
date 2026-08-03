@@ -6,6 +6,7 @@
 import Components from './components.js';
 import Motion from './motion.js';
 import { renderSkillCard } from './skill-card.js';
+import { mountRequestBoxes } from './request-box.js';
 
 /* ---- 色票 --------------------------------------------------------------- */
 const SWATCHES = [
@@ -176,6 +177,8 @@ function start() {
   bindFlipDemo();
   Components.init();
   bindNav();
+  // 這一頁不讀 api/index.json，給假的站台資料就好，展示的是互動不是內容
+  mountRequestBoxes({ name: 'Skill Hub', url: null, repo: null });
 }
 
 // GSAP 是用 defer 從 CDN 載入的，等 DOM 與 script 都到位再啟動

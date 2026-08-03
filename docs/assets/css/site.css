@@ -349,6 +349,78 @@
 }
 
 /* --------------------------------------------------------------------------
+   收錄請求：打名字或貼網址，換一段給 AI 的話
+   -------------------------------------------------------------------------- */
+.request-box {
+  gap: var(--space-5);
+}
+
+.request-box__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.request-box__title {
+  font-size: var(--text-2xl);
+  font-weight: 660;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
+.request-box__text {
+  max-width: 56ch;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.request-box__form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* 輸入框吃掉剩下的寬度，模式切換維持原本大小；窄的時候整排換行各佔一列 */
+.request-box__form .field {
+  flex: 1 1 16rem;
+}
+
+.request-box__form .segmented {
+  flex: none;
+}
+
+/* 判斷結果（網址／repo／只有名字）。margin-right 撐開，讓它跟標題一起靠左，
+   複製按鈕才會被推到最右邊 */
+.request-box__kind {
+  margin-right: auto;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* 提示詞會長到十幾行，給個高度上限免得整張卡片被撐開 */
+.request-box__output {
+  max-height: 20rem;
+  overflow: auto;
+}
+
+/* 還沒輸入時整段只是說明文字，壓淡一點表示還不能複製 */
+.request-box.is-empty .request-box__output {
+  color: var(--text-faint);
+}
+
+/* 小螢幕的 code__bar 是不換行的，「會複製這一段」+ 判斷結果 + 按鈕三個會擠在一起。
+   判斷結果本身就說明了狀態，標題先讓位 */
+@media (max-width: 420px) {
+  .request-box .code__title {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
    AI 接口頁
    -------------------------------------------------------------------------- */
 .endpoints {
