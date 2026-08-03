@@ -30,9 +30,26 @@
 - 用 WebFetch 抓 GitHub repo 的 README 和 `SKILL.md`（raw 網址：`https://raw.githubusercontent.com/<owner>/<repo>/<branch>/<path>/SKILL.md`）
 - SKILL.md 的 frontmatter 有 `name` 與 `description`，直接拿來用
 - 作者、授權、star 數從 repo 頁面取得
-- **`summary` 一定要自己寫**：繁體中文、40 字內、講清楚「這 skill 能幹嘛」，不要照抄英文 description
+- **`summary` 一定要自己寫**，而且要白話（規則見下面）
 
 抓不到就用合理預設，只有真的無法判斷（例如不確定是不是同一個 skill 的不同版本）才問使用者。
+
+#### summary 的寫法（最重要的一條）
+
+`summary` 是卡片上唯一會被看到的說明。標準只有一個：**完全不懂程式的人看一眼就知道這是幹嘛的**。
+
+- 繁體中文，**25 字內**，一句完整的話
+- 只講「能幫我做到什麼」，不講「用什麼技術做到」
+- 不要出現 API、函式庫、外掛、框架、frontmatter、tween 這種術語
+- 不要寫成「名稱：功能一、功能二、功能三」的功能羅列
+- 技術細節、涵蓋範圍、專有名詞一律寫進 `description`，那才是詳情面板看的
+
+| | |
+|---|---|
+| ✅ | 讓網頁上的東西會動起來，淡入、滑動、跟著捲動都行。 |
+| ❌ | GreenSock 官方動畫 skill 全套：tween、時間軸、ScrollTrigger、外掛與效能。 |
+
+`parts[].summary` 同一套規則。`npm run validate` 會抓太長、術語、羅列句型並警告。
 
 ### 3. 寫 registry 檔案
 
@@ -108,7 +125,10 @@ registry/skills/*.json   ← 唯一的資料來源，收錄就是改這裡
 skills/<id>/             ← local 託管的 skill 實體檔案
 scripts/build.mjs        ← 產生 docs/api/*、llms.txt
 docs/                    ← GitHub Pages 網站根目錄（build 產物 + 手寫前端）
-  design-system.html     ← 元件與動效總覽，改設計先改這裡
+  index.html             ← 首頁：介紹 + 精選幾個 skill
+  skills.html            ← Skills 庫：搜尋、篩選、多選安裝
+  api.html               ← AI 接口說明
+  design-system.html     ← 元件與動效總覽。**開發用，不掛在導覽列上**，改設計先改這裡
   assets/js/motion.js    ← 所有 GSAP 共用動效，元件動效一律從這裡取用
   assets/css/tokens.css  ← 設計 token，顏色間距圓角動畫曲線都在這
   assets/css/components.css ← 所有元件樣式
@@ -119,5 +139,6 @@ site.config.json         ← GitHub 帳號、repo 名、安裝路徑設定
 
 1. **動效一律寫在 `motion.js`**，用 `data-motion="..."` 綁到元素上。不要在頁面裡寫一次性的 `gsap.to()`
 2. **樣式一律用 `tokens.css` 的變數**，不要在 components.css 裡寫死色碼或秒數
-3. 新增元件：先在 `components.css` + `motion.js` 定義，加進 `design-system.html` 展示，**確認沒問題才用到 `index.html`**
-4. 所有動效都要通過 `prefers-reduced-motion`（`motion.js` 已用 `gsap.matchMedia()` 統一處理，照現有寫法就會自動支援）
+3. 新增元件：先在 `components.css` + `motion.js` 定義，加進 `design-system.html` 展示，**確認沒問題才用到實際頁面**。`design-system.html` 是開發工具，不要加回導覽列或 footer
+4. 三個頁面共用的浮層（詳情、安裝提示詞、多選操作列、toast）寫在 `assets/js/overlays.js`，不要在每個 HTML 各複製一份
+5. 所有動效都要通過 `prefers-reduced-motion`（`motion.js` 已用 `gsap.matchMedia()` 統一處理，照現有寫法就會自動支援）

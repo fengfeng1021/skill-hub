@@ -4,6 +4,16 @@
 
 網站用 GitHub Pages 直接發佈，同時提供 JSON 接口與 `llms.txt` 給 AI 讀。
 
+## 網站有三頁
+
+| 頁面 | 內容 |
+| --- | --- |
+| `index.html` | 首頁。介紹怎麼用，下方放幾個精選 skill |
+| `skills.html` | Skills 庫。全部收錄，可搜尋、篩選、多選一次複製安裝指令 |
+| `api.html` | AI 接口說明。有一段可以直接貼給 AI 的提示詞 |
+
+`design-system.html` 是開發用的元件與動效總覽，刻意不掛在導覽列上（也標了 `noindex`）。
+
 ---
 
 ## 快速開始
@@ -52,6 +62,19 @@ AI 會照 [CLAUDE.md](CLAUDE.md) 的流程判斷來源類型、抓 SKILL.md、�
 
 一套 skill 被官方拆成好幾個資料夾（例如 GSAP 的 core / timeline / scrolltrigger …）時，收成**一筆**、用 `parts` 列出每一份，安裝提示詞會要求整組一起裝。
 
+### summary 要寫成白話一句話
+
+卡片上只會顯示 `summary` 這一句。標準只有一個：**完全不懂程式的人看一眼就知道這是幹嘛的**。
+
+| | |
+| --- | --- |
+| ✅ | 讓網頁上的東西會動起來，淡入、滑動、跟著捲動都行。 |
+| ❌ | GreenSock 官方動畫 skill 全套：tween、時間軸、ScrollTrigger、外掛與效能。 |
+
+繁體中文、25 字內、只講「能幫我做到什麼」，不要術語、不要功能羅列。技術細節寫進 `description`，那是點開卡片才看的。`npm run validate` 會抓太長、術語與羅列句型並警告。
+
+這條規則也寫進了 `api/index.json` 的 `forAI.howToContribute`，其他 AI 讀接口時會照著做。
+
 要手動加的話：
 
 ```bash
@@ -88,13 +111,18 @@ scripts/
   add-skill.mjs             指令式新增／更新
   serve.mjs                 本機預覽伺服器
 docs/                       GitHub Pages 根目錄
-  index.html                收藏庫主頁
-  design-system.html        元件與動效總覽 ← 改設計先改這裡
+  index.html                首頁：介紹 + 精選幾個 skill
+  skills.html               Skills 庫：搜尋、篩選、多選安裝
+  api.html                  AI 接口說明
+  design-system.html        元件與動效總覽 ← 改設計先改這裡（不掛導覽列）
   assets/css/tokens.css     設計 token（顏色／間距／圓角／動畫曲線）
   assets/css/components.css 所有元件樣式
+  assets/css/site.css       頁面區塊樣式（頁首、步驟、接口卡、CTA …）
   assets/js/motion.js       所有 GSAP 共用動效
   assets/js/components.js   元件行為（modal / 複製 / 主題切換 …）
-  assets/js/app.js          資料串接與頁面組裝
+  assets/js/overlays.js     三頁共用的浮層（詳情、安裝提示詞、操作列、toast）
+  assets/js/app.js          首頁與 Skills 庫的資料串接
+  assets/js/page.js         AI 接口頁的資料串接
 site.config.json            GitHub 帳號、repo、安裝路徑設定
 ```
 
@@ -104,7 +132,8 @@ site.config.json            GitHub 帳號、repo、安裝路徑設定
 
 - 樣式只用 `tokens.css` 的變數，不寫死色碼與秒數
 - 動效全部集中在 `motion.js`，頁面上用 `data-motion="..."` 綁定，不寫一次性的 `gsap.to()`
-- 新元件先進 `design-system.html` 驗過，再用到 `index.html`
+- 新元件先進 `design-system.html` 驗過，再用到實際頁面
+- 三頁共用的浮層寫在 `overlays.js`，不在每個 HTML 各複製一份
 - 動效統一走 `gsap.matchMedia()`，`prefers-reduced-motion` 自動生效
 
 動畫用 GSAP 3（core + ScrollTrigger + Flip，CDN 載入，無建置步驟）。

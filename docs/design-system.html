@@ -39,9 +39,9 @@
           <span class="tag">Design System</span>
         </a>
         <nav class="site-nav">
-          <a class="site-nav__link" href="./index.html">收藏庫</a>
-          <a class="site-nav__link is-active" href="./design-system.html">元件</a>
-          <a class="site-nav__link" href="./llms.txt">llms.txt</a>
+          <a class="site-nav__link" href="./">首頁</a>
+          <a class="site-nav__link" href="./skills.html">Skills 庫</a>
+          <a class="site-nav__link" href="./api.html">AI 接口</a>
           <button class="theme-toggle" data-theme-toggle aria-label="切換主題">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
               <circle cx="12" cy="12" r="4" />
@@ -77,6 +77,7 @@
           <a class="ds-nav__link" href="#code">程式碼</a>
           <a class="ds-nav__link" href="#feedback">回饋</a>
           <a class="ds-nav__link" href="#states">狀態</a>
+          <a class="ds-nav__link" href="#blocks">頁面區塊</a>
           <a class="ds-nav__link" href="#motion">動效</a>
         </nav>
 
@@ -295,6 +296,123 @@
                 <div class="row" style="gap: var(--space-6); height: 100%; align-items: center">
                   <div class="stat"><span class="stat__num" data-motion="count" data-motion-to="24">0</span><span class="stat__label">已收錄</span></div>
                   <div class="stat"><span class="stat__num" data-motion="count" data-motion-to="8">0</span><span class="stat__label">分類</span></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ---------- 頁面區塊 ---------- -->
+          <section class="ds-section" id="blocks">
+            <h2 class="ds-section__title">頁面區塊 <span class="ds-section__file">.section-head / .steps / .endpoints / .spec / .rules / .cta</span></h2>
+            <p class="ds-section__desc">
+              比元件大一級的組合，三個頁面共用。標題一律用 <code class="tag">mask</code> 由下往上刷進來，
+              成組的內容用 <code class="tag">stagger</code> 依序進場。頁首的
+              <code class="tag">.page-head</code> 是滿版的，要看實際效果請開
+              <code class="tag">skills.html</code> 或 <code class="tag">api.html</code>。
+            </p>
+
+            <!-- 標題組 -->
+            <div class="ds-demo ds-demo--col" data-motion="reveal">
+              <div class="section-head">
+                <div>
+                  <p class="eyebrow" data-motion="reveal">段落小標</p>
+                  <h2 class="section-head__title">
+                    <span data-motion="mask" data-motion-scroll="1">區塊標題長這樣</span>
+                  </h2>
+                  <p class="section-head__desc" data-motion="reveal">
+                    一句補充說明。窄螢幕時右邊的連結會掉到下一行。
+                  </p>
+                </div>
+                <a class="link-arrow" href="#blocks">
+                  看全部
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- 步驟 -->
+            <div class="ds-demo ds-demo--col" data-motion="reveal">
+              <div class="steps" data-motion="stagger" data-motion-child=".step">
+                <div class="step">
+                  <span class="step__num">1</span>
+                  <p class="step__title">勾選</p>
+                  <p class="step__text">挑幾個想要的，數字會跟著跳。</p>
+                </div>
+                <div class="step">
+                  <span class="step__num">2</span>
+                  <p class="step__title">複製</p>
+                  <p class="step__text">按一下，安裝指令進剪貼簿。</p>
+                </div>
+                <div class="step">
+                  <span class="step__num">3</span>
+                  <p class="step__title">貼上</p>
+                  <p class="step__text">丟給 AI，它自己會裝好。</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 接口卡 -->
+            <div class="ds-demo ds-demo--col" data-motion="reveal">
+              <div class="endpoints" data-motion="stagger" data-motion-child=".endpoint">
+                <article class="endpoint card" data-motion="lift">
+                  <div class="endpoint__head">
+                    <a class="endpoint__path mono" href="./api/index.json" target="_blank" rel="noopener">api/index.json</a>
+                    <button class="btn btn--sm btn--ghost" data-copy="api/index.json" data-copy-message="已複製網址" data-motion="press">
+                      <span data-copy-label>複製網址</span>
+                    </button>
+                  </div>
+                  <p class="endpoint__desc">路徑會斷行，長網址不會把卡片撐爆。</p>
+                </article>
+                <article class="endpoint card" data-motion="lift">
+                  <div class="endpoint__head">
+                    <span class="endpoint__path mono">api/skills/&lt;id&gt;.json</span>
+                    <button class="btn btn--sm btn--ghost" data-copy="api/skills/&lt;id&gt;.json" data-copy-message="已複製網址" data-motion="press">
+                      <span data-copy-label>複製網址</span>
+                    </button>
+                  </div>
+                  <p class="endpoint__desc">佔位路徑只給看不給點，點下去是 404。</p>
+                </article>
+              </div>
+            </div>
+
+            <!-- 欄位表 -->
+            <div class="ds-demo ds-demo--col" data-motion="reveal">
+              <div class="spec" data-motion="stagger" data-motion-child=".spec__row">
+                <div class="spec__row">
+                  <code class="spec__key mono">installPrompt</code>
+                  <p class="spec__val">左邊固定寬度、右邊自由伸縮，窄螢幕會疊成上下兩行。</p>
+                </div>
+                <div class="spec__row">
+                  <code class="spec__key mono">promptBlock</code>
+                  <p class="spec__val">多筆時就是一列一個欄位。</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 正反例 -->
+            <div class="ds-demo ds-demo--col" data-motion="reveal">
+              <div class="rules" data-motion="stagger" data-motion-child=".rule">
+                <div class="card rule rule--good">
+                  <p class="rule__label">這樣寫</p>
+                  <p class="rule__text">左邊那條線是 accent 色，表示正面示範。</p>
+                </div>
+                <div class="card rule rule--bad">
+                  <p class="rule__label">不要這樣寫</p>
+                  <p class="rule__text">同一個元件換 --bad，線就變成 danger 色。</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 行動呼籲 -->
+            <div class="ds-demo ds-demo--col" data-motion="reveal">
+              <div class="cta card card--glow" data-motion="reveal lift glow" data-motion-preset="scale">
+                <div class="cta__body">
+                  <p class="eyebrow">結尾</p>
+                  <h2 class="cta__title">整段是一張會浮起來的卡</h2>
+                  <p class="cta__text">文字在左、按鈕在右，720px 以下改成上下排。</p>
+                </div>
+                <div class="cta__actions">
+                  <a class="btn btn--primary" href="#blocks" data-motion="press ripple">主要動作</a>
                 </div>
               </div>
             </div>

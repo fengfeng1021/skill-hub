@@ -1,21 +1,33 @@
 /* ==========================================================================
-   App — 收藏庫首頁
+   App — 首頁與 Skills 庫共用
    ==========================================================================
-   這一頁只負責「資料 → 狀態 → 畫面」，
+   只負責「資料 → 狀態 → 畫面」，
    所有樣式來自 components.css / site.css，所有動效來自 motion.js。
    這裡不寫任何一次性的 gsap.to()。
+
+   兩個頁面共用這一支，用 <body data-page> 區分：
+     home    首頁：只放幾張精選卡片，沒有搜尋與篩選
+     library Skills 庫：完整的搜尋、篩選、檢視切換
+   所以底下取元素、綁事件全部都要能接受「這一頁沒有這個東西」。
    ========================================================================== */
 
 import Components from './components.js';
 import Motion from './motion.js';
+import { mountOverlays } from './overlays.js';
 import { renderSkillCard, escapeHTML, initials } from './skill-card.js';
 import { Icons } from './icons.js';
 
 const SELECTION_KEY = 'skill-hub-selection';
 const VIEW_KEY = 'skill-hub-view';
+const HOME_LIMIT = 6; // 首頁精選張數
+
+const PAGE = document.body.dataset.page === 'home' ? 'home' : 'library';
+const isHome = PAGE === 'home';
 
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+/** 元素可能不存在（另一個頁面沒有這塊）就跳過，省得每個呼叫點都寫 if */
+const on = (node, type, handler, opts) => node?.addEventListener(type, handler, opts);
 
 const state = {
   site: null,
@@ -39,6 +51,7 @@ let refreshTimer = null;
    啟動
    ========================================================================== */
 async function start() {
+  mountOverlays(); // 浮層要先掛上去，Components.init() 才掃得到
   cacheElements();
   Components.init();
   selectionBar = Motion.floatingBar(el.selectionBar);
@@ -69,6 +82,9 @@ function cacheElements() {
   el.heroMeta = $('#heroMeta');
   el.clearFilters = $('#clearFilters');
   el.detailBody = $('#detailBody');
+  el.moreLink = $('#moreLink');
+  el.selectAll = $('#selectAll');
+  el.emptyReset = $('#emptyReset');
 }
 
 function hydrate(data) {
@@ -96,6 +112,11 @@ function hydrate(data) {
   // 篩掉的卡片先藏好再跑進場，才不會animate到看不見的卡片
   Motion.intro(el.grid);
   openFromHash();
+}
+
+/** 首頁只放前幾張，其餘留給 Skills 庫 */
+function shownSkills() {
+  return isHome ? state.skills.slice(0, HOME_LIMIT) : state.skills;
 }
 
 /** 推薦 → 官方 → 新加入的在前 → 名稱 */
@@ -127,7 +148,7 @@ function renderSiteChrome(data) {
     $('#footerRepo')?.setAttribute('href', './api/index.json');
   }
 
-  if (data.site?.configured === false) {
+  if (data.site?.configured === false && el.setupNote) {
     el.setupNote.innerHTML = `
       <div class="setup-note">
         <span class="setup-note__icon">${Icons.sparkle}</span>
@@ -144,6 +165,14 @@ function renderSiteChrome(data) {
 function renderHeroMeta(data) {
   const count = data.count ?? state.skills.length;
   const cats = (data.categories ?? []).length;
+
+  // 首頁的「看全部」要講清楚還有幾個沒顯示，不然使用者不知道下面還有東西
+  if (el.moreLink) {
+    const rest = Math.max(0, count - HOME_LIMIT);
+    el.moreLink.firstChild.textContent = rest > 0 ? `看全部 ${count} 個 ` : '進 Skills 庫 ';
+  }
+
+  if (!el.heroMeta) return;
   el.heroMeta.innerHTML = `
     <span>收錄 <b data-motion="count" data-motion-to="${count}">0</b> 個 skill</span>
     ${cats > 1 ? `<span>·</span><span>${cats} 個分類</span>` : ''}
@@ -156,6 +185,7 @@ function renderHeroMeta(data) {
  * 所以只有分類超過一個、或 skill 夠多時才顯示。
  */
 function renderFilters(data) {
+  if (!el.filters) return;
   const cats = data.categories ?? [];
   const tags = state.skills.length >= 4 ? (data.tags ?? []).slice(0, 10) : [];
   const showCats = cats.length > 1;
@@ -177,7 +207,8 @@ function renderFilters(data) {
 }
 
 function renderCards() {
-  el.grid.innerHTML = state.skills.map((s) => renderSkillCard(s)).join('');
+  if (!el.grid) return;
+  el.grid.innerHTML = shownSkills().map((s) => renderSkillCard(s)).join('');
   for (const card of $$('.skill-card', el.grid)) {
     state.cards.set(card.dataset.skillId, card);
   }
@@ -185,7 +216,8 @@ function renderCards() {
 }
 
 function showLoadError(err) {
-  el.resultCount.textContent = '載入失敗';
+  if (el.resultCount) el.resultCount.textContent = '載入失敗';
+  if (!el.grid) return;
   el.grid.innerHTML = `
     <div class="empty" style="grid-column: 1 / -1">
       <div class="empty__icon">${Icons.close}</div>
@@ -214,9 +246,10 @@ function matches(skill) {
  * 卡片元素從頭到尾都是同一批，只切換 display，Flip 才能算出正確的位移。
  */
 function apply({ animate = true } = {}) {
+  if (!el.grid) return;
   const visible = [];
   const mutate = () => {
-    for (const s of state.skills) {
+    for (const s of shownSkills()) {
       const card = state.cards.get(s.id);
       if (!card) continue;
       const ok = matches(s);
@@ -233,9 +266,9 @@ function apply({ animate = true } = {}) {
   }
 
   state.visible = visible;
-  el.resultCount.textContent = describeResult(visible.length);
-  el.emptyState.hidden = visible.length > 0;
-  el.clearFilters.hidden = !isFiltered();
+  if (el.resultCount) el.resultCount.textContent = describeResult(visible.length);
+  if (el.emptyState) el.emptyState.hidden = visible.length > 0;
+  if (el.clearFilters) el.clearFilters.hidden = !isFiltered();
   scheduleRefresh();
   writeURL();
 }
@@ -259,6 +292,7 @@ function scheduleRefresh() {
 }
 
 function syncChips() {
+  if (!el.filters) return;
   for (const btn of $$('[data-filter-category]', el.filters)) {
     btn.setAttribute('aria-pressed', String(btn.dataset.filterCategory === state.category));
   }
@@ -271,7 +305,7 @@ function resetFilters() {
   state.query = '';
   state.category = 'all';
   state.tag = null;
-  el.search.value = '';
+  if (el.search) el.search.value = '';
   syncChips();
   apply();
 }
@@ -279,11 +313,18 @@ function resetFilters() {
 /* ==========================================================================
    多選
    ========================================================================== */
+/**
+ * 選取狀態記在 state.selected，卡片在不在這一頁都一樣要記。
+ * 首頁只畫 6 張，但使用者可能是在 Skills 庫勾的 —— 那些也得算進去，
+ * 不然回到首頁按「複製安裝指令」就會少東西。
+ */
 function setSelected(id, on, { syncInput = true } = {}) {
-  const card = state.cards.get(id);
-  if (!card) return;
+  if (!state.byId.has(id)) return; // 舊的 localStorage 可能留著已移除的 id
   if (on) state.selected.add(id);
   else state.selected.delete(id);
+
+  const card = state.cards.get(id);
+  if (!card) return; // 這一頁沒畫這張卡，狀態記著就好
   card.classList.toggle('is-selected', on);
   if (syncInput) {
     const label = card.querySelector('[data-check]');
@@ -293,12 +334,12 @@ function setSelected(id, on, { syncInput = true } = {}) {
 
 function syncSelection({ animate = true } = {}) {
   const n = state.selected.size;
-  el.selectionCount.textContent = String(n);
+  if (el.selectionCount) el.selectionCount.textContent = String(n);
   if (n > 0) {
-    selectionBar.show();
-    if (animate) selectionBar.bump(el.selectionCount);
+    selectionBar?.show();
+    if (animate && el.selectionCount) selectionBar?.bump(el.selectionCount);
   } else {
-    selectionBar.hide();
+    selectionBar?.hide();
   }
   try {
     localStorage.setItem(SELECTION_KEY, JSON.stringify([...state.selected]));
@@ -418,14 +459,27 @@ function detailHTML(skill) {
     )
     .join('<br />');
 
+  // summary 是白話一句話，技術上的涵蓋範圍寫在 description，展開後才看得到
+  const detailText = String(skill.description ?? '').trim();
+  const detailParas =
+    detailText && detailText !== skill.summary
+      ? detailText
+          .split('\n')
+          .map((p) => p.trim())
+          .filter(Boolean)
+          .map((p) => `<p>${escapeHTML(p)}</p>`)
+          .join('')
+      : '';
+
   return `
     <div data-intro>
       <div class="row" style="gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-3)">
         ${badges}${(skill.tags ?? []).map((t) => `<span class="tag">${escapeHTML(t)}</span>`).join('')}
       </div>
-      <p style="color: var(--text-muted)">${escapeHTML(skill.summary)}</p>
+      <p class="detail__lede">${escapeHTML(skill.summary)}</p>
     </div>
 
+    ${section('詳細說明', detailParas ? `<div class="detail__prose">${detailParas}</div>` : '')}
     ${section('什麼時候會用到', list(skill.usage))}
     ${section('重點', list(skill.highlights))}
 
@@ -499,28 +553,30 @@ function detailHTML(skill) {
    ========================================================================== */
 function bindStaticEvents() {
   /* 搜尋 */
-  el.search.addEventListener('input', () => {
+  on(el.search, 'input', () => {
     state.query = el.search.value;
     apply();
   });
-  el.search.addEventListener('keydown', (e) => {
+  on(el.search, 'keydown', (e) => {
     if (e.key === 'Escape') {
       el.search.value = '';
       state.query = '';
       apply();
     }
   });
-  document.addEventListener('keydown', (e) => {
-    if (e.key !== '/' || e.metaKey || e.ctrlKey) return;
-    const tag = document.activeElement?.tagName;
-    if (tag === 'INPUT' || tag === 'TEXTAREA') return;
-    e.preventDefault();
-    el.search.focus();
-    el.search.select();
-  });
+  if (el.search) {
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== '/' || e.metaKey || e.ctrlKey) return;
+      const tag = document.activeElement?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+      e.preventDefault();
+      el.search.focus();
+      el.search.select();
+    });
+  }
 
   /* 篩選 chips */
-  el.filters.addEventListener('click', (e) => {
+  on(el.filters, 'click', (e) => {
     const catBtn = e.target.closest('[data-filter-category]');
     const tagBtn = e.target.closest('[data-filter-tag]');
     if (catBtn) {
@@ -536,7 +592,7 @@ function bindStaticEvents() {
   });
 
   /* 檢視切換 */
-  el.viewSwitch.addEventListener('segmented:change', (e) => {
+  on(el.viewSwitch, 'segmented:change', (e) => {
     state.view = e.detail.value;
     try {
       localStorage.setItem(VIEW_KEY, state.view);
@@ -550,7 +606,7 @@ function bindStaticEvents() {
   });
 
   /* 卡片：勾選 / 複製 / 開詳情 */
-  el.grid.addEventListener('change', (e) => {
+  on(el.grid, 'change', (e) => {
     const input = e.target.closest('.check__input');
     if (!input) return;
     const card = input.closest('.skill-card');
@@ -559,7 +615,7 @@ function bindStaticEvents() {
     syncSelection();
   });
 
-  el.grid.addEventListener('click', (e) => {
+  on(el.grid, 'click', (e) => {
     const card = e.target.closest('.skill-card');
     if (!card) return;
 
@@ -574,7 +630,7 @@ function bindStaticEvents() {
     openDetail(card.dataset.skillId);
   });
 
-  el.grid.addEventListener('keydown', (e) => {
+  on(el.grid, 'keydown', (e) => {
     if (e.key !== 'Enter' && e.key !== ' ') return;
     const card = e.target.closest('.skill-card');
     if (!card || e.target !== card) return;
@@ -583,8 +639,8 @@ function bindStaticEvents() {
   });
 
   /* 多選操作列 */
-  $('#selectionClear').addEventListener('click', clearSelection);
-  $('#selectionInstall').addEventListener('click', async () => {
+  on($('#selectionClear'), 'click', clearSelection);
+  on($('#selectionInstall'), 'click', async () => {
     const list = selectedSkills();
     if (!list.length) return;
     const text = buildCombinedPrompt(list);
@@ -597,14 +653,14 @@ function bindStaticEvents() {
   });
 
   /* 工具列按鈕 */
-  $('#selectAll').addEventListener('click', () => {
+  on(el.selectAll, 'click', () => {
     if (!state.visible.length) return;
     const allSelected = state.visible.every((s) => state.selected.has(s.id));
     for (const s of state.visible) setSelected(s.id, !allSelected);
     syncSelection();
   });
-  $('#clearFilters').addEventListener('click', resetFilters);
-  $('#emptyReset').addEventListener('click', resetFilters);
+  on(el.clearFilters, 'click', resetFilters);
+  on(el.emptyReset, 'click', resetFilters);
 
   /* 開著詳情時按上下頁 / 直接改網址 */
   window.addEventListener('hashchange', openFromHash);
@@ -616,17 +672,16 @@ function bindStaticEvents() {
 function restoreFromStorage() {
   try {
     const saved = JSON.parse(localStorage.getItem(SELECTION_KEY) ?? '[]');
-    for (const id of saved) {
-      if (state.byId.has(id)) setSelected(id, true);
-    }
+    for (const id of saved) setSelected(id, true);
     // 檢視模式可能是舊版存下來的，對不上就退回預設
     const view = localStorage.getItem(VIEW_KEY);
-    const available = $$('.segmented__item', el.viewSwitch).map((i) => i.dataset.value);
+    const available = $$('.segmented__item', el.viewSwitch ?? document).map((i) => i.dataset.value);
     if (view && available.includes(view)) state.view = view;
   } catch {
     /* 壞掉就當作沒選 */
   }
 
+  if (!el.viewSwitch) return;
   // segmented 初始化時排了一次 rAF 定位指示塊，這裡也排在 rAF 之後才不會被蓋回去
   const item = $$('.segmented__item', el.viewSwitch).find((i) => i.dataset.value === state.view);
   if (item && item.getAttribute('aria-selected') !== 'true') {
@@ -634,11 +689,13 @@ function restoreFromStorage() {
   }
 }
 
+/** 首頁沒有篩選介面，網址參數留給 Skills 庫用 */
 function readURL() {
+  if (isHome) return;
   const p = new URLSearchParams(location.search);
   if (p.get('q')) {
     state.query = p.get('q');
-    el.search.value = state.query;
+    if (el.search) el.search.value = state.query;
   }
   if (p.get('cat')) state.category = p.get('cat');
   if (p.get('tag')) state.tag = p.get('tag');
@@ -646,6 +703,7 @@ function readURL() {
 }
 
 function writeURL() {
+  if (isHome) return;
   const p = new URLSearchParams();
   if (state.query.trim()) p.set('q', state.query.trim());
   if (state.category !== 'all') p.set('cat', state.category);

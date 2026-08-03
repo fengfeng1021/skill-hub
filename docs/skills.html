@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-Hant" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Skills 庫 — Skill Hub</title>
+    <meta name="description" content="全部收錄的 Claude Skills。搜尋、篩選、勾選，一次複製安裝提示詞。" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%2314e0a0'/><text x='16' y='22' font-size='15' font-family='monospace' font-weight='bold' text-anchor='middle' fill='%23070b14'>SH</text></svg>" />
+
+    <script>
+      document.documentElement.classList.add('js');
+      try {
+        const t = localStorage.getItem('skill-hub-theme');
+        if (t) document.documentElement.dataset.theme = t;
+      } catch {}
+    </script>
+
+    <link rel="stylesheet" href="./assets/css/tokens.css" />
+    <link rel="stylesheet" href="./assets/css/base.css" />
+    <link rel="stylesheet" href="./assets/css/components.css" />
+    <link rel="stylesheet" href="./assets/css/site.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Flip.min.js" defer></script>
+    <script type="module" src="./assets/js/app.js"></script>
+  </head>
+
+  <body data-page="library">
+    <div class="scroll-progress" data-motion="scroll-progress"></div>
+
+    <header class="site-header" data-motion="shrink-header">
+      <div class="container site-header__inner">
+        <a class="site-logo" href="./">
+          <span class="site-logo__mark">SH</span>
+          <span class="site-logo__text">Skill Hub</span>
+        </a>
+        <nav class="site-nav">
+          <a class="site-nav__link" href="./">首頁</a>
+          <a class="site-nav__link is-active" href="./skills.html">Skills 庫</a>
+          <a class="site-nav__link" href="./api.html">AI 接口</a>
+          <a class="site-nav__link" id="repoLink" href="#" target="_blank" rel="noopener" hidden>GitHub</a>
+          <button class="theme-toggle" data-theme-toggle aria-label="切換主題">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+            </svg>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="page-head">
+        <span class="page-head__glow" aria-hidden="true" data-motion="float"
+              data-motion-amp="12" data-motion-duration="8"></span>
+        <div class="container">
+          <p class="eyebrow" data-intro>Skills 庫</p>
+          <h1 class="page-head__title">
+            <span data-motion="mask" data-motion-delay="0.05">全部收錄，挑你要的</span>
+          </h1>
+          <p class="page-head__lede" data-intro>
+            每張卡片就是一個能力。勾起來，一次把安裝指令帶走。
+          </p>
+          <p class="page-head__meta" id="heroMeta" data-intro></p>
+        </div>
+      </section>
+
+      <div class="container">
+        <div id="setupNote"></div>
+      </div>
+
+      <!-- ---------- 工具列 ---------- -->
+      <div class="toolbar" id="toolbar">
+        <div class="container">
+          <div class="toolbar__row">
+            <label class="field grow">
+              <span class="field__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
+              <input class="field__input" id="search" type="search" placeholder="搜尋名稱、摘要、標籤、用途…" autocomplete="off" />
+              <span class="field__hint"><span class="kbd">/</span></span>
+            </label>
+
+            <div class="segmented" data-segmented id="viewSwitch" role="tablist" aria-label="檢視方式">
+              <span class="segmented__thumb"></span>
+              <button class="segmented__item" role="tab" aria-selected="true" data-value="grid">格狀</button>
+              <button class="segmented__item" role="tab" aria-selected="false" data-value="list">清單</button>
+            </div>
+          </div>
+
+          <div class="toolbar__filters" id="filters"></div>
+
+          <div class="toolbar__meta">
+            <span id="resultCount">載入中…</span>
+            <div class="row" style="gap: var(--space-2)">
+              <button class="btn btn--sm btn--ghost" id="selectAll" data-motion="press">全選</button>
+              <button class="btn btn--sm btn--ghost" id="clearFilters" data-motion="press" hidden>清除篩選</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="skill-grid" id="grid" data-view="grid"></div>
+        <div id="emptyState" hidden>
+          <div class="empty">
+            <div class="empty__icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            </div>
+            <p class="empty__title">找不到符合的 skill</p>
+            <p style="font-size: var(--text-xs)">換個關鍵字，或把篩選條件清掉</p>
+            <button class="btn btn--sm" id="emptyReset" data-motion="press">清除篩選</button>
+          </div>
+        </div>
+      </div>
+
+      <section class="home-section">
+        <div class="container">
+          <div class="cta card" data-motion="reveal lift">
+            <div class="cta__body">
+              <p class="eyebrow">找不到想要的？</p>
+              <h2 class="cta__title">告訴 AI，它會幫你收進來</h2>
+              <p class="cta__text">
+                這個庫是靠 AI 維護的。看到不錯的 skill，把網址丟給 AI，
+                它會照著規格寫好、驗證、更新到這個頁面上。
+              </p>
+            </div>
+            <div class="cta__actions">
+              <a class="btn btn--primary" href="./api.html" data-motion="press ripple">看怎麼做</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <span>Skill Hub</span>
+        <span>
+          <a href="./">首頁</a>
+          <span class="faint"> · </span>
+          <a href="./api.html">AI 接口</a>
+          <span class="faint"> · </span>
+          <a href="./llms.txt">llms.txt</a>
+          <span class="faint"> · </span>
+          <a id="footerRepo" href="#" target="_blank" rel="noopener">原始碼</a>
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>

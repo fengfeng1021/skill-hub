@@ -1,7 +1,7 @@
 {
   "id": "gsap",
   "name": "GSAP",
-  "summary": "GreenSock 官方動畫 skill 全套：tween、時間軸、ScrollTrigger、外掛與效能。",
+  "summary": "讓網頁上的東西會動起來，淡入、滑動、跟著捲動都行。",
   "description": "GSAP 官方為 AI 準備的 skill 組合。內容涵蓋核心 tween 與 ease、多步驟時間軸編排、捲動驅動動畫（ScrollTrigger）、Flip／Draggable／SplitText 等外掛、React 與 Vue／Svelte 的正確用法、gsap.utils 工具函式，以及維持 60fps 的效能守則。\n官方 repo 拆成 8 個 SKILL.md 是為了讓 Claude 只在需要時載入對應的那一份，但它們是同一套東西、實際使用時也是互相搭配，所以在這裡收成一筆，安裝時 8 個資料夾一起裝。",
   "category": "前端 / 動效",
   "tags": [
@@ -37,42 +37,42 @@
     {
       "dirName": "gsap-core",
       "name": "Core",
-      "summary": "to／from／fromTo、ease、stagger、matchMedia 響應式與 reduced-motion。"
+      "summary": "最基本的動起來，移動、放大、變透明都在這。"
     },
     {
       "dirName": "gsap-timeline",
       "name": "Timeline",
-      "summary": "多步驟編排：position 參數、標籤、巢狀時間軸與播放控制。"
+      "summary": "把好幾段動畫排成先後順序，像剪片一樣。"
     },
     {
       "dirName": "gsap-scrolltrigger",
       "name": "ScrollTrigger",
-      "summary": "捲動驅動：pin 釘住、scrub 跟隨捲動、batch 批次進場、假橫向捲動。"
+      "summary": "捲動頁面時觸發動畫，也能把畫面釘住不動。"
     },
     {
       "dirName": "gsap-plugins",
       "name": "Plugins",
-      "summary": "Flip、Draggable、SplitText、ScrollSmoother 等外掛的註冊與用法。"
+      "summary": "額外的特殊效果，像拖曳、文字拆字、位置變換。"
     },
     {
       "dirName": "gsap-react",
       "name": "React",
-      "summary": "useGSAP hook、ref、context 與卸載清理。"
+      "summary": "在 React 做的網站裡要怎麼正確使用。"
     },
     {
       "dirName": "gsap-frameworks",
       "name": "Frameworks",
-      "summary": "Vue、Svelte 等框架的生命週期、選擇器範圍與清理方式。"
+      "summary": "在 Vue、Svelte 這類網站裡怎麼用。"
     },
     {
       "dirName": "gsap-utils",
       "name": "Utils",
-      "summary": "gsap.utils 工具箱：clamp、mapRange、random、snap、wrap、toArray。"
+      "summary": "一些好用的小工具，算數值、隨機、限制範圍。"
     },
     {
       "dirName": "gsap-performance",
       "name": "Performance",
-      "summary": "維持 60fps：只動 transform／opacity、quickTo、避免版面重算。"
+      "summary": "讓動畫跑得順、不卡頓的做法。"
     }
   ],
   "install": {

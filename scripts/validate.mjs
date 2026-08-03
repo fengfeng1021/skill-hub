@@ -14,6 +14,32 @@ const seen = new Map();
 const REQUIRED = ['id', 'name', 'summary', 'category', 'tags', 'source', 'install'];
 const DIR_NAME = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
 
+/**
+ * summary 是卡片上唯一會被看到的說明，必須白話到不需要任何專業知識就看得懂。
+ * 這裡只能用啟發式抓明顯的違規：太長、術語、以及「名詞：A、B、C」這種功能羅列。
+ * 抓到就提醒改寫，不擋 build。
+ */
+const JARGON = [
+  'API', 'SDK', 'CLI', 'frontmatter', 'plugin', 'runtime', 'hook', 'repo',
+  '函式庫', '外掛', '框架', '套件', '模組', '參數', '介面', '編排', '實例', '非同步',
+];
+const PLAIN_MAX = 25;
+
+function checkPlainSummary(at, summary) {
+  if (!summary) return;
+  const len = [...summary].length;
+  if (len > PLAIN_MAX) {
+    warnings.push(`${at}：summary 有 ${len} 字，白話一句話建議 ${PLAIN_MAX} 字內，太長就不好懂了`);
+  }
+  const hits = JARGON.filter((w) => summary.toLowerCase().includes(w.toLowerCase()));
+  if (hits.length) {
+    warnings.push(`${at}：summary 出現術語「${hits.join('、')}」，改寫成不懂程式的人也看得懂的講法，技術細節放 description`);
+  }
+  if (/[：:]/.test(summary)) {
+    warnings.push(`${at}：summary 用「名詞：功能一、功能二」的羅列寫法，改成一句完整的話講「能幫我做到什麼」`);
+  }
+}
+
 for (const s of skills) {
   const at = s.__file;
 
@@ -35,8 +61,9 @@ for (const s of skills) {
   }
   seen.set(s.id, at);
 
-  if (s.summary && [...s.summary].length > 60) {
-    warnings.push(`${at}：summary 有 ${[...s.summary].length} 字，卡片上會被截斷，建議 40 字內`);
+  checkPlainSummary(at, s.summary);
+  for (const p of s.parts ?? []) {
+    if (p?.summary) checkPlainSummary(`${at}（parts ${p.dirName}）`, p.summary);
   }
   if (!Array.isArray(s.tags) || s.tags.length === 0) {
     warnings.push(`${at}：沒有 tags，篩選時找不到`);

@@ -6,4 +6,4 @@
 
 | Skill | 摘要 | 標籤 | 來源 |
 | --- | --- | --- | --- |
-| **GSAP** | GreenSock 官方動畫 skill 全套：tween、時間軸、ScrollTrigger、外掛與效能。 | animation, gsap, javascript, scroll, react, performance | [greensock/gsap-skills](https://github.com/greensock/gsap-skills/tree/main/skills) |
+| **GSAP** | 讓網頁上的東西會動起來，淡入、滑動、跟著捲動都行。 | animation, gsap, javascript, scroll, react, performance | [greensock/gsap-skills](https://github.com/greensock/gsap-skills/tree/main/skills) |

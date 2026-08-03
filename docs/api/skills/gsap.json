@@ -1,7 +1,7 @@
 {
   "id": "gsap",
   "name": "GSAP",
-  "summary": "GreenSock 官方動畫 skill 全套：tween、時間軸、ScrollTrigger、外掛與效能。",
+  "summary": "讓網頁上的東西會動起來，淡入、滑動、跟著捲動都行。",
   "description": "GSAP 官方為 AI 準備的 skill 組合。內容涵蓋核心 tween 與 ease、多步驟時間軸編排、捲動驅動動畫（ScrollTrigger）、Flip／Draggable／SplitText 等外掛、React 與 Vue／Svelte 的正確用法、gsap.utils 工具函式，以及維持 60fps 的效能守則。\n官方 repo 拆成 8 個 SKILL.md 是為了讓 Claude 只在需要時載入對應的那一份，但它們是同一套東西、實際使用時也是互相搭配，所以在這裡收成一筆，安裝時 8 個資料夾一起裝。",
   "category": "前端 / 動效",
   "tags": [
@@ -42,7 +42,7 @@
     {
       "dirName": "gsap-core",
       "name": "Core",
-      "summary": "to／from／fromTo、ease、stagger、matchMedia 響應式與 reduced-motion。",
+      "summary": "最基本的動起來，移動、放大、變透明都在這。",
       "subdir": "skills/gsap-core",
       "rawBase": "https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-core",
       "displayUrl": "https://github.com/greensock/gsap-skills/tree/main/skills/gsap-core"
@@ -50,7 +50,7 @@
     {
       "dirName": "gsap-timeline",
       "name": "Timeline",
-      "summary": "多步驟編排：position 參數、標籤、巢狀時間軸與播放控制。",
+      "summary": "把好幾段動畫排成先後順序，像剪片一樣。",
       "subdir": "skills/gsap-timeline",
       "rawBase": "https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-timeline",
       "displayUrl": "https://github.com/greensock/gsap-skills/tree/main/skills/gsap-timeline"
@@ -58,7 +58,7 @@
     {
       "dirName": "gsap-scrolltrigger",
       "name": "ScrollTrigger",
-      "summary": "捲動驅動：pin 釘住、scrub 跟隨捲動、batch 批次進場、假橫向捲動。",
+      "summary": "捲動頁面時觸發動畫，也能把畫面釘住不動。",
       "subdir": "skills/gsap-scrolltrigger",
       "rawBase": "https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-scrolltrigger",
       "displayUrl": "https://github.com/greensock/gsap-skills/tree/main/skills/gsap-scrolltrigger"
@@ -66,7 +66,7 @@
     {
       "dirName": "gsap-plugins",
       "name": "Plugins",
-      "summary": "Flip、Draggable、SplitText、ScrollSmoother 等外掛的註冊與用法。",
+      "summary": "額外的特殊效果，像拖曳、文字拆字、位置變換。",
       "subdir": "skills/gsap-plugins",
       "rawBase": "https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-plugins",
       "displayUrl": "https://github.com/greensock/gsap-skills/tree/main/skills/gsap-plugins"
@@ -74,7 +74,7 @@
     {
       "dirName": "gsap-react",
       "name": "React",
-      "summary": "useGSAP hook、ref、context 與卸載清理。",
+      "summary": "在 React 做的網站裡要怎麼正確使用。",
       "subdir": "skills/gsap-react",
       "rawBase": "https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-react",
       "displayUrl": "https://github.com/greensock/gsap-skills/tree/main/skills/gsap-react"
@@ -82,7 +82,7 @@
     {
       "dirName": "gsap-frameworks",
       "name": "Frameworks",
-      "summary": "Vue、Svelte 等框架的生命週期、選擇器範圍與清理方式。",
+      "summary": "在 Vue、Svelte 這類網站裡怎麼用。",
       "subdir": "skills/gsap-frameworks",
       "rawBase": "https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-frameworks",
       "displayUrl": "https://github.com/greensock/gsap-skills/tree/main/skills/gsap-frameworks"
@@ -90,7 +90,7 @@
     {
       "dirName": "gsap-utils",
       "name": "Utils",
-      "summary": "gsap.utils 工具箱：clamp、mapRange、random、snap、wrap、toArray。",
+      "summary": "一些好用的小工具，算數值、隨機、限制範圍。",
       "subdir": "skills/gsap-utils",
       "rawBase": "https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-utils",
       "displayUrl": "https://github.com/greensock/gsap-skills/tree/main/skills/gsap-utils"
@@ -98,7 +98,7 @@
     {
       "dirName": "gsap-performance",
       "name": "Performance",
-      "summary": "維持 60fps：只動 transform／opacity、quickTo、避免版面重算。",
+      "summary": "讓動畫跑得順、不卡頓的做法。",
       "subdir": "skills/gsap-performance",
       "rawBase": "https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-performance",
       "displayUrl": "https://github.com/greensock/gsap-skills/tree/main/skills/gsap-performance"
@@ -137,6 +137,6 @@
     "gsap-utils",
     "gsap-performance"
   ],
-  "promptBlock": "### GSAP  →  一組 8 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：GreenSock 官方動畫 skill 全套：tween、時間軸、ScrollTrigger、外掛與效能。\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  npx skills add https://github.com/greensock/gsap-skills\n  ```\n- **來源**：GitHub `greensock/gsap-skills`（分支 `main`，子目錄 `skills`）\n- **repo 網址**：https://github.com/greensock/gsap-skills\n- **這一組的 8 個資料夾**（缺一不可，資料夾名照抄）：\n  - `gsap-core` — to／from／fromTo、ease、stagger、matchMedia 響應式與 reduced-motion。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-core`\n  - `gsap-timeline` — 多步驟編排：position 參數、標籤、巢狀時間軸與播放控制。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-timeline`\n  - `gsap-scrolltrigger` — 捲動驅動：pin 釘住、scrub 跟隨捲動、batch 批次進場、假橫向捲動。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-scrolltrigger`\n  - `gsap-plugins` — Flip、Draggable、SplitText、ScrollSmoother 等外掛的註冊與用法。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-plugins`\n  - `gsap-react` — useGSAP hook、ref、context 與卸載清理。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-react`\n  - `gsap-frameworks` — Vue、Svelte 等框架的生命週期、選擇器範圍與清理方式。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-frameworks`\n  - `gsap-utils` — gsap.utils 工具箱：clamp、mapRange、random、snap、wrap、toArray。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-utils`\n  - `gsap-performance` — 維持 60fps：只動 transform／opacity、quickTo、避免版面重算。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-performance`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：Claude Code 也可以改用 `/plugin marketplace add greensock/gsap-skills` 安裝。手動安裝的話 8 個資料夾要全部放進 skills 目錄，缺一份就會少掉對應主題的知識。",
-  "installPrompt": "你是我的 Skill 安裝助手。請幫我安裝下面這個 Claude Skill。\n\n## 安裝規則\n\n1. **安裝位置** — 每個 skill 是一個資料夾，放在：\n   - 全域（所有專案共用）：`~/.claude/skills/<資料夾名>/`\n     Windows 為 `%USERPROFILE%\\.claude\\skills\\<資料夾名>\\`\n   - 只給目前專案用：`<專案根目錄>/.claude/skills/<資料夾名>/`\n   下面每個 skill 都標了建議範圍，照著放；我另外指定時以我說的為準。\n2. **資料夾名不要改**。Claude 用資料夾名對應 SKILL.md 的 `name`，改了會載入不到。\n3. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n4. **不要改寫 SKILL.md 的 frontmatter**（`name`、`description`）。那是 Claude 判斷何時自動載入這個 skill 的依據，改了就失效。\n5. 目標資料夾**已存在**時，先停下來問我要覆蓋還是跳過，不要直接蓋掉。\n\n---\n\n### GSAP  →  一組 8 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：GreenSock 官方動畫 skill 全套：tween、時間軸、ScrollTrigger、外掛與效能。\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  npx skills add https://github.com/greensock/gsap-skills\n  ```\n- **來源**：GitHub `greensock/gsap-skills`（分支 `main`，子目錄 `skills`）\n- **repo 網址**：https://github.com/greensock/gsap-skills\n- **這一組的 8 個資料夾**（缺一不可，資料夾名照抄）：\n  - `gsap-core` — to／from／fromTo、ease、stagger、matchMedia 響應式與 reduced-motion。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-core`\n  - `gsap-timeline` — 多步驟編排：position 參數、標籤、巢狀時間軸與播放控制。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-timeline`\n  - `gsap-scrolltrigger` — 捲動驅動：pin 釘住、scrub 跟隨捲動、batch 批次進場、假橫向捲動。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-scrolltrigger`\n  - `gsap-plugins` — Flip、Draggable、SplitText、ScrollSmoother 等外掛的註冊與用法。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-plugins`\n  - `gsap-react` — useGSAP hook、ref、context 與卸載清理。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-react`\n  - `gsap-frameworks` — Vue、Svelte 等框架的生命週期、選擇器範圍與清理方式。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-frameworks`\n  - `gsap-utils` — gsap.utils 工具箱：clamp、mapRange、random、snap、wrap、toArray。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-utils`\n  - `gsap-performance` — 維持 60fps：只動 transform／opacity、quickTo、避免版面重算。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-performance`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：Claude Code 也可以改用 `/plugin marketplace add greensock/gsap-skills` 安裝。手動安裝的話 8 個資料夾要全部放進 skills 目錄，缺一份就會少掉對應主題的知識。\n\n---\n\n## 完成後請做這幾件事\n\n1. 列出每個 skill 實際安裝的完整路徑，以及該資料夾下的檔案\n2. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n3. 告訴我要重新啟動 Claude Code，新的 skill 才會被載入\n4. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
+  "promptBlock": "### GSAP  →  一組 8 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：讓網頁上的東西會動起來，淡入、滑動、跟著捲動都行。\n- **詳細一點**：GSAP 官方為 AI 準備的 skill 組合。內容涵蓋核心 tween 與 ease、多步驟時間軸編排、捲動驅動動畫（ScrollTrigger）、Flip／Draggable／SplitText 等外掛、React 與 Vue／Svelte 的正確用法、gsap.utils 工具函式，以及維持 60fps 的效能守則。\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  npx skills add https://github.com/greensock/gsap-skills\n  ```\n- **來源**：GitHub `greensock/gsap-skills`（分支 `main`，子目錄 `skills`）\n- **repo 網址**：https://github.com/greensock/gsap-skills\n- **這一組的 8 個資料夾**（缺一不可，資料夾名照抄）：\n  - `gsap-core` — 最基本的動起來，移動、放大、變透明都在這。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-core`\n  - `gsap-timeline` — 把好幾段動畫排成先後順序，像剪片一樣。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-timeline`\n  - `gsap-scrolltrigger` — 捲動頁面時觸發動畫，也能把畫面釘住不動。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-scrolltrigger`\n  - `gsap-plugins` — 額外的特殊效果，像拖曳、文字拆字、位置變換。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-plugins`\n  - `gsap-react` — 在 React 做的網站裡要怎麼正確使用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-react`\n  - `gsap-frameworks` — 在 Vue、Svelte 這類網站裡怎麼用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-frameworks`\n  - `gsap-utils` — 一些好用的小工具，算數值、隨機、限制範圍。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-utils`\n  - `gsap-performance` — 讓動畫跑得順、不卡頓的做法。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-performance`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：Claude Code 也可以改用 `/plugin marketplace add greensock/gsap-skills` 安裝。手動安裝的話 8 個資料夾要全部放進 skills 目錄，缺一份就會少掉對應主題的知識。",
+  "installPrompt": "你是我的 Skill 安裝助手。請幫我安裝下面這個 Claude Skill。\n\n## 安裝規則\n\n1. **安裝位置** — 每個 skill 是一個資料夾，放在：\n   - 全域（所有專案共用）：`~/.claude/skills/<資料夾名>/`\n     Windows 為 `%USERPROFILE%\\.claude\\skills\\<資料夾名>\\`\n   - 只給目前專案用：`<專案根目錄>/.claude/skills/<資料夾名>/`\n   下面每個 skill 都標了建議範圍，照著放；我另外指定時以我說的為準。\n2. **資料夾名不要改**。Claude 用資料夾名對應 SKILL.md 的 `name`，改了會載入不到。\n3. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n4. **不要改寫 SKILL.md 的 frontmatter**（`name`、`description`）。那是 Claude 判斷何時自動載入這個 skill 的依據，改了就失效。\n5. 目標資料夾**已存在**時，先停下來問我要覆蓋還是跳過，不要直接蓋掉。\n\n---\n\n### GSAP  →  一組 8 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：讓網頁上的東西會動起來，淡入、滑動、跟著捲動都行。\n- **詳細一點**：GSAP 官方為 AI 準備的 skill 組合。內容涵蓋核心 tween 與 ease、多步驟時間軸編排、捲動驅動動畫（ScrollTrigger）、Flip／Draggable／SplitText 等外掛、React 與 Vue／Svelte 的正確用法、gsap.utils 工具函式，以及維持 60fps 的效能守則。\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  npx skills add https://github.com/greensock/gsap-skills\n  ```\n- **來源**：GitHub `greensock/gsap-skills`（分支 `main`，子目錄 `skills`）\n- **repo 網址**：https://github.com/greensock/gsap-skills\n- **這一組的 8 個資料夾**（缺一不可，資料夾名照抄）：\n  - `gsap-core` — 最基本的動起來，移動、放大、變透明都在這。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-core`\n  - `gsap-timeline` — 把好幾段動畫排成先後順序，像剪片一樣。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-timeline`\n  - `gsap-scrolltrigger` — 捲動頁面時觸發動畫，也能把畫面釘住不動。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-scrolltrigger`\n  - `gsap-plugins` — 額外的特殊效果，像拖曳、文字拆字、位置變換。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-plugins`\n  - `gsap-react` — 在 React 做的網站裡要怎麼正確使用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-react`\n  - `gsap-frameworks` — 在 Vue、Svelte 這類網站裡怎麼用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-frameworks`\n  - `gsap-utils` — 一些好用的小工具，算數值、隨機、限制範圍。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-utils`\n  - `gsap-performance` — 讓動畫跑得順、不卡頓的做法。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-performance`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：Claude Code 也可以改用 `/plugin marketplace add greensock/gsap-skills` 安裝。手動安裝的話 8 個資料夾要全部放進 skills 目錄，缺一份就會少掉對應主題的知識。\n\n---\n\n## 完成後請做這幾件事\n\n1. 列出每個 skill 實際安裝的完整路徑，以及該資料夾下的檔案\n2. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n3. 告訴我要重新啟動 Claude Code，新的 skill 才會被載入\n4. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
 }

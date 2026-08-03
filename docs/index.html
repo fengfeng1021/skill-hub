@@ -32,7 +32,7 @@
     <script type="module" src="./assets/js/app.js"></script>
   </head>
 
-  <body>
+  <body data-page="home">
     <div class="scroll-progress" data-motion="scroll-progress"></div>
 
     <header class="site-header" data-motion="shrink-header">
@@ -42,9 +42,9 @@
           <span class="site-logo__text">Skill Hub</span>
         </a>
         <nav class="site-nav">
-          <a class="site-nav__link is-active" href="./">收藏庫</a>
-          <a class="site-nav__link" href="./design-system.html">元件</a>
-          <a class="site-nav__link" href="./llms.txt" target="_blank" rel="noopener">llms.txt</a>
+          <a class="site-nav__link is-active" href="./">首頁</a>
+          <a class="site-nav__link" href="./skills.html">Skills 庫</a>
+          <a class="site-nav__link" href="./api.html">AI 接口</a>
           <a class="site-nav__link" id="repoLink" href="#" target="_blank" rel="noopener" hidden>GitHub</a>
           <button class="theme-toggle" data-theme-toggle aria-label="切換主題">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -73,57 +73,88 @@
             勾選你要的，複製提示詞，貼進 Claude Code —— 剩下的它自己會做完。
           </p>
           <div class="hero__actions" data-intro>
-            <button class="btn btn--primary btn--lg" data-modal="#howtoModal" data-motion="press ripple magnetic"
-                    data-motion-strength="0.18">怎麼用？</button>
+            <a class="btn btn--primary btn--lg" href="./skills.html" data-motion="press ripple magnetic"
+               data-motion-strength="0.18">逛 Skills 庫</a>
+            <button class="btn btn--lg btn--ghost" data-modal="#howtoModal" data-motion="press">怎麼用？</button>
           </div>
           <p class="hero__meta" id="heroMeta" data-intro></p>
         </div>
       </section>
 
-      <!-- ---------- 工具列 ---------- -->
-      <section id="library">
+      <div class="container">
+        <div id="setupNote"></div>
+      </div>
+
+      <!-- ---------- 三步驟 ---------- -->
+      <section class="home-section">
         <div class="container">
-          <div id="setupNote"></div>
-        </div>
-
-        <div class="toolbar" id="toolbar">
-          <div class="container">
-            <div class="toolbar__row">
-              <label class="field grow">
-                <span class="field__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
-                <input class="field__input" id="search" type="search" placeholder="搜尋名稱、摘要、標籤、用途…" autocomplete="off" />
-                <span class="field__hint"><span class="kbd">/</span></span>
-              </label>
-
-              <div class="segmented" data-segmented id="viewSwitch" role="tablist" aria-label="檢視方式">
-                <span class="segmented__thumb"></span>
-                <button class="segmented__item" role="tab" aria-selected="true" data-value="grid">格狀</button>
-                <button class="segmented__item" role="tab" aria-selected="false" data-value="list">清單</button>
-              </div>
-            </div>
-
-            <div class="toolbar__filters" id="filters"></div>
-
-            <div class="toolbar__meta">
-              <span id="resultCount">載入中…</span>
-              <div class="row" style="gap: var(--space-2)">
-                <button class="btn btn--sm btn--ghost" id="selectAll" data-motion="press">全選</button>
-                <button class="btn btn--sm btn--ghost" id="clearFilters" data-motion="press" hidden>清除篩選</button>
-              </div>
+          <div class="section-head">
+            <div>
+              <p class="eyebrow" data-motion="reveal">怎麼運作</p>
+              <h2 class="section-head__title">
+                <span data-motion="mask" data-motion-scroll="1">三個動作，不用會寫程式</span>
+              </h2>
             </div>
           </div>
-        </div>
 
+          <div class="steps" data-motion="stagger" data-motion-child=".step">
+            <article class="card step">
+              <span class="step__num">1</span>
+              <h3 class="step__title">勾選</h3>
+              <p class="step__text">在卡片上勾選想要的能力，一次選幾個都行。</p>
+            </article>
+            <article class="card step">
+              <span class="step__num">2</span>
+              <h3 class="step__title">複製</h3>
+              <p class="step__text">畫面下方會浮出一列，按一下就把整段指令複製起來。</p>
+            </article>
+            <article class="card step">
+              <span class="step__num">3</span>
+              <h3 class="step__title">貼上</h3>
+              <p class="step__text">貼進 Claude Code，它會自己下載、放好、檢查有沒有裝成功。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 精選 ---------- -->
+      <section class="home-section" id="featured">
         <div class="container">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow" data-motion="reveal">收錄的東西</p>
+              <h2 class="section-head__title">
+                <span data-motion="mask" data-motion-scroll="1">挑幾個先看看</span>
+              </h2>
+              <p class="section-head__desc" data-motion="reveal">
+                每一張卡片就是一個能力。點開來看它能做什麼，或直接勾起來一次帶走。
+              </p>
+            </div>
+            <a class="link-arrow" href="./skills.html" id="moreLink" data-motion="reveal">
+              看全部
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+
           <div class="skill-grid" id="grid" data-view="grid"></div>
-          <div id="emptyState" hidden>
-            <div class="empty">
-              <div class="empty__icon">
-                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-              </div>
-              <p class="empty__title">找不到符合的 skill</p>
-              <p style="font-size: var(--text-xs)">換個關鍵字，或把篩選條件清掉</p>
-              <button class="btn btn--sm" id="emptyReset" data-motion="press">清除篩選</button>
+        </div>
+      </section>
+
+      <!-- ---------- AI 接口 ---------- -->
+      <section class="home-section">
+        <div class="container">
+          <div class="cta card card--glow" data-motion="reveal lift glow" data-motion-preset="scale">
+            <div class="cta__body">
+              <p class="eyebrow">給 AI 讀的</p>
+              <h2 class="cta__title">整個收藏庫，AI 可以直接讀</h2>
+              <p class="cta__text">
+                這裡的每一筆資料都有對應的網址可以取用。把網址交給任何一個 AI，
+                它就能幫你查有什麼、幫你裝、也能幫你把新找到的 skill 收進來。
+              </p>
+            </div>
+            <div class="cta__actions">
+              <a class="btn btn--primary" href="./api.html" data-motion="press ripple">看接口說明</a>
+              <a class="btn btn--ghost" href="./llms.txt">llms.txt</a>
             </div>
           </div>
         </div>
@@ -134,138 +165,15 @@
       <div class="container site-footer__inner">
         <span>Skill Hub</span>
         <span>
-          <a href="./api/index.json">api</a>
+          <a href="./skills.html">Skills 庫</a>
+          <span class="faint"> · </span>
+          <a href="./api.html">AI 接口</a>
           <span class="faint"> · </span>
           <a href="./llms.txt">llms.txt</a>
-          <span class="faint"> · </span>
-          <a href="./design-system.html">元件</a>
           <span class="faint"> · </span>
           <a id="footerRepo" href="#" target="_blank" rel="noopener">原始碼</a>
         </span>
       </div>
     </footer>
-
-    <!-- ---------- 詳情面板 ---------- -->
-    <div class="modal modal--wide" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailTitle" tabindex="-1">
-      <div class="modal__backdrop"></div>
-      <div class="modal__panel">
-        <div class="modal__head">
-          <div class="detail__head grow" data-modal-item>
-            <span class="detail__icon" id="detailIcon">—</span>
-            <div class="grow" style="min-width: 0">
-              <h2 class="modal__title" id="detailTitle">—</h2>
-              <p class="mono faint" id="detailId">—</p>
-            </div>
-          </div>
-          <button class="btn btn--icon btn--ghost" data-modal-close aria-label="關閉" data-motion="press">
-            <span class="btn__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>
-          </button>
-        </div>
-        <div class="modal__body stack" style="gap: var(--space-6)" id="detailBody"></div>
-        <div class="modal__foot">
-          <a class="btn btn--ghost" id="detailSource" href="#" target="_blank" rel="noopener" data-motion="press">查看來源</a>
-          <button class="btn btn--primary" id="detailCopy" data-copy="#detailPromptText" data-motion="press ripple">
-            <span class="btn__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
-            <span data-copy-label>複製安裝提示詞</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ---------- 多選安裝提示詞 ---------- -->
-    <div class="modal modal--wide" id="installModal" role="dialog" aria-modal="true" aria-labelledby="installTitle" tabindex="-1">
-      <div class="modal__backdrop"></div>
-      <div class="modal__panel">
-        <div class="modal__head">
-          <div class="grow">
-            <p class="eyebrow" data-modal-item>一併安裝</p>
-            <h2 class="modal__title" id="installTitle" data-modal-item>安裝提示詞</h2>
-            <p class="muted" style="font-size: var(--text-sm); margin-top: var(--space-2)" data-modal-item>
-              複製下面全部內容，貼進 Claude Code（或任何有檔案存取權的 AI），它會照著把 skills 裝好。
-            </p>
-          </div>
-          <button class="btn btn--icon btn--ghost" data-modal-close aria-label="關閉" data-motion="press">
-            <span class="btn__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>
-          </button>
-        </div>
-        <div class="modal__body">
-          <div class="code" data-modal-item>
-            <div class="code__bar">
-              <span class="code__title" id="installMeta">—</span>
-              <button class="btn btn--sm btn--ghost" data-copy="closest" data-motion="press">
-                <span class="btn__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
-                <span data-copy-label>複製</span>
-              </button>
-            </div>
-            <pre class="code__body" id="installPrompt">—</pre>
-          </div>
-        </div>
-        <div class="modal__foot">
-          <button class="btn btn--ghost" data-modal-close data-motion="press">關閉</button>
-          <button class="btn btn--primary" id="installCopy" data-copy="#installPrompt" data-motion="press ripple">
-            <span class="btn__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
-            <span data-copy-label>複製全部</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ---------- 使用說明 ---------- -->
-    <div class="modal" id="howtoModal" role="dialog" aria-modal="true" aria-labelledby="howtoTitle" tabindex="-1">
-      <div class="modal__backdrop"></div>
-      <div class="modal__panel">
-        <div class="modal__head">
-          <div class="grow">
-            <p class="eyebrow" data-modal-item>How to</p>
-            <h2 class="modal__title" id="howtoTitle" data-modal-item>三步驟裝好 skill</h2>
-          </div>
-          <button class="btn btn--icon btn--ghost" data-modal-close aria-label="關閉" data-motion="press">
-            <span class="btn__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>
-          </button>
-        </div>
-        <div class="modal__body stack" style="gap: var(--space-5)">
-          <ol class="detail__list" style="gap: var(--space-4)" data-modal-item>
-            <li><strong>勾選</strong>：在卡片右上角勾選想裝的 skill，可以一次選很多個。</li>
-            <li><strong>複製</strong>：底部會浮出操作列，按「複製安裝指令」拿到一整段提示詞。</li>
-            <li><strong>貼上</strong>：貼進 Claude Code 或任何能存取檔案的 AI，它會自己下載檔案、放到正確位置、驗證 frontmatter。</li>
-          </ol>
-          <div class="divider"></div>
-          <div data-modal-item>
-            <p class="detail__section-title">給 AI 直接讀的接口</p>
-            <ul class="detail__list">
-              <li><code class="tag">llms.txt</code> — 純文字總覽，適合整個貼給 AI</li>
-              <li><code class="tag">api/index.json</code> — 全部資料，含每個 skill 的 installPrompt</li>
-              <li><code class="tag">api/skills/&lt;id&gt;.json</code> — 單一 skill</li>
-            </ul>
-          </div>
-          <div data-modal-item>
-            <p class="detail__section-title">想收錄新的 skill？</p>
-            <p class="muted" style="font-size: var(--text-sm)">
-              不用自己編輯 JSON。把 repo 開在 Claude Code 裡，直接說「我找到一個不錯的 skill：<em>網址</em>，幫我收進去」，
-              它會照著 <code class="tag">CLAUDE.md</code> 的流程建好資料、重新 build。
-            </p>
-          </div>
-        </div>
-        <div class="modal__foot">
-          <button class="btn btn--primary" data-modal-close data-motion="press ripple">知道了</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ---------- 多選浮出操作列 ---------- -->
-    <div class="selection-bar" id="selectionBar">
-      <span class="selection-bar__count">
-        <span class="selection-bar__num" id="selectionCount">0</span> 個已選取
-      </span>
-      <div class="row" style="gap: var(--space-2)">
-        <button class="btn btn--ghost btn--sm" id="selectionClear" data-motion="press">清除</button>
-        <button class="btn btn--primary btn--sm" id="selectionInstall" data-motion="press ripple">
-          <span class="btn__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
-          複製安裝指令
-        </button>
-      </div>
-    </div>
-
-    <div class="toast-stack"></div>
   </body>
 </html>

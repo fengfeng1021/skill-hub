@@ -48,7 +48,13 @@ export function buildBlock(skill, index = null) {
     ? `${title}  →  一組 ${parts.length} 個資料夾，要全部裝齊`
     : `${title}  →  資料夾名 \`${skill.install.dirName}\``;
 
-  const lines = [head, '', `- **這個 skill 做什麼**：${skill.summary}`, `- **建議安裝範圍**：${scope}`];
+  const lines = [head, '', `- **這個 skill 做什麼**：${skill.summary}`];
+
+  // summary 是寫給使用者看的白話，技術上的涵蓋範圍在 description，安裝的 AI 兩個都要知道
+  const detail = String(skill.description ?? '').split('\n')[0].trim();
+  if (detail && detail !== skill.summary) lines.push(`- **詳細一點**：${detail}`);
+
+  lines.push(`- **建議安裝範圍**：${scope}`);
 
   if (skill.install.command) {
     lines.push(`- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：`);

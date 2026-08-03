@@ -9,7 +9,7 @@
  *
  * 這些檔案都是產物，不要手改。
  */
-import { writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
+import { writeFileSync, readFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig, loadSkills, normalize, DOCS_DIR, ROOT } from './lib/registry.mjs';
 import { buildHeader, buildFooter, buildBlock, buildInstallPrompt } from './lib/prompt.mjs';
@@ -49,6 +49,37 @@ const tags = countBy(skills, (s) => s.tags);
 
 const generatedAt = new Date().toISOString().slice(0, 10);
 
+/**
+ * 給「讀這份 JSON 的 AI」看的說明。
+ * 別的 AI 想幫使用者裝 skill、或想幫忙收錄新的 skill，只要讀到這一段就知道規矩，
+ * 不必先去翻 repo 裡的 CLAUDE.md。
+ */
+const forAI = {
+  whatIsThis: `${cfg.name} 是一個 Claude Skills 收藏庫。每一筆 skill 都附了可以直接貼給 AI 執行的安裝提示詞。`,
+  endpoints: {
+    'api/index.json': '全部資料：站台資訊、分類、標籤、每個 skill 的完整欄位與 installPrompt。',
+    'api/skills/<id>.json': '單一 skill 的完整資料。',
+    'api/tags.json': '分類與標籤統計。',
+    'api/schema.json': 'registry 項目的 JSON Schema，要新增收錄時照這個格式寫。',
+    'llms.txt': '純文字總覽，適合整份貼給 AI。',
+  },
+  howToInstall:
+    '使用者說要裝哪幾個，就把對應 skill 的 installPrompt 欄位當成任務執行；' +
+    '多選時把每個 skill 的 promptBlock 依序接起來，前後補上 promptTemplate.header／footer，中間用 promptTemplate.separator 分隔。',
+  howToContribute: {
+    where: 'registry/skills/<id>.json，格式見 api/schema.json。改完跑 npm run validate && npm run build。',
+    language: '所有面向使用者的文字都用繁體中文（台灣用語）。',
+    summaryRule:
+      'summary 是卡片上唯一會被看到的說明，必須是「不需要任何專業知識就看得懂的一句話」：' +
+      '25 字內，只講能幫使用者做到什麼，不要出現 API／函式庫／外掛／框架／frontmatter 這類術語，' +
+      '也不要寫成「名稱：功能一、功能二」的羅列。技術細節一律寫進 description。',
+    summaryGood: '讓網頁上的東西動起來，淡入、滑動、跟著捲動變化都能做。',
+    summaryBad: 'GreenSock 官方動畫 skill 全套：tween、時間軸、ScrollTrigger、外掛與效能。',
+    bundles:
+      '同一個 repo 拆成多個資料夾、實際使用時會一起載入的（例如 GSAP 的 8 份），用 parts 收成一筆，不要拆成多筆。',
+  },
+};
+
 const index = {
   $schema: './schema-note',
   generatedAt,
@@ -60,6 +91,7 @@ const index = {
     repo: cfg.configured ? cfg.repoUrl : null,
     configured: cfg.configured,
   },
+  forAI,
   promptTemplate: {
     header: buildHeader(1, cfg),
     headerPlural: buildHeader('{{count}}', cfg), // 前端把 {{count}} 換成實際數量
@@ -78,6 +110,9 @@ for (const s of skills) {
 }
 writeFileSync(join(API_DIR, 'tags.json'), JSON.stringify({ generatedAt, categories, tags }, null, 2) + '\n');
 
+// registry 格式一起發佈，別的 AI 要幫忙收錄時可以直接讀
+writeFileSync(join(API_DIR, 'schema.json'), readFileSync(join(ROOT, 'registry', 'schema.json'), 'utf8'));
+
 // ---- llms.txt：給 AI 一次讀完整個庫 ----
 const llms = [
   `# ${cfg.name}`,
@@ -92,6 +127,16 @@ const llms = [
   '每個 skill 底下都有「安裝指令」段落。使用者說要裝哪幾個，就把對應段落的內容當作任務執行：',
   '把 skill 資料夾放到 `~/.claude/skills/<資料夾名>/`，資料夾名不要改，SKILL.md 的 frontmatter 不要動。',
   '完整、可直接貼給 AI 的安裝提示詞在 `api/skills/<id>.json` 的 `installPrompt` 欄位。',
+  '',
+  '## 要幫忙收錄新的 skill 的話',
+  '',
+  '資料寫在 `registry/skills/<id>.json`，格式見 `api/schema.json`，改完跑 `npm run validate && npm run build`。',
+  '',
+  `**摘要（summary）的寫法**：${forAI.howToContribute.summaryRule}`,
+  '',
+  `- 好的寫法：${forAI.howToContribute.summaryGood}`,
+  `- 不好的寫法：${forAI.howToContribute.summaryBad}`,
+  `- ${forAI.howToContribute.bundles}`,
   '',
   '## 收錄清單',
   '',
@@ -143,6 +188,7 @@ writeFileSync(join(DOCS_DIR, '.nojekyll'), '');
 console.log(`✓ build 完成：${skills.length} 個 skill、${categories.length} 個分類、${tags.length} 個標籤`);
 console.log(`  → docs/api/index.json`);
 console.log(`  → docs/api/skills/*.json`);
+console.log(`  → docs/api/schema.json`);
 console.log(`  → docs/llms.txt`);
 if (!cfg.configured) {
   console.log('');
