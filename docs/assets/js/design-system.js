@@ -73,7 +73,8 @@ function renderCards() {
   const host = document.getElementById('cardDemo');
   if (!host) return;
   host.innerHTML = DEMO_SKILLS.map((s, i) => renderSkillCard(s, { selected: i === 2 })).join('');
-  Components.scan(host);
+  Components.scan(host); // 內含 Motion.scan
+  Motion.intro(host); // 卡片帶 data-intro，插進來之後要跑一次才會顯示
 
   // 示範用：點卡片切換選取狀態
   host.addEventListener('click', (e) => {

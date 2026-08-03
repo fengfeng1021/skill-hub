@@ -212,6 +212,40 @@ const Motion = (() => {
     });
   });
 
+  /**
+   * 遮罩上移：文字被外框裁掉，再從下方滑進來。
+   * 內容會自動包一層 .mask__inner，外層負責裁切，動的是內層。
+   * data-motion-delay 排序多行，data-motion-scroll="1" 改成捲到才播。
+   */
+  define('mask', (el, ctx) => {
+    const inner = document.createElement('span');
+    inner.className = 'mask__inner';
+    inner.append(...el.childNodes);
+    el.appendChild(inner);
+    el.classList.add('mask');
+
+    if (ctx.reduced) {
+      gsap.set(inner, { yPercent: 0 });
+      return;
+    }
+    gsap.set(inner, { yPercent: 108 });
+
+    const play = () =>
+      gsap.to(inner, {
+        yPercent: 0,
+        duration: num(el, 'motionDuration', 1),
+        ease: 'expo.out',
+        delay: num(el, 'motionDelay', 0),
+        onComplete: () => gsap.set(inner, { clearProps: 'willChange' }),
+      });
+
+    if (str(el, 'motionScroll', null) && ScrollTrigger) {
+      ScrollTrigger.create({ trigger: el, start: str(el, 'motionStart', 'top 90%'), once: true, onEnter: play });
+    } else {
+      play();
+    }
+  });
+
   /* ======================================================================
      Recipe：滑鼠互動
      ====================================================================== */

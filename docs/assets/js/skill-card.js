@@ -48,8 +48,8 @@ export function renderSkillCard(skill, { selected = false, selectable = true } =
     .join('');
 
   return `
-    <article class="card skill-card${selected ? ' is-selected' : ''}"
-             data-motion="lift"
+    <article class="card card--glow skill-card${selected ? ' is-selected' : ''}"
+             data-motion="lift glow" data-intro
              data-skill-id="${escapeHTML(skill.id)}"
              data-category="${escapeHTML(skill.category ?? '')}"
              tabindex="0" role="button"

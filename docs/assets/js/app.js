@@ -93,6 +93,8 @@ function hydrate(data) {
   readURL();
   apply({ animate: false });
   syncSelection({ animate: false });
+  // 篩掉的卡片先藏好再跑進場，才不會animate到看不見的卡片
+  Motion.intro(el.grid);
   openFromHash();
 }
 
@@ -179,7 +181,7 @@ function renderCards() {
   for (const card of $$('.skill-card', el.grid)) {
     state.cards.set(card.dataset.skillId, card);
   }
-  Components.scan(el.grid);
+  Components.scan(el.grid); // 內含 Motion.scan，卡片的 lift / glow 在這裡綁上
 }
 
 function showLoadError(err) {

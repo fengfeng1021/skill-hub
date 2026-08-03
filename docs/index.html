@@ -62,17 +62,21 @@
     <main>
       <!-- ---------- Hero ---------- -->
       <section class="hero">
+        <span class="hero__glow" aria-hidden="true" data-motion="parallax float"
+              data-motion-shift="-18" data-motion-amp="14" data-motion-duration="7"></span>
         <div class="container">
-          <h1 class="hero__title" data-intro>
-            挑好的 skill，<br /><span class="gradient-text">貼給 AI 就裝好</span>
+          <h1 class="hero__title">
+            <span data-motion="mask" data-motion-delay="0.05">挑好的 skill，</span>
+            <span class="gradient-text" data-motion="mask" data-motion-delay="0.17">貼給 AI 就裝好</span>
           </h1>
           <p class="hero__lede" data-intro>
             勾選你要的，複製提示詞，貼進 Claude Code —— 剩下的它自己會做完。
           </p>
           <div class="hero__actions" data-intro>
-            <button class="btn btn--primary" data-modal="#howtoModal" data-motion="press ripple">怎麼用？</button>
-            <p class="hero__meta" id="heroMeta"></p>
+            <button class="btn btn--primary btn--lg" data-modal="#howtoModal" data-motion="press ripple magnetic"
+                    data-motion-strength="0.18">怎麼用？</button>
           </div>
+          <p class="hero__meta" id="heroMeta" data-intro></p>
         </div>
       </section>
 

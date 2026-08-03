@@ -254,6 +254,18 @@ hr {
   color: transparent;
 }
 
+/* 遮罩進場的外框與內層。外框負責裁切，motion.js 的 mask recipe 動內層。 */
+.mask,
+[data-motion~="mask"] {
+  display: block;
+  overflow: hidden;
+}
+
+.mask__inner {
+  display: block;
+  will-change: transform;
+}
+
 /* 進場動效的初始狀態。
    只有在 <html> 帶著 .js（由 head 的 inline script 加上）時才預先隱藏，
    之後由 motion.js 接管顯示。JS 或 GSAP 載入失敗時 motion.js 會把 .js 拿掉，
