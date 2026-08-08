@@ -2,7 +2,7 @@
 
 > 收錄、整理、一鍵安裝各種 Claude / AI Agent Skills。挑好的 skill，複製提示詞，貼給 AI 就裝好。
 
-更新日期：2026-08-08　收錄數量：7
+更新日期：2026-08-08　收錄數量：8
 網站：https://fengfeng1021.github.io/skill-hub
 JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 
@@ -25,6 +25,16 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 ## 收錄清單
 
 ### 前端 / 設計
+
+#### 互動體驗設計 `interaction-experience-design`
+
+- 摘要：讓使用者一看就懂怎麼用，不會迷路也知道下一步。
+- 標籤：ux、interaction、information-architecture、navigation、usability、onboarding
+- 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/interaction-experience-design
+- 安裝資料夾名：`interaction-experience-design`
+- 一行裝完：`xcopy /E /I /Y skills\interaction-experience-design %USERPROFILE%\.claude\skills\interaction-experience-design`
+- 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/interaction-experience-design`
+- 何時使用：設計登入流程、多功能 App 的導覽與分頁組織；規劃按鈕層級、返回機制、頁面切換；擔心使用者迷路、不知道下一步要做什麼；與前端設計總指揮搭配：負責三階段流程中的「UX 互動」階段
 
 #### 前端設計總指揮 `frontend-design-director`
 

@@ -1,0 +1,54 @@
+{
+  "id": "interaction-experience-design",
+  "name": "互動體驗設計",
+  "summary": "讓使用者一看就懂怎麼用，不會迷路也知道下一步。",
+  "description": "專門設計「使用者怎麼跟畫面互動」的體驗，與視覺美化互補。涵蓋六大原則：\n1. 一頁一個主動作（登入大按鈕、忘記密碼小字，不讓兩個按鈕競爭）。\n2. 資訊架構（功能先分組再導覽，深度不超過三層，10 個功能不要 10 個分頁）。\n3. 疊頁與返回（下鑽頁蓋在舊頁上、返回位置固定、前景後景可區分）。\n4. 可學習性（用慣例、30 秒內知道功能在哪、狀態可見）。\n5. 操作回饋（按了要有反應、錯誤提示在欄位旁）。\n6. 表單與流程（分步引導、必填最少化）。\n內建反模式清單（兩個大按鈕競爭、無返回、深層迷路、破壞慣例等）與設計完自檢清單。",
+  "category": "前端 / 設計",
+  "tags": [
+    "ux",
+    "interaction",
+    "information-architecture",
+    "navigation",
+    "usability",
+    "onboarding"
+  ],
+  "official": false,
+  "featured": true,
+  "author": "fengfeng1021",
+  "license": "MIT",
+  "version": "1.0.0",
+  "usage": [
+    "設計登入流程、多功能 App 的導覽與分頁組織",
+    "規劃按鈕層級、返回機制、頁面切換",
+    "擔心使用者迷路、不知道下一步要做什麼",
+    "與前端設計總指揮搭配：負責三階段流程中的「UX 互動」階段"
+  ],
+  "highlights": [
+    "專門補齊「好用」這一塊：資訊架構、導覽、疊頁返回、可學習性",
+    "反模式清單直接可當檢查表用",
+    "與視覺設計 skill 互補，不重疊"
+  ],
+  "source": {
+    "kind": "local",
+    "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/interaction-experience-design"
+  },
+  "install": {
+    "command": "xcopy /E /I /Y skills\\interaction-experience-design %USERPROFILE%\\.claude\\skills\\interaction-experience-design",
+    "scope": "user",
+    "dirName": "interaction-experience-design",
+    "files": [
+      "SKILL.md"
+    ],
+    "requires": [],
+    "notes": "本 skill 由 Skill Hub 自製託管，收錄檔案在 skills/interaction-experience-design/。"
+  },
+  "prompt": null,
+  "links": [
+    {
+      "label": "Skill Hub（收藏庫）",
+      "url": "https://fengfeng1021.github.io/skill-hub/"
+    }
+  ],
+  "addedAt": "2026-08-08",
+  "updatedAt": "2026-08-08"
+}

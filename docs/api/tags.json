@@ -3,7 +3,7 @@
   "categories": [
     {
       "name": "前端 / 設計",
-      "count": 5
+      "count": 6
     },
     {
       "name": "前端 / 動效",
@@ -24,11 +24,11 @@
       "count": 5
     },
     {
-      "name": "frontend",
-      "count": 3
+      "name": "ux",
+      "count": 4
     },
     {
-      "name": "ux",
+      "name": "frontend",
       "count": 3
     },
     {
@@ -88,7 +88,15 @@
       "count": 1
     },
     {
+      "name": "information-architecture",
+      "count": 1
+    },
+    {
       "name": "integration",
+      "count": 1
+    },
+    {
+      "name": "interaction",
       "count": 1
     },
     {
@@ -97,6 +105,14 @@
     },
     {
       "name": "mobile",
+      "count": 1
+    },
+    {
+      "name": "navigation",
+      "count": 1
+    },
+    {
+      "name": "onboarding",
       "count": 1
     },
     {
@@ -121,6 +137,10 @@
     },
     {
       "name": "theme",
+      "count": 1
+    },
+    {
+      "name": "usability",
       "count": 1
     },
     {

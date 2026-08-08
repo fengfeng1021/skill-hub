@@ -1,11 +1,12 @@
 # Skill Hub 收錄清單
 
-共 7 個，更新於 2026-08-08。此檔由 `npm run build` 產生，請勿手改。
+共 8 個，更新於 2026-08-08。此檔由 `npm run build` 產生，請勿手改。
 
-## 前端 / 設計（5）
+## 前端 / 設計（6）
 
 | Skill | 摘要 | 標籤 | 來源 |
 | --- | --- | --- | --- |
+| **互動體驗設計** | 讓使用者一看就懂怎麼用，不會迷路也知道下一步。 | ux, interaction, information-architecture, navigation, usability, onboarding | [本庫託管](https://github.com/fengfeng1021/skill-hub/tree/main/skills/interaction-experience-design) |
 | **前端設計總指揮** | 一個指令搞定網頁設計，自動搭配五套設計功力。 | design, ui, ux, director, frontend, integration | [本庫託管](https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-design-director) |
 | **Hue** | 學任何品牌的風格，之後做的東西都自動長那樣。 | design, brand, design-system, tokens, ui, theme | [dominikmartn/hue](https://github.com/dominikmartn/hue) |
 | **Impeccable** | 把網頁設計得有質感，也能幫你檢查哪裡不夠好。 | design, ui, ux, frontend, review, accessibility | [pbakaus/impeccable](https://github.com/pbakaus/impeccable/tree/main/.claude/skills/impeccable) |
