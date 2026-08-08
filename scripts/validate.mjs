@@ -90,7 +90,7 @@ for (const s of skills) {
     } else if (!existsSync(join(dir, 'SKILL.md'))) {
       errors.push(`${at}：${rel}/ 底下沒有 SKILL.md`);
     } else {
-      // dirName 應與 SKILL.md frontmatter 的 name 一致，否則 Claude Code 載入不到
+      // dirName 應與 SKILL.md frontmatter 的 name 一致，否則 AI 載入不到
       const md = readFileSync(join(dir, 'SKILL.md'), 'utf8');
       const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(md);
       if (!fm) {
@@ -103,7 +103,7 @@ for (const s of skills) {
         const mdName = nameLine?.[1].trim().replace(/^["']|["']$/g, '');
         if (mdName && s.install?.dirName && mdName !== s.install.dirName) {
           errors.push(
-            `${at}：install.dirName "${s.install.dirName}" 與 SKILL.md 的 name "${mdName}" 不一致，Claude Code 會載入不到`
+            `${at}：install.dirName "${s.install.dirName}" 與 SKILL.md 的 name "${mdName}" 不一致，AI 會載入不到`
           );
         }
       }

@@ -139,8 +139,8 @@ export function buildPrompt({ target, mode, base, repo, name }) {
 
   lines.push(
     isName
-      ? `我想收一個叫「${target.value}」的 Claude Skill 進我的收藏庫，但我手上只有名字。`
-      : `我找到一個想收進收藏庫的 Claude Skill：`
+      ? `我想收一個叫「${target.value}」的 AI Agent Skill 進我的收藏庫，但我手上只有名字。`
+      : `我找到一個想收進收藏庫的 AI Agent Skill：`
   );
   if (!isName) lines.push('', `  ${target.value}`);
 

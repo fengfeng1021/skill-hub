@@ -55,7 +55,7 @@ const generatedAt = new Date().toISOString().slice(0, 10);
  * 不必先去翻 repo 裡的 CLAUDE.md。
  */
 const forAI = {
-  whatIsThis: `${cfg.name} 是一個 Claude Skills 收藏庫。每一筆 skill 都附了可以直接貼給 AI 執行的安裝提示詞。`,
+  whatIsThis: `${cfg.name} 是一個 AI Agent Skills 收藏庫（Claude Code、Cursor、Hermes 等各種 AI 都能用）。每一筆 skill 都附了可以直接貼給 AI 執行的安裝提示詞。`,
   endpoints: {
     'api/index.json': '全部資料：站台資訊、分類、標籤、每個 skill 的完整欄位與 installPrompt。',
     'api/skills/<id>.json': '單一 skill 的完整資料。',
@@ -125,7 +125,7 @@ const llms = [
   '## 怎麼用這份檔案',
   '',
   '每個 skill 底下都有「安裝指令」段落。使用者說要裝哪幾個，就把對應段落的內容當作任務執行：',
-  '把 skill 資料夾放到 `~/.claude/skills/<資料夾名>/`，資料夾名不要改，SKILL.md 的 frontmatter 不要動。',
+  '把 skill 資料夾放到你這個 AI 自己的 skills 目錄（Claude Code 是 `~/.claude/skills/`、Cursor 是 `~/.cursor/skills/`、Hermes 是 `<HERMES_HOME>/skills/`，其他 AI 照官方文件），資料夾名不要改，SKILL.md 的 frontmatter 不要動。',
   '完整、可直接貼給 AI 的安裝提示詞在 `api/skills/<id>.json` 的 `installPrompt` 欄位。',
   '',
   '## 要幫忙收錄新的 skill 的話',

@@ -1,6 +1,6 @@
 # Skill Hub
 
-> 收錄、整理、一鍵安裝各種 Claude / AI Agent Skills。挑好的 skill，複製提示詞，貼給 AI 就裝好。
+> 收錄、整理、一鍵安裝各種 AI Agent Skills。挑好的 skill，複製提示詞，貼給 AI 就裝好。
 
 更新日期：2026-08-08　收錄數量：8
 網站：https://fengfeng1021.github.io/skill-hub
@@ -9,7 +9,7 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 ## 怎麼用這份檔案
 
 每個 skill 底下都有「安裝指令」段落。使用者說要裝哪幾個，就把對應段落的內容當作任務執行：
-把 skill 資料夾放到 `~/.claude/skills/<資料夾名>/`，資料夾名不要改，SKILL.md 的 frontmatter 不要動。
+把 skill 資料夾放到你這個 AI 自己的 skills 目錄（Claude Code 是 `~/.claude/skills/`、Cursor 是 `~/.cursor/skills/`、Hermes 是 `<HERMES_HOME>/skills/`，其他 AI 照官方文件），資料夾名不要改，SKILL.md 的 frontmatter 不要動。
 完整、可直接貼給 AI 的安裝提示詞在 `api/skills/<id>.json` 的 `installPrompt` 欄位。
 
 ## 要幫忙收錄新的 skill 的話

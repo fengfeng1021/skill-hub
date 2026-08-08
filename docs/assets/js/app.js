@@ -448,7 +448,7 @@ function detailHTML(skill) {
     parts.length
       ? ['安裝資料夾', `${parts.length} 個，一起裝（見下方清單）`]
       : ['安裝資料夾名', `<code class="tag mono">${escapeHTML(skill.install?.dirName ?? '—')}</code>`],
-    ['建議範圍', skill.install?.scope === 'project' ? '專案內 <code class="tag">.claude/skills</code>' : '全域 <code class="tag">~/.claude/skills</code>'],
+    ['建議範圍', skill.install?.scope === 'project' ? '專案內（只給目前專案）' : '全域（所有專案共用）'],
     ['來源', sourceURL(skill)
       ? `<a href="${escapeHTML(sourceURL(skill))}" target="_blank" rel="noopener" class="link-arrow">${escapeHTML(skill.source.label ?? sourceURL(skill))}</a>`
       : escapeHTML(skill.source?.label ?? '—')],

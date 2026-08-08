@@ -47,7 +47,7 @@ const installModal = () => `
           <p class="eyebrow" data-modal-item>一併安裝</p>
           <h2 class="modal__title" id="installTitle" data-modal-item>安裝提示詞</h2>
           <p class="muted" style="font-size: var(--text-sm); margin-top: var(--space-2)" data-modal-item>
-            複製下面全部內容，貼進 Claude Code（或任何有檔案存取權的 AI），它會照著把 skills 裝好。
+            複製下面全部內容，貼進任何 AI（Claude Code、Cursor、Hermes 都行），它會照著把 skills 裝好。
           </p>
         </div>
         ${closeButton()}
@@ -89,14 +89,14 @@ const howtoModal = () => `
         <ol class="detail__list" style="gap: var(--space-4)" data-modal-item>
           <li><strong>勾選</strong>：在卡片右上角勾選想裝的，可以一次選很多個。</li>
           <li><strong>複製</strong>：底部會浮出操作列，按「複製安裝指令」拿到一整段文字。</li>
-          <li><strong>貼上</strong>：貼進 Claude Code 或任何能存取檔案的 AI，它會自己下載、放到正確位置、檢查有沒有裝好。</li>
+          <li><strong>貼上</strong>：貼進任何能存取檔案的 AI，它會自己下載、放到正確位置、檢查有沒有裝好。</li>
         </ol>
         <div class="divider"></div>
         <div data-modal-item>
           <p class="detail__section-title">不用會寫程式</p>
           <p class="muted" style="font-size: var(--text-sm)">
             整個過程你只要做「勾選 → 複製 → 貼上」三件事，剩下的都是 AI 在做。
-            裝完記得把 Claude Code 重開，新的能力才會生效。
+            裝完記得把你的 AI 重開，新的能力才會生效。
           </p>
         </div>
       </div>

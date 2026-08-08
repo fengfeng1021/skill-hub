@@ -10,21 +10,24 @@ export function buildHeader(count, cfg) {
   // count 傳數字就照數字判斷單複數；傳字串（例如 '{{count}}' 佔位符）一律當多個處理，
   // 讓前端組多選提示詞時能自己把數量填進去。
   const n = typeof count === 'number' && count <= 1 ? '下面這個' : `下列 ${count} 個`;
-  return `你是我的 Skill 安裝助手。請幫我安裝${n} Claude Skill。
+  return `你是我的 Skill 安裝助手。請幫我安裝${n} AI Agent Skill。
 
 ## 安裝規則
 
-1. **安裝位置** — 每個 skill 是一個資料夾，放在：
-   - 全域（所有專案共用）：\`${cfg.installRoots.user.posix}/<資料夾名>/\`
+1. **安裝位置** — 每個 skill 是一個資料夾，放進「你這個 AI 自己」的 skills 目錄（skill 不是只有 Claude 能用，各家 AI 都支援）：
+   - Claude Code：\`${cfg.installRoots.user.posix}/<資料夾名>/\`
      Windows 為 \`${cfg.installRoots.user.windows}\\<資料夾名>\\\`
-   - 只給目前專案用：\`<專案根目錄>/${cfg.installRoots.project.posix}/<資料夾名>/\`
+   - Cursor：\`~/.cursor/skills/<資料夾名>/\`
+   - Hermes：\`<HERMES_HOME>/skills/<資料夾名>/\`（沒設 HERMES_HOME 就用 \`~/.hermes/skills/\`）
+   - 其他 AI：照它的官方文件，通常是 \`~/.<AI 名>/skills/\`
+   - 只給目前專案用：\`<專案根目錄>/${cfg.installRoots.project.posix}/<資料夾名>/\`（其他 AI 用對應的專案目錄，如 Cursor 的 \`.cursor/skills/\`）
    下面每個 skill 都標了建議範圍，照著放；我另外指定時以我說的為準。
-2. **資料夾名不要改**。Claude 用資料夾名對應 SKILL.md 的 \`name\`，改了會載入不到。
+2. **資料夾名不要改**。AI 用資料夾名對應 SKILL.md 的 \`name\`，改了會載入不到。
 3. **取得檔案的優先順序**：
    a. 直接抓下面給的 raw 下載網址
    b. 抓不到就 \`git clone\` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存
    c. 都不行（無網路等）就直接告訴我，我把檔案貼給你
-4. **不要改寫 SKILL.md 的 frontmatter**（\`name\`、\`description\`）。那是 Claude 判斷何時自動載入這個 skill 的依據，改了就失效。
+4. **不要改寫 SKILL.md 的 frontmatter**（\`name\`、\`description\`）。那是 AI 判斷何時自動載入這個 skill 的依據，改了就失效。
 5. 目標資料夾**已存在**時，先停下來問我要覆蓋還是跳過，不要直接蓋掉。`;
 }
 
@@ -33,14 +36,14 @@ export function buildFooter() {
 
 1. 列出每個 skill 實際安裝的完整路徑，以及該資料夾下的檔案
 2. 逐一讀取 SKILL.md 的 frontmatter，確認 \`name\` 與資料夾名一致、\`description\` 沒有空白
-3. 告訴我要重新啟動 Claude Code，新的 skill 才會被載入
+3. 告訴我要重新啟動你這個 AI（Claude Code、Cursor、Hermes 都一樣要重開），新的 skill 才會被載入
 4. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過`;
 }
 
 /** 單一 skill 的說明區塊（不含 header / footer） */
 export function buildBlock(skill, index = null) {
   const title = index === null ? `### ${skill.name}` : `### ${index}. ${skill.name}`;
-  const scope = skill.install.scope === 'project' ? '專案內（.claude/skills）' : '全域（~/.claude/skills）';
+  const scope = skill.install.scope === 'project' ? '專案內（只給目前專案用）' : '全域（所有專案共用）';
   const files = skill.install.files?.length ? skill.install.files : ['SKILL.md'];
   const parts = skill.parts ?? [];
 

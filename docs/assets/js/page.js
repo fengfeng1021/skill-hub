@@ -84,7 +84,7 @@ function renderPrompt(data, base) {
   if (!node) return;
   const name = data.site?.name ?? 'Skill Hub';
   node.textContent = [
-    `我要用「${name}」這個 Claude Skills 收藏庫，目前收錄 ${data.count ?? 0} 個。`,
+    `我要用「${name}」這個 AI Agent Skills 收藏庫，目前收錄 ${data.count ?? 0} 個。`,
     '',
     `- 網站：${base}/`,
     `- 全部資料（JSON）：${base}/api/index.json`,

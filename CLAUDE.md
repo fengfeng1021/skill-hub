@@ -1,6 +1,6 @@
 # Skill Hub — 給 AI 的操作說明
 
-這是一個 **Claude Skills 收藏庫**。使用者會用自然語言請你收錄 skill，例如：
+這是一個 **AI Agent Skills 收藏庫**（Claude Code、Cursor、Hermes 等各種 AI 都能用）。使用者會用自然語言請你收錄 skill，例如：
 
 > 「我找到一個不錯的 skill：https://github.com/xxx/yyy，幫我收進去」
 > 「這個資料夾是我自己寫的 skill，收錄一下」
@@ -61,7 +61,7 @@
 - `id`：kebab-case，全庫唯一。已存在就是**更新**而非新增，不要建立 `xxx-2`
 - `category`：直接寫中文顯示字串。**先看 `registry/skills/` 現有的分類，能沿用就沿用**，不要每收一個就發明新分類
 - `tags`：3–6 個，小寫英文，同樣優先沿用現有標籤
-- `install.dirName`：安裝後的資料夾名，**必須等於 SKILL.md frontmatter 的 `name`**，否則 Claude Code 認不出來
+- `install.dirName`：安裝後的資料夾名，**必須等於 SKILL.md frontmatter 的 `name`**，否則 AI 認不出來
 - `install.files`：實際檔案清單，讓安裝的 AI 知道要拿哪些檔案
 - `install.command`：有官方一行指令（`npx skills add <repo>`、`/plugin marketplace add <owner>/<repo>`）就填，安裝提示詞會請 AI 優先用它，省掉一個個抓檔案
 - `prompt`：留 `null`。自動產生的安裝提示詞已經夠用，除非安裝方式特殊（要跑 script、要裝套件、要設環境變數）才自己寫

@@ -1,6 +1,6 @@
 # Skill Hub
 
-我的 Claude Skills 收藏庫。收錄好用的 skill，每一個都附一段可以直接貼給 AI 的安裝提示詞 —— 貼過去，AI 自己就把 skill 裝好了。可以複選多個 skill，一次組成一段安裝指令。
+我的 AI Agent Skills 收藏庫。收錄好用的 skill，每一個都附一段可以直接貼給 AI 的安裝提示詞 —— 貼過去，AI 自己就把 skill 裝好了。可以複選多個 skill，一次組成一段安裝指令。
 
 網站用 GitHub Pages 直接發佈，同時提供 JSON 接口與 `llms.txt` 給 AI 讀。
 

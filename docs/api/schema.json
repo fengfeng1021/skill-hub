@@ -102,7 +102,7 @@
         },
         "scope": {
           "enum": ["user", "project"],
-          "description": "user = 裝到 ~/.claude/skills（全域）；project = 裝到專案的 .claude/skills。預設 user。"
+          "description": "user = 裝到該 AI 的全域 skills 目錄（如 Claude Code 的 ~/.claude/skills）；project = 裝到專案的 skills 目錄（如 .claude/skills）。預設 user。"
         },
         "files": {
           "type": "array",
