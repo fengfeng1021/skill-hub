@@ -87,6 +87,39 @@ for (const s of skills) {
     const dir = join(ROOT, rel);
     if (!existsSync(dir)) {
       errors.push(`${at}：source.kind=local 但找不到資料夾 ${rel}/`);
+    } else if (s.parts?.length) {
+      // local + parts 組合包：每個 part 資料夾都要有 SKILL.md，dirName 與 frontmatter name 一致
+      for (const p of s.parts) {
+        const pDir = join(dir, p.dirName);
+        if (!existsSync(join(pDir, 'SKILL.md'))) {
+          errors.push(`${at}：${rel}/${p.dirName}/ 底下沒有 SKILL.md`);
+          continue;
+        }
+        const md = readFileSync(join(pDir, 'SKILL.md'), 'utf8');
+        const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(md);
+        if (!fm) {
+          errors.push(`${at}：${rel}/${p.dirName}/SKILL.md 沒有 frontmatter（--- 區塊）`);
+          continue;
+        }
+        const nameLine = /^name:\s*(.+)$/m.exec(fm[1]);
+        const descLine = /^description:\s*(.+)$/m.exec(fm[1]);
+        if (!nameLine) errors.push(`${at}：${rel}/${p.dirName}/SKILL.md frontmatter 缺少 name`);
+        if (!descLine) errors.push(`${at}：${rel}/${p.dirName}/SKILL.md frontmatter 缺少 description`);
+        const mdName = nameLine?.[1].trim().replace(/^["']|["']$/g, '');
+        if (mdName && mdName !== p.dirName) {
+          errors.push(
+            `${at}：parts 的 dirName "${p.dirName}" 與 SKILL.md 的 name "${mdName}" 不一致，AI 會載入不到`
+          );
+        }
+      }
+      // install.files 是「每個資料夾都要拿的檔案」清單，逐一對照每個 part 資料夾
+      for (const f of s.install?.files ?? []) {
+        for (const p of s.parts) {
+          if (!existsSync(join(dir, p.dirName, f))) {
+            warnings.push(`${at}：install.files 列了 ${f}，但 ${rel}/${p.dirName}/${f} 不存在`);
+          }
+        }
+      }
     } else if (!existsSync(join(dir, 'SKILL.md'))) {
       errors.push(`${at}：${rel}/ 底下沒有 SKILL.md`);
     } else {
@@ -126,7 +159,7 @@ for (const s of skills) {
         warnings.push(`${at}：parts 只有一個項目，用 install.dirName 就好`);
       }
       const dirs = new Set();
-      for (const p of parts) {
+      for (const p of s.parts) {
         if (!p?.dirName) {
           errors.push(`${at}：parts 裡有項目缺少 dirName`);
           continue;

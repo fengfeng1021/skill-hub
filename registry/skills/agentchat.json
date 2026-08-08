@@ -1,0 +1,76 @@
+{
+  "id": "agentchat",
+  "name": "AgentChat 免費網頁 AI 工具箱",
+  "summary": "叫免費網頁 AI 幫你寫程式、想事情、檢查品質。",
+  "description": "透過本機 Chrome 瀏覽器操作 8 個免費網頁 AI（ChatGPT、Gemini、Claude、Qwen、Kimi、MiniMax、MiMo、DeepSeek）執行任務，零 API 費用。原始 repo 為 Claude Code skill 套件，本收錄為改動後版本，以純 CLI 形式使用（任何 AI 都能驅動）。\n三種玩法：\n- OneWeb：單一任務自動降級——ChatGPT 優先，額度用盡依序切 Gemini（Pro Extended）→ Claude → Qwen → Kimi → MiniMax → MiMo → DeepSeek；可鎖定單一 AI（--single）或指定生圖（--image）。\n- WebSubAgent：六步串行管道——Kimi 聯網搜尋 → ChatGPT 深度推理 → ChatGPT 交叉審查，每步自動降級。\n- IndependentTasks：並行派發——大量獨立任務分給多家 AI 同時執行，內建內容校驗與合成工具。\n改動標註（vs 原倉庫 ziwang-Physics/AgentChat）：provider 優先鏈改為 ChatGPT 優先（原 Gemini 優先）；WebSubAgent 推理步改 ChatGPT 第一；IndependentTasks 預設 worker 改 chatgpt；新增 AGENTS.md 通用使用指引與 npm 快捷指令（npm run ai / search / reason / review）。",
+  "category": "AI 工具",
+  "tags": [
+    "ai",
+    "browser",
+    "automation",
+    "chatgpt",
+    "gemini",
+    "workflow"
+  ],
+  "official": false,
+  "featured": true,
+  "author": "ziwang-Physics（改動版：fengfeng1021）",
+  "license": "MIT",
+  "usage": [
+    "想要免費的網頁 AI 幫你寫程式、回答問題、生成圖片",
+    "複雜任務要走「查資料 → 深度思考 → 品質審查」的完整流程",
+    "大量獨立子任務想並行分給多家 AI 一起處理"
+  ],
+  "highlights": [
+    "8 家免費網頁 AI 一次接好，額度用盡自動降級，零 API 費用",
+    "三種玩法：單一呼叫／串行管道／並行派發",
+    "改動版 ChatGPT 優先（原版 Gemini 優先），保留原始 GitHub 倉庫可對照"
+  ],
+  "source": {
+    "kind": "local",
+    "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/agentchat"
+  },
+  "parts": [
+    {
+      "dirName": "AgentChat-OneWeb",
+      "name": "OneWeb 自動降級",
+      "summary": "叫一家網頁 AI 寫東西，額度用完自動換下一家。"
+    },
+    {
+      "dirName": "AgentChat-WebSubAgent",
+      "name": "WebSubAgent 串行管道",
+      "summary": "先上網查資料，再深度思考，最後檢查品質。"
+    },
+    {
+      "dirName": "AgentChat-IndependentTasks",
+      "name": "IndependentTasks 並行派發",
+      "summary": "很多獨立小事一次分給好幾家 AI 同時做。"
+    }
+  ],
+  "install": {
+    "scope": "user",
+    "files": [
+      "SKILL.md",
+      "index.js"
+    ],
+    "requires": [
+      "node >= 18",
+      "本機 Chrome（需登入 chatgpt.com 一次）",
+      "repo 根目錄執行 npm install"
+    ],
+    "notes": "這組其實有 4 個資料夾要一起放進同一個 skills 目錄：AgentChat-OneWeb、AgentChat-WebSubAgent、AgentChat-IndependentTasks 三個 skill 資料夾，加上 lib/ 共用程式庫資料夾（三個 skill 的 index.js 都 require ../lib，缺了會直接掛）。AgentChat-OneWeb 的 package.json、package-lock.json 也要一起複製。執行前先在 Chrome 登入想用的 AI 網頁（至少 chatgpt.com）。本收錄為改動後版本（ChatGPT 優先），原始 repo：https://github.com/ziwang-Physics/AgentChat"
+  },
+  "prompt": null,
+  "links": [
+    {
+      "label": "原始 GitHub 倉庫（ziwang-Physics/AgentChat）",
+      "url": "https://github.com/ziwang-Physics/AgentChat"
+    },
+    {
+      "label": "Skill Hub（收藏庫）",
+      "url": "https://fengfeng1021.github.io/skill-hub/"
+    }
+  ],
+  "addedAt": "2026-08-08",
+  "updatedAt": "2026-08-08"
+}

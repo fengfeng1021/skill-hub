@@ -10,6 +10,10 @@
       "count": 1
     },
     {
+      "name": "AI 工具",
+      "count": 1
+    },
+    {
       "name": "Google 管理",
       "count": 1
     }
@@ -52,6 +56,10 @@
       "count": 1
     },
     {
+      "name": "ai",
+      "count": 1
+    },
+    {
       "name": "analysis",
       "count": 1
     },
@@ -60,7 +68,19 @@
       "count": 1
     },
     {
+      "name": "automation",
+      "count": 1
+    },
+    {
       "name": "batch",
+      "count": 1
+    },
+    {
+      "name": "browser",
+      "count": 1
+    },
+    {
+      "name": "chatgpt",
       "count": 1
     },
     {
@@ -81,6 +101,10 @@
     },
     {
       "name": "extraction",
+      "count": 1
+    },
+    {
+      "name": "gemini",
       "count": 1
     },
     {
@@ -145,6 +169,10 @@
     },
     {
       "name": "usability",
+      "count": 1
+    },
+    {
+      "name": "workflow",
       "count": 1
     },
     {

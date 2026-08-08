@@ -1,6 +1,6 @@
 # Skill Hub 收錄清單
 
-共 8 個，更新於 2026-08-08。此檔由 `npm run build` 產生，請勿手改。
+共 9 個，更新於 2026-08-08。此檔由 `npm run build` 產生，請勿手改。
 
 ## 前端 / 設計（6）
 
@@ -18,6 +18,12 @@
 | Skill | 摘要 | 標籤 | 來源 |
 | --- | --- | --- | --- |
 | **GSAP** | 讓網頁上的東西會動起來，淡入、滑動、跟著捲動都行。 | animation, gsap, javascript, scroll, react, performance | [greensock/gsap-skills](https://github.com/greensock/gsap-skills/tree/main/skills) |
+
+## AI 工具（1）
+
+| Skill | 摘要 | 標籤 | 來源 |
+| --- | --- | --- | --- |
+| **AgentChat 免費網頁 AI 工具箱** | 叫免費網頁 AI 幫你寫程式、想事情、檢查品質。 | ai, browser, automation, chatgpt, gemini, workflow | [本庫託管](https://github.com/fengfeng1021/skill-hub/tree/main/skills/agentchat) |
 
 ## Google 管理（1）
 
