@@ -49,10 +49,11 @@
       "references/scoring.md",
       "references/case-studies.md",
       "references/anti-patterns-checklist.md",
-      "scripts/audit.py"
+      "scripts/audit.py",
+      "scripts/test_audit.py"
     ],
     "requires": [],
-    "notes": "本 skill 由 Skill Hub 自製託管，收錄檔案在 skills/interaction-experience-design/。"
+    "notes": "本 skill 由 Skill Hub 自製託管。內建自測：python scripts/test_audit.py。"
   },
   "prompt": null,
   "links": [
