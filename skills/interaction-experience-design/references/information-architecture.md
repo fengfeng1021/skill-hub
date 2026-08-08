@@ -1,5 +1,7 @@
 # 資訊架構（Information Architecture，完整版）
 
+> **使用時機**：規劃導覽、頁面組織、功能分組、命名、疊頁與返回時；決策樹「導覽／組織」分支。
+
 來源：Morville, P. & Rosenfeld, L. *Information Architecture: For the Web and Beyond*（IA 領域經典教科書）。
 
 資訊架構 = 內容與功能的**組織、標籤、導覽、搜尋**方式。決定「東西放在哪、叫什麼名字、怎麼找到」。

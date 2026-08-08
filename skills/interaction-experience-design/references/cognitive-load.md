@@ -1,5 +1,7 @@
 # 認知負荷理論（Cognitive Load Theory，完整版）
 
+> **使用時機**：流程複雜、資訊量大、長表單、使用者需要記很多東西時；決策樹「流程複雜」分支。
+
 來源：Sweller, J. (1988). *Cognitive load during problem solving: Effects on learning*. Cognitive Science.
 
 ## 核心概念

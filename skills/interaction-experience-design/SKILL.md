@@ -33,7 +33,26 @@ version: 3.0.0
 4. **逐條審查**：拿 Nielsen 10 啟發式檢查（references/nielsen-heuristics.md）
 5. **驗證**：任務分析走一遍；有條件做可用性測試（references/evaluation-methods.md）
 
-## 檔案導覽（references/）
+## 依任務讀取（決策樹——照著走，不要憑感覺）
+
+**接到任務後，先判斷任務類型，讀對應的 reference 再動手：**
+
+| 任務類型 | 必讀 | 用途 |
+|---|---|---|
+| 審查／找出介面問題 | `references/nielsen-heuristics.md` ＋ `references/anti-patterns-checklist.md` | 逐條檢查＋對照反模式 |
+| 規劃導覽／頁面組織／分組 | `references/information-architecture.md` | 組織方案、導覽系統、疊頁返回 |
+| 決定按鈕大小／選項數／視覺分組 | `references/design-laws.md` | Fitts、Hick、Miller、Gestalt |
+| 流程複雜／資訊量大／長表單 | `references/cognitive-load.md` | 三類負荷與拆步策略 |
+| 檢查對比／鍵盤／目標大小 | `references/accessibility-wcag.md` | WCAG 2.2 互動要求 |
+| 設計完成要驗證 | `references/evaluation-methods.md` | 啟發式評估／任務分析／可用性測試 |
+| 交付前最終檢查 | `references/anti-patterns-checklist.md` | 自檢清單逐項打勾 |
+
+**規則**：
+- 任務橫跨多類 → 讀對應的多份（例如「登入流程重設計」＝ design-laws ＋ information-architecture ＋ nielsen-heuristics）
+- 不確定讀哪份 → 讀 `references/nielsen-heuristics.md`（最通用的審查基準）
+- 完成設計後**一定**用 `references/anti-patterns-checklist.md` 自檢（這是強制步驟，不是選配）
+
+## 檔案導覽（references/ 完整索引）
 
 | 檔案 | 內容 | 何時讀 |
 |---|---|---|

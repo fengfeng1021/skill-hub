@@ -1,5 +1,7 @@
 # Nielsen 十大啟發式（完整版）
 
+> **使用時機**：審查／找出任何介面的可用性問題時（啟發式評估）；決策樹「審查」分支必讀。
+
 來源：Nielsen, J. (1994, 2024 update). *10 Usability Heuristics for User Interface Design*. Nielsen Norman Group.
 
 啟發式評估：拿這 10 條逐條檢查介面，找出可用性問題。每條附**實例**與**常見違反**。

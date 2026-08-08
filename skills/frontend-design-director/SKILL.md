@@ -32,7 +32,7 @@ version: 2.0.0
 | 模仿某網站風格 | Taste（扒設計 DNA） | Impeccable（落地打磨） |
 | 建立品牌／設計系統 | Hue（生成設計語言） | UI UX Pro Max（規則） |
 | 動效設計 | GSAP | Impeccable（animate） |
-| **互動／導覽／流程設計** | **interaction-experience-design** | Impeccable（Operate 模式） |
+| **互動／導覽／流程設計** | **interaction-experience-design**（讀其 SKILL.md 決策樹選 references） | Impeccable（Operate 模式） |
 | 審查／找出問題 | Impeccable（audit/critique） | interaction-experience-design（互動檢查） |
 
 ## 協同工作流（標準 7 步）
