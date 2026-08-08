@@ -34,11 +34,11 @@
     "footer": "## 完成後請做這幾件事\n\n1. 列出每個 skill 實際安裝的完整路徑，以及該資料夾下的檔案\n2. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n3. 告訴我要重新啟動 Claude Code，新的 skill 才會被載入\n4. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過",
     "separator": "\n\n---\n\n"
   },
-  "count": 6,
+  "count": 7,
   "categories": [
     {
       "name": "前端 / 設計",
-      "count": 4
+      "count": 5
     },
     {
       "name": "前端 / 動效",
@@ -52,11 +52,19 @@
   "tags": [
     {
       "name": "design",
-      "count": 4
+      "count": 5
     },
     {
       "name": "ui",
-      "count": 4
+      "count": 5
+    },
+    {
+      "name": "frontend",
+      "count": 3
+    },
+    {
+      "name": "ux",
+      "count": 3
     },
     {
       "name": "accessibility",
@@ -67,15 +75,7 @@
       "count": 2
     },
     {
-      "name": "frontend",
-      "count": 2
-    },
-    {
       "name": "tokens",
-      "count": 2
-    },
-    {
-      "name": "ux",
       "count": 2
     },
     {
@@ -107,6 +107,10 @@
       "count": 1
     },
     {
+      "name": "director",
+      "count": 1
+    },
+    {
       "name": "extraction",
       "count": 1
     },
@@ -116,6 +120,10 @@
     },
     {
       "name": "gsap",
+      "count": 1
+    },
+    {
+      "name": "integration",
       "count": 1
     },
     {
@@ -156,6 +164,71 @@
     }
   ],
   "skills": [
+    {
+      "id": "frontend-design-director",
+      "name": "前端設計總指揮",
+      "summary": "一個指令搞定網頁設計，自動搭配五套設計功力。",
+      "description": "整合五個前端設計 skill 的總指揮：Impeccable（設計判斷力與打磨）、UI UX Pro Max（設計規則與資料庫）、Taste（模仿網站風格）、Hue（品牌設計系統）、GSAP（動效）。\n只要一個入口，它會依任務自動分工：新介面設計用 Impeccable 的判斷力＋UI UX Pro Max 的規則；模仿風格用 Taste；品牌系統用 Hue；動效用 GSAP。內建六步協同流程與五家精華濃縮，環境中若有原 skill 檔會優先讀取完整內容。",
+      "category": "前端 / 設計",
+      "tags": [
+        "design",
+        "ui",
+        "ux",
+        "director",
+        "frontend",
+        "integration"
+      ],
+      "official": false,
+      "featured": true,
+      "author": "fengfeng1021",
+      "license": "MIT",
+      "usage": [
+        "美化或改版任何網頁、App 畫面，不確定該用哪個設計 skill 時",
+        "要模仿某網站風格、建立品牌設計系統、加動效，一次到位",
+        "設計任務需要同時兼顧判斷力、規則、風格、品牌、動效"
+      ],
+      "highlights": [
+        "一個入口自動分配五個設計 skill，不用自己選",
+        "內建五家精華濃縮，沒裝原檔也有基本水準",
+        "裝了原檔會自動讀取完整內容，兩者互補"
+      ],
+      "source": {
+        "branch": "main",
+        "kind": "local",
+        "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-design-director",
+        "path": "skills/frontend-design-director",
+        "displayUrl": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-design-director",
+        "rawBase": "https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/frontend-design-director",
+        "label": "本庫託管"
+      },
+      "install": {
+        "scope": "user",
+        "files": [
+          "SKILL.md"
+        ],
+        "requires": [
+          "建議同時安裝 impeccable、ui-ux-pro-max、taste、hue、gsap 任一或多個，效果更完整"
+        ],
+        "command": "xcopy /E /I /Y skills\\frontend-design-director %USERPROFILE%\\.claude\\skills\\frontend-design-director",
+        "dirName": "frontend-design-director",
+        "notes": "本 skill 由 Skill Hub 自製託管，收錄檔案在 skills/frontend-design-director/。"
+      },
+      "prompt": null,
+      "links": [
+        {
+          "label": "Skill Hub（收藏庫）",
+          "url": "https://fengfeng1021.github.io/skill-hub/"
+        }
+      ],
+      "addedAt": "2026-08-08",
+      "updatedAt": "2026-08-08",
+      "parts": [],
+      "dirNames": [
+        "frontend-design-director"
+      ],
+      "promptBlock": "### 前端設計總指揮  →  資料夾名 `frontend-design-director`\n\n- **這個 skill 做什麼**：一個指令搞定網頁設計，自動搭配五套設計功力。\n- **詳細一點**：整合五個前端設計 skill 的總指揮：Impeccable（設計判斷力與打磨）、UI UX Pro Max（設計規則與資料庫）、Taste（模仿網站風格）、Hue（品牌設計系統）、GSAP（動效）。\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  xcopy /E /I /Y skills\\frontend-design-director %USERPROFILE%\\.claude\\skills\\frontend-design-director\n  ```\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-design-director\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/frontend-design-director`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **額外相依**（先確認有沒有，缺的話問我要不要裝）：\n  - `建議同時安裝 impeccable、ui-ux-pro-max、taste、hue、gsap 任一或多個，效果更完整`\n- **注意**：本 skill 由 Skill Hub 自製託管，收錄檔案在 skills/frontend-design-director/。",
+      "installPrompt": "你是我的 Skill 安裝助手。請幫我安裝下面這個 Claude Skill。\n\n## 安裝規則\n\n1. **安裝位置** — 每個 skill 是一個資料夾，放在：\n   - 全域（所有專案共用）：`~/.claude/skills/<資料夾名>/`\n     Windows 為 `%USERPROFILE%\\.claude\\skills\\<資料夾名>\\`\n   - 只給目前專案用：`<專案根目錄>/.claude/skills/<資料夾名>/`\n   下面每個 skill 都標了建議範圍，照著放；我另外指定時以我說的為準。\n2. **資料夾名不要改**。Claude 用資料夾名對應 SKILL.md 的 `name`，改了會載入不到。\n3. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n4. **不要改寫 SKILL.md 的 frontmatter**（`name`、`description`）。那是 Claude 判斷何時自動載入這個 skill 的依據，改了就失效。\n5. 目標資料夾**已存在**時，先停下來問我要覆蓋還是跳過，不要直接蓋掉。\n\n---\n\n### 前端設計總指揮  →  資料夾名 `frontend-design-director`\n\n- **這個 skill 做什麼**：一個指令搞定網頁設計，自動搭配五套設計功力。\n- **詳細一點**：整合五個前端設計 skill 的總指揮：Impeccable（設計判斷力與打磨）、UI UX Pro Max（設計規則與資料庫）、Taste（模仿網站風格）、Hue（品牌設計系統）、GSAP（動效）。\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  xcopy /E /I /Y skills\\frontend-design-director %USERPROFILE%\\.claude\\skills\\frontend-design-director\n  ```\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-design-director\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/frontend-design-director`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **額外相依**（先確認有沒有，缺的話問我要不要裝）：\n  - `建議同時安裝 impeccable、ui-ux-pro-max、taste、hue、gsap 任一或多個，效果更完整`\n- **注意**：本 skill 由 Skill Hub 自製託管，收錄檔案在 skills/frontend-design-director/。\n\n---\n\n## 完成後請做這幾件事\n\n1. 列出每個 skill 實際安裝的完整路徑，以及該資料夾下的檔案\n2. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n3. 告訴我要重新啟動 Claude Code，新的 skill 才會被載入\n4. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
+    },
     {
       "id": "cloud-identity-account-ops",
       "name": "員工帳號批量管理",

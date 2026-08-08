@@ -1,0 +1,54 @@
+{
+  "id": "frontend-design-director",
+  "name": "前端設計總指揮",
+  "summary": "一個指令搞定網頁設計，自動搭配五套設計功力。",
+  "description": "整合五個前端設計 skill 的總指揮：Impeccable（設計判斷力與打磨）、UI UX Pro Max（設計規則與資料庫）、Taste（模仿網站風格）、Hue（品牌設計系統）、GSAP（動效）。\n只要一個入口，它會依任務自動分工：新介面設計用 Impeccable 的判斷力＋UI UX Pro Max 的規則；模仿風格用 Taste；品牌系統用 Hue；動效用 GSAP。內建六步協同流程與五家精華濃縮，環境中若有原 skill 檔會優先讀取完整內容。",
+  "category": "前端 / 設計",
+  "tags": [
+    "design",
+    "ui",
+    "ux",
+    "director",
+    "frontend",
+    "integration"
+  ],
+  "official": false,
+  "featured": true,
+  "author": "fengfeng1021",
+  "license": "MIT",
+  "usage": [
+    "美化或改版任何網頁、App 畫面，不確定該用哪個設計 skill 時",
+    "要模仿某網站風格、建立品牌設計系統、加動效，一次到位",
+    "設計任務需要同時兼顧判斷力、規則、風格、品牌、動效"
+  ],
+  "highlights": [
+    "一個入口自動分配五個設計 skill，不用自己選",
+    "內建五家精華濃縮，沒裝原檔也有基本水準",
+    "裝了原檔會自動讀取完整內容，兩者互補"
+  ],
+  "source": {
+    "kind": "local",
+    "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-design-director"
+  },
+  "install": {
+    "command": "xcopy /E /I /Y skills\\frontend-design-director %USERPROFILE%\\.claude\\skills\\frontend-design-director",
+    "scope": "user",
+    "dirName": "frontend-design-director",
+    "files": [
+      "SKILL.md"
+    ],
+    "requires": [
+      "建議同時安裝 impeccable、ui-ux-pro-max、taste、hue、gsap 任一或多個，效果更完整"
+    ],
+    "notes": "本 skill 由 Skill Hub 自製託管，收錄檔案在 skills/frontend-design-director/。"
+  },
+  "prompt": null,
+  "links": [
+    {
+      "label": "Skill Hub（收藏庫）",
+      "url": "https://fengfeng1021.github.io/skill-hub/"
+    }
+  ],
+  "addedAt": "2026-08-08",
+  "updatedAt": "2026-08-08"
+}

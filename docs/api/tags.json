@@ -3,7 +3,7 @@
   "categories": [
     {
       "name": "前端 / 設計",
-      "count": 4
+      "count": 5
     },
     {
       "name": "前端 / 動效",
@@ -17,11 +17,19 @@
   "tags": [
     {
       "name": "design",
-      "count": 4
+      "count": 5
     },
     {
       "name": "ui",
-      "count": 4
+      "count": 5
+    },
+    {
+      "name": "frontend",
+      "count": 3
+    },
+    {
+      "name": "ux",
+      "count": 3
     },
     {
       "name": "accessibility",
@@ -32,15 +40,7 @@
       "count": 2
     },
     {
-      "name": "frontend",
-      "count": 2
-    },
-    {
       "name": "tokens",
-      "count": 2
-    },
-    {
-      "name": "ux",
       "count": 2
     },
     {
@@ -72,6 +72,10 @@
       "count": 1
     },
     {
+      "name": "director",
+      "count": 1
+    },
+    {
       "name": "extraction",
       "count": 1
     },
@@ -81,6 +85,10 @@
     },
     {
       "name": "gsap",
+      "count": 1
+    },
+    {
+      "name": "integration",
       "count": 1
     },
     {
