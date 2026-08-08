@@ -1,14 +1,38 @@
 {
-  "generatedAt": "2026-08-03",
+  "generatedAt": "2026-08-08",
   "categories": [
     {
       "name": "前端 / 動效",
+      "count": 1
+    },
+    {
+      "name": "Google 管理",
       "count": 1
     }
   ],
   "tags": [
     {
+      "name": "accounts",
+      "count": 1
+    },
+    {
+      "name": "admin",
+      "count": 1
+    },
+    {
       "name": "animation",
+      "count": 1
+    },
+    {
+      "name": "batch",
+      "count": 1
+    },
+    {
+      "name": "cloud-identity",
+      "count": 1
+    },
+    {
+      "name": "google",
       "count": 1
     },
     {
@@ -29,6 +53,10 @@
     },
     {
       "name": "scroll",
+      "count": 1
+    },
+    {
+      "name": "workspace",
       "count": 1
     }
   ]
