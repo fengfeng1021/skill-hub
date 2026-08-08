@@ -2,7 +2,7 @@
 
 > 收錄、整理、一鍵安裝各種 Claude / AI Agent Skills。挑好的 skill，複製提示詞，貼給 AI 就裝好。
 
-更新日期：2026-08-08　收錄數量：2
+更新日期：2026-08-08　收錄數量：4
 網站：https://fengfeng1021.github.io/skill-hub
 JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 
@@ -23,6 +23,28 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 同一個 repo 拆成多個資料夾、實際使用時會一起載入的（例如 GSAP 的 8 份），用 parts 收成一筆，不要拆成多筆。
 
 ## 收錄清單
+
+### 前端 / 設計
+
+#### Impeccable `impeccable`
+
+- 摘要：把網頁設計得有質感，也能幫你檢查哪裡不夠好。
+- 標籤：design、ui、ux、frontend、review、accessibility
+- 來源：https://github.com/pbakaus/impeccable/tree/main/.claude/skills/impeccable
+- 安裝資料夾名：`impeccable`
+- 一行裝完：`git clone --depth 1 https://github.com/pbakaus/impeccable %TEMP%/impeccable-repo && xcopy /E /I /Y %TEMP%\impeccable-repo\.claude\skills\impeccable %USERPROFILE%\.claude\skills\impeccable`
+- 下載基底：`https://raw.githubusercontent.com/pbakaus/impeccable/main/.claude/skills/impeccable`
+- 何時使用：覺得介面不好看、說不上哪裡怪，想要具體的修改建議；要設計新頁面或元件，希望一開始就有設計品質；要審查現有網站或介面，找出 UX、無障礙、視覺問題；要把整個網站調成某種風格（更活潑、更安靜、更有質感）
+
+#### Taste `taste`
+
+- 摘要：貼上任何網站的網址，就能學到它的設計風格與品味。
+- 標籤：design、taste、ui、analysis、tokens、extraction
+- 來源：https://github.com/senlindesign/taste-skill
+- 安裝資料夾名：`taste`
+- 一行裝完：`git clone --depth 1 https://github.com/senlindesign/taste-skill %USERPROFILE%\.claude\skills\taste`
+- 下載基底：`https://raw.githubusercontent.com/senlindesign/taste-skill/main`
+- 何時使用：看到一個網站設計得很好，想學它背後的設計邏輯；要模仿某個品牌的視覺風格，需要具體的色票、字體、間距數值；要理解「為什麼」這個設計好看，而不只是複製參數
 
 ### 前端 / 動效
 

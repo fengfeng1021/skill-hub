@@ -34,8 +34,12 @@
     "footer": "## 完成後請做這幾件事\n\n1. 列出每個 skill 實際安裝的完整路徑，以及該資料夾下的檔案\n2. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n3. 告訴我要重新啟動 Claude Code，新的 skill 才會被載入\n4. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過",
     "separator": "\n\n---\n\n"
   },
-  "count": 2,
+  "count": 4,
   "categories": [
+    {
+      "name": "前端 / 設計",
+      "count": 2
+    },
     {
       "name": "前端 / 動效",
       "count": 1
@@ -47,11 +51,27 @@
   ],
   "tags": [
     {
+      "name": "design",
+      "count": 2
+    },
+    {
+      "name": "ui",
+      "count": 2
+    },
+    {
+      "name": "accessibility",
+      "count": 1
+    },
+    {
       "name": "accounts",
       "count": 1
     },
     {
       "name": "admin",
+      "count": 1
+    },
+    {
+      "name": "analysis",
       "count": 1
     },
     {
@@ -64,6 +84,14 @@
     },
     {
       "name": "cloud-identity",
+      "count": 1
+    },
+    {
+      "name": "extraction",
+      "count": 1
+    },
+    {
+      "name": "frontend",
       "count": 1
     },
     {
@@ -87,7 +115,23 @@
       "count": 1
     },
     {
+      "name": "review",
+      "count": 1
+    },
+    {
       "name": "scroll",
+      "count": 1
+    },
+    {
+      "name": "taste",
+      "count": 1
+    },
+    {
+      "name": "tokens",
+      "count": 1
+    },
+    {
+      "name": "ux",
       "count": 1
     },
     {
@@ -295,6 +339,148 @@
       ],
       "promptBlock": "### GSAP  →  一組 8 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：讓網頁上的東西會動起來，淡入、滑動、跟著捲動都行。\n- **詳細一點**：GSAP 官方為 AI 準備的 skill 組合。內容涵蓋核心 tween 與 ease、多步驟時間軸編排、捲動驅動動畫（ScrollTrigger）、Flip／Draggable／SplitText 等外掛、React 與 Vue／Svelte 的正確用法、gsap.utils 工具函式，以及維持 60fps 的效能守則。\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  npx skills add https://github.com/greensock/gsap-skills\n  ```\n- **來源**：GitHub `greensock/gsap-skills`（分支 `main`，子目錄 `skills`）\n- **repo 網址**：https://github.com/greensock/gsap-skills\n- **這一組的 8 個資料夾**（缺一不可，資料夾名照抄）：\n  - `gsap-core` — 最基本的動起來，移動、放大、變透明都在這。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-core`\n  - `gsap-timeline` — 把好幾段動畫排成先後順序，像剪片一樣。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-timeline`\n  - `gsap-scrolltrigger` — 捲動頁面時觸發動畫，也能把畫面釘住不動。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-scrolltrigger`\n  - `gsap-plugins` — 額外的特殊效果，像拖曳、文字拆字、位置變換。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-plugins`\n  - `gsap-react` — 在 React 做的網站裡要怎麼正確使用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-react`\n  - `gsap-frameworks` — 在 Vue、Svelte 這類網站裡怎麼用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-frameworks`\n  - `gsap-utils` — 一些好用的小工具，算數值、隨機、限制範圍。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-utils`\n  - `gsap-performance` — 讓動畫跑得順、不卡頓的做法。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-performance`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：Claude Code 也可以改用 `/plugin marketplace add greensock/gsap-skills` 安裝。手動安裝的話 8 個資料夾要全部放進 skills 目錄，缺一份就會少掉對應主題的知識。",
       "installPrompt": "你是我的 Skill 安裝助手。請幫我安裝下面這個 Claude Skill。\n\n## 安裝規則\n\n1. **安裝位置** — 每個 skill 是一個資料夾，放在：\n   - 全域（所有專案共用）：`~/.claude/skills/<資料夾名>/`\n     Windows 為 `%USERPROFILE%\\.claude\\skills\\<資料夾名>\\`\n   - 只給目前專案用：`<專案根目錄>/.claude/skills/<資料夾名>/`\n   下面每個 skill 都標了建議範圍，照著放；我另外指定時以我說的為準。\n2. **資料夾名不要改**。Claude 用資料夾名對應 SKILL.md 的 `name`，改了會載入不到。\n3. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n4. **不要改寫 SKILL.md 的 frontmatter**（`name`、`description`）。那是 Claude 判斷何時自動載入這個 skill 的依據，改了就失效。\n5. 目標資料夾**已存在**時，先停下來問我要覆蓋還是跳過，不要直接蓋掉。\n\n---\n\n### GSAP  →  一組 8 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：讓網頁上的東西會動起來，淡入、滑動、跟著捲動都行。\n- **詳細一點**：GSAP 官方為 AI 準備的 skill 組合。內容涵蓋核心 tween 與 ease、多步驟時間軸編排、捲動驅動動畫（ScrollTrigger）、Flip／Draggable／SplitText 等外掛、React 與 Vue／Svelte 的正確用法、gsap.utils 工具函式，以及維持 60fps 的效能守則。\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  npx skills add https://github.com/greensock/gsap-skills\n  ```\n- **來源**：GitHub `greensock/gsap-skills`（分支 `main`，子目錄 `skills`）\n- **repo 網址**：https://github.com/greensock/gsap-skills\n- **這一組的 8 個資料夾**（缺一不可，資料夾名照抄）：\n  - `gsap-core` — 最基本的動起來，移動、放大、變透明都在這。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-core`\n  - `gsap-timeline` — 把好幾段動畫排成先後順序，像剪片一樣。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-timeline`\n  - `gsap-scrolltrigger` — 捲動頁面時觸發動畫，也能把畫面釘住不動。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-scrolltrigger`\n  - `gsap-plugins` — 額外的特殊效果，像拖曳、文字拆字、位置變換。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-plugins`\n  - `gsap-react` — 在 React 做的網站裡要怎麼正確使用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-react`\n  - `gsap-frameworks` — 在 Vue、Svelte 這類網站裡怎麼用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-frameworks`\n  - `gsap-utils` — 一些好用的小工具，算數值、隨機、限制範圍。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-utils`\n  - `gsap-performance` — 讓動畫跑得順、不卡頓的做法。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-performance`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：Claude Code 也可以改用 `/plugin marketplace add greensock/gsap-skills` 安裝。手動安裝的話 8 個資料夾要全部放進 skills 目錄，缺一份就會少掉對應主題的知識。\n\n---\n\n## 完成後請做這幾件事\n\n1. 列出每個 skill 實際安裝的完整路徑，以及該資料夾下的檔案\n2. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n3. 告訴我要重新啟動 Claude Code，新的 skill 才會被載入\n4. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
+    },
+    {
+      "id": "impeccable",
+      "name": "Impeccable",
+      "summary": "把網頁設計得有質感，也能幫你檢查哪裡不夠好。",
+      "description": "由 Paul Bakaus 打造的設計語言與品質審查 skill（GitHub 56k+ stars，持續維護）。涵蓋網站、登陸頁、儀表板、產品介面、元件、表單、設定頁、引導流程、空白狀態等所有前端介面。\n能力包含：UX 審查、視覺層級、資訊架構、認知負荷、無障礙（a11y）、效能、響應式行為、主題、反模式偵測、字體排版、間距、格線、對齊、色彩、動態與微互動、UX 文案、錯誤狀態、邊界情況、i18n，以及可重用的設計系統與 tokens。\n支援的指令：audit（全面審查）、critique（批評式回饋）、polish（打磨）、animate（動效）、bolder／quieter（調整強度）、colorize（配色）、typeset（排版）、distill（簡化）、harden（強化）、optimize（最佳化）、extract（提取設計系統）等，也可直接對 live 頁面做迭代修改。",
+      "category": "前端 / 設計",
+      "tags": [
+        "design",
+        "ui",
+        "ux",
+        "frontend",
+        "review",
+        "accessibility"
+      ],
+      "official": false,
+      "featured": true,
+      "author": "Paul Bakaus",
+      "license": "Apache 2.0",
+      "version": "4.0.4",
+      "usage": [
+        "覺得介面不好看、說不上哪裡怪，想要具體的修改建議",
+        "要設計新頁面或元件，希望一開始就有設計品質",
+        "要審查現有網站或介面，找出 UX、無障礙、視覺問題",
+        "要把整個網站調成某種風格（更活潑、更安靜、更有質感）"
+      ],
+      "highlights": [
+        "GitHub 56k+ stars，目前最受歡迎的 AI 介面設計 skill",
+        "不是模板：是一套設計判斷力，任何頁面都適用",
+        "支援 live 瀏覽器迭代，直接看修改效果"
+      ],
+      "source": {
+        "branch": "main",
+        "kind": "github",
+        "url": "https://github.com/pbakaus/impeccable",
+        "subdir": ".claude/skills/impeccable",
+        "owner": "pbakaus",
+        "name": "impeccable",
+        "displayUrl": "https://github.com/pbakaus/impeccable/tree/main/.claude/skills/impeccable",
+        "rawBase": "https://raw.githubusercontent.com/pbakaus/impeccable/main/.claude/skills/impeccable",
+        "label": "pbakaus/impeccable"
+      },
+      "install": {
+        "scope": "user",
+        "files": [
+          "SKILL.md"
+        ],
+        "requires": [],
+        "command": "git clone --depth 1 https://github.com/pbakaus/impeccable %TEMP%/impeccable-repo && xcopy /E /I /Y %TEMP%\\impeccable-repo\\.claude\\skills\\impeccable %USERPROFILE%\\.claude\\skills\\impeccable",
+        "dirName": "impeccable",
+        "notes": "repo 內含多個平台的設定檔，只需要複製 .claude/skills/impeccable 資料夾到 skills 目錄即可。也可以直接整包 clone 到 ~/.claude/skills/impeccable（會多帶其他平台的檔案，不影響使用）。"
+      },
+      "prompt": null,
+      "links": [
+        {
+          "label": "impeccable（GitHub repo）",
+          "url": "https://github.com/pbakaus/impeccable"
+        },
+        {
+          "label": "impeccable 官方網站",
+          "url": "https://impeccable.design"
+        }
+      ],
+      "addedAt": "2026-08-08",
+      "updatedAt": "2026-08-08",
+      "parts": [],
+      "dirNames": [
+        "impeccable"
+      ],
+      "promptBlock": "### Impeccable  →  資料夾名 `impeccable`\n\n- **這個 skill 做什麼**：把網頁設計得有質感，也能幫你檢查哪裡不夠好。\n- **詳細一點**：由 Paul Bakaus 打造的設計語言與品質審查 skill（GitHub 56k+ stars，持續維護）。涵蓋網站、登陸頁、儀表板、產品介面、元件、表單、設定頁、引導流程、空白狀態等所有前端介面。\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  git clone --depth 1 https://github.com/pbakaus/impeccable %TEMP%/impeccable-repo && xcopy /E /I /Y %TEMP%\\impeccable-repo\\.claude\\skills\\impeccable %USERPROFILE%\\.claude\\skills\\impeccable\n  ```\n- **來源**：GitHub `pbakaus/impeccable`（分支 `main`，子目錄 `.claude/skills/impeccable`）\n- **repo 網址**：https://github.com/pbakaus/impeccable\n- **下載基底網址**：`https://raw.githubusercontent.com/pbakaus/impeccable/main/.claude/skills/impeccable`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：repo 內含多個平台的設定檔，只需要複製 .claude/skills/impeccable 資料夾到 skills 目錄即可。也可以直接整包 clone 到 ~/.claude/skills/impeccable（會多帶其他平台的檔案，不影響使用）。",
+      "installPrompt": "你是我的 Skill 安裝助手。請幫我安裝下面這個 Claude Skill。\n\n## 安裝規則\n\n1. **安裝位置** — 每個 skill 是一個資料夾，放在：\n   - 全域（所有專案共用）：`~/.claude/skills/<資料夾名>/`\n     Windows 為 `%USERPROFILE%\\.claude\\skills\\<資料夾名>\\`\n   - 只給目前專案用：`<專案根目錄>/.claude/skills/<資料夾名>/`\n   下面每個 skill 都標了建議範圍，照著放；我另外指定時以我說的為準。\n2. **資料夾名不要改**。Claude 用資料夾名對應 SKILL.md 的 `name`，改了會載入不到。\n3. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n4. **不要改寫 SKILL.md 的 frontmatter**（`name`、`description`）。那是 Claude 判斷何時自動載入這個 skill 的依據，改了就失效。\n5. 目標資料夾**已存在**時，先停下來問我要覆蓋還是跳過，不要直接蓋掉。\n\n---\n\n### Impeccable  →  資料夾名 `impeccable`\n\n- **這個 skill 做什麼**：把網頁設計得有質感，也能幫你檢查哪裡不夠好。\n- **詳細一點**：由 Paul Bakaus 打造的設計語言與品質審查 skill（GitHub 56k+ stars，持續維護）。涵蓋網站、登陸頁、儀表板、產品介面、元件、表單、設定頁、引導流程、空白狀態等所有前端介面。\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  git clone --depth 1 https://github.com/pbakaus/impeccable %TEMP%/impeccable-repo && xcopy /E /I /Y %TEMP%\\impeccable-repo\\.claude\\skills\\impeccable %USERPROFILE%\\.claude\\skills\\impeccable\n  ```\n- **來源**：GitHub `pbakaus/impeccable`（分支 `main`，子目錄 `.claude/skills/impeccable`）\n- **repo 網址**：https://github.com/pbakaus/impeccable\n- **下載基底網址**：`https://raw.githubusercontent.com/pbakaus/impeccable/main/.claude/skills/impeccable`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：repo 內含多個平台的設定檔，只需要複製 .claude/skills/impeccable 資料夾到 skills 目錄即可。也可以直接整包 clone 到 ~/.claude/skills/impeccable（會多帶其他平台的檔案，不影響使用）。\n\n---\n\n## 完成後請做這幾件事\n\n1. 列出每個 skill 實際安裝的完整路徑，以及該資料夾下的檔案\n2. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n3. 告訴我要重新啟動 Claude Code，新的 skill 才會被載入\n4. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
+    },
+    {
+      "id": "taste",
+      "name": "Taste",
+      "summary": "貼上任何網站的網址，就能學到它的設計風格與品味。",
+      "description": "設計 DNA 提取器：貼一個網站網址，它會用真實瀏覽器抓取 DOM 資料與截圖，跑 4 步驟分析，產出兩份檔案——{domain}.md 與 {domain}.json，內容包含兩層：\n1. 具體設計 tokens：色彩、字體、間距、圓角、陰影、格線。\n2. Taste DNA：Trigger → Decision → Reason → Evidence 的取捨說明，解釋「為什麼」這個設計有效。\n有了這兩層，AI 就不只是照抄數值，而是理解設計背後的決策邏輯，遇到沒看過的頁面也能做出對的判斷。",
+      "category": "前端 / 設計",
+      "tags": [
+        "design",
+        "taste",
+        "ui",
+        "analysis",
+        "tokens",
+        "extraction"
+      ],
+      "official": false,
+      "featured": false,
+      "author": "senlindesign",
+      "license": "MIT",
+      "version": "1.0.0",
+      "usage": [
+        "看到一個網站設計得很好，想學它背後的設計邏輯",
+        "要模仿某個品牌的視覺風格，需要具體的色票、字體、間距數值",
+        "要理解「為什麼」這個設計好看，而不只是複製參數"
+      ],
+      "highlights": [
+        "不只給數值：連設計決策的「為什麼」都分析出來",
+        "任何網站都能扒，產出 markdown + JSON 兩份檔案",
+        "跟 Impeccable 互補：一個學別人的品味，一個建立自己的品味標準"
+      ],
+      "source": {
+        "branch": "main",
+        "kind": "github",
+        "url": "https://github.com/senlindesign/taste-skill",
+        "owner": "senlindesign",
+        "name": "taste-skill",
+        "displayUrl": "https://github.com/senlindesign/taste-skill",
+        "rawBase": "https://raw.githubusercontent.com/senlindesign/taste-skill/main",
+        "label": "senlindesign/taste-skill"
+      },
+      "install": {
+        "scope": "user",
+        "files": [
+          "SKILL.md"
+        ],
+        "requires": [
+          "Playwright MCP"
+        ],
+        "command": "git clone --depth 1 https://github.com/senlindesign/taste-skill %USERPROFILE%\\.claude\\skills\\taste",
+        "dirName": "taste",
+        "notes": "需要先安裝 Playwright MCP 才能抓取網站。安裝後用 /taste <網址> 開始分析。"
+      },
+      "prompt": null,
+      "links": [
+        {
+          "label": "taste-skill（GitHub repo）",
+          "url": "https://github.com/senlindesign/taste-skill"
+        },
+        {
+          "label": "Taste Lab 官方網站",
+          "url": "https://www.tastelab.xyz"
+        }
+      ],
+      "addedAt": "2026-08-08",
+      "updatedAt": "2026-08-08",
+      "parts": [],
+      "dirNames": [
+        "taste"
+      ],
+      "promptBlock": "### Taste  →  資料夾名 `taste`\n\n- **這個 skill 做什麼**：貼上任何網站的網址，就能學到它的設計風格與品味。\n- **詳細一點**：設計 DNA 提取器：貼一個網站網址，它會用真實瀏覽器抓取 DOM 資料與截圖，跑 4 步驟分析，產出兩份檔案——{domain}.md 與 {domain}.json，內容包含兩層：\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  git clone --depth 1 https://github.com/senlindesign/taste-skill %USERPROFILE%\\.claude\\skills\\taste\n  ```\n- **來源**：GitHub `senlindesign/taste-skill`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/senlindesign/taste-skill\n- **下載基底網址**：`https://raw.githubusercontent.com/senlindesign/taste-skill/main`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **額外相依**（先確認有沒有，缺的話問我要不要裝）：\n  - `Playwright MCP`\n- **注意**：需要先安裝 Playwright MCP 才能抓取網站。安裝後用 /taste <網址> 開始分析。",
+      "installPrompt": "你是我的 Skill 安裝助手。請幫我安裝下面這個 Claude Skill。\n\n## 安裝規則\n\n1. **安裝位置** — 每個 skill 是一個資料夾，放在：\n   - 全域（所有專案共用）：`~/.claude/skills/<資料夾名>/`\n     Windows 為 `%USERPROFILE%\\.claude\\skills\\<資料夾名>\\`\n   - 只給目前專案用：`<專案根目錄>/.claude/skills/<資料夾名>/`\n   下面每個 skill 都標了建議範圍，照著放；我另外指定時以我說的為準。\n2. **資料夾名不要改**。Claude 用資料夾名對應 SKILL.md 的 `name`，改了會載入不到。\n3. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n4. **不要改寫 SKILL.md 的 frontmatter**（`name`、`description`）。那是 Claude 判斷何時自動載入這個 skill 的依據，改了就失效。\n5. 目標資料夾**已存在**時，先停下來問我要覆蓋還是跳過，不要直接蓋掉。\n\n---\n\n### Taste  →  資料夾名 `taste`\n\n- **這個 skill 做什麼**：貼上任何網站的網址，就能學到它的設計風格與品味。\n- **詳細一點**：設計 DNA 提取器：貼一個網站網址，它會用真實瀏覽器抓取 DOM 資料與截圖，跑 4 步驟分析，產出兩份檔案——{domain}.md 與 {domain}.json，內容包含兩層：\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  git clone --depth 1 https://github.com/senlindesign/taste-skill %USERPROFILE%\\.claude\\skills\\taste\n  ```\n- **來源**：GitHub `senlindesign/taste-skill`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/senlindesign/taste-skill\n- **下載基底網址**：`https://raw.githubusercontent.com/senlindesign/taste-skill/main`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **額外相依**（先確認有沒有，缺的話問我要不要裝）：\n  - `Playwright MCP`\n- **注意**：需要先安裝 Playwright MCP 才能抓取網站。安裝後用 /taste <網址> 開始分析。\n\n---\n\n## 完成後請做這幾件事\n\n1. 列出每個 skill 實際安裝的完整路徑，以及該資料夾下的檔案\n2. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n3. 告訴我要重新啟動 Claude Code，新的 skill 才會被載入\n4. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
     }
   ]
 }

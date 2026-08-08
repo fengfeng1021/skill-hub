@@ -2,6 +2,10 @@
   "generatedAt": "2026-08-08",
   "categories": [
     {
+      "name": "前端 / 設計",
+      "count": 2
+    },
+    {
       "name": "前端 / 動效",
       "count": 1
     },
@@ -12,11 +16,27 @@
   ],
   "tags": [
     {
+      "name": "design",
+      "count": 2
+    },
+    {
+      "name": "ui",
+      "count": 2
+    },
+    {
+      "name": "accessibility",
+      "count": 1
+    },
+    {
       "name": "accounts",
       "count": 1
     },
     {
       "name": "admin",
+      "count": 1
+    },
+    {
+      "name": "analysis",
       "count": 1
     },
     {
@@ -29,6 +49,14 @@
     },
     {
       "name": "cloud-identity",
+      "count": 1
+    },
+    {
+      "name": "extraction",
+      "count": 1
+    },
+    {
+      "name": "frontend",
       "count": 1
     },
     {
@@ -52,7 +80,23 @@
       "count": 1
     },
     {
+      "name": "review",
+      "count": 1
+    },
+    {
       "name": "scroll",
+      "count": 1
+    },
+    {
+      "name": "taste",
+      "count": 1
+    },
+    {
+      "name": "tokens",
+      "count": 1
+    },
+    {
+      "name": "ux",
       "count": 1
     },
     {

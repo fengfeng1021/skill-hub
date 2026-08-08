@@ -1,0 +1,60 @@
+{
+  "id": "impeccable",
+  "name": "Impeccable",
+  "summary": "把網頁設計得有質感，也能幫你檢查哪裡不夠好。",
+  "description": "由 Paul Bakaus 打造的設計語言與品質審查 skill（GitHub 56k+ stars，持續維護）。涵蓋網站、登陸頁、儀表板、產品介面、元件、表單、設定頁、引導流程、空白狀態等所有前端介面。\n能力包含：UX 審查、視覺層級、資訊架構、認知負荷、無障礙（a11y）、效能、響應式行為、主題、反模式偵測、字體排版、間距、格線、對齊、色彩、動態與微互動、UX 文案、錯誤狀態、邊界情況、i18n，以及可重用的設計系統與 tokens。\n支援的指令：audit（全面審查）、critique（批評式回饋）、polish（打磨）、animate（動效）、bolder／quieter（調整強度）、colorize（配色）、typeset（排版）、distill（簡化）、harden（強化）、optimize（最佳化）、extract（提取設計系統）等，也可直接對 live 頁面做迭代修改。",
+  "category": "前端 / 設計",
+  "tags": [
+    "design",
+    "ui",
+    "ux",
+    "frontend",
+    "review",
+    "accessibility"
+  ],
+  "official": false,
+  "featured": true,
+  "author": "Paul Bakaus",
+  "license": "Apache 2.0",
+  "version": "4.0.4",
+  "usage": [
+    "覺得介面不好看、說不上哪裡怪，想要具體的修改建議",
+    "要設計新頁面或元件，希望一開始就有設計品質",
+    "要審查現有網站或介面，找出 UX、無障礙、視覺問題",
+    "要把整個網站調成某種風格（更活潑、更安靜、更有質感）"
+  ],
+  "highlights": [
+    "GitHub 56k+ stars，目前最受歡迎的 AI 介面設計 skill",
+    "不是模板：是一套設計判斷力，任何頁面都適用",
+    "支援 live 瀏覽器迭代，直接看修改效果"
+  ],
+  "source": {
+    "kind": "github",
+    "url": "https://github.com/pbakaus/impeccable",
+    "branch": "main",
+    "subdir": ".claude/skills/impeccable"
+  },
+  "install": {
+    "command": "git clone --depth 1 https://github.com/pbakaus/impeccable %TEMP%/impeccable-repo && xcopy /E /I /Y %TEMP%\\impeccable-repo\\.claude\\skills\\impeccable %USERPROFILE%\\.claude\\skills\\impeccable",
+    "scope": "user",
+    "dirName": "impeccable",
+    "files": [
+      "SKILL.md"
+    ],
+    "requires": [],
+    "notes": "repo 內含多個平台的設定檔，只需要複製 .claude/skills/impeccable 資料夾到 skills 目錄即可。也可以直接整包 clone 到 ~/.claude/skills/impeccable（會多帶其他平台的檔案，不影響使用）。"
+  },
+  "prompt": null,
+  "links": [
+    {
+      "label": "impeccable（GitHub repo）",
+      "url": "https://github.com/pbakaus/impeccable"
+    },
+    {
+      "label": "impeccable 官方網站",
+      "url": "https://impeccable.design"
+    }
+  ],
+  "addedAt": "2026-08-08",
+  "updatedAt": "2026-08-08"
+}
