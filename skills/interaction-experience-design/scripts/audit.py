@@ -64,6 +64,8 @@ class AuditParser(html.parser.HTMLParser):
         self.inputs = []          # (name, has_label, has_placeholder, has_aria)
         self.in_label = 0
         self.current_label_text = ""
+        self._elem_stack = []     # 追蹤目前元素的文字
+        self._pending_labels = []
 
     def _get_style(self, attrs):
         d = dict(attrs)
@@ -86,6 +88,15 @@ class AuditParser(html.parser.HTMLParser):
             if tag == "input" and d.get("type") not in (None, "text", "email", "password", "search", "tel", "url", "number"):
                 return
             self.buttons.append((tag, d.get("id", d.get("name", "")), w, h, fs))
+            # 焦點可見性：outline:none 且無替代 focus 樣式
+            if re.search(r"outline\s*:\s*none", style):
+                self.issues.append(("warning", "focus",
+                    f"元素「{d.get('id', d.get('name', '?'))}」設了 outline:none——焦點環不可見（WCAG：鍵盤使用者會迷路）"))
+            # 圖示按鈕需 aria-label（無文字時）
+            if tag in ("button", "a") and not d.get("aria-label") and not d.get("title"):
+                self._elem_stack.append((tag, d.get("id", ""), False))
+        elif tag in ("button", "a"):
+            self._elem_stack.append((tag, d.get("id", ""), False))
         if tag == "input":
             self.inputs.append({
                 "name": d.get("id") or d.get("name") or "?",
@@ -130,6 +141,11 @@ class AuditParser(html.parser.HTMLParser):
                         self._pending_labels = []
                     self._pending_labels.append(self._label_for)
                 self._label_for = None
+        if tag in ("button", "a") and self._elem_stack:
+            elem_tag, elem_id, has_text = self._elem_stack.pop()
+            if not has_text:
+                self.issues.append(("warning", "aria",
+                    f"圖示按鈕「{elem_id or elem_tag}」沒有文字也沒有 aria-label/title（螢幕閱讀器與鍵盤使用者不知道它做什麼）"))
 
     def handle_data(self, data):
         if self.in_label and data.strip():
@@ -140,6 +156,10 @@ class AuditParser(html.parser.HTMLParser):
                     inp["_labeled"] = False
             if self.inputs and not getattr(self, "_label_for", None):
                 self.inputs[-1]["_labeled"] = True
+        if data.strip() and self._elem_stack:
+            t, i, _ = self._elem_stack[-1]
+            if t in ("button", "a"):
+                self._elem_stack[-1] = (t, i, True)
 
 
 def audit(html_text):
@@ -150,6 +170,13 @@ def audit(html_text):
         return {"score": 0, "issues": [("error", "parse", f"HTML 解析失敗：{e}")]}
 
     issues = list(p.issues)
+
+    # reduced-motion：有動畫但沒有 prefers-reduced-motion 處理
+    has_animation = re.search(r"animation\s*:|@keyframes", html_text)
+    has_reduced_motion = "prefers-reduced-motion" in html_text
+    if has_animation and not has_reduced_motion:
+        issues.append(("warning", "motion",
+            "偵測到動畫（animation/@keyframes）但沒有 prefers-reduced-motion 處理（WCAG：應尊重使用者減少動態的設定）"))
 
     # placeholder-only 欄位
     for inp in p.inputs:

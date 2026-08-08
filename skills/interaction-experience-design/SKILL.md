@@ -47,6 +47,7 @@ version: 3.0.0
 | 設計完成要驗證 | `references/evaluation-methods.md` ＋ `references/scoring.md` | 評估方法＋評分閘門（<80 不准交付） |
 | 交付前最終檢查 | `references/anti-patterns-checklist.md` ＋ `references/scoring.md` | 自檢打勾＋計分判定（強制） |
 | 需要具體設計參考 | `references/case-studies.md` | 真實產品好/壞案例對照 |
+| **桌面應用（egui 等）** | `references/desktop-apps.md` | 桌面特有調整、加扣項與評分流程 |
 
 **規則**：
 - 任務橫跨多類 → 讀對應的多份（例如「登入流程重設計」＝ design-laws ＋ information-architecture ＋ nielsen-heuristics ＋ case-studies）
@@ -65,6 +66,7 @@ version: 3.0.0
 | `evaluation-methods.md` | 啟發式評估／任務分析／可用性測試／A-B／心智模型測試 操作步驟 | 設計完成要驗證時 |
 | `scoring.md` | 評分閘門：100 分制扣分表，<80 不准交付 | 每次設計完成強制評分 |
 | `case-studies.md` | 真實產品互動案例（Linear／Slack／Stripe／Notion／Airbnb／Gmail 好壞對照） | 需要具體設計參考時 |
+| `desktop-apps.md` | egui／桌面應用適用指引（學理調整、加扣項、桌面評分流程） | 設計桌面軟體時 |
 | `anti-patterns-checklist.md` | 反模式清單＋自檢清單（含學理對應） | 設計中與交付前 |
 
 ## 可執行工具（scripts/）

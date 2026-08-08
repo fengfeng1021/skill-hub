@@ -2,7 +2,7 @@
   "id": "interaction-experience-design",
   "name": "互動體驗設計",
   "summary": "讓使用者一看就懂怎麼用，不會迷路也知道下一步。",
-  "description": "專業級「使用者交互體驗」設計 skill，多檔結構（SKILL.md 入口 ＋ references/ 9 份詳細檔 ＋ scripts/ 可執行工具）。以學術理論為基礎：ISO 9241-11、Nielsen 十大啟發式（NN/g 2024）、Shneiderman 八條黃金法則、互動設計定律（Fitts／Hick／Miller／Gestalt／Jakob／Norman）、認知負荷理論（Sweller）、資訊架構學（Morville & Rosenfeld）、WCAG 2.2、五種評估方法。references：nielsen-heuristics（10 條完整＋實例＋違反）、design-laws、information-architecture、cognitive-load、accessibility-wcag、evaluation-methods、scoring（評分閘門：100 分制 <80 不准交付）、case-studies（Linear／Slack／Stripe／Notion／Airbnb／Gmail 好壞案例對照）、anti-patterns-checklist。scripts/audit.py：餵 HTML 自動檢查對比度／目標大小／placeholder-only／非語意元素／雙主按鈕並輸出評分。內建決策樹索引（任務類型→必讀檔案）。",
+  "description": "專業級「使用者交互體驗」設計 skill v5：SKILL.md 入口＋決策樹索引＋11 份 references＋scripts 工具＋benchmarks 案例集＋多平台目錄。學理基礎：Nielsen 10 啟發式、Shneiderman 8 法則、Fitts/Hick/Miller/Gestalt/Jakob/Norman、認知負荷、資訊架構學、WCAG 2.2、ISO 9241。references 含：nielsen-heuristics（10 條完整）、design-laws、information-architecture、cognitive-load、accessibility-wcag、evaluation-methods、scoring（評分閘門 <80 不交付，工具+人工合流）、case-studies（6 主題好壞案例）、desktop-apps（egui 桌面指引）、anti-patterns-checklist。scripts/audit.py（HTML 自動審查：對比/目標/placeholder/語意/雙主按鈕/焦點/aria/reduced-motion）、test_audit.py（12 項自測含 benchmark 回歸）。附 README、.codex/.cursor 多平台目錄。",
   "category": "前端 / 設計",
   "tags": [
     "ux",
@@ -18,7 +18,7 @@
   "featured": true,
   "author": "fengfeng1021",
   "license": "MIT",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "usage": [
     "設計登入流程、多功能 App 的導覽與分頁組織",
     "規劃按鈕層級、返回機制、頁面切換",
@@ -40,6 +40,7 @@
     "dirName": "interaction-experience-design",
     "files": [
       "SKILL.md",
+      "README.md",
       "references/nielsen-heuristics.md",
       "references/design-laws.md",
       "references/information-architecture.md",
@@ -48,9 +49,16 @@
       "references/evaluation-methods.md",
       "references/scoring.md",
       "references/case-studies.md",
+      "references/desktop-apps.md",
       "references/anti-patterns-checklist.md",
       "scripts/audit.py",
-      "scripts/test_audit.py"
+      "scripts/test_audit.py",
+      "benchmarks/login-good.html",
+      "benchmarks/login-bad.html",
+      "benchmarks/dashboard-good.html",
+      "benchmarks/dashboard-bad.html",
+      "benchmarks/settings-good.html",
+      "benchmarks/settings-bad.html"
     ],
     "requires": [],
     "notes": "本 skill 由 Skill Hub 自製託管。內建自測：python scripts/test_audit.py。"

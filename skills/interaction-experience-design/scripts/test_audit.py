@@ -68,6 +68,54 @@ class TestAudit(unittest.TestCase):
             r_file = audit.audit(p.read_text(encoding="utf-8"))
         self.assertEqual(r_file["score"], r_str["score"])
 
+    def test_icon_button_without_label_detected(self):
+        html = '<button style="height:32px;width:32px"></button>'
+        r = audit.audit(html)
+        cats = {cat for _, cat, _ in r["issues"]}
+        self.assertIn("aria", cats, "無文字無 aria-label 的圖示按鈕應被抓到")
+
+    def test_icon_button_with_aria_label_ok(self):
+        html = '<button aria-label="搜尋" style="height:32px;width:32px"></button>'
+        r = audit.audit(html)
+        cats = {cat for _, cat, _ in r["issues"]}
+        self.assertNotIn("aria", cats)
+
+    def test_outline_none_detected(self):
+        html = '<a href="#" style="outline:none">連結</a>'
+        r = audit.audit(html)
+        cats = {cat for _, cat, _ in r["issues"]}
+        self.assertIn("focus", cats, "outline:none 應被抓到")
+
+    def test_animation_without_reduced_motion_detected(self):
+        html = '<div style="animation: fade 1s"></div>'
+        r = audit.audit(html)
+        cats = {cat for _, cat, _ in r["issues"]}
+        self.assertIn("motion", cats)
+
+    def test_animation_with_reduced_motion_ok(self):
+        html = '<style>@media (prefers-reduced-motion: reduce) { * { animation: none } }</style><div style="animation: fade 1s"></div>'
+        r = audit.audit(html)
+        cats = {cat for _, cat, _ in r["issues"]}
+        self.assertNotIn("motion", cats)
+
+    def test_benchmark_suite(self):
+        """benchmarks/ 案例集回歸測試：每個案例的期望分數區間"""
+        bench_dir = Path(__file__).parent.parent / "benchmarks"
+        expectations = {
+            "login-good.html": (90, 101),
+            "login-bad.html": (0, 79),
+            "dashboard-good.html": (90, 101),
+            "dashboard-bad.html": (0, 79),
+            "settings-good.html": (90, 101),
+            "settings-bad.html": (0, 79),
+        }
+        for fname, (lo, hi) in expectations.items():
+            p = bench_dir / fname
+            self.assertTrue(p.exists(), f"缺少 benchmark 檔 {fname}")
+            r = audit.audit(p.read_text(encoding="utf-8"))
+            self.assertTrue(lo <= r["score"] <= hi,
+                f"{fname}: 期望 {lo}-{hi}，實際 {r['score']}（問題：{[msg for _,_,msg in r['issues']]}）")
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
