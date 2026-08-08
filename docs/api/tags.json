@@ -28,12 +28,12 @@
       "count": 4
     },
     {
-      "name": "frontend",
+      "name": "accessibility",
       "count": 3
     },
     {
-      "name": "accessibility",
-      "count": 2
+      "name": "frontend",
+      "count": 3
     },
     {
       "name": "brand",
@@ -68,6 +68,10 @@
       "count": 1
     },
     {
+      "name": "cognitive-load",
+      "count": 1
+    },
+    {
       "name": "design-system",
       "count": 1
     },
@@ -85,6 +89,10 @@
     },
     {
       "name": "gsap",
+      "count": 1
+    },
+    {
+      "name": "heuristics",
       "count": 1
     },
     {
@@ -109,10 +117,6 @@
     },
     {
       "name": "navigation",
-      "count": 1
-    },
-    {
-      "name": "onboarding",
       "count": 1
     },
     {

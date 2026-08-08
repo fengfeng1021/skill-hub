@@ -29,7 +29,7 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 #### 互動體驗設計 `interaction-experience-design`
 
 - 摘要：讓使用者一看就懂怎麼用，不會迷路也知道下一步。
-- 標籤：ux、interaction、information-architecture、navigation、usability、onboarding
+- 標籤：ux、interaction、heuristics、information-architecture、navigation、usability、accessibility、cognitive-load
 - 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/interaction-experience-design
 - 安裝資料夾名：`interaction-experience-design`
 - 一行裝完：`xcopy /E /I /Y skills\interaction-experience-design %USERPROFILE%\.claude\skills\interaction-experience-design`
