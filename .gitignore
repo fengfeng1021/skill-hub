@@ -7,3 +7,4 @@ Thumbs.db
 
 # 本地暫存的 skill 下載
 .downloads/
+__pycache__/
