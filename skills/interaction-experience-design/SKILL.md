@@ -44,13 +44,14 @@ version: 3.0.0
 | 決定按鈕大小／選項數／視覺分組 | `references/design-laws.md` | Fitts、Hick、Miller、Gestalt |
 | 流程複雜／資訊量大／長表單 | `references/cognitive-load.md` | 三類負荷與拆步策略 |
 | 檢查對比／鍵盤／目標大小 | `references/accessibility-wcag.md` | WCAG 2.2 互動要求 |
-| 設計完成要驗證 | `references/evaluation-methods.md` | 啟發式評估／任務分析／可用性測試 |
-| 交付前最終檢查 | `references/anti-patterns-checklist.md` | 自檢清單逐項打勾 |
+| 設計完成要驗證 | `references/evaluation-methods.md` ＋ `references/scoring.md` | 評估方法＋評分閘門（<80 不准交付） |
+| 交付前最終檢查 | `references/anti-patterns-checklist.md` ＋ `references/scoring.md` | 自檢打勾＋計分判定（強制） |
+| 需要具體設計參考 | `references/case-studies.md` | 真實產品好/壞案例對照 |
 
 **規則**：
-- 任務橫跨多類 → 讀對應的多份（例如「登入流程重設計」＝ design-laws ＋ information-architecture ＋ nielsen-heuristics）
+- 任務橫跨多類 → 讀對應的多份（例如「登入流程重設計」＝ design-laws ＋ information-architecture ＋ nielsen-heuristics ＋ case-studies）
 - 不確定讀哪份 → 讀 `references/nielsen-heuristics.md`（最通用的審查基準）
-- 完成設計後**一定**用 `references/anti-patterns-checklist.md` 自檢（這是強制步驟，不是選配）
+- 完成設計後**一定**用 `references/anti-patterns-checklist.md` 自檢，再用 `references/scoring.md` 計分——**<80 分不准交付**（強制步驟，不是選配）
 
 ## 檔案導覽（references/ 完整索引）
 
@@ -62,7 +63,15 @@ version: 3.0.0
 | `cognitive-load.md` | 認知負荷理論：三類負荷與減載策略 | 流程複雜、資訊量大時 |
 | `accessibility-wcag.md` | WCAG 2.2 互動相關要求與對應實作 | 檢查無障礙時 |
 | `evaluation-methods.md` | 啟發式評估／任務分析／可用性測試／A-B／心智模型測試 操作步驟 | 設計完成要驗證時 |
+| `scoring.md` | 評分閘門：100 分制扣分表，<80 不准交付 | 每次設計完成強制評分 |
+| `case-studies.md` | 真實產品互動案例（Linear／Slack／Stripe／Notion／Airbnb／Gmail 好壞對照） | 需要具體設計參考時 |
 | `anti-patterns-checklist.md` | 反模式清單＋自檢清單（含學理對應） | 設計中與交付前 |
+
+## 可執行工具（scripts/）
+
+- `scripts/audit.py`：**互動體驗快速審查**。餵 HTML 檔案自動檢查（對比度／目標大小／placeholder-only／非語意元素／雙主按鈕）並輸出評分。
+  用法：`python scripts/audit.py <html檔案> [--json]`；<80 分不合格需修正重評。
+  有 HTML 成品時一律執行，與 `references/scoring.md` 互補（工具抓機械問題，人工評分抓設計問題）。
 
 ## 反模式速覽（詳細版見 references/anti-patterns-checklist.md）
 
