@@ -2,7 +2,7 @@
   "id": "interaction-experience-design",
   "name": "互動體驗設計",
   "summary": "讓使用者一看就懂怎麼用，不會迷路也知道下一步。",
-  "description": "專業級「使用者交互體驗」設計 skill，以學術理論為基礎。涵蓋：ISO 9241-11 可用性定義、Nielsen 十大啟發式（NN/g 2024）、Shneiderman 八條黃金法則、互動設計定律（Fitts 費茲定律、Hick 希克定律、Miller 7±2、Gestalt 格式塔、Jakob 慣例定律、Norman 設計心理學）、認知負荷理論（Sweller）、資訊架構學（Morville & Rosenfeld：組織方案、心智模型、Card Sorting、深度廣度、導覽系統、疊頁返回）、WCAG 2.2 無障礙、五種評估方法（啟發式評估/任務分析/可用性測試/A-B/心智模型測試）。內建反模式清單（每條對應違反的學理）與自檢清單。",
+  "description": "專業級「使用者交互體驗」設計 skill，多檔結構（SKILL.md 入口 ＋ references/ 7 份詳細檔）。以學術理論為基礎：ISO 9241-11 可用性定義、Nielsen 十大啟發式（NN/g 2024）、Shneiderman 八條黃金法則、互動設計定律（Fitts／Hick／Miller 7±2／Gestalt／Jakob／Norman）、認知負荷理論（Sweller）、資訊架構學（Morville & Rosenfeld）、WCAG 2.2 無障礙、五種評估方法（啟發式評估／任務分析／可用性測試／A-B／心智模型測試）。references 檔：nielsen-heuristics（10 條完整＋實例＋違反）、design-laws（定律詳解）、information-architecture（組織方案／卡片分類／深度廣度／導覽系統／疊頁返回）、cognitive-load（三類負荷與減載）、accessibility-wcag（互動相關要求）、evaluation-methods（5 種方法操作步驟）、anti-patterns-checklist（反模式＋自檢清單，含學理對應）。",
   "category": "前端 / 設計",
   "tags": [
     "ux",
@@ -18,7 +18,7 @@
   "featured": true,
   "author": "fengfeng1021",
   "license": "MIT",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "usage": [
     "設計登入流程、多功能 App 的導覽與分頁組織",
     "規劃按鈕層級、返回機制、頁面切換",
@@ -39,7 +39,14 @@
     "scope": "user",
     "dirName": "interaction-experience-design",
     "files": [
-      "SKILL.md"
+      "SKILL.md",
+      "references/nielsen-heuristics.md",
+      "references/design-laws.md",
+      "references/information-architecture.md",
+      "references/cognitive-load.md",
+      "references/accessibility-wcag.md",
+      "references/evaluation-methods.md",
+      "references/anti-patterns-checklist.md"
     ],
     "requires": [],
     "notes": "本 skill 由 Skill Hub 自製託管，收錄檔案在 skills/interaction-experience-design/。"
