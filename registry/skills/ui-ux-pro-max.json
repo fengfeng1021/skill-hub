@@ -1,7 +1,7 @@
 {
   "id": "ui-ux-pro-max",
   "name": "UI UX Pro Max",
-  "summary": "設計網站和手機 App，配色、字體、排版都幫你想好。",
+  "summary": "設計網站和手機 App，配色字體排版都幫你想好。",
   "description": "GitHub 114k+ stars 的設計智慧 skill 組合，一套 7 份、實際使用時互相搭配。核心是 ui-ux-pro-max 的在地查詢資料庫：84 種 UI 風格、192 組配色、74 種字體搭配、192 種產品類型、98 條 UX 指引、104 個圖示、16 組動效預設、25 種圖表，涵蓋 22 個技術棧（React、Next.js、Vue、SwiftUI、Flutter、Tailwind、shadcn/ui、Angular、WPF、WinUI 等）。\n另外 6 份負責具體產出：ui-styling（漂亮且無障礙的網頁介面）、design-system（三層設計 tokens 與元件規格）、design（商標 55 種風格、企業識別 50 件交付、圖示 15 種風格）、banner-design（22 種風格的社群媒體／廣告橫幅）、slides（策略性 HTML 簡報）、brand（品牌聲音與視覺識別）。",
   "category": "前端 / 設計",
   "tags": [

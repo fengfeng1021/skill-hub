@@ -68,7 +68,7 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 
 #### UI UX Pro Max `ui-ux-pro-max`
 
-- 摘要：設計網站和手機 App，配色、字體、排版都幫你想好。
+- 摘要：設計網站和手機 App，配色字體排版都幫你想好。
 - 標籤：design、ui、ux、frontend、mobile、brand、accessibility
 - 來源：https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills
 - 這是一組 7 個資料夾，要一起裝：`ui-ux-pro-max`、`ui-styling`、`design-system`、`design`、`banner-design`、`slides`、`brand`
