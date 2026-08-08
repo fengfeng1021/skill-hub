@@ -1,0 +1,135 @@
+{
+  "id": "ui-ux-pro-max",
+  "name": "UI UX Pro Max",
+  "summary": "設計網站和手機 App，配色、字體、排版都幫你想好。",
+  "description": "GitHub 114k+ stars 的設計智慧 skill 組合，一套 7 份、實際使用時互相搭配。核心是 ui-ux-pro-max 的在地查詢資料庫：84 種 UI 風格、192 組配色、74 種字體搭配、192 種產品類型、98 條 UX 指引、104 個圖示、16 組動效預設、25 種圖表，涵蓋 22 個技術棧（React、Next.js、Vue、SwiftUI、Flutter、Tailwind、shadcn/ui、Angular、WPF、WinUI 等）。\n另外 6 份負責具體產出：ui-styling（漂亮且無障礙的網頁介面）、design-system（三層設計 tokens 與元件規格）、design（商標 55 種風格、企業識別 50 件交付、圖示 15 種風格）、banner-design（22 種風格的社群媒體／廣告橫幅）、slides（策略性 HTML 簡報）、brand（品牌聲音與視覺識別）。",
+  "category": "前端 / 設計",
+  "tags": [
+    "design",
+    "ui",
+    "ux",
+    "frontend",
+    "mobile",
+    "brand",
+    "accessibility"
+  ],
+  "official": false,
+  "featured": true,
+  "author": "nextlevelbuilder",
+  "license": "MIT",
+  "version": "1.0.0",
+  "usage": [
+    "設計或改版網頁、手機 App 的介面，需要配色、字體、排版建議",
+    "要設計商標、橫幅、簡報、圖示等各種視覺素材",
+    "要建立品牌識別或整套設計系統",
+    "要確保介面無障礙、各種裝置都好看"
+  ],
+  "highlights": [
+    "GitHub 114k+ stars，目前最熱門的 AI 設計 skill",
+    "內建超大靈感庫：84 種風格、192 組配色、74 種字體搭配",
+    "一套 7 份一起裝，從介面、商標、簡報到品牌全包"
+  ],
+  "source": {
+    "branch": "main",
+    "kind": "github",
+    "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+    "subdir": ".claude/skills",
+    "owner": "nextlevelbuilder",
+    "name": "ui-ux-pro-max-skill",
+    "displayUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills",
+    "rawBase": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills",
+    "label": "nextlevelbuilder/ui-ux-pro-max-skill"
+  },
+  "parts": [
+    {
+      "dirName": "ui-ux-pro-max",
+      "name": "核心靈感庫",
+      "summary": "查詢各種設計風格、配色、字體搭配的靈感庫。",
+      "subdir": ".claude/skills/ui-ux-pro-max",
+      "rawBase": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-ux-pro-max",
+      "displayUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/ui-ux-pro-max"
+    },
+    {
+      "dirName": "ui-styling",
+      "name": "介面美化",
+      "summary": "把網頁畫面做漂亮，按鈕、表格、選單都兼顧。",
+      "subdir": ".claude/skills/ui-styling",
+      "rawBase": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-styling",
+      "displayUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/ui-styling"
+    },
+    {
+      "dirName": "design-system",
+      "name": "設計系統",
+      "summary": "訂好一套設計規則（顏色、字體、間距），全站統一。",
+      "subdir": ".claude/skills/design-system",
+      "rawBase": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design-system",
+      "displayUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/design-system"
+    },
+    {
+      "dirName": "design",
+      "name": "視覺設計",
+      "summary": "設計商標、圖示、橫幅等各種視覺素材。",
+      "subdir": ".claude/skills/design",
+      "rawBase": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design",
+      "displayUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/design"
+    },
+    {
+      "dirName": "banner-design",
+      "name": "橫幅設計",
+      "summary": "設計社群媒體和廣告用的橫幅圖片。",
+      "subdir": ".claude/skills/banner-design",
+      "rawBase": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/banner-design",
+      "displayUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/banner-design"
+    },
+    {
+      "dirName": "slides",
+      "name": "簡報",
+      "summary": "做出好看又有策略的簡報頁面。",
+      "subdir": ".claude/skills/slides",
+      "rawBase": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/slides",
+      "displayUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/slides"
+    },
+    {
+      "dirName": "brand",
+      "name": "品牌",
+      "summary": "建立品牌聲音與視覺形象，讓所有東西風格一致。",
+      "subdir": ".claude/skills/brand",
+      "rawBase": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/brand",
+      "displayUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/brand"
+    }
+  ],
+  "install": {
+    "scope": "user",
+    "files": [
+      "SKILL.md"
+    ],
+    "requires": [],
+    "command": "git clone --depth 1 https://github.com/nextlevelbuilder/ui-ux-pro-max-skill %TEMP%/ui-ux-pro-max-repo && xcopy /E /I /Y %TEMP%\\ui-ux-pro-max-repo\\.claude\\skills %USERPROFILE%\\.claude\\skills",
+    "notes": "repo 內 .claude/skills 底下有 7 個 skill 資料夾，全部複製到 skills 目錄，缺一份就少掉對應能力。",
+    "dirName": "ui-ux-pro-max"
+  },
+  "prompt": null,
+  "links": [
+    {
+      "label": "UI UX Pro Max（GitHub repo）",
+      "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill"
+    },
+    {
+      "label": "官方網站",
+      "url": "https://uupm.cc"
+    }
+  ],
+  "addedAt": "2026-08-08",
+  "updatedAt": "2026-08-08",
+  "dirNames": [
+    "ui-ux-pro-max",
+    "ui-styling",
+    "design-system",
+    "design",
+    "banner-design",
+    "slides",
+    "brand"
+  ],
+  "promptBlock": "### UI UX Pro Max  →  一組 7 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：設計網站和手機 App，配色、字體、排版都幫你想好。\n- **詳細一點**：GitHub 114k+ stars 的設計智慧 skill 組合，一套 7 份、實際使用時互相搭配。核心是 ui-ux-pro-max 的在地查詢資料庫：84 種 UI 風格、192 組配色、74 種字體搭配、192 種產品類型、98 條 UX 指引、104 個圖示、16 組動效預設、25 種圖表，涵蓋 22 個技術棧（React、Next.js、Vue、SwiftUI、Flutter、Tailwind、shadcn/ui、Angular、WPF、WinUI 等）。\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  git clone --depth 1 https://github.com/nextlevelbuilder/ui-ux-pro-max-skill %TEMP%/ui-ux-pro-max-repo && xcopy /E /I /Y %TEMP%\\ui-ux-pro-max-repo\\.claude\\skills %USERPROFILE%\\.claude\\skills\n  ```\n- **來源**：GitHub `nextlevelbuilder/ui-ux-pro-max-skill`（分支 `main`，子目錄 `.claude/skills`）\n- **repo 網址**：https://github.com/nextlevelbuilder/ui-ux-pro-max-skill\n- **這一組的 7 個資料夾**（缺一不可，資料夾名照抄）：\n  - `ui-ux-pro-max` — 查詢各種設計風格、配色、字體搭配的靈感庫。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-ux-pro-max`\n  - `ui-styling` — 把網頁畫面做漂亮，按鈕、表格、選單都兼顧。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-styling`\n  - `design-system` — 訂好一套設計規則（顏色、字體、間距），全站統一。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design-system`\n  - `design` — 設計商標、圖示、橫幅等各種視覺素材。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design`\n  - `banner-design` — 設計社群媒體和廣告用的橫幅圖片。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/banner-design`\n  - `slides` — 做出好看又有策略的簡報頁面。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/slides`\n  - `brand` — 建立品牌聲音與視覺形象，讓所有東西風格一致。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/brand`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：repo 內 .claude/skills 底下有 7 個 skill 資料夾，全部複製到 skills 目錄，缺一份就少掉對應能力。",
+  "installPrompt": "你是我的 Skill 安裝助手。請幫我安裝下面這個 Claude Skill。\n\n## 安裝規則\n\n1. **安裝位置** — 每個 skill 是一個資料夾，放在：\n   - 全域（所有專案共用）：`~/.claude/skills/<資料夾名>/`\n     Windows 為 `%USERPROFILE%\\.claude\\skills\\<資料夾名>\\`\n   - 只給目前專案用：`<專案根目錄>/.claude/skills/<資料夾名>/`\n   下面每個 skill 都標了建議範圍，照著放；我另外指定時以我說的為準。\n2. **資料夾名不要改**。Claude 用資料夾名對應 SKILL.md 的 `name`，改了會載入不到。\n3. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n4. **不要改寫 SKILL.md 的 frontmatter**（`name`、`description`）。那是 Claude 判斷何時自動載入這個 skill 的依據，改了就失效。\n5. 目標資料夾**已存在**時，先停下來問我要覆蓋還是跳過，不要直接蓋掉。\n\n---\n\n### UI UX Pro Max  →  一組 7 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：設計網站和手機 App，配色、字體、排版都幫你想好。\n- **詳細一點**：GitHub 114k+ stars 的設計智慧 skill 組合，一套 7 份、實際使用時互相搭配。核心是 ui-ux-pro-max 的在地查詢資料庫：84 種 UI 風格、192 組配色、74 種字體搭配、192 種產品類型、98 條 UX 指引、104 個圖示、16 組動效預設、25 種圖表，涵蓋 22 個技術棧（React、Next.js、Vue、SwiftUI、Flutter、Tailwind、shadcn/ui、Angular、WPF、WinUI 等）。\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  git clone --depth 1 https://github.com/nextlevelbuilder/ui-ux-pro-max-skill %TEMP%/ui-ux-pro-max-repo && xcopy /E /I /Y %TEMP%\\ui-ux-pro-max-repo\\.claude\\skills %USERPROFILE%\\.claude\\skills\n  ```\n- **來源**：GitHub `nextlevelbuilder/ui-ux-pro-max-skill`（分支 `main`，子目錄 `.claude/skills`）\n- **repo 網址**：https://github.com/nextlevelbuilder/ui-ux-pro-max-skill\n- **這一組的 7 個資料夾**（缺一不可，資料夾名照抄）：\n  - `ui-ux-pro-max` — 查詢各種設計風格、配色、字體搭配的靈感庫。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-ux-pro-max`\n  - `ui-styling` — 把網頁畫面做漂亮，按鈕、表格、選單都兼顧。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-styling`\n  - `design-system` — 訂好一套設計規則（顏色、字體、間距），全站統一。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design-system`\n  - `design` — 設計商標、圖示、橫幅等各種視覺素材。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design`\n  - `banner-design` — 設計社群媒體和廣告用的橫幅圖片。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/banner-design`\n  - `slides` — 做出好看又有策略的簡報頁面。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/slides`\n  - `brand` — 建立品牌聲音與視覺形象，讓所有東西風格一致。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/brand`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：repo 內 .claude/skills 底下有 7 個 skill 資料夾，全部複製到 skills 目錄，缺一份就少掉對應能力。\n\n---\n\n## 完成後請做這幾件事\n\n1. 列出每個 skill 實際安裝的完整路徑，以及該資料夾下的檔案\n2. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n3. 告訴我要重新啟動 Claude Code，新的 skill 才會被載入\n4. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
+}

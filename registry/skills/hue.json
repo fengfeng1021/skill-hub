@@ -1,0 +1,58 @@
+{
+  "id": "hue",
+  "name": "Hue",
+  "summary": "學任何品牌的風格，之後做的東西都自動長那樣。",
+  "description": "給它一個品牌的網址、名稱或截圖，它會分析並生成一套完整的設計語言 skill：色彩 tokens、字體、間距、元件規格、明暗模式、首頁版型配方、圖示組合。\n之後 AI 再做任何頁面或元件，都會自動符合這套品牌風格，兩個不同時間的會話產出的東西視覺上也一致。支援 Claude Code 與 Codex。",
+  "category": "前端 / 設計",
+  "tags": [
+    "design",
+    "brand",
+    "design-system",
+    "tokens",
+    "ui",
+    "theme"
+  ],
+  "official": false,
+  "featured": false,
+  "author": "dominikmartn",
+  "license": "MIT",
+  "version": "1.2.0",
+  "usage": [
+    "想要某個品牌的風格（例如 Apple、Linear），希望之後做的東西都長那樣",
+    "要建立自己公司的完整設計系統，色票、字體、元件一次到位",
+    "有一張設計截圖，想把它變成可重複使用的設計語言"
+  ],
+  "highlights": [
+    "給網址／名稱／截圖就能生成整套設計系統",
+    "生成的設計語言會持續套用到之後所有產出，風格統一",
+    "包含明暗模式、首頁版型、圖示等完整配方"
+  ],
+  "source": {
+    "kind": "github",
+    "url": "https://github.com/dominikmartn/hue",
+    "branch": "main"
+  },
+  "install": {
+    "command": "git clone --depth 1 https://github.com/dominikmartn/hue %USERPROFILE%\\.claude\\skills\\hue",
+    "scope": "user",
+    "dirName": "hue",
+    "files": [
+      "SKILL.md"
+    ],
+    "requires": [],
+    "notes": "clone 整個 repo 即可，SKILL.md 在根目錄。"
+  },
+  "prompt": null,
+  "links": [
+    {
+      "label": "hue（GitHub repo）",
+      "url": "https://github.com/dominikmartn/hue"
+    },
+    {
+      "label": "hue 官方網站",
+      "url": "https://hueapp.io"
+    }
+  ],
+  "addedAt": "2026-08-08",
+  "updatedAt": "2026-08-08"
+}

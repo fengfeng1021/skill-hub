@@ -3,7 +3,7 @@
   "categories": [
     {
       "name": "前端 / 設計",
-      "count": 2
+      "count": 4
     },
     {
       "name": "前端 / 動效",
@@ -17,15 +17,31 @@
   "tags": [
     {
       "name": "design",
-      "count": 2
+      "count": 4
     },
     {
       "name": "ui",
-      "count": 2
+      "count": 4
     },
     {
       "name": "accessibility",
-      "count": 1
+      "count": 2
+    },
+    {
+      "name": "brand",
+      "count": 2
+    },
+    {
+      "name": "frontend",
+      "count": 2
+    },
+    {
+      "name": "tokens",
+      "count": 2
+    },
+    {
+      "name": "ux",
+      "count": 2
     },
     {
       "name": "accounts",
@@ -52,11 +68,11 @@
       "count": 1
     },
     {
-      "name": "extraction",
+      "name": "design-system",
       "count": 1
     },
     {
-      "name": "frontend",
+      "name": "extraction",
       "count": 1
     },
     {
@@ -69,6 +85,10 @@
     },
     {
       "name": "javascript",
+      "count": 1
+    },
+    {
+      "name": "mobile",
       "count": 1
     },
     {
@@ -92,11 +112,7 @@
       "count": 1
     },
     {
-      "name": "tokens",
-      "count": 1
-    },
-    {
-      "name": "ux",
+      "name": "theme",
       "count": 1
     },
     {

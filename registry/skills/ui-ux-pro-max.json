@@ -1,0 +1,97 @@
+{
+  "id": "ui-ux-pro-max",
+  "name": "UI UX Pro Max",
+  "summary": "設計網站和手機 App，配色、字體、排版都幫你想好。",
+  "description": "GitHub 114k+ stars 的設計智慧 skill 組合，一套 7 份、實際使用時互相搭配。核心是 ui-ux-pro-max 的在地查詢資料庫：84 種 UI 風格、192 組配色、74 種字體搭配、192 種產品類型、98 條 UX 指引、104 個圖示、16 組動效預設、25 種圖表，涵蓋 22 個技術棧（React、Next.js、Vue、SwiftUI、Flutter、Tailwind、shadcn/ui、Angular、WPF、WinUI 等）。\n另外 6 份負責具體產出：ui-styling（漂亮且無障礙的網頁介面）、design-system（三層設計 tokens 與元件規格）、design（商標 55 種風格、企業識別 50 件交付、圖示 15 種風格）、banner-design（22 種風格的社群媒體／廣告橫幅）、slides（策略性 HTML 簡報）、brand（品牌聲音與視覺識別）。",
+  "category": "前端 / 設計",
+  "tags": [
+    "design",
+    "ui",
+    "ux",
+    "frontend",
+    "mobile",
+    "brand",
+    "accessibility"
+  ],
+  "official": false,
+  "featured": true,
+  "author": "nextlevelbuilder",
+  "license": "MIT",
+  "version": "1.0.0",
+  "usage": [
+    "設計或改版網頁、手機 App 的介面，需要配色、字體、排版建議",
+    "要設計商標、橫幅、簡報、圖示等各種視覺素材",
+    "要建立品牌識別或整套設計系統",
+    "要確保介面無障礙、各種裝置都好看"
+  ],
+  "highlights": [
+    "GitHub 114k+ stars，目前最熱門的 AI 設計 skill",
+    "內建超大靈感庫：84 種風格、192 組配色、74 種字體搭配",
+    "一套 7 份一起裝，從介面、商標、簡報到品牌全包"
+  ],
+  "source": {
+    "kind": "github",
+    "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+    "branch": "main",
+    "subdir": ".claude/skills"
+  },
+  "parts": [
+    {
+      "dirName": "ui-ux-pro-max",
+      "name": "核心靈感庫",
+      "summary": "查詢各種設計風格、配色、字體搭配的靈感庫。"
+    },
+    {
+      "dirName": "ui-styling",
+      "name": "介面美化",
+      "summary": "把網頁畫面做漂亮，按鈕、表格、選單都兼顧。"
+    },
+    {
+      "dirName": "design-system",
+      "name": "設計系統",
+      "summary": "訂好一套設計規則（顏色、字體、間距），全站統一。"
+    },
+    {
+      "dirName": "design",
+      "name": "視覺設計",
+      "summary": "設計商標、圖示、橫幅等各種視覺素材。"
+    },
+    {
+      "dirName": "banner-design",
+      "name": "橫幅設計",
+      "summary": "設計社群媒體和廣告用的橫幅圖片。"
+    },
+    {
+      "dirName": "slides",
+      "name": "簡報",
+      "summary": "做出好看又有策略的簡報頁面。"
+    },
+    {
+      "dirName": "brand",
+      "name": "品牌",
+      "summary": "建立品牌聲音與視覺形象，讓所有東西風格一致。"
+    }
+  ],
+  "install": {
+    "command": "git clone --depth 1 https://github.com/nextlevelbuilder/ui-ux-pro-max-skill %TEMP%/ui-ux-pro-max-repo && xcopy /E /I /Y %TEMP%\\ui-ux-pro-max-repo\\.claude\\skills %USERPROFILE%\\.claude\\skills",
+    "scope": "user",
+    "files": [
+      "SKILL.md"
+    ],
+    "requires": [],
+    "notes": "repo 內 .claude/skills 底下有 7 個 skill 資料夾，全部複製到 skills 目錄，缺一份就少掉對應能力。"
+  },
+  "prompt": null,
+  "links": [
+    {
+      "label": "UI UX Pro Max（GitHub repo）",
+      "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill"
+    },
+    {
+      "label": "官方網站",
+      "url": "https://uupm.cc"
+    }
+  ],
+  "addedAt": "2026-08-08",
+  "updatedAt": "2026-08-08"
+}

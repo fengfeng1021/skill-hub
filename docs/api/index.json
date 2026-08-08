@@ -34,11 +34,11 @@
     "footer": "## 完成後請做這幾件事\n\n1. 列出每個 skill 實際安裝的完整路徑，以及該資料夾下的檔案\n2. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n3. 告訴我要重新啟動 Claude Code，新的 skill 才會被載入\n4. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過",
     "separator": "\n\n---\n\n"
   },
-  "count": 4,
+  "count": 6,
   "categories": [
     {
       "name": "前端 / 設計",
-      "count": 2
+      "count": 4
     },
     {
       "name": "前端 / 動效",
@@ -52,15 +52,31 @@
   "tags": [
     {
       "name": "design",
-      "count": 2
+      "count": 4
     },
     {
       "name": "ui",
-      "count": 2
+      "count": 4
     },
     {
       "name": "accessibility",
-      "count": 1
+      "count": 2
+    },
+    {
+      "name": "brand",
+      "count": 2
+    },
+    {
+      "name": "frontend",
+      "count": 2
+    },
+    {
+      "name": "tokens",
+      "count": 2
+    },
+    {
+      "name": "ux",
+      "count": 2
     },
     {
       "name": "accounts",
@@ -87,11 +103,11 @@
       "count": 1
     },
     {
-      "name": "extraction",
+      "name": "design-system",
       "count": 1
     },
     {
-      "name": "frontend",
+      "name": "extraction",
       "count": 1
     },
     {
@@ -104,6 +120,10 @@
     },
     {
       "name": "javascript",
+      "count": 1
+    },
+    {
+      "name": "mobile",
       "count": 1
     },
     {
@@ -127,11 +147,7 @@
       "count": 1
     },
     {
-      "name": "tokens",
-      "count": 1
-    },
-    {
-      "name": "ux",
+      "name": "theme",
       "count": 1
     },
     {
@@ -341,6 +357,75 @@
       "installPrompt": "你是我的 Skill 安裝助手。請幫我安裝下面這個 Claude Skill。\n\n## 安裝規則\n\n1. **安裝位置** — 每個 skill 是一個資料夾，放在：\n   - 全域（所有專案共用）：`~/.claude/skills/<資料夾名>/`\n     Windows 為 `%USERPROFILE%\\.claude\\skills\\<資料夾名>\\`\n   - 只給目前專案用：`<專案根目錄>/.claude/skills/<資料夾名>/`\n   下面每個 skill 都標了建議範圍，照著放；我另外指定時以我說的為準。\n2. **資料夾名不要改**。Claude 用資料夾名對應 SKILL.md 的 `name`，改了會載入不到。\n3. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n4. **不要改寫 SKILL.md 的 frontmatter**（`name`、`description`）。那是 Claude 判斷何時自動載入這個 skill 的依據，改了就失效。\n5. 目標資料夾**已存在**時，先停下來問我要覆蓋還是跳過，不要直接蓋掉。\n\n---\n\n### GSAP  →  一組 8 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：讓網頁上的東西會動起來，淡入、滑動、跟著捲動都行。\n- **詳細一點**：GSAP 官方為 AI 準備的 skill 組合。內容涵蓋核心 tween 與 ease、多步驟時間軸編排、捲動驅動動畫（ScrollTrigger）、Flip／Draggable／SplitText 等外掛、React 與 Vue／Svelte 的正確用法、gsap.utils 工具函式，以及維持 60fps 的效能守則。\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  npx skills add https://github.com/greensock/gsap-skills\n  ```\n- **來源**：GitHub `greensock/gsap-skills`（分支 `main`，子目錄 `skills`）\n- **repo 網址**：https://github.com/greensock/gsap-skills\n- **這一組的 8 個資料夾**（缺一不可，資料夾名照抄）：\n  - `gsap-core` — 最基本的動起來，移動、放大、變透明都在這。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-core`\n  - `gsap-timeline` — 把好幾段動畫排成先後順序，像剪片一樣。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-timeline`\n  - `gsap-scrolltrigger` — 捲動頁面時觸發動畫，也能把畫面釘住不動。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-scrolltrigger`\n  - `gsap-plugins` — 額外的特殊效果，像拖曳、文字拆字、位置變換。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-plugins`\n  - `gsap-react` — 在 React 做的網站裡要怎麼正確使用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-react`\n  - `gsap-frameworks` — 在 Vue、Svelte 這類網站裡怎麼用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-frameworks`\n  - `gsap-utils` — 一些好用的小工具，算數值、隨機、限制範圍。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-utils`\n  - `gsap-performance` — 讓動畫跑得順、不卡頓的做法。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-performance`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：Claude Code 也可以改用 `/plugin marketplace add greensock/gsap-skills` 安裝。手動安裝的話 8 個資料夾要全部放進 skills 目錄，缺一份就會少掉對應主題的知識。\n\n---\n\n## 完成後請做這幾件事\n\n1. 列出每個 skill 實際安裝的完整路徑，以及該資料夾下的檔案\n2. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n3. 告訴我要重新啟動 Claude Code，新的 skill 才會被載入\n4. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
     },
     {
+      "id": "hue",
+      "name": "Hue",
+      "summary": "學任何品牌的風格，之後做的東西都自動長那樣。",
+      "description": "給它一個品牌的網址、名稱或截圖，它會分析並生成一套完整的設計語言 skill：色彩 tokens、字體、間距、元件規格、明暗模式、首頁版型配方、圖示組合。\n之後 AI 再做任何頁面或元件，都會自動符合這套品牌風格，兩個不同時間的會話產出的東西視覺上也一致。支援 Claude Code 與 Codex。",
+      "category": "前端 / 設計",
+      "tags": [
+        "design",
+        "brand",
+        "design-system",
+        "tokens",
+        "ui",
+        "theme"
+      ],
+      "official": false,
+      "featured": false,
+      "author": "dominikmartn",
+      "license": "MIT",
+      "version": "1.2.0",
+      "usage": [
+        "想要某個品牌的風格（例如 Apple、Linear），希望之後做的東西都長那樣",
+        "要建立自己公司的完整設計系統，色票、字體、元件一次到位",
+        "有一張設計截圖，想把它變成可重複使用的設計語言"
+      ],
+      "highlights": [
+        "給網址／名稱／截圖就能生成整套設計系統",
+        "生成的設計語言會持續套用到之後所有產出，風格統一",
+        "包含明暗模式、首頁版型、圖示等完整配方"
+      ],
+      "source": {
+        "branch": "main",
+        "kind": "github",
+        "url": "https://github.com/dominikmartn/hue",
+        "owner": "dominikmartn",
+        "name": "hue",
+        "displayUrl": "https://github.com/dominikmartn/hue",
+        "rawBase": "https://raw.githubusercontent.com/dominikmartn/hue/main",
+        "label": "dominikmartn/hue"
+      },
+      "install": {
+        "scope": "user",
+        "files": [
+          "SKILL.md"
+        ],
+        "requires": [],
+        "command": "git clone --depth 1 https://github.com/dominikmartn/hue %USERPROFILE%\\.claude\\skills\\hue",
+        "dirName": "hue",
+        "notes": "clone 整個 repo 即可，SKILL.md 在根目錄。"
+      },
+      "prompt": null,
+      "links": [
+        {
+          "label": "hue（GitHub repo）",
+          "url": "https://github.com/dominikmartn/hue"
+        },
+        {
+          "label": "hue 官方網站",
+          "url": "https://hueapp.io"
+        }
+      ],
+      "addedAt": "2026-08-08",
+      "updatedAt": "2026-08-08",
+      "parts": [],
+      "dirNames": [
+        "hue"
+      ],
+      "promptBlock": "### Hue  →  資料夾名 `hue`\n\n- **這個 skill 做什麼**：學任何品牌的風格，之後做的東西都自動長那樣。\n- **詳細一點**：給它一個品牌的網址、名稱或截圖，它會分析並生成一套完整的設計語言 skill：色彩 tokens、字體、間距、元件規格、明暗模式、首頁版型配方、圖示組合。\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  git clone --depth 1 https://github.com/dominikmartn/hue %USERPROFILE%\\.claude\\skills\\hue\n  ```\n- **來源**：GitHub `dominikmartn/hue`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/dominikmartn/hue\n- **下載基底網址**：`https://raw.githubusercontent.com/dominikmartn/hue/main`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：clone 整個 repo 即可，SKILL.md 在根目錄。",
+      "installPrompt": "你是我的 Skill 安裝助手。請幫我安裝下面這個 Claude Skill。\n\n## 安裝規則\n\n1. **安裝位置** — 每個 skill 是一個資料夾，放在：\n   - 全域（所有專案共用）：`~/.claude/skills/<資料夾名>/`\n     Windows 為 `%USERPROFILE%\\.claude\\skills\\<資料夾名>\\`\n   - 只給目前專案用：`<專案根目錄>/.claude/skills/<資料夾名>/`\n   下面每個 skill 都標了建議範圍，照著放；我另外指定時以我說的為準。\n2. **資料夾名不要改**。Claude 用資料夾名對應 SKILL.md 的 `name`，改了會載入不到。\n3. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n4. **不要改寫 SKILL.md 的 frontmatter**（`name`、`description`）。那是 Claude 判斷何時自動載入這個 skill 的依據，改了就失效。\n5. 目標資料夾**已存在**時，先停下來問我要覆蓋還是跳過，不要直接蓋掉。\n\n---\n\n### Hue  →  資料夾名 `hue`\n\n- **這個 skill 做什麼**：學任何品牌的風格，之後做的東西都自動長那樣。\n- **詳細一點**：給它一個品牌的網址、名稱或截圖，它會分析並生成一套完整的設計語言 skill：色彩 tokens、字體、間距、元件規格、明暗模式、首頁版型配方、圖示組合。\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  git clone --depth 1 https://github.com/dominikmartn/hue %USERPROFILE%\\.claude\\skills\\hue\n  ```\n- **來源**：GitHub `dominikmartn/hue`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/dominikmartn/hue\n- **下載基底網址**：`https://raw.githubusercontent.com/dominikmartn/hue/main`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：clone 整個 repo 即可，SKILL.md 在根目錄。\n\n---\n\n## 完成後請做這幾件事\n\n1. 列出每個 skill 實際安裝的完整路徑，以及該資料夾下的檔案\n2. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n3. 告訴我要重新啟動 Claude Code，新的 skill 才會被載入\n4. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
+    },
+    {
       "id": "impeccable",
       "name": "Impeccable",
       "summary": "把網頁設計得有質感，也能幫你檢查哪裡不夠好。",
@@ -481,6 +566,141 @@
       ],
       "promptBlock": "### Taste  →  資料夾名 `taste`\n\n- **這個 skill 做什麼**：貼上任何網站的網址，就能學到它的設計風格與品味。\n- **詳細一點**：設計 DNA 提取器：貼一個網站網址，它會用真實瀏覽器抓取 DOM 資料與截圖，跑 4 步驟分析，產出兩份檔案——{domain}.md 與 {domain}.json，內容包含兩層：\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  git clone --depth 1 https://github.com/senlindesign/taste-skill %USERPROFILE%\\.claude\\skills\\taste\n  ```\n- **來源**：GitHub `senlindesign/taste-skill`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/senlindesign/taste-skill\n- **下載基底網址**：`https://raw.githubusercontent.com/senlindesign/taste-skill/main`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **額外相依**（先確認有沒有，缺的話問我要不要裝）：\n  - `Playwright MCP`\n- **注意**：需要先安裝 Playwright MCP 才能抓取網站。安裝後用 /taste <網址> 開始分析。",
       "installPrompt": "你是我的 Skill 安裝助手。請幫我安裝下面這個 Claude Skill。\n\n## 安裝規則\n\n1. **安裝位置** — 每個 skill 是一個資料夾，放在：\n   - 全域（所有專案共用）：`~/.claude/skills/<資料夾名>/`\n     Windows 為 `%USERPROFILE%\\.claude\\skills\\<資料夾名>\\`\n   - 只給目前專案用：`<專案根目錄>/.claude/skills/<資料夾名>/`\n   下面每個 skill 都標了建議範圍，照著放；我另外指定時以我說的為準。\n2. **資料夾名不要改**。Claude 用資料夾名對應 SKILL.md 的 `name`，改了會載入不到。\n3. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n4. **不要改寫 SKILL.md 的 frontmatter**（`name`、`description`）。那是 Claude 判斷何時自動載入這個 skill 的依據，改了就失效。\n5. 目標資料夾**已存在**時，先停下來問我要覆蓋還是跳過，不要直接蓋掉。\n\n---\n\n### Taste  →  資料夾名 `taste`\n\n- **這個 skill 做什麼**：貼上任何網站的網址，就能學到它的設計風格與品味。\n- **詳細一點**：設計 DNA 提取器：貼一個網站網址，它會用真實瀏覽器抓取 DOM 資料與截圖，跑 4 步驟分析，產出兩份檔案——{domain}.md 與 {domain}.json，內容包含兩層：\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  git clone --depth 1 https://github.com/senlindesign/taste-skill %USERPROFILE%\\.claude\\skills\\taste\n  ```\n- **來源**：GitHub `senlindesign/taste-skill`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/senlindesign/taste-skill\n- **下載基底網址**：`https://raw.githubusercontent.com/senlindesign/taste-skill/main`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **額外相依**（先確認有沒有，缺的話問我要不要裝）：\n  - `Playwright MCP`\n- **注意**：需要先安裝 Playwright MCP 才能抓取網站。安裝後用 /taste <網址> 開始分析。\n\n---\n\n## 完成後請做這幾件事\n\n1. 列出每個 skill 實際安裝的完整路徑，以及該資料夾下的檔案\n2. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n3. 告訴我要重新啟動 Claude Code，新的 skill 才會被載入\n4. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
+    },
+    {
+      "id": "ui-ux-pro-max",
+      "name": "UI UX Pro Max",
+      "summary": "設計網站和手機 App，配色、字體、排版都幫你想好。",
+      "description": "GitHub 114k+ stars 的設計智慧 skill 組合，一套 7 份、實際使用時互相搭配。核心是 ui-ux-pro-max 的在地查詢資料庫：84 種 UI 風格、192 組配色、74 種字體搭配、192 種產品類型、98 條 UX 指引、104 個圖示、16 組動效預設、25 種圖表，涵蓋 22 個技術棧（React、Next.js、Vue、SwiftUI、Flutter、Tailwind、shadcn/ui、Angular、WPF、WinUI 等）。\n另外 6 份負責具體產出：ui-styling（漂亮且無障礙的網頁介面）、design-system（三層設計 tokens 與元件規格）、design（商標 55 種風格、企業識別 50 件交付、圖示 15 種風格）、banner-design（22 種風格的社群媒體／廣告橫幅）、slides（策略性 HTML 簡報）、brand（品牌聲音與視覺識別）。",
+      "category": "前端 / 設計",
+      "tags": [
+        "design",
+        "ui",
+        "ux",
+        "frontend",
+        "mobile",
+        "brand",
+        "accessibility"
+      ],
+      "official": false,
+      "featured": true,
+      "author": "nextlevelbuilder",
+      "license": "MIT",
+      "version": "1.0.0",
+      "usage": [
+        "設計或改版網頁、手機 App 的介面，需要配色、字體、排版建議",
+        "要設計商標、橫幅、簡報、圖示等各種視覺素材",
+        "要建立品牌識別或整套設計系統",
+        "要確保介面無障礙、各種裝置都好看"
+      ],
+      "highlights": [
+        "GitHub 114k+ stars，目前最熱門的 AI 設計 skill",
+        "內建超大靈感庫：84 種風格、192 組配色、74 種字體搭配",
+        "一套 7 份一起裝，從介面、商標、簡報到品牌全包"
+      ],
+      "source": {
+        "branch": "main",
+        "kind": "github",
+        "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+        "subdir": ".claude/skills",
+        "owner": "nextlevelbuilder",
+        "name": "ui-ux-pro-max-skill",
+        "displayUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills",
+        "rawBase": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills",
+        "label": "nextlevelbuilder/ui-ux-pro-max-skill"
+      },
+      "parts": [
+        {
+          "dirName": "ui-ux-pro-max",
+          "name": "核心靈感庫",
+          "summary": "查詢各種設計風格、配色、字體搭配的靈感庫。",
+          "subdir": ".claude/skills/ui-ux-pro-max",
+          "rawBase": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-ux-pro-max",
+          "displayUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/ui-ux-pro-max"
+        },
+        {
+          "dirName": "ui-styling",
+          "name": "介面美化",
+          "summary": "把網頁畫面做漂亮，按鈕、表格、選單都兼顧。",
+          "subdir": ".claude/skills/ui-styling",
+          "rawBase": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-styling",
+          "displayUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/ui-styling"
+        },
+        {
+          "dirName": "design-system",
+          "name": "設計系統",
+          "summary": "訂好一套設計規則（顏色、字體、間距），全站統一。",
+          "subdir": ".claude/skills/design-system",
+          "rawBase": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design-system",
+          "displayUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/design-system"
+        },
+        {
+          "dirName": "design",
+          "name": "視覺設計",
+          "summary": "設計商標、圖示、橫幅等各種視覺素材。",
+          "subdir": ".claude/skills/design",
+          "rawBase": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design",
+          "displayUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/design"
+        },
+        {
+          "dirName": "banner-design",
+          "name": "橫幅設計",
+          "summary": "設計社群媒體和廣告用的橫幅圖片。",
+          "subdir": ".claude/skills/banner-design",
+          "rawBase": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/banner-design",
+          "displayUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/banner-design"
+        },
+        {
+          "dirName": "slides",
+          "name": "簡報",
+          "summary": "做出好看又有策略的簡報頁面。",
+          "subdir": ".claude/skills/slides",
+          "rawBase": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/slides",
+          "displayUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/slides"
+        },
+        {
+          "dirName": "brand",
+          "name": "品牌",
+          "summary": "建立品牌聲音與視覺形象，讓所有東西風格一致。",
+          "subdir": ".claude/skills/brand",
+          "rawBase": "https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/brand",
+          "displayUrl": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills/brand"
+        }
+      ],
+      "install": {
+        "scope": "user",
+        "files": [
+          "SKILL.md"
+        ],
+        "requires": [],
+        "command": "git clone --depth 1 https://github.com/nextlevelbuilder/ui-ux-pro-max-skill %TEMP%/ui-ux-pro-max-repo && xcopy /E /I /Y %TEMP%\\ui-ux-pro-max-repo\\.claude\\skills %USERPROFILE%\\.claude\\skills",
+        "notes": "repo 內 .claude/skills 底下有 7 個 skill 資料夾，全部複製到 skills 目錄，缺一份就少掉對應能力。",
+        "dirName": "ui-ux-pro-max"
+      },
+      "prompt": null,
+      "links": [
+        {
+          "label": "UI UX Pro Max（GitHub repo）",
+          "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill"
+        },
+        {
+          "label": "官方網站",
+          "url": "https://uupm.cc"
+        }
+      ],
+      "addedAt": "2026-08-08",
+      "updatedAt": "2026-08-08",
+      "dirNames": [
+        "ui-ux-pro-max",
+        "ui-styling",
+        "design-system",
+        "design",
+        "banner-design",
+        "slides",
+        "brand"
+      ],
+      "promptBlock": "### UI UX Pro Max  →  一組 7 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：設計網站和手機 App，配色、字體、排版都幫你想好。\n- **詳細一點**：GitHub 114k+ stars 的設計智慧 skill 組合，一套 7 份、實際使用時互相搭配。核心是 ui-ux-pro-max 的在地查詢資料庫：84 種 UI 風格、192 組配色、74 種字體搭配、192 種產品類型、98 條 UX 指引、104 個圖示、16 組動效預設、25 種圖表，涵蓋 22 個技術棧（React、Next.js、Vue、SwiftUI、Flutter、Tailwind、shadcn/ui、Angular、WPF、WinUI 等）。\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  git clone --depth 1 https://github.com/nextlevelbuilder/ui-ux-pro-max-skill %TEMP%/ui-ux-pro-max-repo && xcopy /E /I /Y %TEMP%\\ui-ux-pro-max-repo\\.claude\\skills %USERPROFILE%\\.claude\\skills\n  ```\n- **來源**：GitHub `nextlevelbuilder/ui-ux-pro-max-skill`（分支 `main`，子目錄 `.claude/skills`）\n- **repo 網址**：https://github.com/nextlevelbuilder/ui-ux-pro-max-skill\n- **這一組的 7 個資料夾**（缺一不可，資料夾名照抄）：\n  - `ui-ux-pro-max` — 查詢各種設計風格、配色、字體搭配的靈感庫。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-ux-pro-max`\n  - `ui-styling` — 把網頁畫面做漂亮，按鈕、表格、選單都兼顧。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-styling`\n  - `design-system` — 訂好一套設計規則（顏色、字體、間距），全站統一。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design-system`\n  - `design` — 設計商標、圖示、橫幅等各種視覺素材。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design`\n  - `banner-design` — 設計社群媒體和廣告用的橫幅圖片。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/banner-design`\n  - `slides` — 做出好看又有策略的簡報頁面。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/slides`\n  - `brand` — 建立品牌聲音與視覺形象，讓所有東西風格一致。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/brand`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：repo 內 .claude/skills 底下有 7 個 skill 資料夾，全部複製到 skills 目錄，缺一份就少掉對應能力。",
+      "installPrompt": "你是我的 Skill 安裝助手。請幫我安裝下面這個 Claude Skill。\n\n## 安裝規則\n\n1. **安裝位置** — 每個 skill 是一個資料夾，放在：\n   - 全域（所有專案共用）：`~/.claude/skills/<資料夾名>/`\n     Windows 為 `%USERPROFILE%\\.claude\\skills\\<資料夾名>\\`\n   - 只給目前專案用：`<專案根目錄>/.claude/skills/<資料夾名>/`\n   下面每個 skill 都標了建議範圍，照著放；我另外指定時以我說的為準。\n2. **資料夾名不要改**。Claude 用資料夾名對應 SKILL.md 的 `name`，改了會載入不到。\n3. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n4. **不要改寫 SKILL.md 的 frontmatter**（`name`、`description`）。那是 Claude 判斷何時自動載入這個 skill 的依據，改了就失效。\n5. 目標資料夾**已存在**時，先停下來問我要覆蓋還是跳過，不要直接蓋掉。\n\n---\n\n### UI UX Pro Max  →  一組 7 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：設計網站和手機 App，配色、字體、排版都幫你想好。\n- **詳細一點**：GitHub 114k+ stars 的設計智慧 skill 組合，一套 7 份、實際使用時互相搭配。核心是 ui-ux-pro-max 的在地查詢資料庫：84 種 UI 風格、192 組配色、74 種字體搭配、192 種產品類型、98 條 UX 指引、104 個圖示、16 組動效預設、25 種圖表，涵蓋 22 個技術棧（React、Next.js、Vue、SwiftUI、Flutter、Tailwind、shadcn/ui、Angular、WPF、WinUI 等）。\n- **建議安裝範圍**：全域（~/.claude/skills）\n- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：\n  ```bash\n  git clone --depth 1 https://github.com/nextlevelbuilder/ui-ux-pro-max-skill %TEMP%/ui-ux-pro-max-repo && xcopy /E /I /Y %TEMP%\\ui-ux-pro-max-repo\\.claude\\skills %USERPROFILE%\\.claude\\skills\n  ```\n- **來源**：GitHub `nextlevelbuilder/ui-ux-pro-max-skill`（分支 `main`，子目錄 `.claude/skills`）\n- **repo 網址**：https://github.com/nextlevelbuilder/ui-ux-pro-max-skill\n- **這一組的 7 個資料夾**（缺一不可，資料夾名照抄）：\n  - `ui-ux-pro-max` — 查詢各種設計風格、配色、字體搭配的靈感庫。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-ux-pro-max`\n  - `ui-styling` — 把網頁畫面做漂亮，按鈕、表格、選單都兼顧。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-styling`\n  - `design-system` — 訂好一套設計規則（顏色、字體、間距），全站統一。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design-system`\n  - `design` — 設計商標、圖示、橫幅等各種視覺素材。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design`\n  - `banner-design` — 設計社群媒體和廣告用的橫幅圖片。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/banner-design`\n  - `slides` — 做出好看又有策略的簡報頁面。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/slides`\n  - `brand` — 建立品牌聲音與視覺形象，讓所有東西風格一致。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/brand`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：repo 內 .claude/skills 底下有 7 個 skill 資料夾，全部複製到 skills 目錄，缺一份就少掉對應能力。\n\n---\n\n## 完成後請做這幾件事\n\n1. 列出每個 skill 實際安裝的完整路徑，以及該資料夾下的檔案\n2. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n3. 告訴我要重新啟動 Claude Code，新的 skill 才會被載入\n4. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
     }
   ]
 }
