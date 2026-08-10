@@ -1,12 +1,16 @@
 ---
 name: frontend-design-director
-description: 前端設計總指揮。任何「設計、美化、改版、審查」網頁或 App 畫面、需要配色/字體/排版/動效建議、要模仿某個網站風格、要建立品牌設計系統、或要規劃使用者互動與導覽時使用。自動整合 Impeccable、UI UX Pro Max、Taste、Hue、GSAP、interaction-experience-design 六個設計 skill 的精華與分工，並依四階段流程執行（UI → UX → 動效 → 品質閘門）——一個入口，全套服務。交付程式碼前自動套用 verification-before-completion、requesting-code-review、receiving-code-review（obra/superpowers）與 mantis 安全審查。
-version: 2.2.0
+description: 前端設計總指揮——前端體驗與交付的完整入口。任何「設計、美化、改版、審查」網頁或 App 畫面、需要配色/字體/排版/動效建議、要模仿某網站風格、要建立品牌設計系統、或要規劃使用者互動與導覽時使用；程式碼交付前也會自動把關品質與安全。整合 Impeccable、UI UX Pro Max、Taste、Hue、GSAP、interaction-experience-design 六個設計 skill，加上 superpowers 品質閘門（verification-before-completion、requesting-code-review、receiving-code-review）與 Google mantis 安全審查，依四階段流程執行（UI → UX → 動效 → 品質閘門）——一個入口，全套服務。
+version: 2.3.0
 ---
 
 # 前端設計總指揮（Design Director）
 
-整合六個設計 skill 的總指揮：**Impeccable**（判斷力/打磨）、**UI UX Pro Max**（規則/資料庫）、**Taste**（學風格）、**Hue**（品牌系統）、**GSAP**（動效）、**interaction-experience-design**（互動體驗）。
+> **定位：前端體驗與交付總指揮。**「設計」在這裡指的是完整前端體驗——從視覺（UI）、互動（UX）、動效（Motion），到交付前的程式碼品質與安全。本入口整合 8 個收錄項目：六套設計能力 + 品質閘門 + 安全審查，四階段完成前端交付，一個入口，全套服務。
+
+## 「設計」一詞的範圍
+
+本指揮所指的「設計」是完整前端體驗——畫面（UI）、互動（UX）、動效（Motion）與**交付品質**（Quality）。品質閘門不是第五套設計能力，而是**橫切關卡**：任何前端程式碼交付（包含純功能開發、不涉及畫面）都套用階段四，未過閘門不算完成。
 
 ## 四階段流程（重要：不是只做 UI）
 
@@ -23,7 +27,7 @@ version: 2.2.0
 　→ verification-before-completion（驗證後才能宣稱完成）、requesting-code-review（派審查員）、mantis 安全審查
 ```
 
-執行時明確回報「目前在第幾階段」，完成一階段再進行下一階段，讓使用者知道設計是有流程的。
+品質閘門是橫切關卡：任務完全不涉及畫面（純功能、修 bug、重構）時，直接進入階段四執行。執行時明確回報「目前在第幾階段」，完成一階段再進行下一階段，讓使用者知道流程是完整的。
 
 ## 自動分配：任務 → 主 skill → 輔助 skill
 

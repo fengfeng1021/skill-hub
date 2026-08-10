@@ -1,8 +1,8 @@
 {
   "id": "frontend-design-director",
   "name": "前端設計總指揮",
-  "summary": "把六套設計能力一次裝齊，從畫面做到互動。",
-  "description": "這是一套跨來源的精選組合包，不是單一 skill。入口「前端設計總指揮」負責分工，並整合 Impeccable（設計判斷力與打磨）、UI UX Pro Max（設計規則與資料庫）、Taste（模仿網站風格）、Hue（品牌設計系統）、GSAP（動效）與 interaction-experience-design（互動體驗）六套能力。\nv2.2.0 起加入品質閘門：依 UI → UX → 動效 → 品質閘門四階段協同，交付前自動套用程式碼品質閘門（obra/superpowers 的完成前驗證與程式碼審查）與安全審查（Google Mantis），設計不只好看、程式也要乾淨安全。\n安裝時會連同組合入口與所有收錄項目全部裝齊；執行任務時不再把其餘能力誤當成可選相依。",
+  "summary": "把六套設計能力一次裝齊，品質與安全也自動把關。",
+  "description": "這是一套跨來源的精選組合包，不是單一 skill。入口「前端設計總指揮」定位為前端體驗與交付總指揮：「設計」涵蓋完整前端體驗——視覺（UI）、互動（UX）、動效（Motion）與交付品質（Quality）。\n整合六套設計能力（Impeccable 設計判斷力與打磨、UI UX Pro Max 設計規則與資料庫、Taste 模仿網站風格、Hue 品牌設計系統、GSAP 動效、interaction-experience-design 互動體驗）＋程式碼品質閘門（obra/superpowers 的完成前驗證與程式碼審查，270k+ stars 開發方法論）＋安全審查（Google Mantis 18-skill 流水線）。\n依 UI → UX → 動效 → 品質閘門四階段協同：前三個階段管畫面與體驗，品質閘門是橫切關卡——任何前端程式碼交付（含純功能開發、不涉及畫面）都套用，未過閘門不算完成。\n安裝時會連同組合入口與所有收錄項目全部裝齊；執行任務時不再把其餘能力誤當成可選相依。",
   "category": "前端 / 設計",
   "tags": [
     "design",
@@ -29,7 +29,8 @@
     "一個入口自動分配六套設計能力與品質閘門，不用自己選",
     "安裝提示詞會展開完整清單並逐項驗證，不會只裝入口",
     "依 UI、UX、動效、品質閘門四階段完成，不只美化畫面",
-    "融合 270k+ stars 的開發品質方法論與 Google 官方安全審查"
+    "融合 270k+ stars 的開發品質方法論與 Google 官方安全審查",
+    "品質閘門是橫切關卡：純功能開發、修 bug、重構也會自動套用"
   ],
   "includes": [
     "impeccable",

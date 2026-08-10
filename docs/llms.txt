@@ -37,7 +37,7 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 
 #### 前端設計總指揮 `frontend-design-director`
 
-- 摘要：把六套設計能力一次裝齊，從畫面做到互動。
+- 摘要：把六套設計能力一次裝齊，品質與安全也自動把關。
 - 標籤：design、ui、ux、director、frontend、integration、quality、review、security
 - 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-design-director
 - 安裝資料夾名：`frontend-design-director`
