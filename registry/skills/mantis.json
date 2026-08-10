@@ -1,0 +1,143 @@
+{
+  "id": "mantis",
+  "name": "Mantis 安全審查",
+  "summary": "自動找程式漏洞、試著重現、再幫你補上。",
+  "description": "Google 官方推出的安全審查 toolkit，18 個 skill 組成一套可自動執行的漏洞審查流水線：先建立知識庫與威脅模型（architecture、threat-model、summarize、structural-index、plan、history），再掃描與驗證（researcher、dedupe、critic、review、reproduce、chain、calibrate），最後修補與報告（patch、report、reflect），另有總指揮與自訂流水線（meta-agent、pipeline-adapter）。所有 skill 都是單獨的資料夾，安裝時一併裝齊。\n⚠️ 官方警告：本套件會產生並執行自動化程式碼，行為可能不穩定，只能在隔離環境使用；所有發現必須由安全專家人工複核後才能回報。",
+  "category": "程式品質",
+  "tags": [
+    "security",
+    "review",
+    "vulnerability",
+    "audit",
+    "workflow",
+    "quality"
+  ],
+  "official": true,
+  "featured": false,
+  "author": "Google",
+  "license": "Apache-2.0",
+  "usage": [
+    "交付前想自動檢查程式有沒有安全漏洞",
+    "需要從找漏洞、重現、到修補的完整流程",
+    "要對程式碼做深度審查，不只是跑掃描器"
+  ],
+  "highlights": [
+    "Google 官方出品，18 個 skill 涵蓋審查全流程",
+    "會實際寫出重現程式並驗證漏洞，不是只有報告",
+    "附修補、總結、檢討，一輪跑完留下可複用的知識"
+  ],
+  "source": {
+    "kind": "github",
+    "url": "https://github.com/google/mantis",
+    "branch": "main"
+  },
+  "parts": [
+    {
+      "dirName": "mantis-architecture",
+      "name": "知識庫",
+      "summary": "把程式碼分析整理成互相連結的知識庫，當審查底圖。"
+    },
+    {
+      "dirName": "mantis-threat-model",
+      "name": "威脅建模",
+      "summary": "先畫出哪些地方會被攻擊、誰會來攻擊，再決定查哪裡。"
+    },
+    {
+      "dirName": "mantis-summarize",
+      "name": "安全摘要",
+      "summary": "先幫每個資料夾寫安全摘要，讓後面好規劃。"
+    },
+    {
+      "dirName": "mantis-researcher",
+      "name": "漏洞掃描",
+      "summary": "照計畫實際檢查程式碼，找出可疑的漏洞。"
+    },
+    {
+      "dirName": "mantis-dedupe",
+      "name": "去重",
+      "summary": "把重複的發現整理成一份，避免同一問題報很多次。"
+    },
+    {
+      "dirName": "mantis-critic",
+      "name": "過濾假漏洞",
+      "summary": "過濾掉測試用、碰不到的假漏洞，只留真的。"
+    },
+    {
+      "dirName": "mantis-review",
+      "name": "複核",
+      "summary": "獨立的第二輪檢查，去掉誤報。"
+    },
+    {
+      "dirName": "mantis-reproduce",
+      "name": "重現漏洞",
+      "summary": "寫出能重現問題的測試，確認漏洞真的存在。"
+    },
+    {
+      "dirName": "mantis-chain",
+      "name": "攻擊鏈",
+      "summary": "把單獨的漏洞串起來，看能不能組合成更大攻擊。"
+    },
+    {
+      "dirName": "mantis-calibrate",
+      "name": "風險評分",
+      "summary": "綜合證據算出整體風險分數。"
+    },
+    {
+      "dirName": "mantis-report",
+      "name": "安全報告",
+      "summary": "把確認的發現整理成人看得懂的安全報告。"
+    },
+    {
+      "dirName": "mantis-patch",
+      "name": "自動修補",
+      "summary": "自動產生最小修補、套用並驗證修好沒。"
+    },
+    {
+      "dirName": "mantis-history",
+      "name": "歷史分析",
+      "summary": "翻版本歷史，找出過去修過的漏洞當參考。"
+    },
+    {
+      "dirName": "mantis-reflect",
+      "name": "事後檢討",
+      "summary": "每次審查結束檢討，留下經驗下次更準。"
+    },
+    {
+      "dirName": "mantis-plan",
+      "name": "審查計畫",
+      "summary": "根據威脅模型排定這次要查哪些地方。"
+    },
+    {
+      "dirName": "mantis-structural-index",
+      "name": "結構索引",
+      "summary": "把程式碼建成索引，方便快速比對。"
+    },
+    {
+      "dirName": "mantis-meta-agent",
+      "name": "總指揮",
+      "summary": "當總指揮，盯整場審查跑完。"
+    },
+    {
+      "dirName": "mantis-pipeline-adapter",
+      "name": "自訂流水線",
+      "summary": "教你打造自己的自動化審查流水線。"
+    }
+  ],
+  "install": {
+    "scope": "user",
+    "files": [
+      "SKILL.md"
+    ],
+    "requires": [],
+    "notes": "18 個資料夾必須全部安裝；本套件會執行自動化程式碼，官方警告只能在隔離環境使用，發現需人工複核。"
+  },
+  "prompt": null,
+  "links": [
+    {
+      "label": "google/mantis（官方 repo）",
+      "url": "https://github.com/google/mantis"
+    }
+  ],
+  "addedAt": "2026-08-10",
+  "updatedAt": "2026-08-10"
+}

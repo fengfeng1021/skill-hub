@@ -1,0 +1,99 @@
+{
+  "id": "superpowers-code-quality",
+  "name": "程式碼品質閘門",
+  "summary": "寫完程式先驗證再交貨，還有審查員幫你把關。",
+  "description": "取自 obra/superpowers（GitHub 270k+ stars 的開發方法論框架，作者 Jesse Vincent）的品質三件套：\n- verification-before-completion：要宣稱「完成／修好／測試通過」前，必須先跑驗證指令並確認輸出，證據先於斷言。\n- requesting-code-review：主要功能完成或合併前，派出 code-reviewer 子代理（附 code-reviewer.md 審查員指示）以精確上下文審查，早審常審。\n- receiving-code-review：收到審查意見先技術驗證再實作，不盲從也不表演式同意，用證據溝通。\n三個資料夾都來自同一 repo 的 skills/ 子目錄，安裝時一併裝齊；適合加進任何前端設計／開發流程的收尾階段。",
+  "category": "程式品質",
+  "tags": [
+    "code-quality",
+    "review",
+    "verification",
+    "workflow",
+    "methodology"
+  ],
+  "official": true,
+  "featured": true,
+  "author": "Jesse Vincent (obra)",
+  "license": "MIT",
+  "usage": [
+    "寫完功能準備交付或合併前，想要品質把關",
+    "AI 宣稱「寫完了」但沒有跑過驗證，需要強制驗證流程",
+    "希望程式碼有第二人（審查員）看過再上線",
+    "收到審查意見不知道該照單全收還是反駁"
+  ],
+  "highlights": [
+    "品質門：沒驗證不准說完成，直接擋掉最常見的 AI 壞習慣",
+    "審查閉環：請求審查＋正確接收意見兩段都顧到",
+    "270k+ stars 的開發方法論，非個人經驗，廣受社群採用"
+  ],
+  "source": {
+    "branch": "main",
+    "kind": "github",
+    "url": "https://github.com/obra/superpowers",
+    "subdir": "skills",
+    "owner": "obra",
+    "name": "superpowers",
+    "displayUrl": "https://github.com/obra/superpowers/tree/main/skills",
+    "rawBase": "https://raw.githubusercontent.com/obra/superpowers/main/skills",
+    "label": "obra/superpowers"
+  },
+  "parts": [
+    {
+      "dirName": "verification-before-completion",
+      "name": "完成前驗證",
+      "summary": "沒先跑驗證，不准說程式寫完了。",
+      "subdir": "skills/verification-before-completion",
+      "rawBase": "https://raw.githubusercontent.com/obra/superpowers/main/skills/verification-before-completion",
+      "displayUrl": "https://github.com/obra/superpowers/tree/main/skills/verification-before-completion"
+    },
+    {
+      "dirName": "requesting-code-review",
+      "name": "請求審查",
+      "summary": "交貨前派審查員先看一遍，提早抓問題。",
+      "subdir": "skills/requesting-code-review",
+      "rawBase": "https://raw.githubusercontent.com/obra/superpowers/main/skills/requesting-code-review",
+      "displayUrl": "https://github.com/obra/superpowers/tree/main/skills/requesting-code-review"
+    },
+    {
+      "dirName": "receiving-code-review",
+      "name": "接收意見",
+      "summary": "收到審查意見先自己驗證，不盲從也不硬拗。",
+      "subdir": "skills/receiving-code-review",
+      "rawBase": "https://raw.githubusercontent.com/obra/superpowers/main/skills/receiving-code-review",
+      "displayUrl": "https://github.com/obra/superpowers/tree/main/skills/receiving-code-review"
+    }
+  ],
+  "install": {
+    "scope": "user",
+    "files": [
+      "SKILL.md"
+    ],
+    "requires": [],
+    "notes": "3 個資料夾必須全部安裝；requesting-code-review 資料夾裡還有一份 code-reviewer.md（審查員指示），要一起拿。",
+    "dirName": "verification-before-completion"
+  },
+  "prompt": null,
+  "links": [
+    {
+      "label": "obra/superpowers（官方 repo）",
+      "url": "https://github.com/obra/superpowers"
+    }
+  ],
+  "addedAt": "2026-08-10",
+  "updatedAt": "2026-08-10",
+  "includes": [],
+  "dirNames": [
+    "verification-before-completion",
+    "requesting-code-review",
+    "receiving-code-review"
+  ],
+  "includedSkills": [],
+  "installIds": [
+    "superpowers-code-quality"
+  ],
+  "installCount": 1,
+  "installFolderCount": 3,
+  "promptBlockSingle": "### 程式碼品質閘門  →  一組 3 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：寫完程式先驗證再交貨，還有審查員幫你把關。\n- **詳細一點**：取自 obra/superpowers（GitHub 270k+ stars 的開發方法論框架，作者 Jesse Vincent）的品質三件套：\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `obra/superpowers`（分支 `main`，來源 repo 內子目錄 `skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/obra/superpowers\n- **這一組的 3 個資料夾**（缺一不可，資料夾名照抄）：\n  - `verification-before-completion` — 沒先跑驗證，不准說程式寫完了。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/verification-before-completion`\n  - `requesting-code-review` — 交貨前派審查員先看一遍，提早抓問題。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/requesting-code-review`\n  - `receiving-code-review` — 收到審查意見先自己驗證，不盲從也不硬拗。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/receiving-code-review`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：3 個資料夾必須全部安裝；requesting-code-review 資料夾裡還有一份 code-reviewer.md（審查員指示），要一起拿。",
+  "promptBlock": "### 程式碼品質閘門  →  一組 3 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：寫完程式先驗證再交貨，還有審查員幫你把關。\n- **詳細一點**：取自 obra/superpowers（GitHub 270k+ stars 的開發方法論框架，作者 Jesse Vincent）的品質三件套：\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `obra/superpowers`（分支 `main`，來源 repo 內子目錄 `skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/obra/superpowers\n- **這一組的 3 個資料夾**（缺一不可，資料夾名照抄）：\n  - `verification-before-completion` — 沒先跑驗證，不准說程式寫完了。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/verification-before-completion`\n  - `requesting-code-review` — 交貨前派審查員先看一遍，提早抓問題。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/requesting-code-review`\n  - `receiving-code-review` — 收到審查意見先自己驗證，不盲從也不硬拗。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/receiving-code-review`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：3 個資料夾必須全部安裝；requesting-code-review 資料夾裡還有一份 code-reviewer.md（審查員指示），要一起拿。",
+  "installPrompt": "你是我的 Skill 安裝助手。請幫我把下面這個 AI Agent Skill 安裝到「你目前所在的 Agent 環境」。\n\n## 安裝規則\n\n1. **先辨識目前環境** — 讀取你自己的官方說明、系統設定或既有 skills，確認這個 Agent 支援的 skill 格式、安裝方式與可用範圍。不要預設任何品牌，也不要自行猜一個 `~/.<名稱>/skills` 路徑。\n2. **自動選擇正確位置** — 我有指定全域或專案範圍時照做；沒有指定時，沿用目前 Agent 的既有慣例。若這個 Agent 只支援其中一種，就使用它官方支援的方式。只有真的無法判定時才停下來問我。\n3. **保持原始結構** — 每個 skill 都是獨立資料夾；資料夾名、SKILL.md frontmatter 的 `name`／`description` 與相對檔案結構都不要改。\n4. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n5. 來源若提供綁定特定 Agent 或固定路徑的安裝指令，只把它當作來源線索；請改用目前 Agent 的官方安裝方式，不要原樣執行。\n6. 目標資料夾**已存在**時，先比較版本與差異，再問我要更新、覆蓋或跳過，不要直接蓋掉。\n\n---\n\n### 程式碼品質閘門  →  一組 3 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：寫完程式先驗證再交貨，還有審查員幫你把關。\n- **詳細一點**：取自 obra/superpowers（GitHub 270k+ stars 的開發方法論框架，作者 Jesse Vincent）的品質三件套：\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `obra/superpowers`（分支 `main`，來源 repo 內子目錄 `skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/obra/superpowers\n- **這一組的 3 個資料夾**（缺一不可，資料夾名照抄）：\n  - `verification-before-completion` — 沒先跑驗證，不准說程式寫完了。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/verification-before-completion`\n  - `requesting-code-review` — 交貨前派審查員先看一遍，提早抓問題。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/requesting-code-review`\n  - `receiving-code-review` — 收到審查意見先自己驗證，不盲從也不硬拗。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/receiving-code-review`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：3 個資料夾必須全部安裝；requesting-code-review 資料夾裡還有一份 code-reviewer.md（審查員指示），要一起拿。\n\n---\n\n## 完成後請做這幾件事\n\n1. 說明你辨識到的 Agent 與採用的官方 skill 機制，不要只回報「已完成」\n2. 列出每個 skill 實際安裝的位置，以及該資料夾下的檔案\n3. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n4. 依目前 Agent 的載入方式驗證 skill 已可被發現；只有官方流程確實要求時，才提醒我重新載入或重啟\n5. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
+}

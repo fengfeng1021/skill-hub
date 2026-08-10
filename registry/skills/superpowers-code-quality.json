@@ -1,0 +1,69 @@
+{
+  "id": "superpowers-code-quality",
+  "name": "程式碼品質閘門",
+  "summary": "寫完程式先驗證再交貨，還有審查員幫你把關。",
+  "description": "取自 obra/superpowers（GitHub 270k+ stars 的開發方法論框架，作者 Jesse Vincent）的品質三件套：\n- verification-before-completion：要宣稱「完成／修好／測試通過」前，必須先跑驗證指令並確認輸出，證據先於斷言。\n- requesting-code-review：主要功能完成或合併前，派出 code-reviewer 子代理（附 code-reviewer.md 審查員指示）以精確上下文審查，早審常審。\n- receiving-code-review：收到審查意見先技術驗證再實作，不盲從也不表演式同意，用證據溝通。\n三個資料夾都來自同一 repo 的 skills/ 子目錄，安裝時一併裝齊；適合加進任何前端設計／開發流程的收尾階段。",
+  "category": "程式品質",
+  "tags": [
+    "code-quality",
+    "review",
+    "verification",
+    "workflow",
+    "methodology"
+  ],
+  "official": true,
+  "featured": true,
+  "author": "Jesse Vincent (obra)",
+  "license": "MIT",
+  "usage": [
+    "寫完功能準備交付或合併前，想要品質把關",
+    "AI 宣稱「寫完了」但沒有跑過驗證，需要強制驗證流程",
+    "希望程式碼有第二人（審查員）看過再上線",
+    "收到審查意見不知道該照單全收還是反駁"
+  ],
+  "highlights": [
+    "品質門：沒驗證不准說完成，直接擋掉最常見的 AI 壞習慣",
+    "審查閉環：請求審查＋正確接收意見兩段都顧到",
+    "270k+ stars 的開發方法論，非個人經驗，廣受社群採用"
+  ],
+  "source": {
+    "kind": "github",
+    "url": "https://github.com/obra/superpowers",
+    "branch": "main",
+    "subdir": "skills"
+  },
+  "parts": [
+    {
+      "dirName": "verification-before-completion",
+      "name": "完成前驗證",
+      "summary": "沒先跑驗證，不准說程式寫完了。"
+    },
+    {
+      "dirName": "requesting-code-review",
+      "name": "請求審查",
+      "summary": "交貨前派審查員先看一遍，提早抓問題。"
+    },
+    {
+      "dirName": "receiving-code-review",
+      "name": "接收意見",
+      "summary": "收到審查意見先自己驗證，不盲從也不硬拗。"
+    }
+  ],
+  "install": {
+    "scope": "user",
+    "files": [
+      "SKILL.md"
+    ],
+    "requires": [],
+    "notes": "3 個資料夾必須全部安裝；requesting-code-review 資料夾裡還有一份 code-reviewer.md（審查員指示），要一起拿。"
+  },
+  "prompt": null,
+  "links": [
+    {
+      "label": "obra/superpowers（官方 repo）",
+      "url": "https://github.com/obra/superpowers"
+    }
+  ],
+  "addedAt": "2026-08-10",
+  "updatedAt": "2026-08-10"
+}

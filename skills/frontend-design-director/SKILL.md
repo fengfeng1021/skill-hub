@@ -1,16 +1,16 @@
 ---
 name: frontend-design-director
-description: 前端設計總指揮。任何「設計、美化、改版、審查」網頁或 App 畫面、需要配色/字體/排版/動效建議、要模仿某個網站風格、要建立品牌設計系統、或要規劃使用者互動與導覽時使用。自動整合 Impeccable、UI UX Pro Max、Taste、Hue、GSAP、interaction-experience-design 六個設計 skill 的精華與分工，並依三階段流程執行（UI → UX → 動效）——一個入口，全套服務。
-version: 2.1.0
+description: 前端設計總指揮。任何「設計、美化、改版、審查」網頁或 App 畫面、需要配色/字體/排版/動效建議、要模仿某個網站風格、要建立品牌設計系統、或要規劃使用者互動與導覽時使用。自動整合 Impeccable、UI UX Pro Max、Taste、Hue、GSAP、interaction-experience-design 六個設計 skill 的精華與分工，並依四階段流程執行（UI → UX → 動效 → 品質閘門）——一個入口，全套服務。交付程式碼前自動套用 verification-before-completion、requesting-code-review、receiving-code-review（obra/superpowers）與 mantis 安全審查。
+version: 2.2.0
 ---
 
 # 前端設計總指揮（Design Director）
 
 整合六個設計 skill 的總指揮：**Impeccable**（判斷力/打磨）、**UI UX Pro Max**（規則/資料庫）、**Taste**（學風格）、**Hue**（品牌系統）、**GSAP**（動效）、**interaction-experience-design**（互動體驗）。
 
-## 三階段流程（重要：不是只做 UI）
+## 四階段流程（重要：不是只做 UI）
 
-使用者說「設計／做一個畫面」時，依序完成三個階段，**每階段完成再進下一階段**，不要只做其中一項：
+使用者說「設計／做一個畫面」時，依序完成四個階段，**每階段完成再進下一階段**，不要只做其中一項：
 
 ```
 階段一　UI 底子（畫面好看）
@@ -19,6 +19,8 @@ version: 2.1.0
 　→ interaction-experience-design：主動作層級、資訊架構與導覽、疊頁返回、可學習性、操作回饋
 階段三　動效加分（有生命）
 　→ GSAP：有意義的動效（引導、回饋、連續性）
+階段四　品質閘門（程式碼乾淨、安全，才叫完成）
+　→ verification-before-completion（驗證後才能宣稱完成）、requesting-code-review（派審查員）、mantis 安全審查
 ```
 
 執行時明確回報「目前在第幾階段」，完成一階段再進行下一階段，讓使用者知道設計是有流程的。
@@ -34,8 +36,10 @@ version: 2.1.0
 | 動效設計 | GSAP | Impeccable（animate） |
 | **互動／導覽／流程設計** | **interaction-experience-design**（讀其 SKILL.md 決策樹選 references） | Impeccable（Operate 模式） |
 | 審查／找出問題 | Impeccable（audit/critique） | interaction-experience-design（互動檢查） |
+| **程式碼品質驗收** | **verification-before-completion**（先驗證再宣稱完成） | requesting-code-review（交付前派審查員） |
+| **程式碼安全** | **mantis-threat-model / mantis-review** | mantis-patch（修補漏洞） |
 
-## 協同工作流（標準 7 步）
+## 協同工作流（標準 8 步）
 
 1. **判斷模式**（Impeccable）：Persuade（說服）/ Operate（操作）/ Read（閱讀）/ Experience（體驗）。
 2. **學風格**（Taste）：若要模仿某風格，分析其 tokens（色彩/字體/間距/圓角/陰影/格線）＋背後的決策邏輯。
@@ -44,6 +48,7 @@ version: 2.1.0
 5. **設計底子**（Impeccable）：依模式設計，套用品質地板。
 6. **互動體驗**（interaction-experience-design）：主動作、資訊架構、導覽與疊頁返回、可學習性、操作回饋——讓「好用」。
 7. **動效加分**（GSAP）：有意義的動態，不裝飾。
+8. **品質閘門**（superpowers + mantis）：先驗證（證據優先）、再審查、後檢查安全，全過才交付。
 
 ## 六家精華（濃縮版，環境有原檔時優先讀原檔）
 
@@ -77,6 +82,26 @@ version: 2.1.0
 - 操作回饋：按了要有反應、錯誤提示在欄位旁（Nielsen 啟發式 9）
 - 詳細學理（Nielsen 10 啟發式、Shneiderman 8 法則、Gestalt、WCAG 等）見原檔
 
+## 品質閘門三件套（obra/superpowers，270k★ 開發方法論）
+
+### verification-before-completion — 完成前驗證（品質門）
+- 要宣稱「完成／修好／測試通過」前，**先跑驗證指令並確認輸出**；證據先於斷言
+- 沒跑驗證就說完成 = 違反本 skill 的硬規則
+
+### requesting-code-review — 交付前審查（閉環）
+- 主要功能完成、合併前，派 code-reviewer 子代理（讀 `code-reviewer.md`）審查
+- 給審查員精確的上下文與評估標準，不丟整個 session 歷史；早審、常審
+
+### receiving-code-review — 正確接收意見
+- 收到審查意見：先驗證再實作，不懂就問；技術正確性優先於客氣，不盲從也不表演式同意
+- 若意見技術上有問題，用證據說明，不要照單全收
+
+## 安全審查（google/mantis，Google 官方 18-skill 流水線）
+
+- 前端交付前對照 `mantis-threat-model`（威脅建模）→ `mantis-review`（審查）→ `mantis-patch`（修補）
+- 典型檢查：XSS／注入、敏感資訊外洩、權限過寬、DOM clobbering、第三方套件風險
+- ⚠️ mantis 會產生並執行自動化程式碼，**只在隔離環境使用**；所有發現需人工複核後才回報
+
 ## 原檔讀取指示
 
 先依目前 Agent 的官方 skill 機制找出它實際載入的 skill 目錄。若其中存在下列 skill，**先讀原檔再行動**；不要預設品牌或猜測固定路徑。本檔濃縮版只是沒有原檔時的最低標準：
@@ -86,3 +111,5 @@ version: 2.1.0
 - `hue/`（SKILL.md + scripts/）
 - `gsap-*/`（GSAP 動效系列）
 - `interaction-experience-design/`（SKILL.md）
+- `verification-before-completion/`、`requesting-code-review/`（含 code-reviewer.md）、`receiving-code-review/`（superpowers 品質閘門）
+- `mantis-*/`（Google 安全審查流水線，18 個 skill）

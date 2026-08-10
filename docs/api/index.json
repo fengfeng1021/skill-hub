@@ -34,11 +34,15 @@
     "footer": "## 完成後請做這幾件事\n\n1. 說明你辨識到的 Agent 與採用的官方 skill 機制，不要只回報「已完成」\n2. 列出每個 skill 實際安裝的位置，以及該資料夾下的檔案\n3. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n4. 依目前 Agent 的載入方式驗證 skill 已可被發現；只有官方流程確實要求時，才提醒我重新載入或重啟\n5. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過",
     "separator": "\n\n---\n\n"
   },
-  "count": 9,
+  "count": 11,
   "categories": [
     {
       "name": "前端 / 設計",
       "count": 6
+    },
+    {
+      "name": "程式品質",
+      "count": 2
     },
     {
       "name": "前端 / 動效",
@@ -63,6 +67,10 @@
       "count": 5
     },
     {
+      "name": "review",
+      "count": 4
+    },
+    {
       "name": "ux",
       "count": 4
     },
@@ -75,7 +83,19 @@
       "count": 3
     },
     {
+      "name": "workflow",
+      "count": 3
+    },
+    {
       "name": "brand",
+      "count": 2
+    },
+    {
+      "name": "quality",
+      "count": 2
+    },
+    {
+      "name": "security",
       "count": 2
     },
     {
@@ -103,6 +123,10 @@
       "count": 1
     },
     {
+      "name": "audit",
+      "count": 1
+    },
+    {
       "name": "automation",
       "count": 1
     },
@@ -116,6 +140,10 @@
     },
     {
       "name": "cloud-identity",
+      "count": 1
+    },
+    {
+      "name": "code-quality",
       "count": 1
     },
     {
@@ -167,6 +195,10 @@
       "count": 1
     },
     {
+      "name": "methodology",
+      "count": 1
+    },
+    {
       "name": "mobile",
       "count": 1
     },
@@ -180,10 +212,6 @@
     },
     {
       "name": "react",
-      "count": 1
-    },
-    {
-      "name": "review",
       "count": 1
     },
     {
@@ -207,7 +235,11 @@
       "count": 1
     },
     {
-      "name": "workflow",
+      "name": "verification",
+      "count": 1
+    },
+    {
+      "name": "vulnerability",
       "count": 1
     },
     {
@@ -313,7 +345,7 @@
       "id": "frontend-design-director",
       "name": "前端設計總指揮",
       "summary": "把六套設計能力一次裝齊，從畫面做到互動。",
-      "description": "這是一套跨來源的精選組合包，不是單一 skill。入口「前端設計總指揮」負責分工，並整合 Impeccable（設計判斷力與打磨）、UI UX Pro Max（設計規則與資料庫）、Taste（模仿網站風格）、Hue（品牌設計系統）、GSAP（動效）與 interaction-experience-design（互動體驗）六套能力。\n安裝時會連同組合入口與六套資產全部裝齊，共 7 個收錄項目；執行任務時依 UI → UX → 動效三階段協同，不再把其餘能力誤當成可選相依。",
+      "description": "這是一套跨來源的精選組合包，不是單一 skill。入口「前端設計總指揮」負責分工，並整合 Impeccable（設計判斷力與打磨）、UI UX Pro Max（設計規則與資料庫）、Taste（模仿網站風格）、Hue（品牌設計系統）、GSAP（動效）與 interaction-experience-design（互動體驗）六套能力。\nv2.2.0 起加入品質閘門：依 UI → UX → 動效 → 品質閘門四階段協同，交付前自動套用程式碼品質閘門（obra/superpowers 的完成前驗證與程式碼審查）與安全審查（Google Mantis），設計不只好看、程式也要乾淨安全。\n安裝時會連同組合入口與所有收錄項目全部裝齊；執行任務時不再把其餘能力誤當成可選相依。",
       "category": "前端 / 設計",
       "tags": [
         "design",
@@ -321,7 +353,10 @@
         "ux",
         "director",
         "frontend",
-        "integration"
+        "integration",
+        "quality",
+        "review",
+        "security"
       ],
       "official": false,
       "featured": true,
@@ -330,12 +365,14 @@
       "usage": [
         "美化或改版任何網頁、App 畫面，不確定該用哪個設計 skill 時",
         "要模仿某網站風格、建立品牌設計系統、加動效，一次到位",
-        "設計任務需要同時兼顧判斷力、規則、風格、品牌、動效"
+        "設計任務需要同時兼顧判斷力、規則、風格、品牌、動效",
+        "交付前想要品質把關：程式碼驗證、審查與安全檢查"
       ],
       "highlights": [
-        "一個入口自動分配六套設計能力，不用自己選",
+        "一個入口自動分配六套設計能力與品質閘門，不用自己選",
         "安裝提示詞會展開完整清單並逐項驗證，不會只裝入口",
-        "依 UI、UX、動效三階段完成設計，不只美化畫面"
+        "依 UI、UX、動效、品質閘門四階段完成，不只美化畫面",
+        "融合 270k+ stars 的開發品質方法論與 Google 官方安全審查"
       ],
       "includes": [
         "impeccable",
@@ -343,7 +380,9 @@
         "taste",
         "hue",
         "gsap",
-        "interaction-experience-design"
+        "interaction-experience-design",
+        "superpowers-code-quality",
+        "mantis"
       ],
       "source": {
         "branch": "main",
@@ -361,7 +400,7 @@
         ],
         "requires": [],
         "dirName": "frontend-design-director",
-        "notes": "這是精選組合包的協同入口；安裝時必須連同 includes 展開的六套資產一起安裝。"
+        "notes": "這是精選組合包的協同入口；安裝時必須連同 includes 展開的八個收錄項目一起安裝。"
       },
       "prompt": null,
       "links": [
@@ -449,6 +488,45 @@
           "dirNames": [
             "interaction-experience-design"
           ]
+        },
+        {
+          "id": "superpowers-code-quality",
+          "name": "程式碼品質閘門",
+          "summary": "寫完程式先驗證再交貨，還有審查員幫你把關。",
+          "category": "程式品質",
+          "folderCount": 3,
+          "dirNames": [
+            "verification-before-completion",
+            "requesting-code-review",
+            "receiving-code-review"
+          ]
+        },
+        {
+          "id": "mantis",
+          "name": "Mantis 安全審查",
+          "summary": "自動找程式漏洞、試著重現、再幫你補上。",
+          "category": "程式品質",
+          "folderCount": 18,
+          "dirNames": [
+            "mantis-architecture",
+            "mantis-threat-model",
+            "mantis-summarize",
+            "mantis-researcher",
+            "mantis-dedupe",
+            "mantis-critic",
+            "mantis-review",
+            "mantis-reproduce",
+            "mantis-chain",
+            "mantis-calibrate",
+            "mantis-report",
+            "mantis-patch",
+            "mantis-history",
+            "mantis-reflect",
+            "mantis-plan",
+            "mantis-structural-index",
+            "mantis-meta-agent",
+            "mantis-pipeline-adapter"
+          ]
         }
       ],
       "installIds": [
@@ -458,13 +536,114 @@
         "taste",
         "hue",
         "gsap",
-        "interaction-experience-design"
+        "interaction-experience-design",
+        "superpowers-code-quality",
+        "mantis"
       ],
-      "installCount": 7,
-      "installFolderCount": 20,
-      "promptBlockSingle": "### 前端設計總指揮  →  資料夾名 `frontend-design-director`\n\n- **這個 skill 做什麼**：把六套設計能力一次裝齊，從畫面做到互動。\n- **詳細一點**：這是一套跨來源的精選組合包，不是單一 skill。入口「前端設計總指揮」負責分工，並整合 Impeccable（設計判斷力與打磨）、UI UX Pro Max（設計規則與資料庫）、Taste（模仿網站風格）、Hue（品牌設計系統）、GSAP（動效）與 interaction-experience-design（互動體驗）六套能力。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-design-director\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/frontend-design-director`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：這是精選組合包的協同入口；安裝時必須連同 includes 展開的六套資產一起安裝。",
-      "promptBlock": "### 前端設計總指揮 — 精選組合包\n\n> 這不是單一 skill，而是一套已整理好的完整資產。請一次安裝下列 7 個收錄項目、共 20 個 skill 資料夾，不能把其餘內容當成可選相依。\n\n- **組合入口**：前端設計總指揮（負責整合與分工）\n- **完整內容**：Impeccable、UI UX Pro Max、Taste、Hue、GSAP、互動體驗設計\n\n---\n\n### 1. 前端設計總指揮  →  資料夾名 `frontend-design-director`\n\n- **這個 skill 做什麼**：把六套設計能力一次裝齊，從畫面做到互動。\n- **詳細一點**：這是一套跨來源的精選組合包，不是單一 skill。入口「前端設計總指揮」負責分工，並整合 Impeccable（設計判斷力與打磨）、UI UX Pro Max（設計規則與資料庫）、Taste（模仿網站風格）、Hue（品牌設計系統）、GSAP（動效）與 interaction-experience-design（互動體驗）六套能力。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-design-director\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/frontend-design-director`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：這是精選組合包的協同入口；安裝時必須連同 includes 展開的六套資產一起安裝。\n\n---\n\n### 2. Impeccable  →  資料夾名 `impeccable`\n\n- **這個 skill 做什麼**：把網頁設計得有質感，也能幫你檢查哪裡不夠好。\n- **詳細一點**：由 Paul Bakaus 打造的設計語言與品質審查 skill（GitHub 56k+ stars，持續維護）。涵蓋網站、登陸頁、儀表板、產品介面、元件、表單、設定頁、引導流程、空白狀態等所有前端介面。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `pbakaus/impeccable`（分支 `main`，來源 repo 內子目錄 `.claude/skills/impeccable`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/pbakaus/impeccable\n- **下載基底網址**：`https://raw.githubusercontent.com/pbakaus/impeccable/main/.claude/skills/impeccable`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：repo 內含多個平台的設定檔；本收錄已標出 skill 的來源子目錄。請保留該資料夾內容，並依目前 Agent 的官方機制安裝。\n\n---\n\n### 3. UI UX Pro Max  →  一組 7 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：設計網站和手機 App，配色字體排版都幫你想好。\n- **詳細一點**：GitHub 114k+ stars 的設計智慧 skill 組合，一套 7 份、實際使用時互相搭配。核心是 ui-ux-pro-max 的在地查詢資料庫：84 種 UI 風格、192 組配色、74 種字體搭配、192 種產品類型、98 條 UX 指引、104 個圖示、16 組動效預設、25 種圖表，涵蓋 22 個技術棧（React、Next.js、Vue、SwiftUI、Flutter、Tailwind、shadcn/ui、Angular、WPF、WinUI 等）。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `nextlevelbuilder/ui-ux-pro-max-skill`（分支 `main`，來源 repo 內子目錄 `.claude/skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/nextlevelbuilder/ui-ux-pro-max-skill\n- **這一組的 7 個資料夾**（缺一不可，資料夾名照抄）：\n  - `ui-ux-pro-max` — 查詢各種設計風格、配色、字體搭配的靈感庫。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-ux-pro-max`\n  - `ui-styling` — 把網頁畫面做漂亮，按鈕、表格、選單都兼顧。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-styling`\n  - `design-system` — 訂好一套設計規則（顏色、字體、間距），全站統一。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design-system`\n  - `design` — 設計商標、圖示、橫幅等各種視覺素材。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design`\n  - `banner-design` — 設計社群媒體和廣告用的橫幅圖片。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/banner-design`\n  - `slides` — 做出好看又有策略的簡報頁面。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/slides`\n  - `brand` — 建立品牌聲音與視覺形象，讓所有東西風格一致。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/brand`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：來源 repo 含 7 個相互搭配的 skill 資料夾，請依目前 Agent 的官方機制全部安裝，缺一份就少掉對應能力。\n\n---\n\n### 4. Taste  →  資料夾名 `taste`\n\n- **這個 skill 做什麼**：貼上任何網站的網址，就能學到它的設計風格與品味。\n- **詳細一點**：設計 DNA 提取器：貼一個網站網址，它會用真實瀏覽器抓取 DOM 資料與截圖，跑 4 步驟分析，產出兩份檔案——{domain}.md 與 {domain}.json，內容包含兩層：\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `senlindesign/taste-skill`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/senlindesign/taste-skill\n- **下載基底網址**：`https://raw.githubusercontent.com/senlindesign/taste-skill/main`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **額外相依**（先確認有沒有，缺的話問我要不要裝）：\n  - `Playwright MCP`\n- **注意**：需要先安裝 Playwright MCP 才能抓取網站。安裝後用 /taste <網址> 開始分析。\n\n---\n\n### 5. Hue  →  資料夾名 `hue`\n\n- **這個 skill 做什麼**：學任何品牌的風格，之後做的東西都自動長那樣。\n- **詳細一點**：給它一個品牌的網址、名稱或截圖，它會分析並生成一套完整的設計語言 skill：色彩 tokens、字體、間距、元件規格、明暗模式、首頁版型配方、圖示組合。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `dominikmartn/hue`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/dominikmartn/hue\n- **下載基底網址**：`https://raw.githubusercontent.com/dominikmartn/hue/main`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：clone 整個 repo 即可，SKILL.md 在根目錄。\n\n---\n\n### 6. GSAP  →  一組 8 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：讓網頁上的東西會動起來，淡入、滑動、跟著捲動都行。\n- **詳細一點**：GSAP 官方為 AI 準備的 skill 組合。內容涵蓋核心 tween 與 ease、多步驟時間軸編排、捲動驅動動畫（ScrollTrigger）、Flip／Draggable／SplitText 等外掛、React 與 Vue／Svelte 的正確用法、gsap.utils 工具函式，以及維持 60fps 的效能守則。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **可攜式安裝指令**（確認適用目前 Agent 後可優先使用，成功就跳過手動取檔）：\n  ```bash\n  npx skills add https://github.com/greensock/gsap-skills\n  ```\n- **來源**：GitHub `greensock/gsap-skills`（分支 `main`，來源 repo 內子目錄 `skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/greensock/gsap-skills\n- **這一組的 8 個資料夾**（缺一不可，資料夾名照抄）：\n  - `gsap-core` — 最基本的動起來，移動、放大、變透明都在這。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-core`\n  - `gsap-timeline` — 把好幾段動畫排成先後順序，像剪片一樣。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-timeline`\n  - `gsap-scrolltrigger` — 捲動頁面時觸發動畫，也能把畫面釘住不動。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-scrolltrigger`\n  - `gsap-plugins` — 額外的特殊效果，像拖曳、文字拆字、位置變換。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-plugins`\n  - `gsap-react` — 在 React 做的網站裡要怎麼正確使用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-react`\n  - `gsap-frameworks` — 在 Vue、Svelte 這類網站裡怎麼用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-frameworks`\n  - `gsap-utils` — 一些好用的小工具，算數值、隨機、限制範圍。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-utils`\n  - `gsap-performance` — 讓動畫跑得順、不卡頓的做法。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-performance`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：請依目前 Agent 的官方安裝機制處理；8 個資料夾必須全部安裝，缺一份就會少掉對應主題的知識。\n\n---\n\n### 7. 互動體驗設計  →  資料夾名 `interaction-experience-design`\n\n- **這個 skill 做什麼**：讓使用者一看就懂怎麼用，不會迷路也知道下一步。\n- **詳細一點**：專業級「使用者交互體驗」設計 skill v5：SKILL.md 入口＋決策樹索引＋11 份 references＋scripts 工具＋benchmarks 案例集＋多平台目錄。學理基礎：Nielsen 10 啟發式、Shneiderman 8 法則、Fitts/Hick/Miller/Gestalt/Jakob/Norman、認知負荷、資訊架構學、WCAG 2.2、ISO 9241。references 含：nielsen-heuristics（10 條完整）、design-laws、information-architecture、cognitive-load、accessibility-wcag、evaluation-methods、scoring（評分閘門 <80 不交付，工具+人工合流）、case-studies（6 主題好壞案例）、desktop-apps（egui 桌面指引）、anti-patterns-checklist。scripts/audit.py（HTML 自動審查：對比/目標/placeholder/語意/雙主按鈕/焦點/aria/reduced-motion）、test_audit.py（12 項自測含 benchmark 回歸）。附 README、.codex/.cursor 多平台目錄。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/interaction-experience-design\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/interaction-experience-design`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n  - `README.md`\n  - `references/nielsen-heuristics.md`\n  - `references/design-laws.md`\n  - `references/information-architecture.md`\n  - `references/cognitive-load.md`\n  - `references/accessibility-wcag.md`\n  - `references/evaluation-methods.md`\n  - `references/scoring.md`\n  - `references/case-studies.md`\n  - `references/desktop-apps.md`\n  - `references/anti-patterns-checklist.md`\n  - `scripts/audit.py`\n  - `scripts/test_audit.py`\n  - `benchmarks/login-good.html`\n  - `benchmarks/login-bad.html`\n  - `benchmarks/dashboard-good.html`\n  - `benchmarks/dashboard-bad.html`\n  - `benchmarks/settings-good.html`\n  - `benchmarks/settings-bad.html`\n- **注意**：本 skill 由 Skill Hub 自製託管。內建自測：python scripts/test_audit.py。",
-      "installPrompt": "你是我的 Skill 安裝助手。請幫我把下列 7 個 AI Agent Skill 安裝到「你目前所在的 Agent 環境」。\n\n## 安裝規則\n\n1. **先辨識目前環境** — 讀取你自己的官方說明、系統設定或既有 skills，確認這個 Agent 支援的 skill 格式、安裝方式與可用範圍。不要預設任何品牌，也不要自行猜一個 `~/.<名稱>/skills` 路徑。\n2. **自動選擇正確位置** — 我有指定全域或專案範圍時照做；沒有指定時，沿用目前 Agent 的既有慣例。若這個 Agent 只支援其中一種，就使用它官方支援的方式。只有真的無法判定時才停下來問我。\n3. **保持原始結構** — 每個 skill 都是獨立資料夾；資料夾名、SKILL.md frontmatter 的 `name`／`description` 與相對檔案結構都不要改。\n4. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n5. 來源若提供綁定特定 Agent 或固定路徑的安裝指令，只把它當作來源線索；請改用目前 Agent 的官方安裝方式，不要原樣執行。\n6. 目標資料夾**已存在**時，先比較版本與差異，再問我要更新、覆蓋或跳過，不要直接蓋掉。\n\n---\n\n### 前端設計總指揮 — 精選組合包\n\n> 這不是單一 skill，而是一套已整理好的完整資產。請一次安裝下列 7 個收錄項目、共 20 個 skill 資料夾，不能把其餘內容當成可選相依。\n\n- **組合入口**：前端設計總指揮（負責整合與分工）\n- **完整內容**：Impeccable、UI UX Pro Max、Taste、Hue、GSAP、互動體驗設計\n\n---\n\n### 1. 前端設計總指揮  →  資料夾名 `frontend-design-director`\n\n- **這個 skill 做什麼**：把六套設計能力一次裝齊，從畫面做到互動。\n- **詳細一點**：這是一套跨來源的精選組合包，不是單一 skill。入口「前端設計總指揮」負責分工，並整合 Impeccable（設計判斷力與打磨）、UI UX Pro Max（設計規則與資料庫）、Taste（模仿網站風格）、Hue（品牌設計系統）、GSAP（動效）與 interaction-experience-design（互動體驗）六套能力。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-design-director\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/frontend-design-director`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：這是精選組合包的協同入口；安裝時必須連同 includes 展開的六套資產一起安裝。\n\n---\n\n### 2. Impeccable  →  資料夾名 `impeccable`\n\n- **這個 skill 做什麼**：把網頁設計得有質感，也能幫你檢查哪裡不夠好。\n- **詳細一點**：由 Paul Bakaus 打造的設計語言與品質審查 skill（GitHub 56k+ stars，持續維護）。涵蓋網站、登陸頁、儀表板、產品介面、元件、表單、設定頁、引導流程、空白狀態等所有前端介面。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `pbakaus/impeccable`（分支 `main`，來源 repo 內子目錄 `.claude/skills/impeccable`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/pbakaus/impeccable\n- **下載基底網址**：`https://raw.githubusercontent.com/pbakaus/impeccable/main/.claude/skills/impeccable`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：repo 內含多個平台的設定檔；本收錄已標出 skill 的來源子目錄。請保留該資料夾內容，並依目前 Agent 的官方機制安裝。\n\n---\n\n### 3. UI UX Pro Max  →  一組 7 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：設計網站和手機 App，配色字體排版都幫你想好。\n- **詳細一點**：GitHub 114k+ stars 的設計智慧 skill 組合，一套 7 份、實際使用時互相搭配。核心是 ui-ux-pro-max 的在地查詢資料庫：84 種 UI 風格、192 組配色、74 種字體搭配、192 種產品類型、98 條 UX 指引、104 個圖示、16 組動效預設、25 種圖表，涵蓋 22 個技術棧（React、Next.js、Vue、SwiftUI、Flutter、Tailwind、shadcn/ui、Angular、WPF、WinUI 等）。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `nextlevelbuilder/ui-ux-pro-max-skill`（分支 `main`，來源 repo 內子目錄 `.claude/skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/nextlevelbuilder/ui-ux-pro-max-skill\n- **這一組的 7 個資料夾**（缺一不可，資料夾名照抄）：\n  - `ui-ux-pro-max` — 查詢各種設計風格、配色、字體搭配的靈感庫。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-ux-pro-max`\n  - `ui-styling` — 把網頁畫面做漂亮，按鈕、表格、選單都兼顧。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-styling`\n  - `design-system` — 訂好一套設計規則（顏色、字體、間距），全站統一。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design-system`\n  - `design` — 設計商標、圖示、橫幅等各種視覺素材。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design`\n  - `banner-design` — 設計社群媒體和廣告用的橫幅圖片。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/banner-design`\n  - `slides` — 做出好看又有策略的簡報頁面。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/slides`\n  - `brand` — 建立品牌聲音與視覺形象，讓所有東西風格一致。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/brand`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：來源 repo 含 7 個相互搭配的 skill 資料夾，請依目前 Agent 的官方機制全部安裝，缺一份就少掉對應能力。\n\n---\n\n### 4. Taste  →  資料夾名 `taste`\n\n- **這個 skill 做什麼**：貼上任何網站的網址，就能學到它的設計風格與品味。\n- **詳細一點**：設計 DNA 提取器：貼一個網站網址，它會用真實瀏覽器抓取 DOM 資料與截圖，跑 4 步驟分析，產出兩份檔案——{domain}.md 與 {domain}.json，內容包含兩層：\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `senlindesign/taste-skill`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/senlindesign/taste-skill\n- **下載基底網址**：`https://raw.githubusercontent.com/senlindesign/taste-skill/main`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **額外相依**（先確認有沒有，缺的話問我要不要裝）：\n  - `Playwright MCP`\n- **注意**：需要先安裝 Playwright MCP 才能抓取網站。安裝後用 /taste <網址> 開始分析。\n\n---\n\n### 5. Hue  →  資料夾名 `hue`\n\n- **這個 skill 做什麼**：學任何品牌的風格，之後做的東西都自動長那樣。\n- **詳細一點**：給它一個品牌的網址、名稱或截圖，它會分析並生成一套完整的設計語言 skill：色彩 tokens、字體、間距、元件規格、明暗模式、首頁版型配方、圖示組合。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `dominikmartn/hue`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/dominikmartn/hue\n- **下載基底網址**：`https://raw.githubusercontent.com/dominikmartn/hue/main`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：clone 整個 repo 即可，SKILL.md 在根目錄。\n\n---\n\n### 6. GSAP  →  一組 8 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：讓網頁上的東西會動起來，淡入、滑動、跟著捲動都行。\n- **詳細一點**：GSAP 官方為 AI 準備的 skill 組合。內容涵蓋核心 tween 與 ease、多步驟時間軸編排、捲動驅動動畫（ScrollTrigger）、Flip／Draggable／SplitText 等外掛、React 與 Vue／Svelte 的正確用法、gsap.utils 工具函式，以及維持 60fps 的效能守則。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **可攜式安裝指令**（確認適用目前 Agent 後可優先使用，成功就跳過手動取檔）：\n  ```bash\n  npx skills add https://github.com/greensock/gsap-skills\n  ```\n- **來源**：GitHub `greensock/gsap-skills`（分支 `main`，來源 repo 內子目錄 `skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/greensock/gsap-skills\n- **這一組的 8 個資料夾**（缺一不可，資料夾名照抄）：\n  - `gsap-core` — 最基本的動起來，移動、放大、變透明都在這。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-core`\n  - `gsap-timeline` — 把好幾段動畫排成先後順序，像剪片一樣。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-timeline`\n  - `gsap-scrolltrigger` — 捲動頁面時觸發動畫，也能把畫面釘住不動。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-scrolltrigger`\n  - `gsap-plugins` — 額外的特殊效果，像拖曳、文字拆字、位置變換。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-plugins`\n  - `gsap-react` — 在 React 做的網站裡要怎麼正確使用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-react`\n  - `gsap-frameworks` — 在 Vue、Svelte 這類網站裡怎麼用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-frameworks`\n  - `gsap-utils` — 一些好用的小工具，算數值、隨機、限制範圍。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-utils`\n  - `gsap-performance` — 讓動畫跑得順、不卡頓的做法。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-performance`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：請依目前 Agent 的官方安裝機制處理；8 個資料夾必須全部安裝，缺一份就會少掉對應主題的知識。\n\n---\n\n### 7. 互動體驗設計  →  資料夾名 `interaction-experience-design`\n\n- **這個 skill 做什麼**：讓使用者一看就懂怎麼用，不會迷路也知道下一步。\n- **詳細一點**：專業級「使用者交互體驗」設計 skill v5：SKILL.md 入口＋決策樹索引＋11 份 references＋scripts 工具＋benchmarks 案例集＋多平台目錄。學理基礎：Nielsen 10 啟發式、Shneiderman 8 法則、Fitts/Hick/Miller/Gestalt/Jakob/Norman、認知負荷、資訊架構學、WCAG 2.2、ISO 9241。references 含：nielsen-heuristics（10 條完整）、design-laws、information-architecture、cognitive-load、accessibility-wcag、evaluation-methods、scoring（評分閘門 <80 不交付，工具+人工合流）、case-studies（6 主題好壞案例）、desktop-apps（egui 桌面指引）、anti-patterns-checklist。scripts/audit.py（HTML 自動審查：對比/目標/placeholder/語意/雙主按鈕/焦點/aria/reduced-motion）、test_audit.py（12 項自測含 benchmark 回歸）。附 README、.codex/.cursor 多平台目錄。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/interaction-experience-design\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/interaction-experience-design`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n  - `README.md`\n  - `references/nielsen-heuristics.md`\n  - `references/design-laws.md`\n  - `references/information-architecture.md`\n  - `references/cognitive-load.md`\n  - `references/accessibility-wcag.md`\n  - `references/evaluation-methods.md`\n  - `references/scoring.md`\n  - `references/case-studies.md`\n  - `references/desktop-apps.md`\n  - `references/anti-patterns-checklist.md`\n  - `scripts/audit.py`\n  - `scripts/test_audit.py`\n  - `benchmarks/login-good.html`\n  - `benchmarks/login-bad.html`\n  - `benchmarks/dashboard-good.html`\n  - `benchmarks/dashboard-bad.html`\n  - `benchmarks/settings-good.html`\n  - `benchmarks/settings-bad.html`\n- **注意**：本 skill 由 Skill Hub 自製託管。內建自測：python scripts/test_audit.py。\n\n---\n\n## 完成後請做這幾件事\n\n1. 說明你辨識到的 Agent 與採用的官方 skill 機制，不要只回報「已完成」\n2. 列出每個 skill 實際安裝的位置，以及該資料夾下的檔案\n3. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n4. 依目前 Agent 的載入方式驗證 skill 已可被發現；只有官方流程確實要求時，才提醒我重新載入或重啟\n5. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
+      "installCount": 9,
+      "installFolderCount": 41,
+      "promptBlockSingle": "### 前端設計總指揮  →  資料夾名 `frontend-design-director`\n\n- **這個 skill 做什麼**：把六套設計能力一次裝齊，從畫面做到互動。\n- **詳細一點**：這是一套跨來源的精選組合包，不是單一 skill。入口「前端設計總指揮」負責分工，並整合 Impeccable（設計判斷力與打磨）、UI UX Pro Max（設計規則與資料庫）、Taste（模仿網站風格）、Hue（品牌設計系統）、GSAP（動效）與 interaction-experience-design（互動體驗）六套能力。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-design-director\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/frontend-design-director`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：這是精選組合包的協同入口；安裝時必須連同 includes 展開的八個收錄項目一起安裝。",
+      "promptBlock": "### 前端設計總指揮 — 精選組合包\n\n> 這不是單一 skill，而是一套已整理好的完整資產。請一次安裝下列 9 個收錄項目、共 41 個 skill 資料夾，不能把其餘內容當成可選相依。\n\n- **組合入口**：前端設計總指揮（負責整合與分工）\n- **完整內容**：Impeccable、UI UX Pro Max、Taste、Hue、GSAP、互動體驗設計、程式碼品質閘門、Mantis 安全審查\n\n---\n\n### 1. 前端設計總指揮  →  資料夾名 `frontend-design-director`\n\n- **這個 skill 做什麼**：把六套設計能力一次裝齊，從畫面做到互動。\n- **詳細一點**：這是一套跨來源的精選組合包，不是單一 skill。入口「前端設計總指揮」負責分工，並整合 Impeccable（設計判斷力與打磨）、UI UX Pro Max（設計規則與資料庫）、Taste（模仿網站風格）、Hue（品牌設計系統）、GSAP（動效）與 interaction-experience-design（互動體驗）六套能力。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-design-director\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/frontend-design-director`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：這是精選組合包的協同入口；安裝時必須連同 includes 展開的八個收錄項目一起安裝。\n\n---\n\n### 2. Impeccable  →  資料夾名 `impeccable`\n\n- **這個 skill 做什麼**：把網頁設計得有質感，也能幫你檢查哪裡不夠好。\n- **詳細一點**：由 Paul Bakaus 打造的設計語言與品質審查 skill（GitHub 56k+ stars，持續維護）。涵蓋網站、登陸頁、儀表板、產品介面、元件、表單、設定頁、引導流程、空白狀態等所有前端介面。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `pbakaus/impeccable`（分支 `main`，來源 repo 內子目錄 `.claude/skills/impeccable`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/pbakaus/impeccable\n- **下載基底網址**：`https://raw.githubusercontent.com/pbakaus/impeccable/main/.claude/skills/impeccable`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：repo 內含多個平台的設定檔；本收錄已標出 skill 的來源子目錄。請保留該資料夾內容，並依目前 Agent 的官方機制安裝。\n\n---\n\n### 3. UI UX Pro Max  →  一組 7 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：設計網站和手機 App，配色字體排版都幫你想好。\n- **詳細一點**：GitHub 114k+ stars 的設計智慧 skill 組合，一套 7 份、實際使用時互相搭配。核心是 ui-ux-pro-max 的在地查詢資料庫：84 種 UI 風格、192 組配色、74 種字體搭配、192 種產品類型、98 條 UX 指引、104 個圖示、16 組動效預設、25 種圖表，涵蓋 22 個技術棧（React、Next.js、Vue、SwiftUI、Flutter、Tailwind、shadcn/ui、Angular、WPF、WinUI 等）。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `nextlevelbuilder/ui-ux-pro-max-skill`（分支 `main`，來源 repo 內子目錄 `.claude/skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/nextlevelbuilder/ui-ux-pro-max-skill\n- **這一組的 7 個資料夾**（缺一不可，資料夾名照抄）：\n  - `ui-ux-pro-max` — 查詢各種設計風格、配色、字體搭配的靈感庫。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-ux-pro-max`\n  - `ui-styling` — 把網頁畫面做漂亮，按鈕、表格、選單都兼顧。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-styling`\n  - `design-system` — 訂好一套設計規則（顏色、字體、間距），全站統一。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design-system`\n  - `design` — 設計商標、圖示、橫幅等各種視覺素材。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design`\n  - `banner-design` — 設計社群媒體和廣告用的橫幅圖片。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/banner-design`\n  - `slides` — 做出好看又有策略的簡報頁面。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/slides`\n  - `brand` — 建立品牌聲音與視覺形象，讓所有東西風格一致。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/brand`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：來源 repo 含 7 個相互搭配的 skill 資料夾，請依目前 Agent 的官方機制全部安裝，缺一份就少掉對應能力。\n\n---\n\n### 4. Taste  →  資料夾名 `taste`\n\n- **這個 skill 做什麼**：貼上任何網站的網址，就能學到它的設計風格與品味。\n- **詳細一點**：設計 DNA 提取器：貼一個網站網址，它會用真實瀏覽器抓取 DOM 資料與截圖，跑 4 步驟分析，產出兩份檔案——{domain}.md 與 {domain}.json，內容包含兩層：\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `senlindesign/taste-skill`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/senlindesign/taste-skill\n- **下載基底網址**：`https://raw.githubusercontent.com/senlindesign/taste-skill/main`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **額外相依**（先確認有沒有，缺的話問我要不要裝）：\n  - `Playwright MCP`\n- **注意**：需要先安裝 Playwright MCP 才能抓取網站。安裝後用 /taste <網址> 開始分析。\n\n---\n\n### 5. Hue  →  資料夾名 `hue`\n\n- **這個 skill 做什麼**：學任何品牌的風格，之後做的東西都自動長那樣。\n- **詳細一點**：給它一個品牌的網址、名稱或截圖，它會分析並生成一套完整的設計語言 skill：色彩 tokens、字體、間距、元件規格、明暗模式、首頁版型配方、圖示組合。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `dominikmartn/hue`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/dominikmartn/hue\n- **下載基底網址**：`https://raw.githubusercontent.com/dominikmartn/hue/main`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：clone 整個 repo 即可，SKILL.md 在根目錄。\n\n---\n\n### 6. GSAP  →  一組 8 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：讓網頁上的東西會動起來，淡入、滑動、跟著捲動都行。\n- **詳細一點**：GSAP 官方為 AI 準備的 skill 組合。內容涵蓋核心 tween 與 ease、多步驟時間軸編排、捲動驅動動畫（ScrollTrigger）、Flip／Draggable／SplitText 等外掛、React 與 Vue／Svelte 的正確用法、gsap.utils 工具函式，以及維持 60fps 的效能守則。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **可攜式安裝指令**（確認適用目前 Agent 後可優先使用，成功就跳過手動取檔）：\n  ```bash\n  npx skills add https://github.com/greensock/gsap-skills\n  ```\n- **來源**：GitHub `greensock/gsap-skills`（分支 `main`，來源 repo 內子目錄 `skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/greensock/gsap-skills\n- **這一組的 8 個資料夾**（缺一不可，資料夾名照抄）：\n  - `gsap-core` — 最基本的動起來，移動、放大、變透明都在這。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-core`\n  - `gsap-timeline` — 把好幾段動畫排成先後順序，像剪片一樣。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-timeline`\n  - `gsap-scrolltrigger` — 捲動頁面時觸發動畫，也能把畫面釘住不動。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-scrolltrigger`\n  - `gsap-plugins` — 額外的特殊效果，像拖曳、文字拆字、位置變換。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-plugins`\n  - `gsap-react` — 在 React 做的網站裡要怎麼正確使用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-react`\n  - `gsap-frameworks` — 在 Vue、Svelte 這類網站裡怎麼用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-frameworks`\n  - `gsap-utils` — 一些好用的小工具，算數值、隨機、限制範圍。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-utils`\n  - `gsap-performance` — 讓動畫跑得順、不卡頓的做法。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-performance`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：請依目前 Agent 的官方安裝機制處理；8 個資料夾必須全部安裝，缺一份就會少掉對應主題的知識。\n\n---\n\n### 7. 互動體驗設計  →  資料夾名 `interaction-experience-design`\n\n- **這個 skill 做什麼**：讓使用者一看就懂怎麼用，不會迷路也知道下一步。\n- **詳細一點**：專業級「使用者交互體驗」設計 skill v5：SKILL.md 入口＋決策樹索引＋11 份 references＋scripts 工具＋benchmarks 案例集＋多平台目錄。學理基礎：Nielsen 10 啟發式、Shneiderman 8 法則、Fitts/Hick/Miller/Gestalt/Jakob/Norman、認知負荷、資訊架構學、WCAG 2.2、ISO 9241。references 含：nielsen-heuristics（10 條完整）、design-laws、information-architecture、cognitive-load、accessibility-wcag、evaluation-methods、scoring（評分閘門 <80 不交付，工具+人工合流）、case-studies（6 主題好壞案例）、desktop-apps（egui 桌面指引）、anti-patterns-checklist。scripts/audit.py（HTML 自動審查：對比/目標/placeholder/語意/雙主按鈕/焦點/aria/reduced-motion）、test_audit.py（12 項自測含 benchmark 回歸）。附 README、.codex/.cursor 多平台目錄。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/interaction-experience-design\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/interaction-experience-design`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n  - `README.md`\n  - `references/nielsen-heuristics.md`\n  - `references/design-laws.md`\n  - `references/information-architecture.md`\n  - `references/cognitive-load.md`\n  - `references/accessibility-wcag.md`\n  - `references/evaluation-methods.md`\n  - `references/scoring.md`\n  - `references/case-studies.md`\n  - `references/desktop-apps.md`\n  - `references/anti-patterns-checklist.md`\n  - `scripts/audit.py`\n  - `scripts/test_audit.py`\n  - `benchmarks/login-good.html`\n  - `benchmarks/login-bad.html`\n  - `benchmarks/dashboard-good.html`\n  - `benchmarks/dashboard-bad.html`\n  - `benchmarks/settings-good.html`\n  - `benchmarks/settings-bad.html`\n- **注意**：本 skill 由 Skill Hub 自製託管。內建自測：python scripts/test_audit.py。\n\n---\n\n### 8. 程式碼品質閘門  →  一組 3 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：寫完程式先驗證再交貨，還有審查員幫你把關。\n- **詳細一點**：取自 obra/superpowers（GitHub 270k+ stars 的開發方法論框架，作者 Jesse Vincent）的品質三件套：\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `obra/superpowers`（分支 `main`，來源 repo 內子目錄 `skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/obra/superpowers\n- **這一組的 3 個資料夾**（缺一不可，資料夾名照抄）：\n  - `verification-before-completion` — 沒先跑驗證，不准說程式寫完了。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/verification-before-completion`\n  - `requesting-code-review` — 交貨前派審查員先看一遍，提早抓問題。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/requesting-code-review`\n  - `receiving-code-review` — 收到審查意見先自己驗證，不盲從也不硬拗。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/receiving-code-review`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：3 個資料夾必須全部安裝；requesting-code-review 資料夾裡還有一份 code-reviewer.md（審查員指示），要一起拿。\n\n---\n\n### 9. Mantis 安全審查  →  一組 18 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：自動找程式漏洞、試著重現、再幫你補上。\n- **詳細一點**：Google 官方推出的安全審查 toolkit，18 個 skill 組成一套可自動執行的漏洞審查流水線：先建立知識庫與威脅模型（architecture、threat-model、summarize、structural-index、plan、history），再掃描與驗證（researcher、dedupe、critic、review、reproduce、chain、calibrate），最後修補與報告（patch、report、reflect），另有總指揮與自訂流水線（meta-agent、pipeline-adapter）。所有 skill 都是單獨的資料夾，安裝時一併裝齊。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `google/mantis`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/google/mantis\n- **這一組的 18 個資料夾**（缺一不可，資料夾名照抄）：\n  - `mantis-architecture` — 把程式碼分析整理成互相連結的知識庫，當審查底圖。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-architecture`\n  - `mantis-threat-model` — 先畫出哪些地方會被攻擊、誰會來攻擊，再決定查哪裡。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-threat-model`\n  - `mantis-summarize` — 先幫每個資料夾寫安全摘要，讓後面好規劃。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-summarize`\n  - `mantis-researcher` — 照計畫實際檢查程式碼，找出可疑的漏洞。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-researcher`\n  - `mantis-dedupe` — 把重複的發現整理成一份，避免同一問題報很多次。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-dedupe`\n  - `mantis-critic` — 過濾掉測試用、碰不到的假漏洞，只留真的。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-critic`\n  - `mantis-review` — 獨立的第二輪檢查，去掉誤報。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-review`\n  - `mantis-reproduce` — 寫出能重現問題的測試，確認漏洞真的存在。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reproduce`\n  - `mantis-chain` — 把單獨的漏洞串起來，看能不能組合成更大攻擊。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-chain`\n  - `mantis-calibrate` — 綜合證據算出整體風險分數。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-calibrate`\n  - `mantis-report` — 把確認的發現整理成人看得懂的安全報告。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-report`\n  - `mantis-patch` — 自動產生最小修補、套用並驗證修好沒。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-patch`\n  - `mantis-history` — 翻版本歷史，找出過去修過的漏洞當參考。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-history`\n  - `mantis-reflect` — 每次審查結束檢討，留下經驗下次更準。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reflect`\n  - `mantis-plan` — 根據威脅模型排定這次要查哪些地方。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-plan`\n  - `mantis-structural-index` — 把程式碼建成索引，方便快速比對。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-structural-index`\n  - `mantis-meta-agent` — 當總指揮，盯整場審查跑完。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-meta-agent`\n  - `mantis-pipeline-adapter` — 教你打造自己的自動化審查流水線。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-pipeline-adapter`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：18 個資料夾必須全部安裝；本套件會執行自動化程式碼，官方警告只能在隔離環境使用，發現需人工複核。",
+      "installPrompt": "你是我的 Skill 安裝助手。請幫我把下列 9 個 AI Agent Skill 安裝到「你目前所在的 Agent 環境」。\n\n## 安裝規則\n\n1. **先辨識目前環境** — 讀取你自己的官方說明、系統設定或既有 skills，確認這個 Agent 支援的 skill 格式、安裝方式與可用範圍。不要預設任何品牌，也不要自行猜一個 `~/.<名稱>/skills` 路徑。\n2. **自動選擇正確位置** — 我有指定全域或專案範圍時照做；沒有指定時，沿用目前 Agent 的既有慣例。若這個 Agent 只支援其中一種，就使用它官方支援的方式。只有真的無法判定時才停下來問我。\n3. **保持原始結構** — 每個 skill 都是獨立資料夾；資料夾名、SKILL.md frontmatter 的 `name`／`description` 與相對檔案結構都不要改。\n4. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n5. 來源若提供綁定特定 Agent 或固定路徑的安裝指令，只把它當作來源線索；請改用目前 Agent 的官方安裝方式，不要原樣執行。\n6. 目標資料夾**已存在**時，先比較版本與差異，再問我要更新、覆蓋或跳過，不要直接蓋掉。\n\n---\n\n### 前端設計總指揮 — 精選組合包\n\n> 這不是單一 skill，而是一套已整理好的完整資產。請一次安裝下列 9 個收錄項目、共 41 個 skill 資料夾，不能把其餘內容當成可選相依。\n\n- **組合入口**：前端設計總指揮（負責整合與分工）\n- **完整內容**：Impeccable、UI UX Pro Max、Taste、Hue、GSAP、互動體驗設計、程式碼品質閘門、Mantis 安全審查\n\n---\n\n### 1. 前端設計總指揮  →  資料夾名 `frontend-design-director`\n\n- **這個 skill 做什麼**：把六套設計能力一次裝齊，從畫面做到互動。\n- **詳細一點**：這是一套跨來源的精選組合包，不是單一 skill。入口「前端設計總指揮」負責分工，並整合 Impeccable（設計判斷力與打磨）、UI UX Pro Max（設計規則與資料庫）、Taste（模仿網站風格）、Hue（品牌設計系統）、GSAP（動效）與 interaction-experience-design（互動體驗）六套能力。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-design-director\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/frontend-design-director`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：這是精選組合包的協同入口；安裝時必須連同 includes 展開的八個收錄項目一起安裝。\n\n---\n\n### 2. Impeccable  →  資料夾名 `impeccable`\n\n- **這個 skill 做什麼**：把網頁設計得有質感，也能幫你檢查哪裡不夠好。\n- **詳細一點**：由 Paul Bakaus 打造的設計語言與品質審查 skill（GitHub 56k+ stars，持續維護）。涵蓋網站、登陸頁、儀表板、產品介面、元件、表單、設定頁、引導流程、空白狀態等所有前端介面。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `pbakaus/impeccable`（分支 `main`，來源 repo 內子目錄 `.claude/skills/impeccable`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/pbakaus/impeccable\n- **下載基底網址**：`https://raw.githubusercontent.com/pbakaus/impeccable/main/.claude/skills/impeccable`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：repo 內含多個平台的設定檔；本收錄已標出 skill 的來源子目錄。請保留該資料夾內容，並依目前 Agent 的官方機制安裝。\n\n---\n\n### 3. UI UX Pro Max  →  一組 7 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：設計網站和手機 App，配色字體排版都幫你想好。\n- **詳細一點**：GitHub 114k+ stars 的設計智慧 skill 組合，一套 7 份、實際使用時互相搭配。核心是 ui-ux-pro-max 的在地查詢資料庫：84 種 UI 風格、192 組配色、74 種字體搭配、192 種產品類型、98 條 UX 指引、104 個圖示、16 組動效預設、25 種圖表，涵蓋 22 個技術棧（React、Next.js、Vue、SwiftUI、Flutter、Tailwind、shadcn/ui、Angular、WPF、WinUI 等）。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `nextlevelbuilder/ui-ux-pro-max-skill`（分支 `main`，來源 repo 內子目錄 `.claude/skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/nextlevelbuilder/ui-ux-pro-max-skill\n- **這一組的 7 個資料夾**（缺一不可，資料夾名照抄）：\n  - `ui-ux-pro-max` — 查詢各種設計風格、配色、字體搭配的靈感庫。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-ux-pro-max`\n  - `ui-styling` — 把網頁畫面做漂亮，按鈕、表格、選單都兼顧。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/ui-styling`\n  - `design-system` — 訂好一套設計規則（顏色、字體、間距），全站統一。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design-system`\n  - `design` — 設計商標、圖示、橫幅等各種視覺素材。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/design`\n  - `banner-design` — 設計社群媒體和廣告用的橫幅圖片。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/banner-design`\n  - `slides` — 做出好看又有策略的簡報頁面。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/slides`\n  - `brand` — 建立品牌聲音與視覺形象，讓所有東西風格一致。\n    下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills/brand`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：來源 repo 含 7 個相互搭配的 skill 資料夾，請依目前 Agent 的官方機制全部安裝，缺一份就少掉對應能力。\n\n---\n\n### 4. Taste  →  資料夾名 `taste`\n\n- **這個 skill 做什麼**：貼上任何網站的網址，就能學到它的設計風格與品味。\n- **詳細一點**：設計 DNA 提取器：貼一個網站網址，它會用真實瀏覽器抓取 DOM 資料與截圖，跑 4 步驟分析，產出兩份檔案——{domain}.md 與 {domain}.json，內容包含兩層：\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `senlindesign/taste-skill`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/senlindesign/taste-skill\n- **下載基底網址**：`https://raw.githubusercontent.com/senlindesign/taste-skill/main`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **額外相依**（先確認有沒有，缺的話問我要不要裝）：\n  - `Playwright MCP`\n- **注意**：需要先安裝 Playwright MCP 才能抓取網站。安裝後用 /taste <網址> 開始分析。\n\n---\n\n### 5. Hue  →  資料夾名 `hue`\n\n- **這個 skill 做什麼**：學任何品牌的風格，之後做的東西都自動長那樣。\n- **詳細一點**：給它一個品牌的網址、名稱或截圖，它會分析並生成一套完整的設計語言 skill：色彩 tokens、字體、間距、元件規格、明暗模式、首頁版型配方、圖示組合。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `dominikmartn/hue`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/dominikmartn/hue\n- **下載基底網址**：`https://raw.githubusercontent.com/dominikmartn/hue/main`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：clone 整個 repo 即可，SKILL.md 在根目錄。\n\n---\n\n### 6. GSAP  →  一組 8 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：讓網頁上的東西會動起來，淡入、滑動、跟著捲動都行。\n- **詳細一點**：GSAP 官方為 AI 準備的 skill 組合。內容涵蓋核心 tween 與 ease、多步驟時間軸編排、捲動驅動動畫（ScrollTrigger）、Flip／Draggable／SplitText 等外掛、React 與 Vue／Svelte 的正確用法、gsap.utils 工具函式，以及維持 60fps 的效能守則。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **可攜式安裝指令**（確認適用目前 Agent 後可優先使用，成功就跳過手動取檔）：\n  ```bash\n  npx skills add https://github.com/greensock/gsap-skills\n  ```\n- **來源**：GitHub `greensock/gsap-skills`（分支 `main`，來源 repo 內子目錄 `skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/greensock/gsap-skills\n- **這一組的 8 個資料夾**（缺一不可，資料夾名照抄）：\n  - `gsap-core` — 最基本的動起來，移動、放大、變透明都在這。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-core`\n  - `gsap-timeline` — 把好幾段動畫排成先後順序，像剪片一樣。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-timeline`\n  - `gsap-scrolltrigger` — 捲動頁面時觸發動畫，也能把畫面釘住不動。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-scrolltrigger`\n  - `gsap-plugins` — 額外的特殊效果，像拖曳、文字拆字、位置變換。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-plugins`\n  - `gsap-react` — 在 React 做的網站裡要怎麼正確使用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-react`\n  - `gsap-frameworks` — 在 Vue、Svelte 這類網站裡怎麼用。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-frameworks`\n  - `gsap-utils` — 一些好用的小工具，算數值、隨機、限制範圍。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-utils`\n  - `gsap-performance` — 讓動畫跑得順、不卡頓的做法。\n    下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills/gsap-performance`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：請依目前 Agent 的官方安裝機制處理；8 個資料夾必須全部安裝，缺一份就會少掉對應主題的知識。\n\n---\n\n### 7. 互動體驗設計  →  資料夾名 `interaction-experience-design`\n\n- **這個 skill 做什麼**：讓使用者一看就懂怎麼用，不會迷路也知道下一步。\n- **詳細一點**：專業級「使用者交互體驗」設計 skill v5：SKILL.md 入口＋決策樹索引＋11 份 references＋scripts 工具＋benchmarks 案例集＋多平台目錄。學理基礎：Nielsen 10 啟發式、Shneiderman 8 法則、Fitts/Hick/Miller/Gestalt/Jakob/Norman、認知負荷、資訊架構學、WCAG 2.2、ISO 9241。references 含：nielsen-heuristics（10 條完整）、design-laws、information-architecture、cognitive-load、accessibility-wcag、evaluation-methods、scoring（評分閘門 <80 不交付，工具+人工合流）、case-studies（6 主題好壞案例）、desktop-apps（egui 桌面指引）、anti-patterns-checklist。scripts/audit.py（HTML 自動審查：對比/目標/placeholder/語意/雙主按鈕/焦點/aria/reduced-motion）、test_audit.py（12 項自測含 benchmark 回歸）。附 README、.codex/.cursor 多平台目錄。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/interaction-experience-design\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/interaction-experience-design`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n  - `README.md`\n  - `references/nielsen-heuristics.md`\n  - `references/design-laws.md`\n  - `references/information-architecture.md`\n  - `references/cognitive-load.md`\n  - `references/accessibility-wcag.md`\n  - `references/evaluation-methods.md`\n  - `references/scoring.md`\n  - `references/case-studies.md`\n  - `references/desktop-apps.md`\n  - `references/anti-patterns-checklist.md`\n  - `scripts/audit.py`\n  - `scripts/test_audit.py`\n  - `benchmarks/login-good.html`\n  - `benchmarks/login-bad.html`\n  - `benchmarks/dashboard-good.html`\n  - `benchmarks/dashboard-bad.html`\n  - `benchmarks/settings-good.html`\n  - `benchmarks/settings-bad.html`\n- **注意**：本 skill 由 Skill Hub 自製託管。內建自測：python scripts/test_audit.py。\n\n---\n\n### 8. 程式碼品質閘門  →  一組 3 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：寫完程式先驗證再交貨，還有審查員幫你把關。\n- **詳細一點**：取自 obra/superpowers（GitHub 270k+ stars 的開發方法論框架，作者 Jesse Vincent）的品質三件套：\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `obra/superpowers`（分支 `main`，來源 repo 內子目錄 `skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/obra/superpowers\n- **這一組的 3 個資料夾**（缺一不可，資料夾名照抄）：\n  - `verification-before-completion` — 沒先跑驗證，不准說程式寫完了。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/verification-before-completion`\n  - `requesting-code-review` — 交貨前派審查員先看一遍，提早抓問題。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/requesting-code-review`\n  - `receiving-code-review` — 收到審查意見先自己驗證，不盲從也不硬拗。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/receiving-code-review`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：3 個資料夾必須全部安裝；requesting-code-review 資料夾裡還有一份 code-reviewer.md（審查員指示），要一起拿。\n\n---\n\n### 9. Mantis 安全審查  →  一組 18 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：自動找程式漏洞、試著重現、再幫你補上。\n- **詳細一點**：Google 官方推出的安全審查 toolkit，18 個 skill 組成一套可自動執行的漏洞審查流水線：先建立知識庫與威脅模型（architecture、threat-model、summarize、structural-index、plan、history），再掃描與驗證（researcher、dedupe、critic、review、reproduce、chain、calibrate），最後修補與報告（patch、report、reflect），另有總指揮與自訂流水線（meta-agent、pipeline-adapter）。所有 skill 都是單獨的資料夾，安裝時一併裝齊。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `google/mantis`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/google/mantis\n- **這一組的 18 個資料夾**（缺一不可，資料夾名照抄）：\n  - `mantis-architecture` — 把程式碼分析整理成互相連結的知識庫，當審查底圖。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-architecture`\n  - `mantis-threat-model` — 先畫出哪些地方會被攻擊、誰會來攻擊，再決定查哪裡。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-threat-model`\n  - `mantis-summarize` — 先幫每個資料夾寫安全摘要，讓後面好規劃。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-summarize`\n  - `mantis-researcher` — 照計畫實際檢查程式碼，找出可疑的漏洞。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-researcher`\n  - `mantis-dedupe` — 把重複的發現整理成一份，避免同一問題報很多次。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-dedupe`\n  - `mantis-critic` — 過濾掉測試用、碰不到的假漏洞，只留真的。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-critic`\n  - `mantis-review` — 獨立的第二輪檢查，去掉誤報。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-review`\n  - `mantis-reproduce` — 寫出能重現問題的測試，確認漏洞真的存在。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reproduce`\n  - `mantis-chain` — 把單獨的漏洞串起來，看能不能組合成更大攻擊。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-chain`\n  - `mantis-calibrate` — 綜合證據算出整體風險分數。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-calibrate`\n  - `mantis-report` — 把確認的發現整理成人看得懂的安全報告。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-report`\n  - `mantis-patch` — 自動產生最小修補、套用並驗證修好沒。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-patch`\n  - `mantis-history` — 翻版本歷史，找出過去修過的漏洞當參考。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-history`\n  - `mantis-reflect` — 每次審查結束檢討，留下經驗下次更準。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reflect`\n  - `mantis-plan` — 根據威脅模型排定這次要查哪些地方。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-plan`\n  - `mantis-structural-index` — 把程式碼建成索引，方便快速比對。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-structural-index`\n  - `mantis-meta-agent` — 當總指揮，盯整場審查跑完。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-meta-agent`\n  - `mantis-pipeline-adapter` — 教你打造自己的自動化審查流水線。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-pipeline-adapter`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：18 個資料夾必須全部安裝；本套件會執行自動化程式碼，官方警告只能在隔離環境使用，發現需人工複核。\n\n---\n\n## 完成後請做這幾件事\n\n1. 說明你辨識到的 Agent 與採用的官方 skill 機制，不要只回報「已完成」\n2. 列出每個 skill 實際安裝的位置，以及該資料夾下的檔案\n3. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n4. 依目前 Agent 的載入方式驗證 skill 已可被發現；只有官方流程確實要求時，才提醒我重新載入或重啟\n5. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
+    },
+    {
+      "id": "superpowers-code-quality",
+      "name": "程式碼品質閘門",
+      "summary": "寫完程式先驗證再交貨，還有審查員幫你把關。",
+      "description": "取自 obra/superpowers（GitHub 270k+ stars 的開發方法論框架，作者 Jesse Vincent）的品質三件套：\n- verification-before-completion：要宣稱「完成／修好／測試通過」前，必須先跑驗證指令並確認輸出，證據先於斷言。\n- requesting-code-review：主要功能完成或合併前，派出 code-reviewer 子代理（附 code-reviewer.md 審查員指示）以精確上下文審查，早審常審。\n- receiving-code-review：收到審查意見先技術驗證再實作，不盲從也不表演式同意，用證據溝通。\n三個資料夾都來自同一 repo 的 skills/ 子目錄，安裝時一併裝齊；適合加進任何前端設計／開發流程的收尾階段。",
+      "category": "程式品質",
+      "tags": [
+        "code-quality",
+        "review",
+        "verification",
+        "workflow",
+        "methodology"
+      ],
+      "official": true,
+      "featured": true,
+      "author": "Jesse Vincent (obra)",
+      "license": "MIT",
+      "usage": [
+        "寫完功能準備交付或合併前，想要品質把關",
+        "AI 宣稱「寫完了」但沒有跑過驗證，需要強制驗證流程",
+        "希望程式碼有第二人（審查員）看過再上線",
+        "收到審查意見不知道該照單全收還是反駁"
+      ],
+      "highlights": [
+        "品質門：沒驗證不准說完成，直接擋掉最常見的 AI 壞習慣",
+        "審查閉環：請求審查＋正確接收意見兩段都顧到",
+        "270k+ stars 的開發方法論，非個人經驗，廣受社群採用"
+      ],
+      "source": {
+        "branch": "main",
+        "kind": "github",
+        "url": "https://github.com/obra/superpowers",
+        "subdir": "skills",
+        "owner": "obra",
+        "name": "superpowers",
+        "displayUrl": "https://github.com/obra/superpowers/tree/main/skills",
+        "rawBase": "https://raw.githubusercontent.com/obra/superpowers/main/skills",
+        "label": "obra/superpowers"
+      },
+      "parts": [
+        {
+          "dirName": "verification-before-completion",
+          "name": "完成前驗證",
+          "summary": "沒先跑驗證，不准說程式寫完了。",
+          "subdir": "skills/verification-before-completion",
+          "rawBase": "https://raw.githubusercontent.com/obra/superpowers/main/skills/verification-before-completion",
+          "displayUrl": "https://github.com/obra/superpowers/tree/main/skills/verification-before-completion"
+        },
+        {
+          "dirName": "requesting-code-review",
+          "name": "請求審查",
+          "summary": "交貨前派審查員先看一遍，提早抓問題。",
+          "subdir": "skills/requesting-code-review",
+          "rawBase": "https://raw.githubusercontent.com/obra/superpowers/main/skills/requesting-code-review",
+          "displayUrl": "https://github.com/obra/superpowers/tree/main/skills/requesting-code-review"
+        },
+        {
+          "dirName": "receiving-code-review",
+          "name": "接收意見",
+          "summary": "收到審查意見先自己驗證，不盲從也不硬拗。",
+          "subdir": "skills/receiving-code-review",
+          "rawBase": "https://raw.githubusercontent.com/obra/superpowers/main/skills/receiving-code-review",
+          "displayUrl": "https://github.com/obra/superpowers/tree/main/skills/receiving-code-review"
+        }
+      ],
+      "install": {
+        "scope": "user",
+        "files": [
+          "SKILL.md"
+        ],
+        "requires": [],
+        "notes": "3 個資料夾必須全部安裝；requesting-code-review 資料夾裡還有一份 code-reviewer.md（審查員指示），要一起拿。",
+        "dirName": "verification-before-completion"
+      },
+      "prompt": null,
+      "links": [
+        {
+          "label": "obra/superpowers（官方 repo）",
+          "url": "https://github.com/obra/superpowers"
+        }
+      ],
+      "addedAt": "2026-08-10",
+      "updatedAt": "2026-08-10",
+      "includes": [],
+      "dirNames": [
+        "verification-before-completion",
+        "requesting-code-review",
+        "receiving-code-review"
+      ],
+      "includedSkills": [],
+      "installIds": [
+        "superpowers-code-quality"
+      ],
+      "installCount": 1,
+      "installFolderCount": 3,
+      "promptBlockSingle": "### 程式碼品質閘門  →  一組 3 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：寫完程式先驗證再交貨，還有審查員幫你把關。\n- **詳細一點**：取自 obra/superpowers（GitHub 270k+ stars 的開發方法論框架，作者 Jesse Vincent）的品質三件套：\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `obra/superpowers`（分支 `main`，來源 repo 內子目錄 `skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/obra/superpowers\n- **這一組的 3 個資料夾**（缺一不可，資料夾名照抄）：\n  - `verification-before-completion` — 沒先跑驗證，不准說程式寫完了。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/verification-before-completion`\n  - `requesting-code-review` — 交貨前派審查員先看一遍，提早抓問題。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/requesting-code-review`\n  - `receiving-code-review` — 收到審查意見先自己驗證，不盲從也不硬拗。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/receiving-code-review`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：3 個資料夾必須全部安裝；requesting-code-review 資料夾裡還有一份 code-reviewer.md（審查員指示），要一起拿。",
+      "promptBlock": "### 程式碼品質閘門  →  一組 3 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：寫完程式先驗證再交貨，還有審查員幫你把關。\n- **詳細一點**：取自 obra/superpowers（GitHub 270k+ stars 的開發方法論框架，作者 Jesse Vincent）的品質三件套：\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `obra/superpowers`（分支 `main`，來源 repo 內子目錄 `skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/obra/superpowers\n- **這一組的 3 個資料夾**（缺一不可，資料夾名照抄）：\n  - `verification-before-completion` — 沒先跑驗證，不准說程式寫完了。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/verification-before-completion`\n  - `requesting-code-review` — 交貨前派審查員先看一遍，提早抓問題。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/requesting-code-review`\n  - `receiving-code-review` — 收到審查意見先自己驗證，不盲從也不硬拗。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/receiving-code-review`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：3 個資料夾必須全部安裝；requesting-code-review 資料夾裡還有一份 code-reviewer.md（審查員指示），要一起拿。",
+      "installPrompt": "你是我的 Skill 安裝助手。請幫我把下面這個 AI Agent Skill 安裝到「你目前所在的 Agent 環境」。\n\n## 安裝規則\n\n1. **先辨識目前環境** — 讀取你自己的官方說明、系統設定或既有 skills，確認這個 Agent 支援的 skill 格式、安裝方式與可用範圍。不要預設任何品牌，也不要自行猜一個 `~/.<名稱>/skills` 路徑。\n2. **自動選擇正確位置** — 我有指定全域或專案範圍時照做；沒有指定時，沿用目前 Agent 的既有慣例。若這個 Agent 只支援其中一種，就使用它官方支援的方式。只有真的無法判定時才停下來問我。\n3. **保持原始結構** — 每個 skill 都是獨立資料夾；資料夾名、SKILL.md frontmatter 的 `name`／`description` 與相對檔案結構都不要改。\n4. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n5. 來源若提供綁定特定 Agent 或固定路徑的安裝指令，只把它當作來源線索；請改用目前 Agent 的官方安裝方式，不要原樣執行。\n6. 目標資料夾**已存在**時，先比較版本與差異，再問我要更新、覆蓋或跳過，不要直接蓋掉。\n\n---\n\n### 程式碼品質閘門  →  一組 3 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：寫完程式先驗證再交貨，還有審查員幫你把關。\n- **詳細一點**：取自 obra/superpowers（GitHub 270k+ stars 的開發方法論框架，作者 Jesse Vincent）的品質三件套：\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `obra/superpowers`（分支 `main`，來源 repo 內子目錄 `skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/obra/superpowers\n- **這一組的 3 個資料夾**（缺一不可，資料夾名照抄）：\n  - `verification-before-completion` — 沒先跑驗證，不准說程式寫完了。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/verification-before-completion`\n  - `requesting-code-review` — 交貨前派審查員先看一遍，提早抓問題。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/requesting-code-review`\n  - `receiving-code-review` — 收到審查意見先自己驗證，不盲從也不硬拗。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/receiving-code-review`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：3 個資料夾必須全部安裝；requesting-code-review 資料夾裡還有一份 code-reviewer.md（審查員指示），要一起拿。\n\n---\n\n## 完成後請做這幾件事\n\n1. 說明你辨識到的 Agent 與採用的官方 skill 機制，不要只回報「已完成」\n2. 列出每個 skill 實際安裝的位置，以及該資料夾下的檔案\n3. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n4. 依目前 Agent 的載入方式驗證 skill 已可被發現；只有官方流程確實要求時，才提醒我重新載入或重啟\n5. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
     },
     {
       "id": "agentchat",
@@ -958,6 +1137,239 @@
       "promptBlockSingle": "### Impeccable  →  資料夾名 `impeccable`\n\n- **這個 skill 做什麼**：把網頁設計得有質感，也能幫你檢查哪裡不夠好。\n- **詳細一點**：由 Paul Bakaus 打造的設計語言與品質審查 skill（GitHub 56k+ stars，持續維護）。涵蓋網站、登陸頁、儀表板、產品介面、元件、表單、設定頁、引導流程、空白狀態等所有前端介面。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `pbakaus/impeccable`（分支 `main`，來源 repo 內子目錄 `.claude/skills/impeccable`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/pbakaus/impeccable\n- **下載基底網址**：`https://raw.githubusercontent.com/pbakaus/impeccable/main/.claude/skills/impeccable`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：repo 內含多個平台的設定檔；本收錄已標出 skill 的來源子目錄。請保留該資料夾內容，並依目前 Agent 的官方機制安裝。",
       "promptBlock": "### Impeccable  →  資料夾名 `impeccable`\n\n- **這個 skill 做什麼**：把網頁設計得有質感，也能幫你檢查哪裡不夠好。\n- **詳細一點**：由 Paul Bakaus 打造的設計語言與品質審查 skill（GitHub 56k+ stars，持續維護）。涵蓋網站、登陸頁、儀表板、產品介面、元件、表單、設定頁、引導流程、空白狀態等所有前端介面。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `pbakaus/impeccable`（分支 `main`，來源 repo 內子目錄 `.claude/skills/impeccable`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/pbakaus/impeccable\n- **下載基底網址**：`https://raw.githubusercontent.com/pbakaus/impeccable/main/.claude/skills/impeccable`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：repo 內含多個平台的設定檔；本收錄已標出 skill 的來源子目錄。請保留該資料夾內容，並依目前 Agent 的官方機制安裝。",
       "installPrompt": "你是我的 Skill 安裝助手。請幫我把下面這個 AI Agent Skill 安裝到「你目前所在的 Agent 環境」。\n\n## 安裝規則\n\n1. **先辨識目前環境** — 讀取你自己的官方說明、系統設定或既有 skills，確認這個 Agent 支援的 skill 格式、安裝方式與可用範圍。不要預設任何品牌，也不要自行猜一個 `~/.<名稱>/skills` 路徑。\n2. **自動選擇正確位置** — 我有指定全域或專案範圍時照做；沒有指定時，沿用目前 Agent 的既有慣例。若這個 Agent 只支援其中一種，就使用它官方支援的方式。只有真的無法判定時才停下來問我。\n3. **保持原始結構** — 每個 skill 都是獨立資料夾；資料夾名、SKILL.md frontmatter 的 `name`／`description` 與相對檔案結構都不要改。\n4. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n5. 來源若提供綁定特定 Agent 或固定路徑的安裝指令，只把它當作來源線索；請改用目前 Agent 的官方安裝方式，不要原樣執行。\n6. 目標資料夾**已存在**時，先比較版本與差異，再問我要更新、覆蓋或跳過，不要直接蓋掉。\n\n---\n\n### Impeccable  →  資料夾名 `impeccable`\n\n- **這個 skill 做什麼**：把網頁設計得有質感，也能幫你檢查哪裡不夠好。\n- **詳細一點**：由 Paul Bakaus 打造的設計語言與品質審查 skill（GitHub 56k+ stars，持續維護）。涵蓋網站、登陸頁、儀表板、產品介面、元件、表單、設定頁、引導流程、空白狀態等所有前端介面。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `pbakaus/impeccable`（分支 `main`，來源 repo 內子目錄 `.claude/skills/impeccable`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/pbakaus/impeccable\n- **下載基底網址**：`https://raw.githubusercontent.com/pbakaus/impeccable/main/.claude/skills/impeccable`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：repo 內含多個平台的設定檔；本收錄已標出 skill 的來源子目錄。請保留該資料夾內容，並依目前 Agent 的官方機制安裝。\n\n---\n\n## 完成後請做這幾件事\n\n1. 說明你辨識到的 Agent 與採用的官方 skill 機制，不要只回報「已完成」\n2. 列出每個 skill 實際安裝的位置，以及該資料夾下的檔案\n3. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n4. 依目前 Agent 的載入方式驗證 skill 已可被發現；只有官方流程確實要求時，才提醒我重新載入或重啟\n5. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
+    },
+    {
+      "id": "mantis",
+      "name": "Mantis 安全審查",
+      "summary": "自動找程式漏洞、試著重現、再幫你補上。",
+      "description": "Google 官方推出的安全審查 toolkit，18 個 skill 組成一套可自動執行的漏洞審查流水線：先建立知識庫與威脅模型（architecture、threat-model、summarize、structural-index、plan、history），再掃描與驗證（researcher、dedupe、critic、review、reproduce、chain、calibrate），最後修補與報告（patch、report、reflect），另有總指揮與自訂流水線（meta-agent、pipeline-adapter）。所有 skill 都是單獨的資料夾，安裝時一併裝齊。\n⚠️ 官方警告：本套件會產生並執行自動化程式碼，行為可能不穩定，只能在隔離環境使用；所有發現必須由安全專家人工複核後才能回報。",
+      "category": "程式品質",
+      "tags": [
+        "security",
+        "review",
+        "vulnerability",
+        "audit",
+        "workflow",
+        "quality"
+      ],
+      "official": true,
+      "featured": false,
+      "author": "Google",
+      "license": "Apache-2.0",
+      "usage": [
+        "交付前想自動檢查程式有沒有安全漏洞",
+        "需要從找漏洞、重現、到修補的完整流程",
+        "要對程式碼做深度審查，不只是跑掃描器"
+      ],
+      "highlights": [
+        "Google 官方出品，18 個 skill 涵蓋審查全流程",
+        "會實際寫出重現程式並驗證漏洞，不是只有報告",
+        "附修補、總結、檢討，一輪跑完留下可複用的知識"
+      ],
+      "source": {
+        "branch": "main",
+        "kind": "github",
+        "url": "https://github.com/google/mantis",
+        "owner": "google",
+        "name": "mantis",
+        "displayUrl": "https://github.com/google/mantis",
+        "rawBase": "https://raw.githubusercontent.com/google/mantis/main",
+        "label": "google/mantis"
+      },
+      "parts": [
+        {
+          "dirName": "mantis-architecture",
+          "name": "知識庫",
+          "summary": "把程式碼分析整理成互相連結的知識庫，當審查底圖。",
+          "subdir": "mantis-architecture",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-architecture",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-architecture"
+        },
+        {
+          "dirName": "mantis-threat-model",
+          "name": "威脅建模",
+          "summary": "先畫出哪些地方會被攻擊、誰會來攻擊，再決定查哪裡。",
+          "subdir": "mantis-threat-model",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-threat-model",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-threat-model"
+        },
+        {
+          "dirName": "mantis-summarize",
+          "name": "安全摘要",
+          "summary": "先幫每個資料夾寫安全摘要，讓後面好規劃。",
+          "subdir": "mantis-summarize",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-summarize",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-summarize"
+        },
+        {
+          "dirName": "mantis-researcher",
+          "name": "漏洞掃描",
+          "summary": "照計畫實際檢查程式碼，找出可疑的漏洞。",
+          "subdir": "mantis-researcher",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-researcher",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-researcher"
+        },
+        {
+          "dirName": "mantis-dedupe",
+          "name": "去重",
+          "summary": "把重複的發現整理成一份，避免同一問題報很多次。",
+          "subdir": "mantis-dedupe",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-dedupe",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-dedupe"
+        },
+        {
+          "dirName": "mantis-critic",
+          "name": "過濾假漏洞",
+          "summary": "過濾掉測試用、碰不到的假漏洞，只留真的。",
+          "subdir": "mantis-critic",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-critic",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-critic"
+        },
+        {
+          "dirName": "mantis-review",
+          "name": "複核",
+          "summary": "獨立的第二輪檢查，去掉誤報。",
+          "subdir": "mantis-review",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-review",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-review"
+        },
+        {
+          "dirName": "mantis-reproduce",
+          "name": "重現漏洞",
+          "summary": "寫出能重現問題的測試，確認漏洞真的存在。",
+          "subdir": "mantis-reproduce",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-reproduce",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-reproduce"
+        },
+        {
+          "dirName": "mantis-chain",
+          "name": "攻擊鏈",
+          "summary": "把單獨的漏洞串起來，看能不能組合成更大攻擊。",
+          "subdir": "mantis-chain",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-chain",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-chain"
+        },
+        {
+          "dirName": "mantis-calibrate",
+          "name": "風險評分",
+          "summary": "綜合證據算出整體風險分數。",
+          "subdir": "mantis-calibrate",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-calibrate",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-calibrate"
+        },
+        {
+          "dirName": "mantis-report",
+          "name": "安全報告",
+          "summary": "把確認的發現整理成人看得懂的安全報告。",
+          "subdir": "mantis-report",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-report",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-report"
+        },
+        {
+          "dirName": "mantis-patch",
+          "name": "自動修補",
+          "summary": "自動產生最小修補、套用並驗證修好沒。",
+          "subdir": "mantis-patch",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-patch",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-patch"
+        },
+        {
+          "dirName": "mantis-history",
+          "name": "歷史分析",
+          "summary": "翻版本歷史，找出過去修過的漏洞當參考。",
+          "subdir": "mantis-history",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-history",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-history"
+        },
+        {
+          "dirName": "mantis-reflect",
+          "name": "事後檢討",
+          "summary": "每次審查結束檢討，留下經驗下次更準。",
+          "subdir": "mantis-reflect",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-reflect",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-reflect"
+        },
+        {
+          "dirName": "mantis-plan",
+          "name": "審查計畫",
+          "summary": "根據威脅模型排定這次要查哪些地方。",
+          "subdir": "mantis-plan",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-plan",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-plan"
+        },
+        {
+          "dirName": "mantis-structural-index",
+          "name": "結構索引",
+          "summary": "把程式碼建成索引，方便快速比對。",
+          "subdir": "mantis-structural-index",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-structural-index",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-structural-index"
+        },
+        {
+          "dirName": "mantis-meta-agent",
+          "name": "總指揮",
+          "summary": "當總指揮，盯整場審查跑完。",
+          "subdir": "mantis-meta-agent",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-meta-agent",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-meta-agent"
+        },
+        {
+          "dirName": "mantis-pipeline-adapter",
+          "name": "自訂流水線",
+          "summary": "教你打造自己的自動化審查流水線。",
+          "subdir": "mantis-pipeline-adapter",
+          "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-pipeline-adapter",
+          "displayUrl": "https://github.com/google/mantis/tree/main/mantis-pipeline-adapter"
+        }
+      ],
+      "install": {
+        "scope": "user",
+        "files": [
+          "SKILL.md"
+        ],
+        "requires": [],
+        "notes": "18 個資料夾必須全部安裝；本套件會執行自動化程式碼，官方警告只能在隔離環境使用，發現需人工複核。",
+        "dirName": "mantis-architecture"
+      },
+      "prompt": null,
+      "links": [
+        {
+          "label": "google/mantis（官方 repo）",
+          "url": "https://github.com/google/mantis"
+        }
+      ],
+      "addedAt": "2026-08-10",
+      "updatedAt": "2026-08-10",
+      "includes": [],
+      "dirNames": [
+        "mantis-architecture",
+        "mantis-threat-model",
+        "mantis-summarize",
+        "mantis-researcher",
+        "mantis-dedupe",
+        "mantis-critic",
+        "mantis-review",
+        "mantis-reproduce",
+        "mantis-chain",
+        "mantis-calibrate",
+        "mantis-report",
+        "mantis-patch",
+        "mantis-history",
+        "mantis-reflect",
+        "mantis-plan",
+        "mantis-structural-index",
+        "mantis-meta-agent",
+        "mantis-pipeline-adapter"
+      ],
+      "includedSkills": [],
+      "installIds": [
+        "mantis"
+      ],
+      "installCount": 1,
+      "installFolderCount": 18,
+      "promptBlockSingle": "### Mantis 安全審查  →  一組 18 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：自動找程式漏洞、試著重現、再幫你補上。\n- **詳細一點**：Google 官方推出的安全審查 toolkit，18 個 skill 組成一套可自動執行的漏洞審查流水線：先建立知識庫與威脅模型（architecture、threat-model、summarize、structural-index、plan、history），再掃描與驗證（researcher、dedupe、critic、review、reproduce、chain、calibrate），最後修補與報告（patch、report、reflect），另有總指揮與自訂流水線（meta-agent、pipeline-adapter）。所有 skill 都是單獨的資料夾，安裝時一併裝齊。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `google/mantis`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/google/mantis\n- **這一組的 18 個資料夾**（缺一不可，資料夾名照抄）：\n  - `mantis-architecture` — 把程式碼分析整理成互相連結的知識庫，當審查底圖。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-architecture`\n  - `mantis-threat-model` — 先畫出哪些地方會被攻擊、誰會來攻擊，再決定查哪裡。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-threat-model`\n  - `mantis-summarize` — 先幫每個資料夾寫安全摘要，讓後面好規劃。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-summarize`\n  - `mantis-researcher` — 照計畫實際檢查程式碼，找出可疑的漏洞。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-researcher`\n  - `mantis-dedupe` — 把重複的發現整理成一份，避免同一問題報很多次。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-dedupe`\n  - `mantis-critic` — 過濾掉測試用、碰不到的假漏洞，只留真的。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-critic`\n  - `mantis-review` — 獨立的第二輪檢查，去掉誤報。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-review`\n  - `mantis-reproduce` — 寫出能重現問題的測試，確認漏洞真的存在。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reproduce`\n  - `mantis-chain` — 把單獨的漏洞串起來，看能不能組合成更大攻擊。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-chain`\n  - `mantis-calibrate` — 綜合證據算出整體風險分數。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-calibrate`\n  - `mantis-report` — 把確認的發現整理成人看得懂的安全報告。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-report`\n  - `mantis-patch` — 自動產生最小修補、套用並驗證修好沒。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-patch`\n  - `mantis-history` — 翻版本歷史，找出過去修過的漏洞當參考。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-history`\n  - `mantis-reflect` — 每次審查結束檢討，留下經驗下次更準。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reflect`\n  - `mantis-plan` — 根據威脅模型排定這次要查哪些地方。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-plan`\n  - `mantis-structural-index` — 把程式碼建成索引，方便快速比對。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-structural-index`\n  - `mantis-meta-agent` — 當總指揮，盯整場審查跑完。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-meta-agent`\n  - `mantis-pipeline-adapter` — 教你打造自己的自動化審查流水線。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-pipeline-adapter`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：18 個資料夾必須全部安裝；本套件會執行自動化程式碼，官方警告只能在隔離環境使用，發現需人工複核。",
+      "promptBlock": "### Mantis 安全審查  →  一組 18 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：自動找程式漏洞、試著重現、再幫你補上。\n- **詳細一點**：Google 官方推出的安全審查 toolkit，18 個 skill 組成一套可自動執行的漏洞審查流水線：先建立知識庫與威脅模型（architecture、threat-model、summarize、structural-index、plan、history），再掃描與驗證（researcher、dedupe、critic、review、reproduce、chain、calibrate），最後修補與報告（patch、report、reflect），另有總指揮與自訂流水線（meta-agent、pipeline-adapter）。所有 skill 都是單獨的資料夾，安裝時一併裝齊。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `google/mantis`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/google/mantis\n- **這一組的 18 個資料夾**（缺一不可，資料夾名照抄）：\n  - `mantis-architecture` — 把程式碼分析整理成互相連結的知識庫，當審查底圖。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-architecture`\n  - `mantis-threat-model` — 先畫出哪些地方會被攻擊、誰會來攻擊，再決定查哪裡。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-threat-model`\n  - `mantis-summarize` — 先幫每個資料夾寫安全摘要，讓後面好規劃。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-summarize`\n  - `mantis-researcher` — 照計畫實際檢查程式碼，找出可疑的漏洞。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-researcher`\n  - `mantis-dedupe` — 把重複的發現整理成一份，避免同一問題報很多次。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-dedupe`\n  - `mantis-critic` — 過濾掉測試用、碰不到的假漏洞，只留真的。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-critic`\n  - `mantis-review` — 獨立的第二輪檢查，去掉誤報。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-review`\n  - `mantis-reproduce` — 寫出能重現問題的測試，確認漏洞真的存在。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reproduce`\n  - `mantis-chain` — 把單獨的漏洞串起來，看能不能組合成更大攻擊。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-chain`\n  - `mantis-calibrate` — 綜合證據算出整體風險分數。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-calibrate`\n  - `mantis-report` — 把確認的發現整理成人看得懂的安全報告。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-report`\n  - `mantis-patch` — 自動產生最小修補、套用並驗證修好沒。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-patch`\n  - `mantis-history` — 翻版本歷史，找出過去修過的漏洞當參考。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-history`\n  - `mantis-reflect` — 每次審查結束檢討，留下經驗下次更準。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reflect`\n  - `mantis-plan` — 根據威脅模型排定這次要查哪些地方。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-plan`\n  - `mantis-structural-index` — 把程式碼建成索引，方便快速比對。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-structural-index`\n  - `mantis-meta-agent` — 當總指揮，盯整場審查跑完。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-meta-agent`\n  - `mantis-pipeline-adapter` — 教你打造自己的自動化審查流水線。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-pipeline-adapter`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：18 個資料夾必須全部安裝；本套件會執行自動化程式碼，官方警告只能在隔離環境使用，發現需人工複核。",
+      "installPrompt": "你是我的 Skill 安裝助手。請幫我把下面這個 AI Agent Skill 安裝到「你目前所在的 Agent 環境」。\n\n## 安裝規則\n\n1. **先辨識目前環境** — 讀取你自己的官方說明、系統設定或既有 skills，確認這個 Agent 支援的 skill 格式、安裝方式與可用範圍。不要預設任何品牌，也不要自行猜一個 `~/.<名稱>/skills` 路徑。\n2. **自動選擇正確位置** — 我有指定全域或專案範圍時照做；沒有指定時，沿用目前 Agent 的既有慣例。若這個 Agent 只支援其中一種，就使用它官方支援的方式。只有真的無法判定時才停下來問我。\n3. **保持原始結構** — 每個 skill 都是獨立資料夾；資料夾名、SKILL.md frontmatter 的 `name`／`description` 與相對檔案結構都不要改。\n4. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n5. 來源若提供綁定特定 Agent 或固定路徑的安裝指令，只把它當作來源線索；請改用目前 Agent 的官方安裝方式，不要原樣執行。\n6. 目標資料夾**已存在**時，先比較版本與差異，再問我要更新、覆蓋或跳過，不要直接蓋掉。\n\n---\n\n### Mantis 安全審查  →  一組 18 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：自動找程式漏洞、試著重現、再幫你補上。\n- **詳細一點**：Google 官方推出的安全審查 toolkit，18 個 skill 組成一套可自動執行的漏洞審查流水線：先建立知識庫與威脅模型（architecture、threat-model、summarize、structural-index、plan、history），再掃描與驗證（researcher、dedupe、critic、review、reproduce、chain、calibrate），最後修補與報告（patch、report、reflect），另有總指揮與自訂流水線（meta-agent、pipeline-adapter）。所有 skill 都是單獨的資料夾，安裝時一併裝齊。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `google/mantis`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/google/mantis\n- **這一組的 18 個資料夾**（缺一不可，資料夾名照抄）：\n  - `mantis-architecture` — 把程式碼分析整理成互相連結的知識庫，當審查底圖。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-architecture`\n  - `mantis-threat-model` — 先畫出哪些地方會被攻擊、誰會來攻擊，再決定查哪裡。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-threat-model`\n  - `mantis-summarize` — 先幫每個資料夾寫安全摘要，讓後面好規劃。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-summarize`\n  - `mantis-researcher` — 照計畫實際檢查程式碼，找出可疑的漏洞。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-researcher`\n  - `mantis-dedupe` — 把重複的發現整理成一份，避免同一問題報很多次。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-dedupe`\n  - `mantis-critic` — 過濾掉測試用、碰不到的假漏洞，只留真的。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-critic`\n  - `mantis-review` — 獨立的第二輪檢查，去掉誤報。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-review`\n  - `mantis-reproduce` — 寫出能重現問題的測試，確認漏洞真的存在。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reproduce`\n  - `mantis-chain` — 把單獨的漏洞串起來，看能不能組合成更大攻擊。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-chain`\n  - `mantis-calibrate` — 綜合證據算出整體風險分數。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-calibrate`\n  - `mantis-report` — 把確認的發現整理成人看得懂的安全報告。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-report`\n  - `mantis-patch` — 自動產生最小修補、套用並驗證修好沒。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-patch`\n  - `mantis-history` — 翻版本歷史，找出過去修過的漏洞當參考。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-history`\n  - `mantis-reflect` — 每次審查結束檢討，留下經驗下次更準。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reflect`\n  - `mantis-plan` — 根據威脅模型排定這次要查哪些地方。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-plan`\n  - `mantis-structural-index` — 把程式碼建成索引，方便快速比對。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-structural-index`\n  - `mantis-meta-agent` — 當總指揮，盯整場審查跑完。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-meta-agent`\n  - `mantis-pipeline-adapter` — 教你打造自己的自動化審查流水線。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-pipeline-adapter`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：18 個資料夾必須全部安裝；本套件會執行自動化程式碼，官方警告只能在隔離環境使用，發現需人工複核。\n\n---\n\n## 完成後請做這幾件事\n\n1. 說明你辨識到的 Agent 與採用的官方 skill 機制，不要只回報「已完成」\n2. 列出每個 skill 實際安裝的位置，以及該資料夾下的檔案\n3. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n4. 依目前 Agent 的載入方式驗證 skill 已可被發現；只有官方流程確實要求時，才提醒我重新載入或重啟\n5. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
     },
     {
       "id": "taste",

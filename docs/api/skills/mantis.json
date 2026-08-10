@@ -1,0 +1,233 @@
+{
+  "id": "mantis",
+  "name": "Mantis 安全審查",
+  "summary": "自動找程式漏洞、試著重現、再幫你補上。",
+  "description": "Google 官方推出的安全審查 toolkit，18 個 skill 組成一套可自動執行的漏洞審查流水線：先建立知識庫與威脅模型（architecture、threat-model、summarize、structural-index、plan、history），再掃描與驗證（researcher、dedupe、critic、review、reproduce、chain、calibrate），最後修補與報告（patch、report、reflect），另有總指揮與自訂流水線（meta-agent、pipeline-adapter）。所有 skill 都是單獨的資料夾，安裝時一併裝齊。\n⚠️ 官方警告：本套件會產生並執行自動化程式碼，行為可能不穩定，只能在隔離環境使用；所有發現必須由安全專家人工複核後才能回報。",
+  "category": "程式品質",
+  "tags": [
+    "security",
+    "review",
+    "vulnerability",
+    "audit",
+    "workflow",
+    "quality"
+  ],
+  "official": true,
+  "featured": false,
+  "author": "Google",
+  "license": "Apache-2.0",
+  "usage": [
+    "交付前想自動檢查程式有沒有安全漏洞",
+    "需要從找漏洞、重現、到修補的完整流程",
+    "要對程式碼做深度審查，不只是跑掃描器"
+  ],
+  "highlights": [
+    "Google 官方出品，18 個 skill 涵蓋審查全流程",
+    "會實際寫出重現程式並驗證漏洞，不是只有報告",
+    "附修補、總結、檢討，一輪跑完留下可複用的知識"
+  ],
+  "source": {
+    "branch": "main",
+    "kind": "github",
+    "url": "https://github.com/google/mantis",
+    "owner": "google",
+    "name": "mantis",
+    "displayUrl": "https://github.com/google/mantis",
+    "rawBase": "https://raw.githubusercontent.com/google/mantis/main",
+    "label": "google/mantis"
+  },
+  "parts": [
+    {
+      "dirName": "mantis-architecture",
+      "name": "知識庫",
+      "summary": "把程式碼分析整理成互相連結的知識庫，當審查底圖。",
+      "subdir": "mantis-architecture",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-architecture",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-architecture"
+    },
+    {
+      "dirName": "mantis-threat-model",
+      "name": "威脅建模",
+      "summary": "先畫出哪些地方會被攻擊、誰會來攻擊，再決定查哪裡。",
+      "subdir": "mantis-threat-model",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-threat-model",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-threat-model"
+    },
+    {
+      "dirName": "mantis-summarize",
+      "name": "安全摘要",
+      "summary": "先幫每個資料夾寫安全摘要，讓後面好規劃。",
+      "subdir": "mantis-summarize",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-summarize",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-summarize"
+    },
+    {
+      "dirName": "mantis-researcher",
+      "name": "漏洞掃描",
+      "summary": "照計畫實際檢查程式碼，找出可疑的漏洞。",
+      "subdir": "mantis-researcher",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-researcher",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-researcher"
+    },
+    {
+      "dirName": "mantis-dedupe",
+      "name": "去重",
+      "summary": "把重複的發現整理成一份，避免同一問題報很多次。",
+      "subdir": "mantis-dedupe",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-dedupe",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-dedupe"
+    },
+    {
+      "dirName": "mantis-critic",
+      "name": "過濾假漏洞",
+      "summary": "過濾掉測試用、碰不到的假漏洞，只留真的。",
+      "subdir": "mantis-critic",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-critic",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-critic"
+    },
+    {
+      "dirName": "mantis-review",
+      "name": "複核",
+      "summary": "獨立的第二輪檢查，去掉誤報。",
+      "subdir": "mantis-review",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-review",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-review"
+    },
+    {
+      "dirName": "mantis-reproduce",
+      "name": "重現漏洞",
+      "summary": "寫出能重現問題的測試，確認漏洞真的存在。",
+      "subdir": "mantis-reproduce",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-reproduce",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-reproduce"
+    },
+    {
+      "dirName": "mantis-chain",
+      "name": "攻擊鏈",
+      "summary": "把單獨的漏洞串起來，看能不能組合成更大攻擊。",
+      "subdir": "mantis-chain",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-chain",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-chain"
+    },
+    {
+      "dirName": "mantis-calibrate",
+      "name": "風險評分",
+      "summary": "綜合證據算出整體風險分數。",
+      "subdir": "mantis-calibrate",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-calibrate",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-calibrate"
+    },
+    {
+      "dirName": "mantis-report",
+      "name": "安全報告",
+      "summary": "把確認的發現整理成人看得懂的安全報告。",
+      "subdir": "mantis-report",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-report",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-report"
+    },
+    {
+      "dirName": "mantis-patch",
+      "name": "自動修補",
+      "summary": "自動產生最小修補、套用並驗證修好沒。",
+      "subdir": "mantis-patch",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-patch",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-patch"
+    },
+    {
+      "dirName": "mantis-history",
+      "name": "歷史分析",
+      "summary": "翻版本歷史，找出過去修過的漏洞當參考。",
+      "subdir": "mantis-history",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-history",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-history"
+    },
+    {
+      "dirName": "mantis-reflect",
+      "name": "事後檢討",
+      "summary": "每次審查結束檢討，留下經驗下次更準。",
+      "subdir": "mantis-reflect",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-reflect",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-reflect"
+    },
+    {
+      "dirName": "mantis-plan",
+      "name": "審查計畫",
+      "summary": "根據威脅模型排定這次要查哪些地方。",
+      "subdir": "mantis-plan",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-plan",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-plan"
+    },
+    {
+      "dirName": "mantis-structural-index",
+      "name": "結構索引",
+      "summary": "把程式碼建成索引，方便快速比對。",
+      "subdir": "mantis-structural-index",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-structural-index",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-structural-index"
+    },
+    {
+      "dirName": "mantis-meta-agent",
+      "name": "總指揮",
+      "summary": "當總指揮，盯整場審查跑完。",
+      "subdir": "mantis-meta-agent",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-meta-agent",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-meta-agent"
+    },
+    {
+      "dirName": "mantis-pipeline-adapter",
+      "name": "自訂流水線",
+      "summary": "教你打造自己的自動化審查流水線。",
+      "subdir": "mantis-pipeline-adapter",
+      "rawBase": "https://raw.githubusercontent.com/google/mantis/main/mantis-pipeline-adapter",
+      "displayUrl": "https://github.com/google/mantis/tree/main/mantis-pipeline-adapter"
+    }
+  ],
+  "install": {
+    "scope": "user",
+    "files": [
+      "SKILL.md"
+    ],
+    "requires": [],
+    "notes": "18 個資料夾必須全部安裝；本套件會執行自動化程式碼，官方警告只能在隔離環境使用，發現需人工複核。",
+    "dirName": "mantis-architecture"
+  },
+  "prompt": null,
+  "links": [
+    {
+      "label": "google/mantis（官方 repo）",
+      "url": "https://github.com/google/mantis"
+    }
+  ],
+  "addedAt": "2026-08-10",
+  "updatedAt": "2026-08-10",
+  "includes": [],
+  "dirNames": [
+    "mantis-architecture",
+    "mantis-threat-model",
+    "mantis-summarize",
+    "mantis-researcher",
+    "mantis-dedupe",
+    "mantis-critic",
+    "mantis-review",
+    "mantis-reproduce",
+    "mantis-chain",
+    "mantis-calibrate",
+    "mantis-report",
+    "mantis-patch",
+    "mantis-history",
+    "mantis-reflect",
+    "mantis-plan",
+    "mantis-structural-index",
+    "mantis-meta-agent",
+    "mantis-pipeline-adapter"
+  ],
+  "includedSkills": [],
+  "installIds": [
+    "mantis"
+  ],
+  "installCount": 1,
+  "installFolderCount": 18,
+  "promptBlockSingle": "### Mantis 安全審查  →  一組 18 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：自動找程式漏洞、試著重現、再幫你補上。\n- **詳細一點**：Google 官方推出的安全審查 toolkit，18 個 skill 組成一套可自動執行的漏洞審查流水線：先建立知識庫與威脅模型（architecture、threat-model、summarize、structural-index、plan、history），再掃描與驗證（researcher、dedupe、critic、review、reproduce、chain、calibrate），最後修補與報告（patch、report、reflect），另有總指揮與自訂流水線（meta-agent、pipeline-adapter）。所有 skill 都是單獨的資料夾，安裝時一併裝齊。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `google/mantis`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/google/mantis\n- **這一組的 18 個資料夾**（缺一不可，資料夾名照抄）：\n  - `mantis-architecture` — 把程式碼分析整理成互相連結的知識庫，當審查底圖。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-architecture`\n  - `mantis-threat-model` — 先畫出哪些地方會被攻擊、誰會來攻擊，再決定查哪裡。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-threat-model`\n  - `mantis-summarize` — 先幫每個資料夾寫安全摘要，讓後面好規劃。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-summarize`\n  - `mantis-researcher` — 照計畫實際檢查程式碼，找出可疑的漏洞。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-researcher`\n  - `mantis-dedupe` — 把重複的發現整理成一份，避免同一問題報很多次。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-dedupe`\n  - `mantis-critic` — 過濾掉測試用、碰不到的假漏洞，只留真的。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-critic`\n  - `mantis-review` — 獨立的第二輪檢查，去掉誤報。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-review`\n  - `mantis-reproduce` — 寫出能重現問題的測試，確認漏洞真的存在。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reproduce`\n  - `mantis-chain` — 把單獨的漏洞串起來，看能不能組合成更大攻擊。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-chain`\n  - `mantis-calibrate` — 綜合證據算出整體風險分數。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-calibrate`\n  - `mantis-report` — 把確認的發現整理成人看得懂的安全報告。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-report`\n  - `mantis-patch` — 自動產生最小修補、套用並驗證修好沒。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-patch`\n  - `mantis-history` — 翻版本歷史，找出過去修過的漏洞當參考。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-history`\n  - `mantis-reflect` — 每次審查結束檢討，留下經驗下次更準。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reflect`\n  - `mantis-plan` — 根據威脅模型排定這次要查哪些地方。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-plan`\n  - `mantis-structural-index` — 把程式碼建成索引，方便快速比對。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-structural-index`\n  - `mantis-meta-agent` — 當總指揮，盯整場審查跑完。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-meta-agent`\n  - `mantis-pipeline-adapter` — 教你打造自己的自動化審查流水線。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-pipeline-adapter`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：18 個資料夾必須全部安裝；本套件會執行自動化程式碼，官方警告只能在隔離環境使用，發現需人工複核。",
+  "promptBlock": "### Mantis 安全審查  →  一組 18 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：自動找程式漏洞、試著重現、再幫你補上。\n- **詳細一點**：Google 官方推出的安全審查 toolkit，18 個 skill 組成一套可自動執行的漏洞審查流水線：先建立知識庫與威脅模型（architecture、threat-model、summarize、structural-index、plan、history），再掃描與驗證（researcher、dedupe、critic、review、reproduce、chain、calibrate），最後修補與報告（patch、report、reflect），另有總指揮與自訂流水線（meta-agent、pipeline-adapter）。所有 skill 都是單獨的資料夾，安裝時一併裝齊。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `google/mantis`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/google/mantis\n- **這一組的 18 個資料夾**（缺一不可，資料夾名照抄）：\n  - `mantis-architecture` — 把程式碼分析整理成互相連結的知識庫，當審查底圖。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-architecture`\n  - `mantis-threat-model` — 先畫出哪些地方會被攻擊、誰會來攻擊，再決定查哪裡。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-threat-model`\n  - `mantis-summarize` — 先幫每個資料夾寫安全摘要，讓後面好規劃。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-summarize`\n  - `mantis-researcher` — 照計畫實際檢查程式碼，找出可疑的漏洞。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-researcher`\n  - `mantis-dedupe` — 把重複的發現整理成一份，避免同一問題報很多次。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-dedupe`\n  - `mantis-critic` — 過濾掉測試用、碰不到的假漏洞，只留真的。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-critic`\n  - `mantis-review` — 獨立的第二輪檢查，去掉誤報。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-review`\n  - `mantis-reproduce` — 寫出能重現問題的測試，確認漏洞真的存在。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reproduce`\n  - `mantis-chain` — 把單獨的漏洞串起來，看能不能組合成更大攻擊。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-chain`\n  - `mantis-calibrate` — 綜合證據算出整體風險分數。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-calibrate`\n  - `mantis-report` — 把確認的發現整理成人看得懂的安全報告。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-report`\n  - `mantis-patch` — 自動產生最小修補、套用並驗證修好沒。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-patch`\n  - `mantis-history` — 翻版本歷史，找出過去修過的漏洞當參考。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-history`\n  - `mantis-reflect` — 每次審查結束檢討，留下經驗下次更準。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reflect`\n  - `mantis-plan` — 根據威脅模型排定這次要查哪些地方。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-plan`\n  - `mantis-structural-index` — 把程式碼建成索引，方便快速比對。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-structural-index`\n  - `mantis-meta-agent` — 當總指揮，盯整場審查跑完。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-meta-agent`\n  - `mantis-pipeline-adapter` — 教你打造自己的自動化審查流水線。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-pipeline-adapter`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：18 個資料夾必須全部安裝；本套件會執行自動化程式碼，官方警告只能在隔離環境使用，發現需人工複核。",
+  "installPrompt": "你是我的 Skill 安裝助手。請幫我把下面這個 AI Agent Skill 安裝到「你目前所在的 Agent 環境」。\n\n## 安裝規則\n\n1. **先辨識目前環境** — 讀取你自己的官方說明、系統設定或既有 skills，確認這個 Agent 支援的 skill 格式、安裝方式與可用範圍。不要預設任何品牌，也不要自行猜一個 `~/.<名稱>/skills` 路徑。\n2. **自動選擇正確位置** — 我有指定全域或專案範圍時照做；沒有指定時，沿用目前 Agent 的既有慣例。若這個 Agent 只支援其中一種，就使用它官方支援的方式。只有真的無法判定時才停下來問我。\n3. **保持原始結構** — 每個 skill 都是獨立資料夾；資料夾名、SKILL.md frontmatter 的 `name`／`description` 與相對檔案結構都不要改。\n4. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n5. 來源若提供綁定特定 Agent 或固定路徑的安裝指令，只把它當作來源線索；請改用目前 Agent 的官方安裝方式，不要原樣執行。\n6. 目標資料夾**已存在**時，先比較版本與差異，再問我要更新、覆蓋或跳過，不要直接蓋掉。\n\n---\n\n### Mantis 安全審查  →  一組 18 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：自動找程式漏洞、試著重現、再幫你補上。\n- **詳細一點**：Google 官方推出的安全審查 toolkit，18 個 skill 組成一套可自動執行的漏洞審查流水線：先建立知識庫與威脅模型（architecture、threat-model、summarize、structural-index、plan、history），再掃描與驗證（researcher、dedupe、critic、review、reproduce、chain、calibrate），最後修補與報告（patch、report、reflect），另有總指揮與自訂流水線（meta-agent、pipeline-adapter）。所有 skill 都是單獨的資料夾，安裝時一併裝齊。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `google/mantis`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/google/mantis\n- **這一組的 18 個資料夾**（缺一不可，資料夾名照抄）：\n  - `mantis-architecture` — 把程式碼分析整理成互相連結的知識庫，當審查底圖。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-architecture`\n  - `mantis-threat-model` — 先畫出哪些地方會被攻擊、誰會來攻擊，再決定查哪裡。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-threat-model`\n  - `mantis-summarize` — 先幫每個資料夾寫安全摘要，讓後面好規劃。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-summarize`\n  - `mantis-researcher` — 照計畫實際檢查程式碼，找出可疑的漏洞。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-researcher`\n  - `mantis-dedupe` — 把重複的發現整理成一份，避免同一問題報很多次。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-dedupe`\n  - `mantis-critic` — 過濾掉測試用、碰不到的假漏洞，只留真的。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-critic`\n  - `mantis-review` — 獨立的第二輪檢查，去掉誤報。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-review`\n  - `mantis-reproduce` — 寫出能重現問題的測試，確認漏洞真的存在。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reproduce`\n  - `mantis-chain` — 把單獨的漏洞串起來，看能不能組合成更大攻擊。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-chain`\n  - `mantis-calibrate` — 綜合證據算出整體風險分數。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-calibrate`\n  - `mantis-report` — 把確認的發現整理成人看得懂的安全報告。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-report`\n  - `mantis-patch` — 自動產生最小修補、套用並驗證修好沒。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-patch`\n  - `mantis-history` — 翻版本歷史，找出過去修過的漏洞當參考。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-history`\n  - `mantis-reflect` — 每次審查結束檢討，留下經驗下次更準。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reflect`\n  - `mantis-plan` — 根據威脅模型排定這次要查哪些地方。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-plan`\n  - `mantis-structural-index` — 把程式碼建成索引，方便快速比對。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-structural-index`\n  - `mantis-meta-agent` — 當總指揮，盯整場審查跑完。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-meta-agent`\n  - `mantis-pipeline-adapter` — 教你打造自己的自動化審查流水線。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-pipeline-adapter`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：18 個資料夾必須全部安裝；本套件會執行自動化程式碼，官方警告只能在隔離環境使用，發現需人工複核。\n\n---\n\n## 完成後請做這幾件事\n\n1. 說明你辨識到的 Agent 與採用的官方 skill 機制，不要只回報「已完成」\n2. 列出每個 skill 實際安裝的位置，以及該資料夾下的檔案\n3. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n4. 依目前 Agent 的載入方式驗證 skill 已可被發現；只有官方流程確實要求時，才提醒我重新載入或重啟\n5. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
+}

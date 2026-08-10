@@ -6,6 +6,10 @@
       "count": 6
     },
     {
+      "name": "程式品質",
+      "count": 2
+    },
+    {
       "name": "前端 / 動效",
       "count": 1
     },
@@ -28,6 +32,10 @@
       "count": 5
     },
     {
+      "name": "review",
+      "count": 4
+    },
+    {
       "name": "ux",
       "count": 4
     },
@@ -40,7 +48,19 @@
       "count": 3
     },
     {
+      "name": "workflow",
+      "count": 3
+    },
+    {
       "name": "brand",
+      "count": 2
+    },
+    {
+      "name": "quality",
+      "count": 2
+    },
+    {
+      "name": "security",
       "count": 2
     },
     {
@@ -68,6 +88,10 @@
       "count": 1
     },
     {
+      "name": "audit",
+      "count": 1
+    },
+    {
       "name": "automation",
       "count": 1
     },
@@ -81,6 +105,10 @@
     },
     {
       "name": "cloud-identity",
+      "count": 1
+    },
+    {
+      "name": "code-quality",
       "count": 1
     },
     {
@@ -132,6 +160,10 @@
       "count": 1
     },
     {
+      "name": "methodology",
+      "count": 1
+    },
+    {
       "name": "mobile",
       "count": 1
     },
@@ -145,10 +177,6 @@
     },
     {
       "name": "react",
-      "count": 1
-    },
-    {
-      "name": "review",
       "count": 1
     },
     {
@@ -172,7 +200,11 @@
       "count": 1
     },
     {
-      "name": "workflow",
+      "name": "verification",
+      "count": 1
+    },
+    {
+      "name": "vulnerability",
       "count": 1
     },
     {

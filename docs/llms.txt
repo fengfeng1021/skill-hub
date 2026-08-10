@@ -2,7 +2,7 @@
 
 > 收錄、整理、一鍵安裝各種 AI Agent Skills。挑好的 skill，複製提示詞，貼給 AI 就裝好。
 
-更新日期：2026-08-10　收錄數量：9
+更新日期：2026-08-10　收錄數量：11
 網站：https://fengfeng1021.github.io/skill-hub
 JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 
@@ -38,13 +38,13 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 #### 前端設計總指揮 `frontend-design-director`
 
 - 摘要：把六套設計能力一次裝齊，從畫面做到互動。
-- 標籤：design、ui、ux、director、frontend、integration
+- 標籤：design、ui、ux、director、frontend、integration、quality、review、security
 - 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-design-director
 - 安裝資料夾名：`frontend-design-director`
-- 精選組合包：連同入口共 7 個收錄項目、20 個資料夾
-- 組合內容：`Impeccable`、`UI UX Pro Max`、`Taste`、`Hue`、`GSAP`、`互動體驗設計`
+- 精選組合包：連同入口共 9 個收錄項目、41 個資料夾
+- 組合內容：`Impeccable`、`UI UX Pro Max`、`Taste`、`Hue`、`GSAP`、`互動體驗設計`、`程式碼品質閘門`、`Mantis 安全審查`
 - 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/frontend-design-director`
-- 何時使用：美化或改版任何網頁、App 畫面，不確定該用哪個設計 skill 時；要模仿某網站風格、建立品牌設計系統、加動效，一次到位；設計任務需要同時兼顧判斷力、規則、風格、品牌、動效
+- 何時使用：美化或改版任何網頁、App 畫面，不確定該用哪個設計 skill 時；要模仿某網站風格、建立品牌設計系統、加動效，一次到位；設計任務需要同時兼顧判斷力、規則、風格、品牌、動效；交付前想要品質把關：程式碼驗證、審查與安全檢查
 
 #### Hue `hue`
 
@@ -81,6 +81,26 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 同來源套件含 7 個資料夾，要一起裝：`ui-ux-pro-max`、`ui-styling`、`design-system`、`design`、`banner-design`、`slides`、`brand`
 - 下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills`
 - 何時使用：設計或改版網頁、手機 App 的介面，需要配色、字體、排版建議；要設計商標、橫幅、簡報、圖示等各種視覺素材；要建立品牌識別或整套設計系統；要確保介面無障礙、各種裝置都好看
+
+### 程式品質
+
+#### 程式碼品質閘門 `superpowers-code-quality`
+
+- 摘要：寫完程式先驗證再交貨，還有審查員幫你把關。
+- 標籤：code-quality、review、verification、workflow、methodology
+- 來源：https://github.com/obra/superpowers/tree/main/skills
+- 同來源套件含 3 個資料夾，要一起裝：`verification-before-completion`、`requesting-code-review`、`receiving-code-review`
+- 下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills`
+- 何時使用：寫完功能準備交付或合併前，想要品質把關；AI 宣稱「寫完了」但沒有跑過驗證，需要強制驗證流程；希望程式碼有第二人（審查員）看過再上線；收到審查意見不知道該照單全收還是反駁
+
+#### Mantis 安全審查 `mantis`
+
+- 摘要：自動找程式漏洞、試著重現、再幫你補上。
+- 標籤：security、review、vulnerability、audit、workflow、quality
+- 來源：https://github.com/google/mantis
+- 同來源套件含 18 個資料夾，要一起裝：`mantis-architecture`、`mantis-threat-model`、`mantis-summarize`、`mantis-researcher`、`mantis-dedupe`、`mantis-critic`、`mantis-review`、`mantis-reproduce`、`mantis-chain`、`mantis-calibrate`、`mantis-report`、`mantis-patch`、`mantis-history`、`mantis-reflect`、`mantis-plan`、`mantis-structural-index`、`mantis-meta-agent`、`mantis-pipeline-adapter`
+- 下載基底：`https://raw.githubusercontent.com/google/mantis/main`
+- 何時使用：交付前想自動檢查程式有沒有安全漏洞；需要從找漏洞、重現、到修補的完整流程；要對程式碼做深度審查，不只是跑掃描器
 
 ### 前端 / 動效
 
