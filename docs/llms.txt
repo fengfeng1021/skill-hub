@@ -20,7 +20,7 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 
 - 好的寫法：讓網頁上的東西動起來，淡入、滑動、跟著捲動變化都能做。
 - 不好的寫法：GreenSock 官方動畫 skill 全套：tween、時間軸、ScrollTrigger、外掛與效能。
-- 同一個 repo 拆成多個資料夾、實際使用時會一起載入的（例如 GSAP 的 8 份），用 parts 收成一筆，不要拆成多筆。
+- 同來源套件拆成多個資料夾（例如 GSAP 的 8 份）用 parts；跨來源、由入口 skill 統籌的精選組合包用 includes。includes 會展開成完整安裝清單，不能寫進 install.requires 假裝成可選相依。
 
 ## 收錄清單
 
@@ -37,10 +37,12 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 
 #### 前端設計總指揮 `frontend-design-director`
 
-- 摘要：一個指令搞定網頁設計，自動搭配五套設計功力。
+- 摘要：把六套設計能力一次裝齊，從畫面做到互動。
 - 標籤：design、ui、ux、director、frontend、integration
 - 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-design-director
 - 安裝資料夾名：`frontend-design-director`
+- 精選組合包：連同入口共 7 個收錄項目、20 個資料夾
+- 組合內容：`Impeccable`、`UI UX Pro Max`、`Taste`、`Hue`、`GSAP`、`互動體驗設計`
 - 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/frontend-design-director`
 - 何時使用：美化或改版任何網頁、App 畫面，不確定該用哪個設計 skill 時；要模仿某網站風格、建立品牌設計系統、加動效，一次到位；設計任務需要同時兼顧判斷力、規則、風格、品牌、動效
 
@@ -76,7 +78,7 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 摘要：設計網站和手機 App，配色字體排版都幫你想好。
 - 標籤：design、ui、ux、frontend、mobile、brand、accessibility
 - 來源：https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills
-- 這是一組 7 個資料夾，要一起裝：`ui-ux-pro-max`、`ui-styling`、`design-system`、`design`、`banner-design`、`slides`、`brand`
+- 同來源套件含 7 個資料夾，要一起裝：`ui-ux-pro-max`、`ui-styling`、`design-system`、`design`、`banner-design`、`slides`、`brand`
 - 下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills`
 - 何時使用：設計或改版網頁、手機 App 的介面，需要配色、字體、排版建議；要設計商標、橫幅、簡報、圖示等各種視覺素材；要建立品牌識別或整套設計系統；要確保介面無障礙、各種裝置都好看
 
@@ -87,7 +89,7 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 摘要：讓網頁上的東西會動起來，淡入、滑動、跟著捲動都行。
 - 標籤：animation、gsap、javascript、scroll、react、performance
 - 來源：https://github.com/greensock/gsap-skills/tree/main/skills
-- 這是一組 8 個資料夾，要一起裝：`gsap-core`、`gsap-timeline`、`gsap-scrolltrigger`、`gsap-plugins`、`gsap-react`、`gsap-frameworks`、`gsap-utils`、`gsap-performance`
+- 同來源套件含 8 個資料夾，要一起裝：`gsap-core`、`gsap-timeline`、`gsap-scrolltrigger`、`gsap-plugins`、`gsap-react`、`gsap-frameworks`、`gsap-utils`、`gsap-performance`
 - 一行裝完：`npx skills add https://github.com/greensock/gsap-skills`
 - 下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills`
 - 何時使用：要寫任何 JS 動畫，不論 vanilla 還是 React／Vue／Svelte；要做捲動驅動的動畫、pin 釘住或視差；要編排多步驟、可播放／倒轉／中斷的動畫序列；要處理 prefers-reduced-motion 與動畫效能
@@ -99,7 +101,7 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 摘要：叫免費網頁 AI 幫你寫程式、想事情、檢查品質。
 - 標籤：ai、browser、automation、chatgpt、gemini、workflow
 - 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/agentchat
-- 這是一組 3 個資料夾，要一起裝：`AgentChat-OneWeb`、`AgentChat-WebSubAgent`、`AgentChat-IndependentTasks`
+- 同來源套件含 3 個資料夾，要一起裝：`AgentChat-OneWeb`、`AgentChat-WebSubAgent`、`AgentChat-IndependentTasks`
 - 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/agentchat`
 - 何時使用：想要免費的網頁 AI 幫你寫程式、回答問題、生成圖片；複雜任務要走「查資料 → 深度思考 → 品質審查」的完整流程；大量獨立子任務想並行分給多家 AI 一起處理
 

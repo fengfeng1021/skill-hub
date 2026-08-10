@@ -39,7 +39,7 @@
     "version": { "type": "string", "description": "版本字串。" },
     "official": {
       "type": "boolean",
-      "description": "是否為官方出品（Anthropic / 原廠）。"
+      "description": "是否為原作者或原廠官方出品。"
     },
     "featured": {
       "type": "boolean",
@@ -69,7 +69,7 @@
     },
     "parts": {
       "type": "array",
-      "description": "這個收錄項目其實是一組要一起安裝的 skill 資料夾。有些 skill 會拆成多個 SKILL.md（例如 GSAP 拆成 core / timeline / scrolltrigger …），但實際上是同一套、AI 也是一起用，就用 parts 收成一筆，安裝時整組一起裝。只有一個資料夾的 skill 不需要這個欄位。",
+      "description": "同一個來源套件拆成多個要一起安裝的 skill 資料夾時使用，例如 GSAP 的 core / timeline / scrolltrigger。這些資料夾仍屬同一筆收錄；跨來源精選組合包請用 includes。",
       "items": {
         "type": "object",
         "required": ["dirName"],
@@ -87,6 +87,16 @@
           }
         }
       }
+    },
+    "includes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9-]*$"
+      },
+      "description": "跨來源精選組合包引用的其他 registry id。建置時會遞迴展開、去重，安裝提示詞會把入口 skill 與所有引用項目一起安裝。這表示產品層級的組合，不是額外相依，也不是 parts。"
     },
     "install": {
       "type": "object",

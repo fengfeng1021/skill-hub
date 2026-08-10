@@ -10,6 +10,7 @@ const skills = loadSkills();
 const errors = [];
 const warnings = [];
 const seen = new Map();
+const allIds = new Set(skills.map((s) => s.id).filter(Boolean));
 
 const REQUIRED = ['id', 'name', 'summary', 'category', 'tags', 'source', 'install'];
 const DIR_NAME = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
@@ -180,7 +181,46 @@ for (const s of skills) {
   if (s.install?.scope && !['user', 'project'].includes(s.install.scope)) {
     errors.push(`${at}：install.scope 必須是 user 或 project`);
   }
+
+  // 精選組合包（includes）引用其他收錄項目；它不是 parts，也不是 install.requires。
+  if (s.includes !== undefined) {
+    if (!Array.isArray(s.includes) || s.includes.length === 0) {
+      errors.push(`${at}：includes 必須是至少一個 registry id 的陣列；不是組合包就刪掉 includes`);
+    } else {
+      const ids = new Set();
+      for (const id of s.includes) {
+        if (typeof id !== 'string' || !/^[a-z0-9][a-z0-9-]*$/.test(id)) {
+          errors.push(`${at}：includes 的值 "${id}" 不是合法的 registry id`);
+          continue;
+        }
+        if (id === s.id) errors.push(`${at}：includes 不能引用自己`);
+        if (ids.has(id)) errors.push(`${at}：includes 的 registry id "${id}" 重複`);
+        if (!allIds.has(id)) errors.push(`${at}：includes 引用了不存在的 registry id "${id}"`);
+        ids.add(id);
+      }
+    }
+  }
 }
+
+// 避免 A 包 B、B 又包 A。建置雖會去重，資料語意仍然是錯的，必須擋下來。
+const visiting = new Set();
+const visited = new Set();
+const byId = new Map(skills.map((s) => [s.id, s]));
+function detectIncludeCycle(id, path = []) {
+  if (visiting.has(id)) {
+    errors.push(`精選組合包 includes 形成循環：${[...path, id].join(' → ')}`);
+    return;
+  }
+  if (visited.has(id)) return;
+  visiting.add(id);
+  const item = byId.get(id);
+  for (const child of Array.isArray(item?.includes) ? item.includes : []) {
+    if (byId.has(child)) detectIncludeCycle(child, [...path, id]);
+  }
+  visiting.delete(id);
+  visited.add(id);
+}
+for (const id of byId.keys()) detectIncludeCycle(id);
 
 // skills/ 底下有資料夾卻沒收錄
 if (existsSync(SKILLS_DIR)) {

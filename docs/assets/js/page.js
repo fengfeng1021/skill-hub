@@ -95,7 +95,8 @@ function renderPrompt(data, base) {
     '',
     '1. 我問有什麼 skill，就照 skills 陣列回答我，用 summary 那句白話講，不要講技術細節。',
     '2. 我說要裝哪幾個，就把那幾筆的 installPrompt 當成任務執行；',
-    '   多選時把每筆的 promptBlock 接起來，前後補上 promptTemplate 的 header／footer。',
+    '   多選時先合併並去重每筆的 installIds，再把對應項目的 promptBlockSingle 接起來，',
+    '   前後補上 promptTemplate 的 header／footer。精選組合包不能只裝入口。',
     '3. 我說找到新的 skill 要收錄，就照 forAI.howToContribute 的規矩寫進 registry，',
     '   特別是 summary 一定要「不懂程式的人看一眼就懂」的一句話。',
   ].join('\n');

@@ -59,10 +59,18 @@
   ],
   "addedAt": "2026-08-08",
   "updatedAt": "2026-08-10",
+  "includes": [],
   "parts": [],
   "dirNames": [
     "hue"
   ],
+  "includedSkills": [],
+  "installIds": [
+    "hue"
+  ],
+  "installCount": 1,
+  "installFolderCount": 1,
+  "promptBlockSingle": "### Hue  →  資料夾名 `hue`\n\n- **這個 skill 做什麼**：學任何品牌的風格，之後做的東西都自動長那樣。\n- **詳細一點**：給它一個品牌的網址、名稱或截圖，它會分析並生成一套完整的設計語言 skill：色彩 tokens、字體、間距、元件規格、明暗模式、首頁版型配方、圖示組合。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `dominikmartn/hue`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/dominikmartn/hue\n- **下載基底網址**：`https://raw.githubusercontent.com/dominikmartn/hue/main`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：clone 整個 repo 即可，SKILL.md 在根目錄。",
   "promptBlock": "### Hue  →  資料夾名 `hue`\n\n- **這個 skill 做什麼**：學任何品牌的風格，之後做的東西都自動長那樣。\n- **詳細一點**：給它一個品牌的網址、名稱或截圖，它會分析並生成一套完整的設計語言 skill：色彩 tokens、字體、間距、元件規格、明暗模式、首頁版型配方、圖示組合。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `dominikmartn/hue`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/dominikmartn/hue\n- **下載基底網址**：`https://raw.githubusercontent.com/dominikmartn/hue/main`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：clone 整個 repo 即可，SKILL.md 在根目錄。",
   "installPrompt": "你是我的 Skill 安裝助手。請幫我把下面這個 AI Agent Skill 安裝到「你目前所在的 Agent 環境」。\n\n## 安裝規則\n\n1. **先辨識目前環境** — 讀取你自己的官方說明、系統設定或既有 skills，確認這個 Agent 支援的 skill 格式、安裝方式與可用範圍。不要預設任何品牌，也不要自行猜一個 `~/.<名稱>/skills` 路徑。\n2. **自動選擇正確位置** — 我有指定全域或專案範圍時照做；沒有指定時，沿用目前 Agent 的既有慣例。若這個 Agent 只支援其中一種，就使用它官方支援的方式。只有真的無法判定時才停下來問我。\n3. **保持原始結構** — 每個 skill 都是獨立資料夾；資料夾名、SKILL.md frontmatter 的 `name`／`description` 與相對檔案結構都不要改。\n4. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n5. 來源若提供綁定特定 Agent 或固定路徑的安裝指令，只把它當作來源線索；請改用目前 Agent 的官方安裝方式，不要原樣執行。\n6. 目標資料夾**已存在**時，先比較版本與差異，再問我要更新、覆蓋或跳過，不要直接蓋掉。\n\n---\n\n### Hue  →  資料夾名 `hue`\n\n- **這個 skill 做什麼**：學任何品牌的風格，之後做的東西都自動長那樣。\n- **詳細一點**：給它一個品牌的網址、名稱或截圖，它會分析並生成一套完整的設計語言 skill：色彩 tokens、字體、間距、元件規格、明暗模式、首頁版型配方、圖示組合。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `dominikmartn/hue`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/dominikmartn/hue\n- **下載基底網址**：`https://raw.githubusercontent.com/dominikmartn/hue/main`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：clone 整個 repo 即可，SKILL.md 在根目錄。\n\n---\n\n## 完成後請做這幾件事\n\n1. 說明你辨識到的 Agent 與採用的官方 skill 機制，不要只回報「已完成」\n2. 列出每個 skill 實際安裝的位置，以及該資料夾下的檔案\n3. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n4. 依目前 Agent 的載入方式驗證 skill 已可被發現；只有官方流程確實要求時，才提醒我重新載入或重啟\n5. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
 }

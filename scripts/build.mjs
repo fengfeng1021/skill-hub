@@ -12,21 +12,59 @@
 import { writeFileSync, readFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig, loadSkills, normalize, DOCS_DIR, ROOT } from './lib/registry.mjs';
-import { buildHeader, buildFooter, buildBlock, buildInstallPrompt, isPortableCommand } from './lib/prompt.mjs';
+import {
+  buildHeader,
+  buildFooter,
+  buildBlock,
+  buildPromptBlock,
+  buildInstallPrompt,
+  isPortableCommand,
+} from './lib/prompt.mjs';
 
 const cfg = loadConfig();
 const raw = loadSkills();
 const skills = raw.map((s) => normalize(s, cfg));
+const skillById = new Map(skills.map((s) => [s.id, s]));
+
+/** includes 可再引用其他精選組合包；建置時攤平並去重，順序跟 registry 宣告一致。 */
+function expandIncludes(skill) {
+  const out = [];
+  const visited = new Set([skill.id]);
+  const visit = (id) => {
+    if (visited.has(id)) return;
+    visited.add(id);
+    const item = skillById.get(id);
+    if (!item) return; // validate 會給維護者明確錯誤；build 保持可診斷
+    out.push(item);
+    for (const childId of item.includes ?? []) visit(childId);
+  };
+  for (const id of skill.includes ?? []) visit(id);
+  return out;
+}
 
 const API_DIR = join(DOCS_DIR, 'api');
 const API_SKILLS_DIR = join(API_DIR, 'skills');
 if (existsSync(API_SKILLS_DIR)) rmSync(API_SKILLS_DIR, { recursive: true, force: true });
 mkdirSync(API_SKILLS_DIR, { recursive: true });
 
-// 每個 skill 補上提示詞欄位
+// 每個 skill 補上組合包資訊與提示詞欄位
 for (const s of skills) {
-  s.promptBlock = buildBlock(s);
-  s.installPrompt = buildInstallPrompt(s);
+  const included = expandIncludes(s);
+  const installItems = [s, ...included];
+  s.includedSkills = included.map((item) => ({
+    id: item.id,
+    name: item.name,
+    summary: item.summary,
+    category: item.category,
+    folderCount: item.dirNames.length,
+    dirNames: item.dirNames,
+  }));
+  s.installIds = installItems.map((item) => item.id);
+  s.installCount = installItems.length;
+  s.installFolderCount = installItems.reduce((total, item) => total + item.dirNames.length, 0);
+  s.promptBlockSingle = buildBlock(s);
+  s.promptBlock = buildPromptBlock(s, included);
+  s.installPrompt = buildInstallPrompt(s, included);
   // 固定 Agent／固定目錄的來源命令只留在 registry 供維護者參考，
   // 不發布到跨 Agent API，也不在網站上誘導使用者原樣執行。
   if (s.install.command && !isPortableCommand(s.install.command)) delete s.install.command;
@@ -68,7 +106,8 @@ const forAI = {
   },
   howToInstall:
     '使用者說要裝哪幾個，就把對應 skill 的 installPrompt 欄位當成任務執行；' +
-    '多選時把每個 skill 的 promptBlock 依序接起來，前後補上 promptTemplate.header／footer，中間用 promptTemplate.separator 分隔。',
+    '多選時先合併並去重每筆的 installIds，再把對應項目的 promptBlockSingle 依序接起來，' +
+    '前後補上 promptTemplate.header／footer，中間用 promptTemplate.separator 分隔。',
   howToContribute: {
     where: 'registry/skills/<id>.json，格式見 api/schema.json。改完跑 npm run validate && npm run build。',
     language: '所有面向使用者的文字都用繁體中文（台灣用語）。',
@@ -79,7 +118,8 @@ const forAI = {
     summaryGood: '讓網頁上的東西動起來，淡入、滑動、跟著捲動變化都能做。',
     summaryBad: 'GreenSock 官方動畫 skill 全套：tween、時間軸、ScrollTrigger、外掛與效能。',
     bundles:
-      '同一個 repo 拆成多個資料夾、實際使用時會一起載入的（例如 GSAP 的 8 份），用 parts 收成一筆，不要拆成多筆。',
+      '同來源套件拆成多個資料夾（例如 GSAP 的 8 份）用 parts；跨來源、由入口 skill 統籌的精選組合包用 includes。' +
+      'includes 會展開成完整安裝清單，不能寫進 install.requires 假裝成可選相依。',
   },
 };
 
@@ -154,9 +194,13 @@ for (const cat of categories) {
     llms.push(`- 標籤：${s.tags.join('、') || '無'}`);
     llms.push(`- 來源：${s.source.displayUrl ?? '未註明'}`);
     if (s.parts.length) {
-      llms.push(`- 這是一組 ${s.parts.length} 個資料夾，要一起裝：${s.parts.map((p) => `\`${p.dirName}\``).join('、')}`);
+      llms.push(`- 同來源套件含 ${s.parts.length} 個資料夾，要一起裝：${s.parts.map((p) => `\`${p.dirName}\``).join('、')}`);
     } else {
       llms.push(`- 安裝資料夾名：\`${s.install.dirName}\``);
+    }
+    if (s.includedSkills.length) {
+      llms.push(`- 精選組合包：連同入口共 ${s.installCount} 個收錄項目、${s.installFolderCount} 個資料夾`);
+      llms.push(`- 組合內容：${s.includedSkills.map((item) => `\`${item.name}\``).join('、')}`);
     }
     if (s.install.command) llms.push(`- 一行裝完：\`${s.install.command}\``);
     if (s.source.rawBase) llms.push(`- 下載基底：\`${s.source.rawBase}\``);

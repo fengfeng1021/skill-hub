@@ -35,8 +35,11 @@ function badges(skill) {
   const out = [];
   if (skill.official) out.push(`<span class="badge badge--official">${Icons.check}官方</span>`);
   if (skill.source?.kind === 'local') out.push(`<span class="badge badge--local">本庫託管</span>`);
-  // 一筆收錄項目包含多個資料夾時要講清楚，不然使用者會以為只裝一個
-  if (skill.parts?.length > 1) out.push(`<span class="badge badge--bundle">${skill.parts.length} 合 1</span>`);
+  if (skill.includedSkills?.length) {
+    out.push(`<span class="badge badge--curated">精選組合 · ${skill.installCount}</span>`);
+  }
+  // parts 是同來源套件的多個資料夾；跨來源精選組合包由 includedSkills 表示。
+  if (skill.parts?.length > 1) out.push(`<span class="badge badge--bundle">${skill.parts.length} 個資料夾</span>`);
   return out.join('');
 }
 
@@ -57,6 +60,13 @@ export function renderSkillCard(skill, { selected = false, selectable = true } =
     .slice(0, 3)
     .map((t) => `<span class="tag">${escapeHTML(t)}</span>`)
     .join('');
+  const included = skill.includedSkills ?? [];
+  const bundleSummary = included.length
+    ? `<div class="skill-card__bundle-summary">
+         <span class="skill-card__bundle-label">完整內含</span>
+         <span class="skill-card__bundle-names">${included.map((item) => escapeHTML(item.name)).join('、')}</span>
+       </div>`
+    : '';
 
   return `
     <article class="card card--glow skill-card${selected ? ' is-selected' : ''}"
@@ -81,6 +91,8 @@ export function renderSkillCard(skill, { selected = false, selectable = true } =
       </div>
 
       <p class="skill-card__summary clamp-3">${escapeHTML(skill.summary)}</p>
+
+      ${bundleSummary}
 
       <div class="skill-card__tags">${badges(skill)}${tags}</div>
 

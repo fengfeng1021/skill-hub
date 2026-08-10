@@ -41,6 +41,7 @@ export function normalize(skill, cfg) {
   s.usage = s.usage ?? [];
   s.highlights = s.highlights ?? [];
   s.links = s.links ?? [];
+  s.includes = s.includes ?? [];
   s.official = s.official ?? false;
   s.featured = s.featured ?? false;
   s.description = s.description ?? s.summary ?? '';
@@ -74,7 +75,8 @@ export function normalize(skill, cfg) {
     s.source.label = '外部連結';
   }
 
-  // 組合包：把每一份的路徑與下載網址算好，提示詞與前端都直接用
+  // 同來源多資料夾：把每一份的路徑與下載網址算好，提示詞與前端都直接用。
+  // 跨來源的精選組合包另用 includes，兩者不能混為一談。
   s.parts = (s.parts ?? []).map((p) => {
     const rel = p.subdir ?? [s.source.subdir, p.dirName].filter(Boolean).join('/');
     return {

@@ -112,8 +112,30 @@ export function buildBlock(skill, index = null) {
   return lines.join('\n');
 }
 
-/** 完整的單一 skill 安裝提示詞 */
-export function buildInstallPrompt(skill) {
-  if (skill.prompt) return skill.prompt;
-  return [buildHeader(1), '---', buildBlock(skill), '---', buildFooter()].join('\n\n');
+/**
+ * 一筆收錄項目的提示詞區塊。
+ * includes 是跨來源精選組合包：入口 skill 與被引用的收錄項目都必須安裝。
+ */
+export function buildPromptBlock(skill, included = []) {
+  if (!included.length) return buildBlock(skill);
+
+  const all = [skill, ...included];
+  const folderCount = all.reduce((total, item) => total + (item.dirNames?.length ?? 1), 0);
+  const intro = [
+    `### ${skill.name} — 精選組合包`,
+    '',
+    `> 這不是單一 skill，而是一套已整理好的完整資產。請一次安裝下列 ${all.length} 個收錄項目、共 ${folderCount} 個 skill 資料夾，不能把其餘內容當成可選相依。`,
+    '',
+    `- **組合入口**：${skill.name}（負責整合與分工）`,
+    `- **完整內容**：${included.map((item) => item.name).join('、')}`,
+  ].join('\n');
+
+  return [intro, ...all.map((item, index) => buildBlock(item, index + 1))].join('\n\n---\n\n');
+}
+
+/** 完整安裝提示詞；精選組合包會展開成完整內容與正確總數。 */
+export function buildInstallPrompt(skill, included = []) {
+  if (skill.prompt && !included.length) return skill.prompt;
+  const count = 1 + included.length;
+  return [buildHeader(count), '---', buildPromptBlock(skill, included), '---', buildFooter()].join('\n\n');
 }

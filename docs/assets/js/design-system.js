@@ -42,6 +42,24 @@ function renderSwatches() {
 /* ---- 卡片示範 ----------------------------------------------------------- */
 const DEMO_SKILLS = [
   {
+    id: 'frontend-design-director',
+    name: '前端設計總指揮',
+    summary: '把六套設計能力一次裝齊，從畫面做到互動。',
+    tags: ['design', 'ui', 'ux'],
+    featured: true,
+    category: '前端 / 設計',
+    installCount: 7,
+    includedSkills: [
+      { name: 'Impeccable' },
+      { name: 'UI UX Pro Max' },
+      { name: 'Taste' },
+      { name: 'Hue' },
+      { name: 'GSAP' },
+      { name: '互動體驗設計' },
+    ],
+    source: { kind: 'local', label: '本庫託管' },
+  },
+  {
     id: 'gsap',
     name: 'GSAP',
     summary: '官方動畫 skill 全套：tween、時間軸、ScrollTrigger、外掛與效能。',
@@ -50,15 +68,6 @@ const DEMO_SKILLS = [
     category: '前端 / 動效',
     parts: [{ dirName: 'gsap-core' }, { dirName: 'gsap-timeline' }, { dirName: 'gsap-scrolltrigger' }],
     source: { kind: 'github', label: 'greensock/gsap-skills' },
-  },
-  {
-    id: 'pdf-reading',
-    name: 'PDF 閱讀',
-    summary: '把 PDF 轉成可讀文字與表格，處理掃描檔與多欄排版。',
-    tags: ['document', 'pdf', 'ocr'],
-    featured: true,
-    category: '文件處理',
-    source: { kind: 'github', label: 'anthropics/skills' },
   },
   {
     id: 'my-deploy-flow',
@@ -136,7 +145,7 @@ function bindFeedbackDemos() {
   }
 }
 
-/* ---- Flip 篩選示範 ------------------------------------------------------- */
+/* ---- 可中斷篩選示範 ----------------------------------------------------- */
 function bindFlipDemo() {
   const host = document.getElementById('flipDemo');
   if (!host) return;
@@ -144,7 +153,7 @@ function bindFlipDemo() {
   for (const btn of document.querySelectorAll('[data-flip-filter]')) {
     btn.addEventListener('click', () => {
       const f = btn.dataset.flipFilter;
-      Motion.flip(host, () => {
+      Motion.filter(host, () => {
         for (const el of items) {
           el.style.display = f === 'all' || el.dataset.group === f ? '' : 'none';
         }

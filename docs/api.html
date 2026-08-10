@@ -133,11 +133,19 @@
           <div class="spec" data-motion="stagger" data-motion-child=".spec__row">
             <div class="spec__row">
               <code class="spec__key mono">installPrompt</code>
-              <p class="spec__val">單一 skill 的完整安裝提示詞，Agent 會先辨識自身規範，再把它當任務執行。</p>
+              <p class="spec__val">這筆收錄的完整安裝提示詞。精選組合包會自動展開入口與全部內含資產，不會只裝一個。</p>
             </div>
             <div class="spec__row">
-              <code class="spec__key mono">promptBlock</code>
-              <p class="spec__val">同一個 skill 的說明段落。多選時把每個的這一段接起來就好。</p>
+              <code class="spec__key mono">installIds</code>
+              <p class="spec__val">真正要安裝的 registry id 清單；精選組合包已攤平。多選時先合併並去重這個欄位。</p>
+            </div>
+            <div class="spec__row">
+              <code class="spec__key mono">promptBlockSingle</code>
+              <p class="spec__val">單一收錄項目的說明段落。多選攤平 installIds 後，用這個欄位組合提示詞。</p>
+            </div>
+            <div class="spec__row">
+              <code class="spec__key mono">includedSkills</code>
+              <p class="spec__val">精選組合包的內容摘要；一般單一 skill 會是空陣列。</p>
             </div>
             <div class="spec__row">
               <code class="spec__key mono">promptTemplate</code>

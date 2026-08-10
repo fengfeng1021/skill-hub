@@ -1,6 +1,6 @@
 # Skill Hub — 給 AI 的操作說明
 
-這是一個 **AI Agent Skills 收藏庫**（Claude Code、Cursor、Hermes 等各種 AI 都能用）。使用者會用自然語言請你收錄 skill，例如：
+這是一個 **跨 Agent Skills 收藏庫**（Codex、Claude Code、Cursor、Hermes 等環境都能用）。使用者會用自然語言請你收錄 skill，例如：
 
 > 「我找到一個不錯的 skill：https://github.com/xxx/yyy，幫我收進去」
 > 「這個資料夾是我自己寫的 skill，收錄一下」
@@ -83,6 +83,18 @@
 - `parts[].subdir` 通常不用填，會自動組成 `<source.subdir>/<dirName>`
 - 有 `parts` 就可以省略 `install.dirName`
 - 判斷標準：**同一個 repo、同一個作者、實際使用時會一起載入** → 用 `parts`。功能各自獨立、可以只裝其中一個 → 分開收錄
+
+#### 多個既有 skill 組成一套資產時，用 `includes`
+
+入口 skill 若負責統籌多個不同來源的既有收錄項目，這是「精選組合包」，不是同來源多資料夾，也不是可選相依：
+
+```jsonc
+"includes": ["impeccable", "ui-ux-pro-max", "taste", "hue", "gsap"]
+```
+
+- `includes` 的值是其他 registry id，必須已存在，不能引用自己或形成循環
+- 建置後的 `installIds` 會遞迴展開並去重；`installPrompt` 會把入口與全部內容一起安裝
+- `parts` = 同一來源套件的實體資料夾；`includes` = 跨來源產品組合；`install.requires` = 執行期相依，三者不要混用
 
 ### 4. local 託管的話，複製檔案
 

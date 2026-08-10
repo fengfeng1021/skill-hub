@@ -854,6 +854,11 @@ a.endpoint__path:hover {
   line-clamp: 1;
 }
 
+/* 清單模式維持一列一筆；組合內容仍可由「精選組合」徽章辨識，展開詳情看完整清單。 */
+.skill-grid[data-view="list"] .skill-card__bundle-summary {
+  display: none;
+}
+
 .skill-grid[data-view="list"] .skill-card__tags {
   flex: 0 1 auto;
   flex-wrap: nowrap;
@@ -949,6 +954,82 @@ a.endpoint__path:hover {
   color: var(--text-muted);
   font-size: var(--text-sm);
   line-height: var(--leading-normal);
+}
+
+/* 精選組合包內容圖：入口與實際資產用同一張地圖看懂，避免被誤認成單一 skill。 */
+.bundle-map__intro {
+  margin-bottom: var(--space-3);
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+}
+
+.bundle-map {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.bundle-map__item {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+}
+
+.bundle-map__item--entry {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+}
+
+.bundle-map__index {
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+}
+
+.bundle-map__content {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  min-width: 0;
+}
+
+.bundle-map__content strong {
+  color: var(--text);
+  font-size: var(--text-sm);
+}
+
+.bundle-map__content .badge {
+  justify-self: start;
+}
+
+.bundle-map__content small {
+  grid-column: 1 / -1;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+}
+
+.bundle-map__count {
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .bundle-map__item {
+    grid-template-columns: 1.5rem minmax(0, 1fr);
+  }
+
+  .bundle-map__count {
+    grid-column: 2;
+  }
 }
 
 .detail__meta {

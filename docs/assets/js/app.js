@@ -96,7 +96,17 @@ function hydrate(data) {
   for (const s of state.skills) {
     // 組合包的各分項也要能搜到（搜 scrolltrigger 要找得到 GSAP 這一筆）
     const parts = (s.parts ?? []).flatMap((p) => [p.dirName, p.name, p.summary]);
-    s.__haystack = [s.id, s.name, s.summary, s.category, ...(s.tags ?? []), ...(s.usage ?? []), ...parts]
+    const included = (s.includedSkills ?? []).flatMap((item) => [item.id, item.name, item.summary, item.category]);
+    s.__haystack = [
+      s.id,
+      s.name,
+      s.summary,
+      s.category,
+      ...(s.tags ?? []),
+      ...(s.usage ?? []),
+      ...parts,
+      ...included,
+    ]
       .filter(Boolean)
       .join(' ')
       .toLowerCase();
@@ -263,24 +273,24 @@ function matches(skill) {
 
 /**
  * 套用目前的篩選條件。
- * 卡片元素從頭到尾都是同一批，只切換 display，Flip 才能算出正確的位移。
+ * 卡片元素從頭到尾都是同一批，只切換 display。
+ * 最終結果先同步落地，動效只負責很短的視覺回饋，連續點擊也不會卡在半途版面。
  */
 function apply({ animate = true } = {}) {
   if (!el.grid) return;
-  const visible = [];
+  const visible = shownSkills().filter(matches);
+  const visibleIds = new Set(visible.map((s) => s.id));
   const mutate = () => {
     for (const s of shownSkills()) {
       const card = state.cards.get(s.id);
       if (!card) continue;
-      const ok = matches(s);
-      card.style.display = ok ? '' : 'none';
-      if (ok) visible.push(s);
+      card.style.display = visibleIds.has(s.id) ? '' : 'none';
     }
     el.grid.dataset.view = state.view;
   };
 
   if (animate) {
-    Motion.flip(el.grid, mutate, { itemSelector: '.skill-card' });
+    Motion.filter(el.grid, mutate, { itemSelector: '.skill-card' });
   } else {
     mutate();
   }
@@ -289,7 +299,7 @@ function apply({ animate = true } = {}) {
   if (el.resultCount) el.resultCount.textContent = describeResult(visible.length);
   if (el.emptyState) el.emptyState.hidden = visible.length > 0;
   if (el.clearFilters) el.clearFilters.hidden = !isFiltered();
-  scheduleRefresh();
+  scheduleRefresh(260);
   writeURL();
 }
 
@@ -307,12 +317,11 @@ function describeResult(n) {
 
 /**
  * 版面變動後讓 ScrollTrigger 重算位置，合併多次呼叫避免抖動。
- * 一定要等動畫跑完 —— Flip 進行中卡片是 absolute 的，這時候 refresh 量到的
- * 位置全是錯的，畫面會被硬拉一下。檢視切換整段約 0.9 秒，抓 1 秒。
+ * 分類篩選只做 0.18 秒淡入，所以 260ms 即可；檢視切換仍有 FLIP，保留 1 秒。
  */
-function scheduleRefresh() {
+function scheduleRefresh(delay = 1000) {
   clearTimeout(refreshTimer);
-  refreshTimer = setTimeout(() => Motion.refresh(), 1000);
+  refreshTimer = setTimeout(() => Motion.refresh(), delay);
 }
 
 function syncChips() {
@@ -387,20 +396,37 @@ function selectedSkills() {
    ========================================================================== */
 function buildCombinedPrompt(list) {
   if (!list.length) return '';
+  const installList = resolveInstallList(list);
   if (list.length === 1) return list[0].installPrompt;
+  if (installList.length === 1) return installList[0].installPrompt;
 
   const t = state.template;
-  const header = t.headerPlural.replace('{{count}}', String(list.length));
-  const blocks = list.map((s, i) => s.promptBlock.replace(/^### /, `### ${i + 1}. `));
+  const header = t.headerPlural.replace('{{count}}', String(installList.length));
+  const blocks = installList.map((s, i) =>
+    (s.promptBlockSingle ?? s.promptBlock).replace(/^### /, `### ${i + 1}. `)
+  );
   return [header, ...blocks, t.footer].join(t.separator);
+}
+
+/** 多選時攤平精選組合包並以 registry id 去重，避免同一套資產安裝兩次。 */
+function resolveInstallList(list) {
+  const ids = [...new Set(list.flatMap((s) => s.installIds ?? [s.id]))];
+  return ids.map((id) => state.byId.get(id)).filter(Boolean);
 }
 
 function openInstallModal(list) {
   const text = buildCombinedPrompt(list);
   const names = list.map((s) => s.name).join('、');
+  const installList = resolveInstallList(list);
+  const folderCount = installList.reduce((total, s) => total + (s.dirNames?.length ?? 1), 0);
   $('#installPrompt').textContent = text;
-  $('#installTitle').textContent = list.length > 1 ? `一次安裝 ${list.length} 個 skill` : `安裝 ${list[0].name}`;
-  $('#installMeta').textContent = `${list.length} 個 skill · ${text.length.toLocaleString('en-US')} 字元`;
+  $('#installTitle').textContent =
+    list.length > 1
+      ? `一次安裝 ${installList.length} 個收錄項目`
+      : list[0].includedSkills?.length
+        ? `安裝 ${list[0].name} 完整組合包`
+        : `安裝 ${list[0].name}`;
+  $('#installMeta').textContent = `${installList.length} 個收錄項目 · ${folderCount} 個 skill 資料夾 · ${text.length.toLocaleString('en-US')} 字元`;
   const copyBtn = $('#installCopy');
   copyBtn.dataset.copyMessage = `已複製安裝提示詞：${names}`;
   Components.getModal('#installModal')?.open();
@@ -453,19 +479,23 @@ function detailHTML(skill) {
     items?.length ? `<ul class="detail__list">${items.map((i) => `<li>${escapeHTML(i)}</li>`).join('')}</ul>` : '';
 
   const parts = skill.parts ?? [];
+  const included = skill.includedSkills ?? [];
 
   const badges = [
     skill.official ? '<span class="badge badge--official">官方</span>' : '',
     skill.featured ? '<span class="badge badge--featured">推薦</span>' : '',
     skill.source?.kind === 'local' ? '<span class="badge badge--local">本庫託管</span>' : '',
-    parts.length > 1 ? `<span class="badge badge--bundle">${parts.length} 合 1</span>` : '',
+    included.length ? `<span class="badge badge--curated">精選組合 · ${skill.installCount}</span>` : '',
+    parts.length > 1 ? `<span class="badge badge--bundle">${parts.length} 個資料夾</span>` : '',
   ].join('');
 
   const meta = [
     ['分類', escapeHTML(skill.category ?? '—')],
-    parts.length
-      ? ['安裝資料夾', `${parts.length} 個，一起裝（見下方清單）`]
-      : ['安裝資料夾名', `<code class="tag mono">${escapeHTML(skill.install?.dirName ?? '—')}</code>`],
+    included.length
+      ? ['安裝規模', `${skill.installCount} 個收錄項目 · ${skill.installFolderCount} 個 skill 資料夾`]
+      : parts.length
+        ? ['安裝資料夾', `${parts.length} 個，一起裝（見下方清單）`]
+        : ['安裝資料夾名', `<code class="tag mono">${escapeHTML(skill.install?.dirName ?? '—')}</code>`],
     [
       '使用範圍偏好',
       skill.install?.scope === 'project' ? '專案內（依目前 Agent 支援方式）' : '全域（若目前 Agent 支援）',
@@ -498,6 +528,35 @@ function detailHTML(skill) {
           .join('')
       : '';
 
+  const bundleItems = included.length
+    ? [
+        {
+          name: skill.name,
+          summary: '組合入口：負責分工、協同流程與最低設計標準。',
+          folderCount: skill.dirNames?.length ?? 1,
+          entry: true,
+        },
+        ...included,
+      ]
+    : [];
+  const bundleHTML = bundleItems.length
+    ? `<div class="bundle-map">
+         ${bundleItems
+           .map(
+             (item, index) => `
+               <div class="bundle-map__item${item.entry ? ' bundle-map__item--entry' : ''}">
+                 <span class="bundle-map__index">${String(index + 1).padStart(2, '0')}</span>
+                 <span class="bundle-map__content">
+                   <strong>${escapeHTML(item.name)}</strong>${item.entry ? '<span class="badge badge--curated">組合入口</span>' : ''}
+                   <small>${escapeHTML(item.summary)}</small>
+                 </span>
+                 <span class="bundle-map__count">${item.folderCount} 個資料夾</span>
+               </div>`
+           )
+           .join('')}
+       </div>`
+    : '';
+
   return `
     <div data-intro>
       <div class="row" style="gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-3)">
@@ -507,6 +566,14 @@ function detailHTML(skill) {
     </div>
 
     ${section('詳細說明', detailParas ? `<div class="detail__prose">${detailParas}</div>` : '')}
+    ${
+      included.length
+        ? section(
+            `這套組合會完整安裝什麼`,
+            `<p class="bundle-map__intro">入口與 ${included.length} 套資產都是必要內容，提示詞會一次裝齊並逐項驗證。</p>${bundleHTML}`
+          )
+        : ''
+    }
     ${section('什麼時候會用到', list(skill.usage))}
     ${section('重點', list(skill.highlights))}
 
@@ -551,7 +618,7 @@ function detailHTML(skill) {
     )}
 
     ${section(
-      '包含的檔案',
+      included.length ? '組合入口包含的檔案' : '包含的檔案',
       list(skill.install?.files) || '<p class="faint" style="font-size: var(--text-sm)">未特別註明，預設為整個 skill 資料夾</p>'
     )}
 
@@ -560,7 +627,7 @@ function detailHTML(skill) {
     ${links ? section('相關連結', `<div class="stack" style="gap: var(--space-2); font-size: var(--text-sm)">${links}</div>`) : ''}
 
     <section data-intro>
-      <p class="detail__section-title">跨 Agent 安裝提示詞（會先辨識目前環境）</p>
+      <p class="detail__section-title">${included.length ? '完整組合包' : '跨 Agent'}安裝提示詞（會先辨識目前環境）</p>
       <div class="code">
         <div class="code__bar">
           <span class="code__title">install-${escapeHTML(skill.id)}.md</span>

@@ -177,9 +177,10 @@ export function buildPrompt({ target, mode, base, repo, name }) {
     '先確認 registry 裡沒有同一個 id。已經有了就是更新那一筆，不要另外開一筆。'
   );
   step(
-    `照 ${base}/api/schema.json 的格式，在專案裡寫 registry/skills/<id>.json。\n` +
+      `照 ${base}/api/schema.json 的格式，在專案裡寫 registry/skills/<id>.json。\n` +
       `   專案原始碼在 ${repo}，我本機沒有的話就先 clone 下來再改。\n` +
-      '   同一個 repo 拆成好幾個資料夾、實際使用時會一起載入的，用 parts 收成一筆。'
+      '   同一個 repo 拆成好幾個資料夾、實際使用時會一起載入的，用 parts 收成一筆；\n' +
+      '   跨來源的精選組合包用 includes 引用其他 registry id，不要塞進 install.requires。'
   );
   step('跑 npm run validate && npm run build，兩個都要全綠。');
 

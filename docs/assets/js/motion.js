@@ -9,7 +9,7 @@
         <article data-motion="lift glow">…</article>
       多個效果用空白分隔，參數用 data-motion-* 傳。
 
-   2. 程式式：Motion.toast()、Motion.modal()、Motion.flip() …
+   2. 程式式：Motion.toast()、Motion.modal()、Motion.filter() …
 
    規則：
    - 頁面裡不要自己寫一次性的 gsap.to()。要新效果就在這裡加一個 recipe，
@@ -725,42 +725,58 @@ const Motion = (() => {
     for (const t of gsap.getTweensOf(items)) if (t.isActive()) t.progress(1);
   }
 
-  /** 篩選重排：卡片大小不變，只是位置換了、有的離開，用 scale 帶過就夠 */
-  function flip(container, mutate, { itemSelector = ':scope > *' } = {}) {
-    if (!hasGSAP || !Flip || reduced || !container) {
+  /**
+   * 篩選過渡刻意不使用 FLIP。
+   *
+   * 分類可以在極短時間內連續切換；若每次都把卡片抽成 absolute 再量位置，下一次
+   * 很容易讀到上一輪尚未收尾的半途版面。這裡採「最終狀態優先」：先同步完成
+   * display 變更，再只對目前可見卡片做可中斷的 opacity 回饋。每個容器永遠只有
+   * 一段受控 tween，新的操作會直接取代舊的，不碰 position / transform / height。
+  */
+  const filterRuns = new WeakMap();
+
+  function settleFilter(container) {
+    const previous = filterRuns.get(container);
+    if (!previous) return;
+    filterRuns.delete(container);
+    previous.tween.kill();
+    // data-intro 用 visibility 控制首屏防閃；篩選只碰 opacity，不能清掉它的最終可見狀態。
+    gsap.set(previous.items, { clearProps: 'opacity' });
+  }
+
+  function filter(container, mutate, { itemSelector = ':scope > *' } = {}) {
+    if (!container) {
       mutate();
       return;
     }
+
     const items = [...container.querySelectorAll(itemSelector)];
-    settle(container, items);
+    settleFilter(container);
 
-    const run = { items, fading: [], tl: null };
-    reflows.set(container, run);
-    const done = () => {
-      if (reflows.get(container) === run) reflows.delete(container);
-    };
-
-    const startH = container.getBoundingClientRect().height;
-    const state = Flip.getState(items, { props: 'opacity' });
+    // 功能狀態先完成，動畫永遠不能延遲或改寫篩選結果。
     mutate();
-    const endH = container.getBoundingClientRect().height;
+    if (!hasGSAP || reduced) return;
 
-    Flip.from(state, {
-      duration: 0.55,
-      ease: D.easeStrong,
-      scale: true,
-      stagger: 0.02,
-      absolute: true,
-      onEnter: (els) =>
-        gsap.fromTo(
-          els,
-          { opacity: 0, scale: 0.92 },
-          { opacity: 1, scale: 1, duration: 0.45, ease: D.easeStrong, stagger: 0.02 }
-        ),
-      onLeave: (els) => gsap.to(els, { opacity: 0, scale: 0.92, duration: 0.28, ease: D.ease }),
-      onComplete: done,
-    });
-    holdHeight(container, startH, endH, 0.55);
+    const visible = items.filter(laidOut);
+    if (!visible.length) return;
+
+    const run = { items: visible, tween: null };
+    run.tween = gsap.fromTo(
+      visible,
+      { opacity: 0.62 },
+      {
+        opacity: 1,
+        duration: 0.18,
+        ease: D.ease,
+        stagger: { each: 0.012, from: 'start' },
+        overwrite: 'auto',
+        onComplete: () => {
+          gsap.set(visible, { clearProps: 'opacity' });
+          if (filterRuns.get(container) === run) filterRuns.delete(container);
+        },
+      }
+    );
+    filterRuns.set(container, run);
   }
 
   /**
@@ -779,6 +795,7 @@ const Motion = (() => {
       mutate();
       return;
     }
+    settleFilter(container);
     const items = [...container.querySelectorAll(itemSelector)].filter(laidOut);
     if (reduced || !items.length) {
       settle(container, items);
@@ -910,7 +927,8 @@ const Motion = (() => {
     toast,
     floatingBar,
     segmented,
-    flip,
+    filter,
+    flip: filter,
     viewSwitch,
     pulse,
     shake,

@@ -73,6 +73,8 @@ AI 會照 [CLAUDE.md](CLAUDE.md) 的流程判斷來源類型、抓 SKILL.md、�
 
 一套 skill 被官方拆成好幾個資料夾（例如 GSAP 的 core / timeline / scrolltrigger …）時，收成**一筆**、用 `parts` 列出每一份，安裝提示詞會要求整組一起裝。
 
+如果是一個入口 skill 統籌多個不同來源的現成資產（例如「前端設計總指揮」），則用 `includes` 引用其他 registry id。建置時會遞迴展開、去重，卡片與詳情會標示「精選組合」，安裝提示詞也會把入口與全部內容一起裝齊。`includes` 是產品組合，不要寫成 `install.requires` 的可選相依。
+
 ### summary 要寫成白話一句話
 
 卡片上只會顯示 `summary` 這一句。標準只有一個：**完全不懂程式的人看一眼就知道這是幹嘛的**。

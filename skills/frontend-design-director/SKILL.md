@@ -1,7 +1,7 @@
 ---
 name: frontend-design-director
 description: 前端設計總指揮。任何「設計、美化、改版、審查」網頁或 App 畫面、需要配色/字體/排版/動效建議、要模仿某個網站風格、要建立品牌設計系統、或要規劃使用者互動與導覽時使用。自動整合 Impeccable、UI UX Pro Max、Taste、Hue、GSAP、interaction-experience-design 六個設計 skill 的精華與分工，並依三階段流程執行（UI → UX → 動效）——一個入口，全套服務。
-version: 2.0.0
+version: 2.1.0
 ---
 
 # 前端設計總指揮（Design Director）
@@ -79,7 +79,7 @@ version: 2.0.0
 
 ## 原檔讀取指示
 
-若環境（~/.claude/skills/ 或專案 .claude/skills/）存在下列 skill 目錄，**先讀原檔再行動**，本檔濃縮版只是沒有原檔時的最低標準：
+先依目前 Agent 的官方 skill 機制找出它實際載入的 skill 目錄。若其中存在下列 skill，**先讀原檔再行動**；不要預設品牌或猜測固定路徑。本檔濃縮版只是沒有原檔時的最低標準：
 - `impeccable/`（SKILL.md + references/）
 - `ui-ux-pro-max/`（SKILL.md + references/quick-reference.md；scripts/search.py 可查詢）
 - `taste/`（SKILL.md + references/）

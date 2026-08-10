@@ -13,6 +13,9 @@
  *   node scripts/add-skill.mjs --id my-skill --name "我的 Skill" \
  *     --summary "..." --category "自製" --tags custom --local
  *
+ *   # 跨來源精選組合包（值是已存在的 registry id）
+ *   node scripts/add-skill.mjs --id my-bundle --includes skill-a,skill-b,skill-c
+ *
  * 未提供的欄位會沿用既有檔案的值（等於「部分更新」）。
  */
 import { writeFileSync, existsSync, readFileSync } from 'node:fs';
@@ -63,6 +66,8 @@ const entry = {
   featured: args.featured ? true : existing?.featured ?? false,
   source: existing?.source ?? {},
   install: existing?.install ?? {},
+  parts: existing?.parts,
+  includes: list(args.includes) ?? existing?.includes,
   usage: list(args.usage) ?? existing?.usage ?? [],
   highlights: list(args.highlights) ?? existing?.highlights ?? [],
   prompt: existing?.prompt ?? null,
@@ -86,6 +91,7 @@ if (args.github) {
 
 entry.install = {
   dirName: args['dir-name'] ?? entry.install.dirName ?? id,
+  ...(entry.install.command ? { command: entry.install.command } : {}),
   scope: args.scope ?? entry.install.scope ?? 'user',
   files: list(args.files) ?? entry.install.files ?? ['SKILL.md'],
   requires: list(args.requires) ?? entry.install.requires ?? [],

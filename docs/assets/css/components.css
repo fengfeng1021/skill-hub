@@ -265,6 +265,14 @@
   font-family: var(--font-mono);
 }
 
+/* 跨來源、由入口 skill 統籌的完整資產組合。跟 parts 的「多資料夾」分開呈現。 */
+.badge--curated {
+  padding-inline: 0.55rem;
+  border: 1px solid var(--accent-line);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
 /* --------------------------------------------------------------------------
    Card — 通用卡片容器
    -------------------------------------------------------------------------- */
@@ -365,6 +373,34 @@
   color: var(--text-muted);
   font-size: var(--text-sm);
   line-height: var(--leading-snug);
+}
+
+.skill-card__bundle-summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+}
+
+.skill-card__bundle-label {
+  color: var(--accent);
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.skill-card__bundle-names {
+  min-width: 0;
+  color: var(--text-muted);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
 }
 
 .skill-card__tags {
