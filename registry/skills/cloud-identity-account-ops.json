@@ -1,30 +1,33 @@
 {
   "id": "cloud-identity-account-ops",
-  "name": "員工帳號批量管理",
-  "summary": "一次建好幾十個員工帳號，密碼也全部設定完成。",
-  "description": "Google Cloud Identity／Workspace 管理員專用：批量建立員工郵件帳號（自動命名 a01、a02…，顯示名用不重複的中性英文名），並用 Google Directory API 一次把全部帳號密碼改成同一個值、關閉「登入時變更密碼」的要求。\n涵蓋：Admin Console 表單自動化（Angular 互動限制與解法）、OAuth Playground 授權流程、批量密碼 API、帳號上限（Cloud Identity Free 51 人）與申請管道現況。\n內建安全規則：只操作員工帳號，不碰管理員帳號；管理員密碼由使用者自行管理。",
+  "name": "Cloud Identity 帳號與登入管理",
+  "summary": "批量建立帳號，處理登入驗證並部署安全 SSO。",
+  "description": "面向 Google Cloud Identity／Google Workspace 管理工作的低自由度操作 skill。先用無秘密 tenant plan 鎖定網域、OU、帳號範圍、管理員排除名單與 pilot，再依固定狀態機完成乾跑、單一測試、批量執行、驗證和回滾。\n支援任意網域與帳號批次、Employee ID、Directory API 密碼更新、Login Challenge／Too many failed attempts、新裝置與 Google Maps 首次登入、持久化瀏覽器 profile，以及正式或受控臨時 SAML／OIDC SSO。內建 break-glass 管理員、post-SSO verification、一次性授權、秘密禁止入 Git 和完整 teardown 規則。",
   "category": "Google 管理",
   "tags": [
     "google",
     "cloud-identity",
     "workspace",
     "accounts",
-    "batch",
+    "sso",
     "admin"
   ],
   "author": "Aiapi 管理員",
-  "license": "private",
+  "license": "未指定",
+  "version": "2.0.0",
   "usage": [
-    "要一次建立幾十個員工郵件帳號",
-    "要把所有員工帳號密碼改成同一個值",
-    "要關閉員工「登入時變更密碼」的要求",
-    "要為不同網域／租戶建立帳號"
+    "要為任意網域一次建立或更新一批員工帳號",
+    "帳號登入時被手機驗證或 Login Challenge 擋住",
+    "要讓新帳號首次登入 Google Maps 等服務並保存 profile",
+    "要部署、測試或回滾正式企業 SAML／OIDC SSO",
+    "要用受控臨時 SSO 完成一批帳號的一次性 onboarding"
   ],
   "highlights": [
-    "建帳號與改密碼兩段流程都自動化，不用逐個手動操作",
-    "改密碼用官方 API，一次 50 個帳號一分鐘內完成",
-    "參數化設計：換網域、換命名規則、換密碼都行",
-    "內建安全規則，不會誤動管理員帳號"
+    "用無秘密 tenant plan 固定網域、OU、帳號範圍與管理員排除名單",
+    "強制執行唯讀盤點、乾跑、pilot、分批、驗證和回滾",
+    "涵蓋 Employee ID、Login Challenge、新裝置與持久化 profile",
+    "提供正式企業 SSO 與受控臨時 SSO 的完整部署和停止條件",
+    "禁止密碼、token、Cookie、私鑰和憑證進入 Git 或日誌"
   ],
   "source": {
     "kind": "local",
@@ -35,10 +38,25 @@
     "scope": "user",
     "files": [
       "SKILL.md",
-      "scripts/gen_names.py",
-      "scripts/make_batch.py",
+      "assets/tenant-plan.example.json",
+      "references/batch-account-runbook.md",
+      "references/login-and-sso-runbook.md",
+      "scripts/plan_accounts.py",
       "scripts/batch_password_api.py"
     ],
-    "notes": "執行時需要本機 Chrome（remote debugging port 9222）與 Google 管理員授權（OAuth Playground）；完整前置條件與踩坑記錄都在 SKILL.md 裡。"
-  }
+    "notes": "tenant plan 只可包含非秘密資料；密碼、token、Cookie、SAML 私鑰、OIDC client secret 和憑證不得寫進 skill、Git、命令列或日誌。執行 Google 管理寫入需要使用者自己的管理員 session 或短效授權。"
+  },
+  "prompt": null,
+  "links": [
+    {
+      "label": "Google SSO 設定",
+      "url": "https://knowledge.workspace.google.com/admin/apps/setting-up-sso"
+    },
+    {
+      "label": "Google 登入故障排查",
+      "url": "https://knowledge.workspace.google.com/admin/support/troubleshooting/troubleshoot-login-challenges-2-step-verification-and-sign-in-issues"
+    }
+  ],
+  "addedAt": "2026-08-08",
+  "updatedAt": "2026-08-10"
 }

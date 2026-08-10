@@ -1,72 +1,121 @@
-import asyncio, json, urllib.request, urllib.parse, sys
+"""Dry-run-first password updates for accounts from a validated tenant plan."""
 
-# 用法: python batch_password_api.py [網域] [密碼] [數量] [起始號]
-# 例: python batch_password_api.py example.com REDACTED_SECRET 50 1
-# 前置: OAuth Playground 已授權 admin.directory.user scope（token 從 Playground 頁面讀取）
-DOMAIN = sys.argv[1] if len(sys.argv) > 1 else "example.com"
-PWD = sys.argv[2] if len(sys.argv) > 2 else "REDACTED_SECRET"
-COUNT = int(sys.argv[3]) if len(sys.argv) > 3 else 50
-START = int(sys.argv[4]) if len(sys.argv) > 4 else 1
+from __future__ import annotations
 
-async def main():
-    # 1. 從 OAuth Playground 讀取 access token
-    with urllib.request.urlopen("http://127.0.0.1:9222/json/list", timeout=5) as r:
-        tabs = json.load(r)
-    tab = next((t for t in tabs if t.get("type") == "page" and "oauthplayground" in t.get("url", "")), None)
-    if not tab:
-        print("NO_PLAYGROUND_TAB"); return
-    import websockets
-    async with websockets.connect(tab["webSocketDebuggerUrl"], max_size=10_000_000) as ws:
-        mid = [0]
-        async def cmd(method, params=None):
-            mid[0] += 1
-            await ws.send(json.dumps({"id": mid[0], "method": method, "params": params or {}}))
-            while True:
-                msg = json.loads(await ws.recv())
-                if msg.get("id") == mid[0]:
-                    return msg
-        res = await cmd("Runtime.evaluate", {"expression": "document.getElementById('access_token_field').value", "returnByValue": True})
-        token = res.get("result", {}).get("result", {}).get("value")
+import argparse
+import asyncio
+import getpass
+import json
+import os
+import sys
+import urllib.error
+import urllib.parse
+import urllib.request
+from pathlib import Path
+
+from plan_accounts import PlanError, load_and_validate
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("plan", type=Path, help="Validated non-secret tenant plan JSON")
+    parser.add_argument("--apply", action="store_true", help="Perform password writes")
+    parser.add_argument(
+        "--shared-password-approved",
+        action="store_true",
+        help="Confirm the user explicitly approved the shared-password risk",
+    )
+    parser.add_argument(
+        "--confirm-domain",
+        help="Must exactly match primary_domain when --apply is used",
+    )
+    parser.add_argument(
+        "--no-change-at-next-login",
+        action="store_true",
+        help="Do not require a password change at next login (higher risk)",
+    )
+    return parser.parse_args()
+
+
+async def main() -> int:
+    args = parse_args()
+    try:
+        plan, accounts = load_and_validate(args.plan)
+    except PlanError as exc:
+        print(f"PLAN INVALID: {exc}", file=sys.stderr)
+        return 2
+
+    domain = plan["primary_domain"]
+    users = [row["primary_email"] for row in accounts]
+    print(f"Targets ({len(users)}): {users[0]} .. {users[-1]}")
+    print(f"Pilot: {plan['pilot']}")
+
+    if not args.apply:
+        print("Dry run only. No passwords or accounts were changed.")
+        return 0
+    if not args.shared_password_approved:
+        print("Refusing write: --shared-password-approved is required.", file=sys.stderr)
+        return 2
+    if args.confirm_domain != domain:
+        print("Refusing write: --confirm-domain must exactly match the plan.", file=sys.stderr)
+        return 2
+
+    token = os.environ.get("GOOGLE_DIRECTORY_ACCESS_TOKEN")
     if not token:
-        print("NO_TOKEN"); return
-    print(f"Token 獲取成功（長度 {len(token)}）")
+        print(
+            "GOOGLE_DIRECTORY_ACCESS_TOKEN is not set. Use a short-lived token with "
+            "admin.directory.user scope; never put it in the command line.",
+            file=sys.stderr,
+        )
+        return 2
 
-    # 2. 生成帳號清單（支援命名 a01..a99 或指定規則）
-    users = [f"a{i:02d}@{DOMAIN}" for i in range(START, START + COUNT)]
+    password = getpass.getpass("Shared initial password: ")
+    confirmation = getpass.getpass("Confirm shared initial password: ")
+    if not password or password != confirmation:
+        print("Password confirmation failed.", file=sys.stderr)
+        return 2
 
-    # 3. 批量重設密碼（Directory API）
-    ok_count = 0
-    fail_list = []
+    change_at_next_login = not args.no_change_at_next_login
+    success = 0
+    failed: list[str] = []
     for email in users:
-        url = f"https://admin.googleapis.com/admin/directory/v1/users/{urllib.parse.quote(email)}"
-        body = json.dumps({
-            "password": PWD,
-            "changePasswordAtNextLogin": False
-        }).encode()
-        req = urllib.request.Request(url, data=body, method="PUT")
-        req.add_header("Authorization", f"Bearer {token}")
-        req.add_header("Content-Type", "application/json")
+        url = (
+            "https://admin.googleapis.com/admin/directory/v1/users/"
+            + urllib.parse.quote(email, safe="")
+        )
+        body = json.dumps(
+            {
+                "password": password,
+                "changePasswordAtNextLogin": change_at_next_login,
+            }
+        ).encode("utf-8")
+        request = urllib.request.Request(url, data=body, method="PATCH")
+        request.add_header("Authorization", f"Bearer {token}")
+        request.add_header("Content-Type", "application/json")
         try:
-            with urllib.request.urlopen(req, timeout=30) as resp:
-                data = json.loads(resp.read())
-                status = resp.status
-                if status == 200:
-                    ok_count += 1
-                    print(f"✅ {email}: 密碼已設定")
+            with urllib.request.urlopen(request, timeout=30) as response:
+                if response.status == 200:
+                    success += 1
+                    print(f"OK   {email}")
                 else:
-                    fail_list.append(email)
-                    print(f"⚠️ {email}: HTTP {status}")
-        except urllib.error.HTTPError as e:
-            err_body = e.read().decode(errors="ignore")[:150]
-            fail_list.append(email)
-            print(f"❌ {email}: HTTP {e.code} {err_body}")
-        except Exception as e:
-            fail_list.append(email)
-            print(f"❌ {email}: {e}")
+                    failed.append(email)
+                    print(f"FAIL {email}: HTTP {response.status}")
+        except urllib.error.HTTPError as exc:
+            failed.append(email)
+            print(f"FAIL {email}: HTTP {exc.code}")
+        except Exception as exc:
+            failed.append(email)
+            print(f"FAIL {email}: {type(exc).__name__}")
         await asyncio.sleep(0.3)
 
-    print(f"\n=== 完成：{ok_count}/50 成功 ===")
-    if fail_list:
-        print("失敗清單:", fail_list)
+    password = None
+    confirmation = None
+    print(f"Completed: {success}/{len(users)} succeeded")
+    if failed:
+        print("Failed accounts:", ", ".join(failed))
+        return 1
+    return 0
 
-asyncio.run(main())
+
+if __name__ == "__main__":
+    raise SystemExit(asyncio.run(main()))

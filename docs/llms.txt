@@ -107,11 +107,11 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 
 ### Google 管理
 
-#### 員工帳號批量管理 `cloud-identity-account-ops`
+#### Cloud Identity 帳號與登入管理 `cloud-identity-account-ops`
 
-- 摘要：一次建好幾十個員工帳號，密碼也全部設定完成。
-- 標籤：google、cloud-identity、workspace、accounts、batch、admin
+- 摘要：批量建立帳號，處理登入驗證並部署安全 SSO。
+- 標籤：google、cloud-identity、workspace、accounts、sso、admin
 - 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/cloud-identity-account-ops
 - 安裝資料夾名：`cloud-identity-account-ops`
 - 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/cloud-identity-account-ops`
-- 何時使用：要一次建立幾十個員工郵件帳號；要把所有員工帳號密碼改成同一個值；要關閉員工「登入時變更密碼」的要求；要為不同網域／租戶建立帳號
+- 何時使用：要為任意網域一次建立或更新一批員工帳號；帳號登入時被手機驗證或 Login Challenge 擋住；要讓新帳號首次登入 Google Maps 等服務並保存 profile；要部署、測試或回滾正式企業 SAML／OIDC SSO；要用受控臨時 SSO 完成一批帳號的一次性 onboarding

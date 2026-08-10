@@ -72,10 +72,6 @@
       "count": 1
     },
     {
-      "name": "batch",
-      "count": 1
-    },
-    {
       "name": "browser",
       "count": 1
     },
@@ -157,6 +153,10 @@
     },
     {
       "name": "scroll",
+      "count": 1
+    },
+    {
+      "name": "sso",
       "count": 1
     },
     {

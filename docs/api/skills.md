@@ -29,4 +29,4 @@
 
 | Skill | 摘要 | 標籤 | 來源 |
 | --- | --- | --- | --- |
-| **員工帳號批量管理** | 一次建好幾十個員工帳號，密碼也全部設定完成。 | google, cloud-identity, workspace, accounts, batch, admin | [本庫託管](https://github.com/fengfeng1021/skill-hub/tree/main/skills/cloud-identity-account-ops) |
+| **Cloud Identity 帳號與登入管理** | 批量建立帳號，處理登入驗證並部署安全 SSO。 | google, cloud-identity, workspace, accounts, sso, admin | [本庫託管](https://github.com/fengfeng1021/skill-hub/tree/main/skills/cloud-identity-account-ops) |

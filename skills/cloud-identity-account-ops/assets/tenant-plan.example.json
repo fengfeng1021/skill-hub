@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "primary_domain": "example.com",
+  "target_ou": "/Employees/Onboarding",
+  "account_pattern": {
+    "prefix": "a",
+    "start": 1,
+    "count": 50,
+    "digits": 2
+  },
+  "profile": {
+    "given_name_prefix": "User",
+    "family_name": "Account"
+  },
+  "employee_id_strategy": "local-part",
+  "pilot": "a01@example.com",
+  "admin_exclusions": [
+    "admin@example.com",
+    "breakglass@example.com"
+  ],
+  "target_services": [
+    "https://maps.google.com/"
+  ],
+  "login_strategy": "native"
+}
