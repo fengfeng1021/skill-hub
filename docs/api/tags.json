@@ -7,7 +7,7 @@
     },
     {
       "name": "程式品質",
-      "count": 2
+      "count": 3
     },
     {
       "name": "前端 / 動效",
@@ -28,12 +28,16 @@
       "count": 5
     },
     {
+      "name": "review",
+      "count": 5
+    },
+    {
       "name": "ui",
       "count": 5
     },
     {
-      "name": "review",
-      "count": 4
+      "name": "workflow",
+      "count": 5
     },
     {
       "name": "ux",
@@ -48,7 +52,11 @@
       "count": 3
     },
     {
-      "name": "workflow",
+      "name": "quality",
+      "count": 3
+    },
+    {
+      "name": "security",
       "count": 3
     },
     {
@@ -56,15 +64,15 @@
       "count": 2
     },
     {
-      "name": "quality",
-      "count": 2
-    },
-    {
-      "name": "security",
+      "name": "methodology",
       "count": 2
     },
     {
       "name": "tokens",
+      "count": 2
+    },
+    {
+      "name": "verification",
       "count": 2
     },
     {
@@ -160,10 +168,6 @@
       "count": 1
     },
     {
-      "name": "methodology",
-      "count": 1
-    },
-    {
       "name": "mobile",
       "count": 1
     },
@@ -197,10 +201,6 @@
     },
     {
       "name": "usability",
-      "count": 1
-    },
-    {
-      "name": "verification",
       "count": 1
     },
     {

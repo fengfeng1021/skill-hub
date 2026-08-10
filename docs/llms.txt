@@ -2,7 +2,7 @@
 
 > 收錄、整理、一鍵安裝各種 AI Agent Skills。挑好的 skill，複製提示詞，貼給 AI 就裝好。
 
-更新日期：2026-08-10　收錄數量：11
+更新日期：2026-08-10　收錄數量：12
 網站：https://fengfeng1021.github.io/skill-hub
 JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 
@@ -35,15 +35,15 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/interaction-experience-design`
 - 何時使用：設計登入流程、多功能 App 的導覽與分頁組織；規劃按鈕層級、返回機制、頁面切換；擔心使用者迷路、不知道下一步要做什麼；與前端設計總指揮搭配：負責三階段流程中的「UX 互動」階段
 
-#### 前端設計總指揮 `frontend-design-director`
+#### 前端總指揮 `frontend-director`
 
 - 摘要：把六套設計能力一次裝齊，品質與安全也自動把關。
-- 標籤：design、ui、ux、director、frontend、integration、quality、review、security
-- 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-design-director
-- 安裝資料夾名：`frontend-design-director`
-- 精選組合包：連同入口共 9 個收錄項目、41 個資料夾
-- 組合內容：`Impeccable`、`UI UX Pro Max`、`Taste`、`Hue`、`GSAP`、`互動體驗設計`、`程式碼品質閘門`、`Mantis 安全審查`
-- 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/frontend-design-director`
+- 標籤：design、ui、ux、director、frontend、integration、quality、review、security、workflow
+- 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-director
+- 安裝資料夾名：`frontend-director`
+- 精選組合包：連同入口共 10 個收錄項目、42 個資料夾
+- 組合內容：`Impeccable`、`UI UX Pro Max`、`Taste`、`Hue`、`GSAP`、`互動體驗設計`、`交付品質閘門`、`程式碼品質閘門`、`Mantis 安全審查`
+- 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/frontend-director`
 - 何時使用：美化或改版任何網頁、App 畫面，不確定該用哪個設計 skill 時；要模仿某網站風格、建立品牌設計系統、加動效，一次到位；設計任務需要同時兼顧判斷力、規則、風格、品牌、動效；交付前想要品質把關：程式碼驗證、審查與安全檢查
 
 #### Hue `hue`
@@ -83,6 +83,17 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 何時使用：設計或改版網頁、手機 App 的介面，需要配色、字體、排版建議；要設計商標、橫幅、簡報、圖示等各種視覺素材；要建立品牌識別或整套設計系統；要確保介面無障礙、各種裝置都好看
 
 ### 程式品質
+
+#### 交付品質閘門 `delivery-quality-gate`
+
+- 摘要：寫完程式先驗證、再找人審查、最後檢查安全才交付。
+- 標籤：quality、review、security、verification、workflow、methodology
+- 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/delivery-quality-gate
+- 安裝資料夾名：`delivery-quality-gate`
+- 精選組合包：連同入口共 3 個收錄項目、22 個資料夾
+- 組合內容：`程式碼品質閘門`、`Mantis 安全審查`
+- 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/delivery-quality-gate`
+- 何時使用：任何技術棧的程式碼交付前想要品質把關；後端、資料、DevOps 專案需要驗證、審查與安全檢查；AI 宣稱「寫完了」但沒有跑過驗證，需要強制驗證流程；與前端總指揮搭配：負責四階段流程中的「品質閘門」階段
 
 #### 程式碼品質閘門 `superpowers-code-quality`
 

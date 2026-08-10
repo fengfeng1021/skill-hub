@@ -1,0 +1,116 @@
+{
+  "id": "delivery-quality-gate",
+  "name": "交付品質閘門",
+  "summary": "寫完程式先驗證、再找人審查、最後檢查安全才交付。",
+  "description": "跨技術棧的交付品質總指揮：任何程式碼——前端、後端、腳本、基礎設施、資料處理——在「宣稱完成」之前，都先過這道閘門：驗證 → 審查 → 安全，三關全過才准交付。\n整合兩個來源：\n- 程式碼品質閘門（obra/superpowers，270k+ stars 開發方法論）：verification-before-completion（完成前驗證，證據先於斷言）、requesting-code-review（派審查員）、receiving-code-review（意見先驗證再實作）。\n- 安全審查（Google Mantis，官方 18-skill 流水線）：威脅建模 → 掃描 → 複核 → 重現 → 修補。\n內建調度機制：開場宣告、三關卡流程、最終交付清單（逐項打勾回報）、常見遺漏警示表，避免 AI 只跑一半流程就宣稱完成。\n安裝時會連同 includes 展開的兩個收錄項目一起裝齊。",
+  "category": "程式品質",
+  "tags": [
+    "quality",
+    "review",
+    "security",
+    "verification",
+    "workflow",
+    "methodology"
+  ],
+  "official": false,
+  "featured": true,
+  "author": "fengfeng1021",
+  "license": "MIT",
+  "usage": [
+    "任何技術棧的程式碼交付前想要品質把關",
+    "後端、資料、DevOps 專案需要驗證、審查與安全檢查",
+    "AI 宣稱「寫完了」但沒有跑過驗證，需要強制驗證流程",
+    "與前端總指揮搭配：負責四階段流程中的「品質閘門」階段"
+  ],
+  "highlights": [
+    "不綁定技術棧：前端、後端、腳本、基礎設施都適用",
+    "三道關卡＋最終交付清單，AI 不容易漏步驟",
+    "組合 270k+ stars 品質方法論與 Google 官方安全審查"
+  ],
+  "includes": [
+    "superpowers-code-quality",
+    "mantis"
+  ],
+  "source": {
+    "branch": "main",
+    "kind": "local",
+    "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/delivery-quality-gate",
+    "path": "skills/delivery-quality-gate",
+    "displayUrl": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/delivery-quality-gate",
+    "rawBase": "https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/delivery-quality-gate",
+    "label": "本庫託管"
+  },
+  "install": {
+    "scope": "user",
+    "files": [
+      "SKILL.md"
+    ],
+    "requires": [],
+    "dirName": "delivery-quality-gate",
+    "notes": "這是品質把關的協同入口；安裝時必須連同 includes 展開的兩個收錄項目（superpowers-code-quality、mantis）一起安裝。"
+  },
+  "prompt": null,
+  "links": [
+    {
+      "label": "Skill Hub（收藏庫）",
+      "url": "https://fengfeng1021.github.io/skill-hub/"
+    }
+  ],
+  "addedAt": "2026-08-10",
+  "updatedAt": "2026-08-10",
+  "parts": [],
+  "dirNames": [
+    "delivery-quality-gate"
+  ],
+  "includedSkills": [
+    {
+      "id": "superpowers-code-quality",
+      "name": "程式碼品質閘門",
+      "summary": "寫完程式先驗證再交貨，還有審查員幫你把關。",
+      "category": "程式品質",
+      "folderCount": 3,
+      "dirNames": [
+        "verification-before-completion",
+        "requesting-code-review",
+        "receiving-code-review"
+      ]
+    },
+    {
+      "id": "mantis",
+      "name": "Mantis 安全審查",
+      "summary": "自動找程式漏洞、試著重現、再幫你補上。",
+      "category": "程式品質",
+      "folderCount": 18,
+      "dirNames": [
+        "mantis-architecture",
+        "mantis-threat-model",
+        "mantis-summarize",
+        "mantis-researcher",
+        "mantis-dedupe",
+        "mantis-critic",
+        "mantis-review",
+        "mantis-reproduce",
+        "mantis-chain",
+        "mantis-calibrate",
+        "mantis-report",
+        "mantis-patch",
+        "mantis-history",
+        "mantis-reflect",
+        "mantis-plan",
+        "mantis-structural-index",
+        "mantis-meta-agent",
+        "mantis-pipeline-adapter"
+      ]
+    }
+  ],
+  "installIds": [
+    "delivery-quality-gate",
+    "superpowers-code-quality",
+    "mantis"
+  ],
+  "installCount": 3,
+  "installFolderCount": 22,
+  "promptBlockSingle": "### 交付品質閘門  →  資料夾名 `delivery-quality-gate`\n\n- **這個 skill 做什麼**：寫完程式先驗證、再找人審查、最後檢查安全才交付。\n- **詳細一點**：跨技術棧的交付品質總指揮：任何程式碼——前端、後端、腳本、基礎設施、資料處理——在「宣稱完成」之前，都先過這道閘門：驗證 → 審查 → 安全，三關全過才准交付。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/delivery-quality-gate\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/delivery-quality-gate`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：這是品質把關的協同入口；安裝時必須連同 includes 展開的兩個收錄項目（superpowers-code-quality、mantis）一起安裝。",
+  "promptBlock": "### 交付品質閘門 — 精選組合包\n\n> 這不是單一 skill，而是一套已整理好的完整資產。請一次安裝下列 3 個收錄項目、共 22 個 skill 資料夾，不能把其餘內容當成可選相依。\n\n- **組合入口**：交付品質閘門（負責整合與分工）\n- **完整內容**：程式碼品質閘門、Mantis 安全審查\n\n---\n\n### 1. 交付品質閘門  →  資料夾名 `delivery-quality-gate`\n\n- **這個 skill 做什麼**：寫完程式先驗證、再找人審查、最後檢查安全才交付。\n- **詳細一點**：跨技術棧的交付品質總指揮：任何程式碼——前端、後端、腳本、基礎設施、資料處理——在「宣稱完成」之前，都先過這道閘門：驗證 → 審查 → 安全，三關全過才准交付。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/delivery-quality-gate\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/delivery-quality-gate`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：這是品質把關的協同入口；安裝時必須連同 includes 展開的兩個收錄項目（superpowers-code-quality、mantis）一起安裝。\n\n---\n\n### 2. 程式碼品質閘門  →  一組 3 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：寫完程式先驗證再交貨，還有審查員幫你把關。\n- **詳細一點**：取自 obra/superpowers（GitHub 270k+ stars 的開發方法論框架，作者 Jesse Vincent）的品質三件套：\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `obra/superpowers`（分支 `main`，來源 repo 內子目錄 `skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/obra/superpowers\n- **這一組的 3 個資料夾**（缺一不可，資料夾名照抄）：\n  - `verification-before-completion` — 沒先跑驗證，不准說程式寫完了。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/verification-before-completion`\n  - `requesting-code-review` — 交貨前派審查員先看一遍，提早抓問題。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/requesting-code-review`\n  - `receiving-code-review` — 收到審查意見先自己驗證，不盲從也不硬拗。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/receiving-code-review`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：3 個資料夾必須全部安裝；requesting-code-review 資料夾裡還有一份 code-reviewer.md（審查員指示），要一起拿。\n\n---\n\n### 3. Mantis 安全審查  →  一組 18 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：自動找程式漏洞、試著重現、再幫你補上。\n- **詳細一點**：Google 官方推出的安全審查 toolkit，18 個 skill 組成一套可自動執行的漏洞審查流水線：先建立知識庫與威脅模型（architecture、threat-model、summarize、structural-index、plan、history），再掃描與驗證（researcher、dedupe、critic、review、reproduce、chain、calibrate），最後修補與報告（patch、report、reflect），另有總指揮與自訂流水線（meta-agent、pipeline-adapter）。所有 skill 都是單獨的資料夾，安裝時一併裝齊。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `google/mantis`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/google/mantis\n- **這一組的 18 個資料夾**（缺一不可，資料夾名照抄）：\n  - `mantis-architecture` — 把程式碼分析整理成互相連結的知識庫，當審查底圖。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-architecture`\n  - `mantis-threat-model` — 先畫出哪些地方會被攻擊、誰會來攻擊，再決定查哪裡。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-threat-model`\n  - `mantis-summarize` — 先幫每個資料夾寫安全摘要，讓後面好規劃。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-summarize`\n  - `mantis-researcher` — 照計畫實際檢查程式碼，找出可疑的漏洞。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-researcher`\n  - `mantis-dedupe` — 把重複的發現整理成一份，避免同一問題報很多次。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-dedupe`\n  - `mantis-critic` — 過濾掉測試用、碰不到的假漏洞，只留真的。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-critic`\n  - `mantis-review` — 獨立的第二輪檢查，去掉誤報。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-review`\n  - `mantis-reproduce` — 寫出能重現問題的測試，確認漏洞真的存在。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reproduce`\n  - `mantis-chain` — 把單獨的漏洞串起來，看能不能組合成更大攻擊。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-chain`\n  - `mantis-calibrate` — 綜合證據算出整體風險分數。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-calibrate`\n  - `mantis-report` — 把確認的發現整理成人看得懂的安全報告。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-report`\n  - `mantis-patch` — 自動產生最小修補、套用並驗證修好沒。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-patch`\n  - `mantis-history` — 翻版本歷史，找出過去修過的漏洞當參考。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-history`\n  - `mantis-reflect` — 每次審查結束檢討，留下經驗下次更準。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reflect`\n  - `mantis-plan` — 根據威脅模型排定這次要查哪些地方。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-plan`\n  - `mantis-structural-index` — 把程式碼建成索引，方便快速比對。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-structural-index`\n  - `mantis-meta-agent` — 當總指揮，盯整場審查跑完。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-meta-agent`\n  - `mantis-pipeline-adapter` — 教你打造自己的自動化審查流水線。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-pipeline-adapter`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：18 個資料夾必須全部安裝；本套件會執行自動化程式碼，官方警告只能在隔離環境使用，發現需人工複核。",
+  "installPrompt": "你是我的 Skill 安裝助手。請幫我把下列 3 個 AI Agent Skill 安裝到「你目前所在的 Agent 環境」。\n\n## 安裝規則\n\n1. **先辨識目前環境** — 讀取你自己的官方說明、系統設定或既有 skills，確認這個 Agent 支援的 skill 格式、安裝方式與可用範圍。不要預設任何品牌，也不要自行猜一個 `~/.<名稱>/skills` 路徑。\n2. **自動選擇正確位置** — 我有指定全域或專案範圍時照做；沒有指定時，沿用目前 Agent 的既有慣例。若這個 Agent 只支援其中一種，就使用它官方支援的方式。只有真的無法判定時才停下來問我。\n3. **保持原始結構** — 每個 skill 都是獨立資料夾；資料夾名、SKILL.md frontmatter 的 `name`／`description` 與相對檔案結構都不要改。\n4. **取得檔案的優先順序**：\n   a. 直接抓下面給的 raw 下載網址\n   b. 抓不到就 `git clone` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n5. 來源若提供綁定特定 Agent 或固定路徑的安裝指令，只把它當作來源線索；請改用目前 Agent 的官方安裝方式，不要原樣執行。\n6. 目標資料夾**已存在**時，先比較版本與差異，再問我要更新、覆蓋或跳過，不要直接蓋掉。\n\n---\n\n### 交付品質閘門 — 精選組合包\n\n> 這不是單一 skill，而是一套已整理好的完整資產。請一次安裝下列 3 個收錄項目、共 22 個 skill 資料夾，不能把其餘內容當成可選相依。\n\n- **組合入口**：交付品質閘門（負責整合與分工）\n- **完整內容**：程式碼品質閘門、Mantis 安全審查\n\n---\n\n### 1. 交付品質閘門  →  資料夾名 `delivery-quality-gate`\n\n- **這個 skill 做什麼**：寫完程式先驗證、再找人審查、最後檢查安全才交付。\n- **詳細一點**：跨技術棧的交付品質總指揮：任何程式碼——前端、後端、腳本、基礎設施、資料處理——在「宣稱完成」之前，都先過這道閘門：驗證 → 審查 → 安全，三關全過才准交付。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/delivery-quality-gate\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/delivery-quality-gate`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n- **注意**：這是品質把關的協同入口；安裝時必須連同 includes 展開的兩個收錄項目（superpowers-code-quality、mantis）一起安裝。\n\n---\n\n### 2. 程式碼品質閘門  →  一組 3 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：寫完程式先驗證再交貨，還有審查員幫你把關。\n- **詳細一點**：取自 obra/superpowers（GitHub 270k+ stars 的開發方法論框架，作者 Jesse Vincent）的品質三件套：\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `obra/superpowers`（分支 `main`，來源 repo 內子目錄 `skills`（只用來取檔，不是安裝位置））\n- **repo 網址**：https://github.com/obra/superpowers\n- **這一組的 3 個資料夾**（缺一不可，資料夾名照抄）：\n  - `verification-before-completion` — 沒先跑驗證，不准說程式寫完了。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/verification-before-completion`\n  - `requesting-code-review` — 交貨前派審查員先看一遍，提早抓問題。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/requesting-code-review`\n  - `receiving-code-review` — 收到審查意見先自己驗證，不盲從也不硬拗。\n    下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills/receiving-code-review`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：3 個資料夾必須全部安裝；requesting-code-review 資料夾裡還有一份 code-reviewer.md（審查員指示），要一起拿。\n\n---\n\n### 3. Mantis 安全審查  →  一組 18 個資料夾，要全部裝齊\n\n- **這個 skill 做什麼**：自動找程式漏洞、試著重現、再幫你補上。\n- **詳細一點**：Google 官方推出的安全審查 toolkit，18 個 skill 組成一套可自動執行的漏洞審查流水線：先建立知識庫與威脅模型（architecture、threat-model、summarize、structural-index、plan、history），再掃描與驗證（researcher、dedupe、critic、review、reproduce、chain、calibrate），最後修補與報告（patch、report、reflect），另有總指揮與自訂流水線（meta-agent、pipeline-adapter）。所有 skill 都是單獨的資料夾，安裝時一併裝齊。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：GitHub `google/mantis`（分支 `main`（repo 根目錄即為 skill））\n- **repo 網址**：https://github.com/google/mantis\n- **這一組的 18 個資料夾**（缺一不可，資料夾名照抄）：\n  - `mantis-architecture` — 把程式碼分析整理成互相連結的知識庫，當審查底圖。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-architecture`\n  - `mantis-threat-model` — 先畫出哪些地方會被攻擊、誰會來攻擊，再決定查哪裡。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-threat-model`\n  - `mantis-summarize` — 先幫每個資料夾寫安全摘要，讓後面好規劃。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-summarize`\n  - `mantis-researcher` — 照計畫實際檢查程式碼，找出可疑的漏洞。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-researcher`\n  - `mantis-dedupe` — 把重複的發現整理成一份，避免同一問題報很多次。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-dedupe`\n  - `mantis-critic` — 過濾掉測試用、碰不到的假漏洞，只留真的。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-critic`\n  - `mantis-review` — 獨立的第二輪檢查，去掉誤報。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-review`\n  - `mantis-reproduce` — 寫出能重現問題的測試，確認漏洞真的存在。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reproduce`\n  - `mantis-chain` — 把單獨的漏洞串起來，看能不能組合成更大攻擊。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-chain`\n  - `mantis-calibrate` — 綜合證據算出整體風險分數。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-calibrate`\n  - `mantis-report` — 把確認的發現整理成人看得懂的安全報告。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-report`\n  - `mantis-patch` — 自動產生最小修補、套用並驗證修好沒。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-patch`\n  - `mantis-history` — 翻版本歷史，找出過去修過的漏洞當參考。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-history`\n  - `mantis-reflect` — 每次審查結束檢討，留下經驗下次更準。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-reflect`\n  - `mantis-plan` — 根據威脅模型排定這次要查哪些地方。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-plan`\n  - `mantis-structural-index` — 把程式碼建成索引，方便快速比對。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-structural-index`\n  - `mantis-meta-agent` — 當總指揮，盯整場審查跑完。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-meta-agent`\n  - `mantis-pipeline-adapter` — 教你打造自己的自動化審查流水線。\n    下載基底：`https://raw.githubusercontent.com/google/mantis/main/mantis-pipeline-adapter`\n- **每個資料夾都要拿的檔案**：\n  - `<下載基底>/SKILL.md`\n- **注意**：18 個資料夾必須全部安裝；本套件會執行自動化程式碼，官方警告只能在隔離環境使用，發現需人工複核。\n\n---\n\n## 完成後請做這幾件事\n\n1. 說明你辨識到的 Agent 與採用的官方 skill 機制，不要只回報「已完成」\n2. 列出每個 skill 實際安裝的位置，以及該資料夾下的檔案\n3. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n4. 依目前 Agent 的載入方式驗證 skill 已可被發現；只有官方流程確實要求時，才提醒我重新載入或重啟\n5. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
+}
