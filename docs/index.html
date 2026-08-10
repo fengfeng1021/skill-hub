@@ -33,6 +33,7 @@
   </head>
 
   <body data-page="home">
+    <a class="skip-link" href="#main-content">跳到主要內容</a>
     <div class="scroll-progress" data-motion="scroll-progress"></div>
 
     <header class="site-header" data-motion="shrink-header">
@@ -59,25 +60,42 @@
       </div>
     </header>
 
-    <main>
+    <main id="main-content">
       <!-- ---------- Hero ---------- -->
       <section class="hero">
         <span class="hero__glow" aria-hidden="true" data-motion="parallax float"
               data-motion-shift="-18" data-motion-amp="14" data-motion-duration="7"></span>
-        <div class="container">
-          <h1 class="hero__title">
-            <span data-motion="mask" data-motion-delay="0.05">挑好的 skill，</span>
-            <span class="gradient-text" data-motion="mask" data-motion-delay="0.17">貼給 AI 就裝好</span>
-          </h1>
-          <p class="hero__lede" data-intro>
-            勾選你要的，複製提示詞，貼進你的 AI —— 剩下的它自己會做完。
-          </p>
-          <div class="hero__actions" data-intro>
-            <a class="btn btn--primary btn--lg" href="./skills.html" data-motion="press ripple magnetic"
-               data-motion-strength="0.18">逛 Skills 庫</a>
-            <button class="btn btn--lg btn--ghost" data-modal="#howtoModal" data-motion="press">怎麼用？</button>
+        <div class="container hero__grid">
+          <div class="hero__copy">
+            <p class="hero__kicker" data-intro><span aria-hidden="true"></span>跨 Agent · 環境自適應</p>
+            <h1 class="hero__title">
+              <span data-motion="mask" data-motion-delay="0.05">同一套 skills，</span>
+              <span class="gradient-text" data-motion="mask" data-motion-delay="0.17">交給你的 Agent 裝好</span>
+            </h1>
+            <p class="hero__lede" data-intro>
+              不綁品牌、不指定死路徑。挑選能力、複製提示詞，你目前使用的 Agent 會依自己的官方機制完成安裝與驗證。
+            </p>
+            <div class="hero__actions" data-intro>
+              <a class="btn btn--primary btn--lg" href="./skills.html" data-motion="press ripple magnetic"
+                 data-motion-strength="0.18">挑選 Skills</a>
+              <button class="btn btn--lg btn--ghost" data-modal="#howtoModal" data-motion="press">看安裝流程</button>
+            </div>
+            <p class="hero__meta" id="heroMeta" data-intro></p>
           </div>
-          <p class="hero__meta" id="heroMeta" data-intro></p>
+
+          <aside class="agent-flow card" aria-label="環境自適應安裝流程" data-motion="reveal lift glow" data-motion-preset="scale">
+            <div class="agent-flow__head">
+              <span class="agent-flow__status"><span aria-hidden="true"></span>安裝前自動判斷</span>
+              <span class="agent-flow__meta mono">adaptive</span>
+            </div>
+            <div class="agent-flow__steps" data-motion="stagger" data-motion-child=".agent-flow__step">
+              <div class="agent-flow__step"><b>01</b><span>辨識目前 Agent 與作業環境</span></div>
+              <div class="agent-flow__step"><b>02</b><span>確認官方 skill 機制與支援範圍</span></div>
+              <div class="agent-flow__step"><b>03</b><span>保留原始結構，安裝到正確位置</span></div>
+              <div class="agent-flow__step"><b>04</b><span>驗證載入結果並清楚回報</span></div>
+            </div>
+            <p class="agent-flow__foot">不預設品牌 · 不猜測目錄 · 不直接覆蓋</p>
+          </aside>
         </div>
       </section>
 
@@ -100,18 +118,18 @@
           <div class="steps" data-motion="stagger" data-motion-child=".step">
             <article class="card step">
               <span class="step__num">1</span>
-              <h3 class="step__title">勾選</h3>
-              <p class="step__text">在卡片上勾選想要的能力，一次選幾個都行。</p>
+              <h3 class="step__title">挑選能力</h3>
+              <p class="step__text">在卡片上勾選想要的 skills，一次選幾個都可以。</p>
             </article>
             <article class="card step">
               <span class="step__num">2</span>
-              <h3 class="step__title">複製</h3>
-              <p class="step__text">畫面下方會浮出一列，按一下就把整段指令複製起來。</p>
+              <h3 class="step__title">貼給目前的 Agent</h3>
+              <p class="step__text">複製一段完整提示詞，直接貼進你現在正在使用的 Agent。</p>
             </article>
             <article class="card step">
               <span class="step__num">3</span>
-              <h3 class="step__title">貼上</h3>
-              <p class="step__text">貼進你的 AI，它會自己下載、放好、檢查有沒有裝成功。</p>
+              <h3 class="step__title">自動適配</h3>
+              <p class="step__text">它會辨識自己的安裝方式、放到正確位置，再驗證是否載入成功。</p>
             </article>
           </div>
         </div>
@@ -156,11 +174,14 @@
             </div>
 
             <div class="request-box__form">
-              <label class="field grow">
-                <span class="field__icon" data-icon="sparkle"></span>
-                <input class="field__input" data-request-input type="text"
-                       placeholder="skill 名稱，或 GitHub 網址" autocomplete="off" />
-              </label>
+              <div class="request-box__field">
+                <label class="request-box__field-label" for="requestInputHome">Skill 名稱或 GitHub 網址</label>
+                <span class="field">
+                  <span class="field__icon" data-icon="sparkle"></span>
+                  <input class="field__input" id="requestInputHome" data-request-input type="text"
+                         placeholder="例如：imagegen 或 owner/repo" autocomplete="off" />
+                </span>
+              </div>
               <div class="segmented" data-segmented data-request-mode role="tablist" aria-label="要做到哪一步">
                 <span class="segmented__thumb"></span>
                 <button class="segmented__item" role="tab" aria-selected="true" data-value="catalog">只收錄</button>

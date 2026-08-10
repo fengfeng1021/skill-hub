@@ -82,7 +82,7 @@
       "SKILL.md"
     ],
     "requires": [],
-    "notes": "用 Claude Code 的話也可以改用 `/plugin marketplace add greensock/gsap-skills` 安裝。手動安裝的話 8 個資料夾要全部放進 skills 目錄，缺一份就會少掉對應主題的知識。"
+    "notes": "請依目前 Agent 的官方安裝機制處理；8 個資料夾必須全部安裝，缺一份就會少掉對應主題的知識。"
   },
   "prompt": null,
   "links": [
@@ -96,5 +96,5 @@
     }
   ],
   "addedAt": "2026-08-03",
-  "updatedAt": "2026-08-03"
+  "updatedAt": "2026-08-10"
 }

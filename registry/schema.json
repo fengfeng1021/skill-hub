@@ -98,11 +98,11 @@
         },
         "command": {
           "type": "string",
-          "description": "一行就能裝完的指令（例如 npx skills add <repo>）。有填的話安裝提示詞會請 AI 優先用它。"
+          "description": "來源提供的一行安裝指令。只有不綁特定 Agent 或固定 skills 路徑時，提示詞才會請 AI 優先使用。"
         },
         "scope": {
           "enum": ["user", "project"],
-          "description": "user = 裝到該 AI 的全域 skills 目錄（如 Claude Code 的 ~/.claude/skills）；project = 裝到專案的 skills 目錄（如 .claude/skills）。預設 user。"
+          "description": "使用範圍偏好：user = 目前 Agent 支援的全域範圍；project = 目前 Agent 支援的專案範圍。這不是固定路徑，安裝時必須依當前 Agent 的官方機制判定。預設 user。"
         },
         "files": {
           "type": "array",

@@ -45,9 +45,9 @@ const installModal = () => `
       <div class="modal__head">
         <div class="grow">
           <p class="eyebrow" data-modal-item>一併安裝</p>
-          <h2 class="modal__title" id="installTitle" data-modal-item>安裝提示詞</h2>
+          <h2 class="modal__title" id="installTitle" data-modal-item>環境自適應安裝提示詞</h2>
           <p class="muted" style="font-size: var(--text-sm); margin-top: var(--space-2)" data-modal-item>
-            複製下面全部內容，貼進任何 AI（Claude Code、Cursor、Hermes 都行），它會照著把 skills 裝好。
+            複製下面全部內容，貼進你目前使用的 Agent。它會先辨識自己的官方 skill 機制，再決定正確位置與安裝方式。
           </p>
         </div>
         ${closeButton()}
@@ -81,22 +81,22 @@ const howtoModal = () => `
       <div class="modal__head">
         <div class="grow">
           <p class="eyebrow" data-modal-item>How to</p>
-          <h2 class="modal__title" id="howtoTitle" data-modal-item>三步驟裝好 skill</h2>
+          <h2 class="modal__title" id="howtoTitle" data-modal-item>三步驟，交給目前的 Agent</h2>
         </div>
         ${closeButton()}
       </div>
       <div class="modal__body stack" style="gap: var(--space-5)">
         <ol class="detail__list" style="gap: var(--space-4)" data-modal-item>
-          <li><strong>勾選</strong>：在卡片右上角勾選想裝的，可以一次選很多個。</li>
-          <li><strong>複製</strong>：底部會浮出操作列，按「複製安裝指令」拿到一整段文字。</li>
-          <li><strong>貼上</strong>：貼進任何能存取檔案的 AI，它會自己下載、放到正確位置、檢查有沒有裝好。</li>
+          <li><strong>挑選</strong>：在卡片右上角勾選想裝的，可以一次選很多個。</li>
+          <li><strong>複製</strong>：底部會浮出操作列，按「複製安裝提示詞」拿到完整內容。</li>
+          <li><strong>貼上</strong>：貼進目前的 Agent。它會辨識自身規範、選擇正確位置並驗證結果。</li>
         </ol>
         <div class="divider"></div>
         <div data-modal-item>
           <p class="detail__section-title">不用會寫程式</p>
           <p class="muted" style="font-size: var(--text-sm)">
-            整個過程你只要做「勾選 → 複製 → 貼上」三件事，剩下的都是 AI 在做。
-            裝完記得把你的 AI 重開，新的能力才會生效。
+            整個過程你只要做「挑選 → 複製 → 貼上」三件事，剩下的交給目前的 Agent。
+            如果它的官方流程需要重新載入或重啟，完成後會明確告訴你。
           </p>
         </div>
       </div>
@@ -115,7 +115,7 @@ const selectionBar = () => `
       <button class="btn btn--ghost btn--sm" id="selectionClear" data-motion="press">清除</button>
       <button class="btn btn--primary btn--sm" id="selectionInstall" data-motion="press ripple">
         <span class="btn__icon">${Icons.copy}</span>
-        複製安裝指令
+        複製安裝提示詞
       </button>
     </div>
   </div>`;

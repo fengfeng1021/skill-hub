@@ -132,7 +132,7 @@
               <span class="ds-label">尺寸與圖示</span>
               <button class="btn btn--primary btn--lg" data-motion="press ripple">
                 <span class="btn__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
-                複製安裝指令
+                複製安裝提示詞
               </button>
               <button class="btn" data-motion="press ripple">預設尺寸</button>
               <button class="btn btn--sm" data-motion="press">小尺寸</button>
@@ -151,12 +151,24 @@
             <h2 class="ds-section__title">標籤 <span class="ds-section__file">.chip / .tag / .badge</span></h2>
             <p class="ds-section__desc">chip 可切換，用在篩選；tag 是靜態的；badge 表示狀態。</p>
 
-            <div class="ds-demo" data-motion="reveal">
-              <span class="ds-label">Chip（可切換，點點看）</span>
-              <button class="chip" aria-pressed="true" data-motion="press">全部 <span class="chip__count">24</span></button>
-              <button class="chip" aria-pressed="false" data-motion="press">前端 / 動效 <span class="chip__count">7</span></button>
-              <button class="chip" aria-pressed="false" data-motion="press">文件處理 <span class="chip__count">5</span></button>
-              <button class="chip" aria-pressed="false" data-motion="press">開發工具 <span class="chip__count">9</span></button>
+            <div class="ds-demo ds-demo--col" data-motion="reveal">
+              <span class="ds-label">兩層篩選（分類 → 標籤）</span>
+              <div class="filter-group">
+                <span class="filter-group__label">分類</span>
+                <div class="filter-group__options" role="group" aria-label="依分類篩選">
+                  <button class="chip" aria-pressed="true" data-motion="press">全部 <span class="chip__count">24</span></button>
+                  <button class="chip" aria-pressed="false" data-motion="press">前端 / 動效 <span class="chip__count">7</span></button>
+                  <button class="chip" aria-pressed="false" data-motion="press">文件處理 <span class="chip__count">5</span></button>
+                </div>
+              </div>
+              <div class="filter-group filter-group--tags">
+                <span class="filter-group__label">標籤</span>
+                <div class="filter-group__options" role="group" aria-label="依標籤縮小結果">
+                  <button class="chip" aria-pressed="false" data-motion="press">design <span class="chip__count">5</span></button>
+                  <button class="chip" aria-pressed="false" data-motion="press">ui <span class="chip__count">5</span></button>
+                  <button class="chip" aria-pressed="false" data-motion="press">ux <span class="chip__count">4</span></button>
+                </div>
+              </div>
             </div>
 
             <div class="ds-demo" data-motion="reveal">
@@ -257,12 +269,12 @@
                     <span data-copy-label>複製</span>
                   </button>
                 </div>
-                <pre class="code__body">你是我的 Skill 安裝助手。請幫我安裝下面這個 AI Agent Skill。
+                <pre class="code__body">你是我的 Skill 安裝助手。請把下面這個 Skill 安裝到你目前所在的 Agent 環境。
 
 ## 安裝規則
-1. 安裝位置 — 每個 skill 是一個資料夾，放進你這個 AI 自己的 skills 目錄（Claude Code 是 ~/.claude/skills/、Cursor 是 ~/.cursor/skills/、Hermes 是 HERMES_HOME/skills/）
-2. 資料夾名不要改
-3. 不要改寫 SKILL.md 的 frontmatter</pre>
+1. 先辨識目前 Agent 的官方 skill 機制，不預設品牌或路徑
+2. 沿用目前環境支援的全域或專案範圍
+3. 保留資料夾名、SKILL.md frontmatter 與相對結構</pre>
               </div>
             </div>
           </section>
@@ -356,7 +368,7 @@
                 <div class="step">
                   <span class="step__num">2</span>
                   <p class="step__title">複製</p>
-                  <p class="step__text">按一下，安裝指令進剪貼簿。</p>
+                  <p class="step__text">按一下，安裝提示詞進剪貼簿。</p>
                 </div>
                 <div class="step">
                   <span class="step__num">3</span>
@@ -364,6 +376,23 @@
                   <p class="step__text">丟給 AI，它自己會裝好。</p>
                 </div>
               </div>
+            </div>
+
+            <!-- 環境自適應流程 -->
+            <div class="ds-demo ds-demo--col" data-motion="reveal">
+              <span class="ds-label">Agent flow — 安裝前判斷</span>
+              <aside class="agent-flow card" aria-label="環境自適應安裝流程" style="max-width: 38rem">
+                <div class="agent-flow__head">
+                  <span class="agent-flow__status"><span aria-hidden="true"></span>安裝前自動判斷</span>
+                  <span class="agent-flow__meta mono">adaptive</span>
+                </div>
+                <div class="agent-flow__steps">
+                  <div class="agent-flow__step"><b>01</b><span>辨識目前 Agent 與作業環境</span></div>
+                  <div class="agent-flow__step"><b>02</b><span>確認官方 skill 機制與支援範圍</span></div>
+                  <div class="agent-flow__step"><b>03</b><span>保留原始結構，安裝到正確位置</span></div>
+                </div>
+                <p class="agent-flow__foot">不預設品牌 · 不猜測目錄 · 不直接覆蓋</p>
+              </aside>
             </div>
 
             <!-- 接口卡 -->
@@ -430,11 +459,14 @@
                 </div>
 
                 <div class="request-box__form">
-                  <label class="field grow">
-                    <span class="field__icon" data-icon="sparkle"></span>
-                    <input class="field__input" data-request-input type="text"
-                           placeholder="skill 名稱，或 GitHub 網址" autocomplete="off" />
-                  </label>
+                  <div class="request-box__field">
+                    <label class="request-box__field-label" for="requestInputDemo">Skill 名稱或 GitHub 網址</label>
+                    <span class="field">
+                      <span class="field__icon" data-icon="sparkle"></span>
+                      <input class="field__input" id="requestInputDemo" data-request-input type="text"
+                             placeholder="例如：imagegen 或 owner/repo" autocomplete="off" />
+                    </span>
+                  </div>
                   <div class="segmented" data-segmented data-request-mode role="tablist" aria-label="要做到哪一步">
                     <span class="segmented__thumb"></span>
                     <button class="segmented__item" role="tab" aria-selected="true" data-value="catalog">只收錄</button>
@@ -584,7 +616,7 @@
       <span class="selection-bar__count"><span class="selection-bar__num" id="dsBarNum">3</span> 個已選取</span>
       <div class="row" style="gap: var(--space-2)">
         <button class="btn btn--ghost btn--sm" data-motion="press">清除</button>
-        <button class="btn btn--primary btn--sm" data-motion="press ripple">複製安裝指令</button>
+        <button class="btn btn--primary btn--sm" data-motion="press ripple">複製安裝提示詞</button>
       </div>
     </div>
 

@@ -189,7 +189,7 @@ function renderHeroMeta(data) {
 function renderFilters(data) {
   if (!el.filters) return;
   const cats = data.categories ?? [];
-  const tags = state.skills.length >= 4 ? (data.tags ?? []).slice(0, 10) : [];
+  const tags = state.skills.length >= 4 ? (data.tags ?? []).slice(0, 8) : [];
   const showCats = cats.length > 1;
 
   const chip = (label, count, attrs, pressed) =>
@@ -197,14 +197,32 @@ function renderFilters(data) {
        ${escapeHTML(label)}${count === null ? '' : `<span class="chip__count">${count}</span>`}
      </button>`;
 
-  const chips = [];
+  const categoryChips = [];
   if (showCats) {
-    chips.push(chip('全部', state.skills.length, 'data-filter-category="all"', true));
-    chips.push(...cats.map((c) => chip(c.name, c.count, `data-filter-category="${escapeHTML(c.name)}"`, false)));
+    categoryChips.push(chip('全部', state.skills.length, 'data-filter-category="all"', true));
+    categoryChips.push(
+      ...cats.map((c) => chip(c.name, c.count, `data-filter-category="${escapeHTML(c.name)}"`, false))
+    );
   }
-  chips.push(...tags.map((t) => chip(t.name, t.count, `data-filter-tag="${escapeHTML(t.name)}"`, false)));
+  const tagChips = tags.map((t) => chip(t.name, t.count, `data-filter-tag="${escapeHTML(t.name)}"`, false));
 
-  el.filters.innerHTML = chips.join('');
+  el.filters.innerHTML = `
+    ${
+      categoryChips.length
+        ? `<div class="filter-group">
+             <span class="filter-group__label">分類</span>
+             <div class="filter-group__options" role="group" aria-label="依分類篩選">${categoryChips.join('')}</div>
+           </div>`
+        : ''
+    }
+    ${
+      tagChips.length
+        ? `<div class="filter-group filter-group--tags">
+             <span class="filter-group__label">標籤</span>
+             <div class="filter-group__options" role="group" aria-label="依標籤縮小結果">${tagChips.join('')}</div>
+           </div>`
+        : ''
+    }`;
   Components.scan(el.filters);
 }
 
@@ -322,7 +340,7 @@ function resetFilters() {
 /**
  * 選取狀態記在 state.selected，卡片在不在這一頁都一樣要記。
  * 首頁只畫 6 張，但使用者可能是在 Skills 庫勾的 —— 那些也得算進去，
- * 不然回到首頁按「複製安裝指令」就會少東西。
+ * 不然回到首頁按「複製安裝提示詞」就會少東西。
  */
 function setSelected(id, on, { syncInput = true } = {}) {
   if (!state.byId.has(id)) return; // 舊的 localStorage 可能留著已移除的 id
@@ -448,7 +466,10 @@ function detailHTML(skill) {
     parts.length
       ? ['安裝資料夾', `${parts.length} 個，一起裝（見下方清單）`]
       : ['安裝資料夾名', `<code class="tag mono">${escapeHTML(skill.install?.dirName ?? '—')}</code>`],
-    ['建議範圍', skill.install?.scope === 'project' ? '專案內（只給目前專案）' : '全域（所有專案共用）'],
+    [
+      '使用範圍偏好',
+      skill.install?.scope === 'project' ? '專案內（依目前 Agent 支援方式）' : '全域（若目前 Agent 支援）',
+    ],
     ['來源', sourceURL(skill)
       ? `<a href="${escapeHTML(sourceURL(skill))}" target="_blank" rel="noopener" class="link-arrow">${escapeHTML(skill.source.label ?? sourceURL(skill))}</a>`
       : escapeHTML(skill.source?.label ?? '—')],
@@ -508,12 +529,12 @@ function detailHTML(skill) {
     ${
       skill.install?.command
         ? section(
-            '一行裝完',
+            '可攜式安裝指令',
             `<div class="code">
                <div class="code__bar">
                  <span class="code__title">terminal</span>
                  <button class="btn btn--sm btn--ghost" data-copy="closest"
-                         data-copy-message="已複製安裝指令" data-motion="press">
+                         data-copy-message="已複製安裝提示詞" data-motion="press">
                    <span class="btn__icon">${Icons.copy}</span>
                    <span data-copy-label>複製</span>
                  </button>
@@ -539,7 +560,7 @@ function detailHTML(skill) {
     ${links ? section('相關連結', `<div class="stack" style="gap: var(--space-2); font-size: var(--text-sm)">${links}</div>`) : ''}
 
     <section data-intro>
-      <p class="detail__section-title">安裝提示詞（貼給 AI 就會自己裝好）</p>
+      <p class="detail__section-title">跨 Agent 安裝提示詞（會先辨識目前環境）</p>
       <div class="code">
         <div class="code__bar">
           <span class="code__title">install-${escapeHTML(skill.id)}.md</span>
@@ -586,7 +607,13 @@ function bindStaticEvents() {
     const catBtn = e.target.closest('[data-filter-category]');
     const tagBtn = e.target.closest('[data-filter-tag]');
     if (catBtn) {
-      state.category = catBtn.dataset.filterCategory;
+      const nextCategory = catBtn.dataset.filterCategory;
+      if (state.category !== nextCategory) {
+        state.category = nextCategory;
+        // 標籤是第二層縮小條件。換分類時保留舊標籤很容易得到 0 筆，
+        // 看起來就像分類切換壞掉；回到分類的完整結果才符合使用者預期。
+        state.tag = null;
+      }
     } else if (tagBtn) {
       const value = tagBtn.dataset.filterTag;
       state.tag = state.tag === value ? null : value; // 再按一次取消
@@ -707,8 +734,12 @@ function readURL() {
     state.query = p.get('q');
     if (el.search) el.search.value = state.query;
   }
-  if (p.get('cat')) state.category = p.get('cat');
-  if (p.get('tag')) state.tag = p.get('tag');
+  const category = p.get('cat');
+  const tag = p.get('tag');
+  const validCategories = new Set(state.skills.map((skill) => skill.category));
+  const validTags = new Set(state.skills.flatMap((skill) => skill.tags ?? []));
+  if (category && validCategories.has(category)) state.category = category;
+  if (tag && validTags.has(tag)) state.tag = tag;
   syncChips();
 }
 

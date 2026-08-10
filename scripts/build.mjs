@@ -12,7 +12,7 @@
 import { writeFileSync, readFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig, loadSkills, normalize, DOCS_DIR, ROOT } from './lib/registry.mjs';
-import { buildHeader, buildFooter, buildBlock, buildInstallPrompt } from './lib/prompt.mjs';
+import { buildHeader, buildFooter, buildBlock, buildInstallPrompt, isPortableCommand } from './lib/prompt.mjs';
 
 const cfg = loadConfig();
 const raw = loadSkills();
@@ -26,7 +26,10 @@ mkdirSync(API_SKILLS_DIR, { recursive: true });
 // 每個 skill 補上提示詞欄位
 for (const s of skills) {
   s.promptBlock = buildBlock(s);
-  s.installPrompt = buildInstallPrompt(s, cfg);
+  s.installPrompt = buildInstallPrompt(s);
+  // 固定 Agent／固定目錄的來源命令只留在 registry 供維護者參考，
+  // 不發布到跨 Agent API，也不在網站上誘導使用者原樣執行。
+  if (s.install.command && !isPortableCommand(s.install.command)) delete s.install.command;
   delete s.__file;
 }
 
@@ -55,7 +58,7 @@ const generatedAt = new Date().toISOString().slice(0, 10);
  * 不必先去翻 repo 裡的 CLAUDE.md。
  */
 const forAI = {
-  whatIsThis: `${cfg.name} 是一個 AI Agent Skills 收藏庫（Claude Code、Cursor、Hermes 等各種 AI 都能用）。每一筆 skill 都附了可以直接貼給 AI 執行的安裝提示詞。`,
+  whatIsThis: `${cfg.name} 是一個跨 Agent 的 Skills 收藏庫。每一筆 skill 都附了環境自適應的安裝提示詞，會先辨識目前 Agent 的官方 skill 機制，再選擇正確的安裝方式。`,
   endpoints: {
     'api/index.json': '全部資料：站台資訊、分類、標籤、每個 skill 的完整欄位與 installPrompt。',
     'api/skills/<id>.json': '單一 skill 的完整資料。',
@@ -93,8 +96,8 @@ const index = {
   },
   forAI,
   promptTemplate: {
-    header: buildHeader(1, cfg),
-    headerPlural: buildHeader('{{count}}', cfg), // 前端把 {{count}} 換成實際數量
+    header: buildHeader(1),
+    headerPlural: buildHeader('{{count}}'), // 前端把 {{count}} 換成實際數量
     footer: buildFooter(),
     separator: '\n\n---\n\n',
   },
@@ -124,8 +127,8 @@ const llms = [
   '',
   '## 怎麼用這份檔案',
   '',
-  '每個 skill 底下都有「安裝指令」段落。使用者說要裝哪幾個，就把對應段落的內容當作任務執行：',
-  '把 skill 資料夾放到你這個 AI 自己的 skills 目錄（Claude Code 是 `~/.claude/skills/`、Cursor 是 `~/.cursor/skills/`、Hermes 是 `<HERMES_HOME>/skills/`，其他 AI 照官方文件），資料夾名不要改，SKILL.md 的 frontmatter 不要動。',
+  '每個 skill 底下都有「安裝提示詞」段落。使用者說要裝哪幾個，就把對應段落的內容當作任務執行：',
+  '先辨識目前 Agent 的官方 skill 機制與支援範圍，再把資料夾安裝到它實際使用的位置；不要預設品牌或猜測路徑。資料夾名與 SKILL.md 的 frontmatter 不要改。',
   '完整、可直接貼給 AI 的安裝提示詞在 `api/skills/<id>.json` 的 `installPrompt` 欄位。',
   '',
   '## 要幫忙收錄新的 skill 的話',

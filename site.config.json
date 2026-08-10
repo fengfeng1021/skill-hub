@@ -5,15 +5,5 @@
   "owner": "fengfeng1021",
   "repo": "skill-hub",
   "branch": "main",
-  "locale": "zh-TW",
-  "installRoots": {
-    "user": {
-      "posix": "~/.claude/skills",
-      "windows": "%USERPROFILE%\\.claude\\skills"
-    },
-    "project": {
-      "posix": ".claude/skills",
-      "windows": ".claude\\skills"
-    }
-  }
+  "locale": "zh-TW"
 }

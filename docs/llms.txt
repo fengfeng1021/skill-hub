@@ -2,14 +2,14 @@
 
 > 收錄、整理、一鍵安裝各種 AI Agent Skills。挑好的 skill，複製提示詞，貼給 AI 就裝好。
 
-更新日期：2026-08-08　收錄數量：9
+更新日期：2026-08-10　收錄數量：9
 網站：https://fengfeng1021.github.io/skill-hub
 JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 
 ## 怎麼用這份檔案
 
-每個 skill 底下都有「安裝指令」段落。使用者說要裝哪幾個，就把對應段落的內容當作任務執行：
-把 skill 資料夾放到你這個 AI 自己的 skills 目錄（Claude Code 是 `~/.claude/skills/`、Cursor 是 `~/.cursor/skills/`、Hermes 是 `<HERMES_HOME>/skills/`，其他 AI 照官方文件），資料夾名不要改，SKILL.md 的 frontmatter 不要動。
+每個 skill 底下都有「安裝提示詞」段落。使用者說要裝哪幾個，就把對應段落的內容當作任務執行：
+先辨識目前 Agent 的官方 skill 機制與支援範圍，再把資料夾安裝到它實際使用的位置；不要預設品牌或猜測路徑。資料夾名與 SKILL.md 的 frontmatter 不要改。
 完整、可直接貼給 AI 的安裝提示詞在 `api/skills/<id>.json` 的 `installPrompt` 欄位。
 
 ## 要幫忙收錄新的 skill 的話
@@ -32,7 +32,6 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 標籤：ux、interaction、heuristics、information-architecture、navigation、usability、accessibility、cognitive-load
 - 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/interaction-experience-design
 - 安裝資料夾名：`interaction-experience-design`
-- 一行裝完：`xcopy /E /I /Y skills\interaction-experience-design %USERPROFILE%\.claude\skills\interaction-experience-design`
 - 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/interaction-experience-design`
 - 何時使用：設計登入流程、多功能 App 的導覽與分頁組織；規劃按鈕層級、返回機制、頁面切換；擔心使用者迷路、不知道下一步要做什麼；與前端設計總指揮搭配：負責三階段流程中的「UX 互動」階段
 
@@ -42,7 +41,6 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 標籤：design、ui、ux、director、frontend、integration
 - 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-design-director
 - 安裝資料夾名：`frontend-design-director`
-- 一行裝完：`xcopy /E /I /Y skills\frontend-design-director %USERPROFILE%\.claude\skills\frontend-design-director`
 - 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/frontend-design-director`
 - 何時使用：美化或改版任何網頁、App 畫面，不確定該用哪個設計 skill 時；要模仿某網站風格、建立品牌設計系統、加動效，一次到位；設計任務需要同時兼顧判斷力、規則、風格、品牌、動效
 
@@ -52,7 +50,6 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 標籤：design、brand、design-system、tokens、ui、theme
 - 來源：https://github.com/dominikmartn/hue
 - 安裝資料夾名：`hue`
-- 一行裝完：`git clone --depth 1 https://github.com/dominikmartn/hue %USERPROFILE%\.claude\skills\hue`
 - 下載基底：`https://raw.githubusercontent.com/dominikmartn/hue/main`
 - 何時使用：想要某個品牌的風格（例如 Apple、Linear），希望之後做的東西都長那樣；要建立自己公司的完整設計系統，色票、字體、元件一次到位；有一張設計截圖，想把它變成可重複使用的設計語言
 
@@ -62,7 +59,6 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 標籤：design、ui、ux、frontend、review、accessibility
 - 來源：https://github.com/pbakaus/impeccable/tree/main/.claude/skills/impeccable
 - 安裝資料夾名：`impeccable`
-- 一行裝完：`git clone --depth 1 https://github.com/pbakaus/impeccable %TEMP%/impeccable-repo && xcopy /E /I /Y %TEMP%\impeccable-repo\.claude\skills\impeccable %USERPROFILE%\.claude\skills\impeccable`
 - 下載基底：`https://raw.githubusercontent.com/pbakaus/impeccable/main/.claude/skills/impeccable`
 - 何時使用：覺得介面不好看、說不上哪裡怪，想要具體的修改建議；要設計新頁面或元件，希望一開始就有設計品質；要審查現有網站或介面，找出 UX、無障礙、視覺問題；要把整個網站調成某種風格（更活潑、更安靜、更有質感）
 
@@ -72,7 +68,6 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 標籤：design、taste、ui、analysis、tokens、extraction
 - 來源：https://github.com/senlindesign/taste-skill
 - 安裝資料夾名：`taste`
-- 一行裝完：`git clone --depth 1 https://github.com/senlindesign/taste-skill %USERPROFILE%\.claude\skills\taste`
 - 下載基底：`https://raw.githubusercontent.com/senlindesign/taste-skill/main`
 - 何時使用：看到一個網站設計得很好，想學它背後的設計邏輯；要模仿某個品牌的視覺風格，需要具體的色票、字體、間距數值；要理解「為什麼」這個設計好看，而不只是複製參數
 
@@ -82,7 +77,6 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 標籤：design、ui、ux、frontend、mobile、brand、accessibility
 - 來源：https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills
 - 這是一組 7 個資料夾，要一起裝：`ui-ux-pro-max`、`ui-styling`、`design-system`、`design`、`banner-design`、`slides`、`brand`
-- 一行裝完：`git clone --depth 1 https://github.com/nextlevelbuilder/ui-ux-pro-max-skill %TEMP%/ui-ux-pro-max-repo && xcopy /E /I /Y %TEMP%\ui-ux-pro-max-repo\.claude\skills %USERPROFILE%\.claude\skills`
 - 下載基底：`https://raw.githubusercontent.com/nextlevelbuilder/ui-ux-pro-max-skill/main/.claude/skills`
 - 何時使用：設計或改版網頁、手機 App 的介面，需要配色、字體、排版建議；要設計商標、橫幅、簡報、圖示等各種視覺素材；要建立品牌識別或整套設計系統；要確保介面無障礙、各種裝置都好看
 

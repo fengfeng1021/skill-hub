@@ -191,6 +191,27 @@ hr {
   border: 0;
 }
 
+.skip-link {
+  position: fixed;
+  top: var(--space-3);
+  left: var(--space-3);
+  z-index: calc(var(--z-toast) + 1);
+  translate: 0 -160%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-sm);
+  background: var(--surface-1);
+  color: var(--text);
+  font-size: var(--text-sm);
+  font-weight: 650;
+  box-shadow: var(--shadow-md);
+  transition: translate var(--dur-fast) var(--ease-out);
+}
+
+.skip-link:focus {
+  translate: 0;
+}
+
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;

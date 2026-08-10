@@ -1,6 +1,6 @@
 # Skill Hub
 
-我的 AI Agent Skills 收藏庫。收錄好用的 skill，每一個都附一段可以直接貼給 AI 的安裝提示詞 —— 貼過去，AI 自己就把 skill 裝好了。可以複選多個 skill，一次組成一段安裝指令。
+我的 AI Agent Skills 收藏庫。收錄好用的 skill，每一個都附一段可以直接貼給 Agent 的環境自適應安裝提示詞 —— 它會先辨識自身規範，再選擇正確位置與安裝方式。可以複選多個 skill，一次組成一段提示詞。
 
 網站用 GitHub Pages 直接發佈，同時提供 JSON 接口與 `llms.txt` 給 AI 讀。
 
@@ -9,7 +9,7 @@
 | 頁面 | 內容 |
 | --- | --- |
 | `index.html` | 首頁。介紹怎麼用，下方放幾個精選 skill |
-| `skills.html` | Skills 庫。全部收錄，可搜尋、篩選、多選一次複製安裝指令 |
+| `skills.html` | Skills 庫。全部收錄，可搜尋、篩選、多選一次複製安裝提示詞 |
 | `api.html` | AI 接口說明。有一段可以直接貼給 AI 的提示詞 |
 
 `design-system.html` 是開發用的元件與動效總覽，刻意不掛在導覽列上（也標了 `noindex`）。
@@ -135,7 +135,7 @@ docs/                       GitHub Pages 根目錄
   assets/js/request-box.js  三頁共用的收錄請求：打名字或貼網址 → 產生給 AI 的提示詞
   assets/js/app.js          首頁與 Skills 庫的資料串接
   assets/js/page.js         AI 接口頁的資料串接
-site.config.json            GitHub 帳號、repo、安裝路徑設定
+site.config.json            GitHub 帳號、repo 與站台設定
 ```
 
 ## 設計方式

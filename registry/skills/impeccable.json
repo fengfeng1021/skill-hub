@@ -42,7 +42,7 @@
       "SKILL.md"
     ],
     "requires": [],
-    "notes": "repo 內含多個平台的設定檔，只需要複製 .claude/skills/impeccable 資料夾到 skills 目錄即可。也可以直接整包 clone 到 ~/.claude/skills/impeccable（會多帶其他平台的檔案，不影響使用）。"
+    "notes": "repo 內含多個平台的設定檔；本收錄已標出 skill 的來源子目錄。請保留該資料夾內容，並依目前 Agent 的官方機制安裝。"
   },
   "prompt": null,
   "links": [
@@ -56,5 +56,5 @@
     }
   ],
   "addedAt": "2026-08-08",
-  "updatedAt": "2026-08-08"
+  "updatedAt": "2026-08-10"
 }

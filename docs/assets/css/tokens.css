@@ -27,8 +27,8 @@
   --accent-line: hsl(162 82% 50% / 0.32);
   --accent-ink: hsl(225 40% 6%);
 
-  --accent-2: hsl(266 88% 70%);
-  --accent-2-soft: hsl(266 88% 70% / 0.14);
+  --accent-2: hsl(202 92% 62%);
+  --accent-2-soft: hsl(202 92% 62% / 0.14);
 
   --warn: hsl(38 92% 60%);
   --warn-soft: hsl(38 92% 60% / 0.14);
@@ -138,8 +138,8 @@
   --accent-line: hsl(162 74% 34% / 0.28);
   --accent-ink: hsl(0 0% 100%);
 
-  --accent-2: hsl(266 68% 52%);
-  --accent-2-soft: hsl(266 68% 52% / 0.12);
+  --accent-2: hsl(202 78% 42%);
+  --accent-2-soft: hsl(202 78% 42% / 0.12);
 
   --warn: hsl(32 86% 42%);
   --danger: hsl(0 68% 48%);

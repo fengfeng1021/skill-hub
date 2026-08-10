@@ -27,6 +27,7 @@
   </head>
 
   <body data-page="library">
+    <a class="skip-link" href="#main-content">跳到主要內容</a>
     <div class="scroll-progress" data-motion="scroll-progress"></div>
 
     <header class="site-header" data-motion="shrink-header">
@@ -53,7 +54,7 @@
       </div>
     </header>
 
-    <main>
+    <main id="main-content">
       <section class="page-head">
         <span class="page-head__glow" aria-hidden="true" data-motion="float"
               data-motion-amp="12" data-motion-duration="8"></span>
@@ -63,7 +64,7 @@
             <span data-motion="mask" data-motion-delay="0.05">全部收錄，挑你要的</span>
           </h1>
           <p class="page-head__lede" data-intro>
-            每張卡片就是一個能力。勾起來，一次把安裝指令帶走。
+            依分類探索、用標籤縮小範圍。勾選後複製環境自適應提示詞，交給你目前的 Agent 安裝。
           </p>
           <p class="page-head__meta" id="heroMeta" data-intro></p>
         </div>
@@ -78,6 +79,7 @@
         <div class="container">
           <div class="toolbar__row">
             <label class="field grow">
+              <span class="sr-only">搜尋 Skills</span>
               <span class="field__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
               <input class="field__input" id="search" type="search" placeholder="搜尋名稱、摘要、標籤、用途…" autocomplete="off" />
               <span class="field__hint"><span class="kbd">/</span></span>
@@ -93,7 +95,7 @@
           <div class="toolbar__filters" id="filters"></div>
 
           <div class="toolbar__meta">
-            <span id="resultCount">載入中…</span>
+            <span id="resultCount" aria-live="polite">載入中…</span>
             <div class="row" style="gap: var(--space-2)">
               <button class="btn btn--sm btn--ghost" id="selectAll" data-motion="press">全選</button>
               <button class="btn btn--sm btn--ghost" id="clearFilters" data-motion="press" hidden>清除篩選</button>
@@ -132,11 +134,14 @@
             </div>
 
             <div class="request-box__form">
-              <label class="field grow">
-                <span class="field__icon" data-icon="sparkle"></span>
-                <input class="field__input" data-request-input type="text"
-                       placeholder="skill 名稱，或 GitHub 網址" autocomplete="off" />
-              </label>
+              <div class="request-box__field">
+                <label class="request-box__field-label" for="requestInputLibrary">Skill 名稱或 GitHub 網址</label>
+                <span class="field">
+                  <span class="field__icon" data-icon="sparkle"></span>
+                  <input class="field__input" id="requestInputLibrary" data-request-input type="text"
+                         placeholder="例如：imagegen 或 owner/repo" autocomplete="off" />
+                </span>
+              </div>
               <div class="segmented" data-segmented data-request-mode role="tablist" aria-label="要做到哪一步">
                 <span class="segmented__thumb"></span>
                 <button class="segmented__item" role="tab" aria-selected="true" data-value="catalog">只收錄</button>

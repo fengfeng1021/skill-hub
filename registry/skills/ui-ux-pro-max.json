@@ -79,7 +79,7 @@
       "SKILL.md"
     ],
     "requires": [],
-    "notes": "repo 內 .claude/skills 底下有 7 個 skill 資料夾，全部複製到 skills 目錄，缺一份就少掉對應能力。"
+    "notes": "來源 repo 含 7 個相互搭配的 skill 資料夾，請依目前 Agent 的官方機制全部安裝，缺一份就少掉對應能力。"
   },
   "prompt": null,
   "links": [
@@ -93,5 +93,5 @@
     }
   ],
   "addedAt": "2026-08-08",
-  "updatedAt": "2026-08-08"
+  "updatedAt": "2026-08-10"
 }

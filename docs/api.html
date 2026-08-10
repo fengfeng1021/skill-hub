@@ -26,6 +26,7 @@
   </head>
 
   <body data-page="api">
+    <a class="skip-link" href="#main-content">跳到主要內容</a>
     <div class="scroll-progress" data-motion="scroll-progress"></div>
 
     <header class="site-header" data-motion="shrink-header">
@@ -52,7 +53,7 @@
       </div>
     </header>
 
-    <main>
+    <main id="main-content">
       <section class="page-head">
         <span class="page-head__glow" aria-hidden="true" data-motion="float"
               data-motion-amp="12" data-motion-duration="8"></span>
@@ -132,7 +133,7 @@
           <div class="spec" data-motion="stagger" data-motion-child=".spec__row">
             <div class="spec__row">
               <code class="spec__key mono">installPrompt</code>
-              <p class="spec__val">單一 skill 的完整安裝指令，AI 拿到直接當任務執行就會裝好。</p>
+              <p class="spec__val">單一 skill 的完整安裝提示詞，Agent 會先辨識自身規範，再把它當任務執行。</p>
             </div>
             <div class="spec__row">
               <code class="spec__key mono">promptBlock</code>
@@ -208,11 +209,14 @@
             </div>
 
             <div class="request-box__form">
-              <label class="field grow">
-                <span class="field__icon" data-icon="sparkle"></span>
-                <input class="field__input" data-request-input type="text"
-                       placeholder="skill 名稱，或 GitHub 網址" autocomplete="off" />
-              </label>
+              <div class="request-box__field">
+                <label class="request-box__field-label" for="requestInputApi">Skill 名稱或 GitHub 網址</label>
+                <span class="field">
+                  <span class="field__icon" data-icon="sparkle"></span>
+                  <input class="field__input" id="requestInputApi" data-request-input type="text"
+                         placeholder="例如：imagegen 或 owner/repo" autocomplete="off" />
+                </span>
+              </div>
               <div class="segmented" data-segmented data-request-mode role="tablist" aria-label="要做到哪一步">
                 <span class="segmented__thumb"></span>
                 <button class="segmented__item" role="tab" aria-selected="true" data-value="catalog">只收錄</button>

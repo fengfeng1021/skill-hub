@@ -6,38 +6,41 @@
  * 不必在瀏覽器端重複實作這裡的邏輯。
  */
 
-export function buildHeader(count, cfg) {
+export function buildHeader(count) {
   // count 傳數字就照數字判斷單複數；傳字串（例如 '{{count}}' 佔位符）一律當多個處理，
   // 讓前端組多選提示詞時能自己把數量填進去。
   const n = typeof count === 'number' && count <= 1 ? '下面這個' : `下列 ${count} 個`;
-  return `你是我的 Skill 安裝助手。請幫我安裝${n} AI Agent Skill。
+  return `你是我的 Skill 安裝助手。請幫我把${n} AI Agent Skill 安裝到「你目前所在的 Agent 環境」。
 
 ## 安裝規則
 
-1. **安裝位置** — 每個 skill 是一個資料夾，放進「你這個 AI 自己」的 skills 目錄（skill 不是只有 Claude 能用，各家 AI 都支援）：
-   - Claude Code：\`${cfg.installRoots.user.posix}/<資料夾名>/\`
-     Windows 為 \`${cfg.installRoots.user.windows}\\<資料夾名>\\\`
-   - Cursor：\`~/.cursor/skills/<資料夾名>/\`
-   - Hermes：\`<HERMES_HOME>/skills/<資料夾名>/\`（沒設 HERMES_HOME 就用 \`~/.hermes/skills/\`）
-   - 其他 AI：照它的官方文件，通常是 \`~/.<AI 名>/skills/\`
-   - 只給目前專案用：\`<專案根目錄>/${cfg.installRoots.project.posix}/<資料夾名>/\`（其他 AI 用對應的專案目錄，如 Cursor 的 \`.cursor/skills/\`）
-   下面每個 skill 都標了建議範圍，照著放；我另外指定時以我說的為準。
-2. **資料夾名不要改**。AI 用資料夾名對應 SKILL.md 的 \`name\`，改了會載入不到。
-3. **取得檔案的優先順序**：
+1. **先辨識目前環境** — 讀取你自己的官方說明、系統設定或既有 skills，確認這個 Agent 支援的 skill 格式、安裝方式與可用範圍。不要預設任何品牌，也不要自行猜一個 \`~/.<名稱>/skills\` 路徑。
+2. **自動選擇正確位置** — 我有指定全域或專案範圍時照做；沒有指定時，沿用目前 Agent 的既有慣例。若這個 Agent 只支援其中一種，就使用它官方支援的方式。只有真的無法判定時才停下來問我。
+3. **保持原始結構** — 每個 skill 都是獨立資料夾；資料夾名、SKILL.md frontmatter 的 \`name\`／\`description\` 與相對檔案結構都不要改。
+4. **取得檔案的優先順序**：
    a. 直接抓下面給的 raw 下載網址
    b. 抓不到就 \`git clone\` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存
    c. 都不行（無網路等）就直接告訴我，我把檔案貼給你
-4. **不要改寫 SKILL.md 的 frontmatter**（\`name\`、\`description\`）。那是 AI 判斷何時自動載入這個 skill 的依據，改了就失效。
-5. 目標資料夾**已存在**時，先停下來問我要覆蓋還是跳過，不要直接蓋掉。`;
+5. 來源若提供綁定特定 Agent 或固定路徑的安裝指令，只把它當作來源線索；請改用目前 Agent 的官方安裝方式，不要原樣執行。
+6. 目標資料夾**已存在**時，先比較版本與差異，再問我要更新、覆蓋或跳過，不要直接蓋掉。`;
 }
 
 export function buildFooter() {
   return `## 完成後請做這幾件事
 
-1. 列出每個 skill 實際安裝的完整路徑，以及該資料夾下的檔案
-2. 逐一讀取 SKILL.md 的 frontmatter，確認 \`name\` 與資料夾名一致、\`description\` 沒有空白
-3. 告訴我要重新啟動你這個 AI（Claude Code、Cursor、Hermes 都一樣要重開），新的 skill 才會被載入
-4. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過`;
+1. 說明你辨識到的 Agent 與採用的官方 skill 機制，不要只回報「已完成」
+2. 列出每個 skill 實際安裝的位置，以及該資料夾下的檔案
+3. 逐一讀取 SKILL.md 的 frontmatter，確認 \`name\` 與資料夾名一致、\`description\` 沒有空白
+4. 依目前 Agent 的載入方式驗證 skill 已可被發現；只有官方流程確實要求時，才提醒我重新載入或重啟
+5. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過`;
+}
+
+/** 只有不綁 Agent 名稱、使用者目錄或固定 skills 路徑的命令才可直接執行。 */
+export function isPortableCommand(command) {
+  if (!command) return false;
+  return !/(?:claude|cursor|hermes|codex|\.claude|\.cursor|\.hermes|\.codex|USERPROFILE|HOME|skills[\\/])/i.test(
+    command
+  );
 }
 
 /** 單一 skill 的說明區塊（不含 header / footer） */
@@ -57,17 +60,19 @@ export function buildBlock(skill, index = null) {
   const detail = String(skill.description ?? '').split('\n')[0].trim();
   if (detail && detail !== skill.summary) lines.push(`- **詳細一點**：${detail}`);
 
-  lines.push(`- **建議安裝範圍**：${scope}`);
+  lines.push(`- **使用範圍偏好**：${scope}；若目前 Agent 不支援此範圍，採用它官方提供的等效方式`);
 
-  if (skill.install.command) {
-    lines.push(`- **一行裝完**（能用就優先用這個，成功了就跳過下面的手動取檔）：`);
+  if (isPortableCommand(skill.install.command)) {
+    lines.push(`- **可攜式安裝指令**（確認適用目前 Agent 後可優先使用，成功就跳過手動取檔）：`);
     lines.push(`  \`\`\`bash`);
     lines.push(`  ${skill.install.command}`);
     lines.push(`  \`\`\``);
   }
 
   if (skill.source.kind === 'github') {
-    const sub = skill.source.subdir ? `，子目錄 \`${skill.source.subdir}\`` : '（repo 根目錄即為 skill）';
+    const sub = skill.source.subdir
+      ? `，來源 repo 內子目錄 \`${skill.source.subdir}\`（只用來取檔，不是安裝位置）`
+      : '（repo 根目錄即為 skill）';
     lines.push(`- **來源**：GitHub \`${skill.source.label}\`（分支 \`${skill.source.branch}\`${sub}）`);
     lines.push(`- **repo 網址**：${skill.source.url}`);
   } else if (skill.source.kind === 'local') {
@@ -108,7 +113,7 @@ export function buildBlock(skill, index = null) {
 }
 
 /** 完整的單一 skill 安裝提示詞 */
-export function buildInstallPrompt(skill, cfg) {
+export function buildInstallPrompt(skill) {
   if (skill.prompt) return skill.prompt;
-  return [buildHeader(1, cfg), '---', buildBlock(skill), '---', buildFooter()].join('\n\n');
+  return [buildHeader(1), '---', buildBlock(skill), '---', buildFooter()].join('\n\n');
 }
