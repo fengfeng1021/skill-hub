@@ -2,7 +2,7 @@
   "id": "frontend-director",
   "name": "前端總指揮",
   "summary": "一個入口把前端需求、設計、寫碼和驗證做完。",
-  "description": "跨 Agent 的前端工作流 v5。核心遵循開放 Agent Skills 格式，不依賴 Codex、Claude Code、OpenCode 或 Hermes 的專屬機制：先建立 FR/NFR 驗收契約與檔案級任務，再按需完成 UI、UX、動效，之後對每個 T-### 執行理解、失敗證據、最小實作、相關測試、diff 審查與新證據的 Coding Loop。隨附 Python 標準函式庫狀態控制器、JSON Schema、平台轉接規格和跨模型 A/B 評測工具；外部設計、品質與安全 Skills 可加深結果，缺少時仍能使用入口內建 references 完成基線工作流。",
+  "description": "跨 Agent 的前端工作流 v6。核心遵循開放 Agent Skills 格式，不依賴 Codex、Claude Code、OpenCode 或 Hermes 的專屬機制：先建立 FR/NFR 驗收契約與檔案級任務，再強制依序載入 UI、UX、動效與交付品質 Skills，之後對每個 T-### 執行理解、失敗證據、最小實作、相關測試、lint、diff 審查與新證據的 Coding Loop。Gate 會驗證子 Skill 載入紀錄、具名檢查、證據 hash、桌面／手機實測、跨元件語意 oracle 與安全分級；外部能力缺少時必須先保存 discovery 證據，才可使用內建 reference fallback。",
   "category": "前端 / 設計",
   "tags": [
     "frontend",
@@ -16,7 +16,7 @@
   "featured": true,
   "author": "fengfeng1021",
   "license": "MIT",
-  "version": "5.0.0",
+  "version": "6.0.0",
   "usage": [
     "從一句需求開始完成整個網站、Web App 或重大前端改版",
     "希望較弱但具備工具能力的模型按固定閉環提升設計與代碼品質",
@@ -26,7 +26,7 @@
   ],
   "highlights": [
     "每個任務都要完成失敗證據、最小修改、測試、diff 審查與新證據閉環",
-    "可執行控制器阻止漏需求、用舊證據交付或跳過必要 Gate",
+    "可執行控制器阻止空子 Skill、漏具名檢查、證據竄改、舊證據與空安全 Gate",
     "核心不綁單一 Agent，平台 hooks 和 plugins 只負責增強啟動與約束",
     "設計、UX、動效、品質與安全能力按階段載入，缺少外部能力仍有內建基線",
     "隨附跨 Agent／跨模型 A/B 評測格式，品質提升必須由結果證明"
@@ -37,7 +37,9 @@
     "impeccable",
     "taste",
     "hue",
-    "interaction-experience-design"
+    "interaction-experience-design",
+    "gsap",
+    "delivery-quality-gate"
   ],
   "replaces": [
     "frontend-design-director"
@@ -56,10 +58,10 @@
       {
         "id": "contract",
         "name": "需求契約",
-        "skills": [],
-        "optionalSkills": [
+        "skills": [
           "define-acceptance-contract"
         ],
+        "optionalSkills": [],
         "coreReferences": [
           "references/contract.md"
         ],
@@ -71,10 +73,10 @@
       {
         "id": "plan",
         "name": "實作藍圖",
-        "skills": [],
-        "optionalSkills": [
+        "skills": [
           "plan-implementation"
         ],
+        "optionalSkills": [],
         "coreReferences": [
           "references/implementation-plan.md"
         ],
@@ -86,12 +88,13 @@
       {
         "id": "ui",
         "name": "UI 設計",
-        "skills": [],
-        "optionalSkills": [
+        "skills": [
           "impeccable",
-          "ui-ux-pro-max",
           "taste",
           "hue"
+        ],
+        "optionalSkills": [
+          "ui-ux-pro-max"
         ],
         "coreReferences": [
           "references/ui-quality.md"
@@ -100,15 +103,15 @@
         "outputs": [
           "產品特異的設計方向、tokens、元件與響應式策略"
         ],
-        "gate": "實際內容在桌面與手機可用，層級、焦點、狀態與產品特異性通過"
+        "gate": "產品特異設計方向、桌面／手機規格、狀態 inventory 與元件策略完整"
       },
       {
         "id": "ux",
         "name": "UX 互動",
-        "skills": [],
-        "optionalSkills": [
+        "skills": [
           "interaction-experience-design"
         ],
+        "optionalSkills": [],
         "coreReferences": [
           "references/ux-interaction.md"
         ],
@@ -116,15 +119,15 @@
         "outputs": [
           "主要與例外流程、狀態、回饋、焦點和恢復行為"
         ],
-        "gate": "核心流程可完成，錯誤可恢復，鍵盤、焦點與觸控可用"
+        "gate": "主要、替代、錯誤、恢復、鍵盤、焦點與觸控行為已有可測模型"
       },
       {
         "id": "motion",
         "name": "動效",
-        "skills": [],
-        "optionalSkills": [
+        "skills": [
           "gsap"
         ],
+        "optionalSkills": [],
         "coreReferences": [
           "references/motion.md"
         ],
@@ -132,15 +135,15 @@
         "outputs": [
           "按需選擇的動效、清理與 reduced-motion 行為"
         ],
-        "gate": "動效有目的、可中斷、不阻礙操作並保留 reduced-motion 功能"
+        "gate": "每段動效有目的、reduced-motion 等價行為及中斷／清理策略"
       },
       {
         "id": "implementation",
         "name": "逐任務實作",
-        "skills": [],
-        "optionalSkills": [
+        "skills": [
           "delivery-quality-gate"
         ],
+        "optionalSkills": [],
         "coreReferences": [
           "references/coding-loop.md",
           "references/workflow-state.md"
@@ -148,41 +151,45 @@
         "outputs": [
           "逐 T-### 的最小實作、最新檢查、diff 審查與證據"
         ],
-        "gate": "每個任務完成 Coding Loop，且證據與目前檔案指紋一致"
+        "gate": "每個任務完成 Coding Loop，tests、typecheck、lint、diff-review 與檔案指紋一致"
       },
       {
         "id": "integration",
         "name": "整合驗證",
-        "skills": [],
-        "optionalSkills": [
+        "skills": [
           "delivery-quality-gate"
         ],
+        "optionalSkills": [],
         "coreReferences": [
           "references/verification.md"
         ],
         "outputs": [
           "需求追蹤矩陣與最新整合、瀏覽器、無障礙和效能證據"
         ],
-        "gate": "所有需求都有實作與最新證據，沒有未解釋的測試或 console 錯誤"
+        "gate": "所有需求有最新證據，桌面／手機／鍵盤／reduced-motion／語意 oracle 通過且 console 乾淨"
       },
       {
         "id": "security",
         "name": "安全交付",
-        "skills": [],
-        "optionalSkills": [
+        "skills": [
           "delivery-quality-gate"
         ],
+        "optionalSkills": [],
         "coreReferences": [
           "references/security.md"
         ],
         "outputs": [
           "風險分級、安全證據、處置和殘留風險"
         ],
-        "gate": "Critical/High 為零，Medium 已緩解或明確接受，修補後已重驗"
+        "gate": "安全已明確分級並有基線、負向路徑與依賴證據；Critical/High 為零，Medium 已處理"
       }
     ],
-    "overlays": [],
-    "finalizers": []
+    "overlays": [
+      "delivery-quality-gate"
+    ],
+    "finalizers": [
+      "delivery-quality-gate"
+    ]
   },
   "source": {
     "kind": "local",
@@ -214,7 +221,7 @@
       "evals/result.schema.json"
     ],
     "requires": [],
-    "notes": "入口核心遵循 Agent Skills 開放格式；必須保留 references、scripts、schemas 與 evals 相對結構。workflowctl 使用 Python 3.9+ 標準函式庫；若宿主無 Python，仍可按 schema 手動維持狀態，但要揭露未自動驗證。預設只安裝 7 個聚焦資料夾；UI UX Pro Max、GSAP 與 delivery-quality-gate 是已安裝才載入的可選增強，不會為入口強制暴露其大型子套件。runtime 是可視化路由，真正的狀態推進與完成阻擋由 scripts/workflowctl.py 執行。"
+    "notes": "入口核心遵循 Agent Skills 開放格式；必須保留 references、scripts、schemas 與 evals 相對結構。workflowctl 使用 Python 3.9+ 標準函式庫；若宿主無 Python，仍可按 schema 手動維持狀態，但要揭露未自動驗證。完整組合會安裝需求、規劃、Impeccable、Taste、Hue、互動體驗、GSAP、交付品質及其程式品質／Mantis 安全能力；執行時按階段逐一載入，不會同時塞入上下文。runtime 是可視化路由，真正的子 Skill、具名證據、安全分級與完成阻擋由 scripts/workflowctl.py 執行。"
   },
   "prompt": null,
   "links": [

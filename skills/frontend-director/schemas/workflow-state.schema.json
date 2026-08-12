@@ -1,10 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://fengfeng1021.github.io/skill-hub/schemas/frontend-workflow-state-v1.json",
+  "$id": "https://fengfeng1021.github.io/skill-hub/schemas/frontend-workflow-state-v2.json",
   "title": "Frontend Director Workflow State",
   "type": "object",
   "required": [
     "schemaVersion",
+    "policyVersion",
     "workflow",
     "skillVersion",
     "runId",
@@ -15,10 +16,14 @@
     "requirements",
     "tasks",
     "risks",
+    "skillsUsed",
+    "capabilityFallbacks",
+    "securityClassification",
     "audit"
   ],
   "properties": {
-    "schemaVersion": { "const": 1 },
+    "schemaVersion": { "const": 2 },
+    "policyVersion": { "const": 2 },
     "workflow": { "const": "frontend-director" },
     "skillVersion": { "type": "string" },
     "runId": { "type": "string", "format": "uuid" },
@@ -43,6 +48,27 @@
           "status": { "enum": ["pending", "in_progress", "passed", "skipped", "invalid"] },
           "summary": { "type": ["string", "null"] },
           "evidence": { "type": "array", "items": { "type": "string" } },
+          "evidenceSha256": { "type": ["string", "null"] },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "kind", "evidence", "summary", "recordedAt", "workspaceFingerprint", "evidenceSha256", "valid"],
+              "properties": {
+                "name": { "type": "string", "minLength": 1 },
+                "kind": { "enum": ["automated", "manual", "not-applicable"] },
+                "command": { "type": ["string", "null"] },
+                "exitCode": { "type": ["integer", "null"] },
+                "evidence": { "type": "string", "minLength": 1 },
+                "summary": { "type": "string", "minLength": 1 },
+                "recordedAt": { "type": "string" },
+                "workspaceFingerprint": { "type": "string" },
+                "evidenceSha256": { "type": "string" },
+                "valid": { "type": "boolean" },
+                "invalidReason": { "type": "string" }
+              }
+            }
+          },
           "workspaceFingerprint": { "type": ["string", "null"] }
         }
       }
@@ -86,7 +112,8 @@
                 "recordedAt": { "type": "string" },
                 "scopeFingerprint": { "type": "string" },
                 "evidenceSha256": { "type": "string" },
-                "valid": { "type": "boolean" }
+                "valid": { "type": "boolean" },
+                "invalidReason": { "type": "string" }
               }
             }
           },
@@ -98,7 +125,61 @@
       }
     },
     "risks": { "type": "array", "items": { "type": "object" } },
-    "skillsUsed": { "type": "array", "items": { "type": "object" } },
+    "skillsUsed": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "phase", "loadedAt", "resources", "source", "skillFile", "skillFileSha256", "valid"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "version": { "type": ["string", "null"] },
+          "phase": { "enum": ["contract", "plan", "ui", "ux", "motion", "implementation", "integration", "security"] },
+          "loadedAt": { "type": "string" },
+          "resources": { "type": "array", "contains": { "const": "SKILL.md" } },
+          "source": { "enum": ["native", "bridge", "manual"] },
+          "skillFile": { "type": "string", "minLength": 1 },
+          "skillFileSha256": { "type": "string", "minLength": 64, "maxLength": 64 },
+          "valid": { "type": "boolean" },
+          "invalidReason": { "type": "string" }
+        }
+      }
+    },
+    "capabilityFallbacks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["phase", "missingSkills", "reason", "reference", "evidence", "evidenceSha256", "workspaceFingerprint", "recordedAt", "valid"],
+        "properties": {
+          "phase": { "enum": ["contract", "plan", "ui", "ux", "motion", "implementation", "integration", "security"] },
+          "missingSkills": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "reason": { "type": "string", "minLength": 12 },
+          "reference": { "type": "string" },
+          "evidence": { "type": "string" },
+          "evidenceSha256": { "type": "string" },
+          "workspaceFingerprint": { "type": "string" },
+          "recordedAt": { "type": "string" },
+          "valid": { "type": "boolean" },
+          "invalidReason": { "type": "string" }
+        }
+      }
+    },
+    "securityClassification": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["level", "reason", "evidence", "evidenceSha256", "workspaceFingerprint", "recordedAt"],
+          "properties": {
+            "level": { "enum": ["low", "medium", "high"] },
+            "reason": { "type": "string", "minLength": 12 },
+            "evidence": { "type": "string" },
+            "evidenceSha256": { "type": "string" },
+            "workspaceFingerprint": { "type": "string" },
+            "recordedAt": { "type": "string" }
+          }
+        }
+      ]
+    },
     "audit": { "type": "array", "items": { "type": "object" } }
   }
 }

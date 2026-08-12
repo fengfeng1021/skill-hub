@@ -44,8 +44,8 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 標籤：frontend、design、workflow、requirements、quality、security
 - 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-director
 - 安裝資料夾名：`frontend-director`
-- 精選組合包：連同入口共 7 個收錄項目、7 個資料夾
-- 組合內容：`需求契約`、`實作藍圖`、`Impeccable`、`Taste`、`Hue`、`互動體驗設計`
+- 精選組合包：連同入口共 11 個收錄項目、37 個資料夾
+- 組合內容：`需求契約`、`實作藍圖`、`Impeccable`、`Taste`、`Hue`、`互動體驗設計`、`GSAP`、`交付品質工作流`、`程式碼品質閘門`、`Mantis 安全審查`
 - 執行模式：pipeline
 - 可攜核心：不依賴單一 Agent 的專屬機制
 - 續跑狀態：`.agent/workflow-state.json`

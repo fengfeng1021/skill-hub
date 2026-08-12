@@ -11,6 +11,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -20,8 +21,9 @@ from pathlib import Path, PurePosixPath
 from typing import Any, Iterable, Optional
 
 
-SCHEMA_VERSION = 1
-SKILL_VERSION = "5.0.0"
+SCHEMA_VERSION = 2
+SKILL_VERSION = "6.0.0"
+POLICY_VERSION = 2
 WORKFLOW = "frontend-director"
 STATE_REL = Path(".agent") / "workflow-state.json"
 PHASES = (
@@ -37,6 +39,53 @@ PHASES = (
 OPTIONAL_PHASES = {"ui", "ux", "motion"}
 REQUIRED_PHASES = set(PHASES) - OPTIONAL_PHASES
 SEVERITIES = {"critical", "high", "medium", "low"}
+CHECK_KINDS = {"automated", "manual", "not-applicable"}
+
+# Every passed phase must prove that its specialist capability was actually
+# loaded. A portable built-in fallback is allowed only when discovery evidence
+# shows that the external skill is unavailable.
+PHASE_SKILL_GROUPS: dict[str, tuple[tuple[str, ...], ...]] = {
+    "contract": (("define-acceptance-contract",),),
+    "plan": (("plan-implementation",),),
+    "ui": (("impeccable",), ("taste",), ("hue",)),
+    "ux": (("interaction-experience-design",),),
+    "motion": (("gsap-core", "gsap-timeline", "gsap-scrolltrigger", "gsap-react", "gsap-frameworks"),),
+    "implementation": (("delivery-quality-gate",),),
+    "integration": (("delivery-quality-gate",),),
+    "security": (("delivery-quality-gate",),),
+}
+PHASE_FALLBACK_REFERENCES = {
+    "contract": "references/contract.md",
+    "plan": "references/implementation-plan.md",
+    "ui": "references/ui-quality.md",
+    "ux": "references/ux-interaction.md",
+    "motion": "references/motion.md",
+    "implementation": "references/coding-loop.md",
+    "integration": "references/verification.md",
+    "security": "references/security.md",
+}
+PHASE_REQUIRED_CHECKS: dict[str, tuple[str, ...]] = {
+    "contract": ("requirements-review",),
+    "plan": ("coverage-review",),
+    "ui": ("design-direction", "responsive-spec", "state-inventory", "product-specificity"),
+    "ux": ("primary-flow-model", "failure-recovery-plan", "accessibility-plan"),
+    "motion": ("motion-purpose", "reduced-motion-plan", "interruption-plan"),
+    "implementation": ("tests", "typecheck", "lint", "diff-review"),
+    "integration": (
+        "build",
+        "desktop-browser",
+        "mobile-browser",
+        "keyboard-focus",
+        "semantic-oracles",
+        "reduced-motion",
+        "console-clean",
+    ),
+    "security": ("security-baseline", "negative-paths", "dependency-review"),
+}
+SECURITY_SPECIALIST_MARKERS = ("mantis", "security", "threat")
+PROJECT_SCAN_EXCLUDES = {".git", ".agent", "node_modules", "dist", "build", ".next", "coverage"}
+FRONTEND_CODE_SUFFIXES = {".js", ".jsx", ".mjs", ".cjs", ".ts", ".tsx", ".vue", ".svelte"}
+TYPED_FRONTEND_SUFFIXES = {".ts", ".tsx", ".vue", ".svelte"}
 
 
 class WorkflowError(RuntimeError):
@@ -157,6 +206,187 @@ def file_sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def skill_frontmatter_name(path: Path) -> str:
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError as exc:
+        raise WorkflowError(f"Cannot read skill file {path}: {exc}") from exc
+    match = re.match(r"^---\s*\n(?P<header>.*?)\n---(?:\s*\n|$)", text, flags=re.DOTALL)
+    if not match:
+        raise WorkflowError(f"Skill file has no YAML frontmatter: {path}")
+    name = re.search(r"^name:\s*['\"]?(?P<name>[^'\"\n]+?)['\"]?\s*$", match.group("header"), flags=re.MULTILINE)
+    if not name:
+        raise WorkflowError(f"Skill file frontmatter has no name: {path}")
+    return name.group("name").strip()
+
+
+def skill_activation_valid(entry: dict[str, Any]) -> bool:
+    skill_file = entry.get("skillFile")
+    expected = entry.get("skillFileSha256")
+    if not skill_file or not expected:
+        return False
+    path = Path(skill_file)
+    return path.is_absolute() and path.is_file() and file_sha256(path) == expected
+
+
+def uses_enforced_policy(state: dict[str, Any]) -> bool:
+    return int(state.get("policyVersion", 1)) >= POLICY_VERSION
+
+
+def evidence_integrity_ok(root: Path, record: dict[str, Any], *, require_current_workspace: bool) -> bool:
+    evidence = record.get("evidence")
+    if not evidence:
+        return False
+    evidence_path = resolve_project_path(root, evidence)
+    if not evidence_path.is_file() or record.get("evidenceSha256") != file_sha256(evidence_path):
+        return False
+    if require_current_workspace and record.get("workspaceFingerprint") != workspace_fingerprint(root):
+        return False
+    return True
+
+
+def phase_capability_errors(
+    root: Path,
+    state: dict[str, Any],
+    phase: str,
+    *,
+    require_current_workspace: bool,
+) -> list[str]:
+    if not uses_enforced_policy(state):
+        return []
+    loaded = {
+        entry.get("name")
+        for entry in state.get("skillsUsed", [])
+        if entry.get("phase") == phase
+        and entry.get("valid", True)
+        and "SKILL.md" in entry.get("resources", [])
+        and skill_activation_valid(entry)
+    }
+    fallbacks = [
+        entry
+        for entry in state.get("capabilityFallbacks", [])
+        if entry.get("phase") == phase and entry.get("valid", True)
+    ]
+    errors: list[str] = []
+    for group in PHASE_SKILL_GROUPS[phase]:
+        if loaded.intersection(group):
+            continue
+        covered = any(
+            set(entry.get("missingSkills", [])).intersection(group)
+            and entry.get("reference") == PHASE_FALLBACK_REFERENCES[phase]
+            and evidence_integrity_ok(root, entry, require_current_workspace=require_current_workspace)
+            for entry in fallbacks
+        )
+        if not covered:
+            errors.append(
+                f"{phase} gate requires a loaded skill from ({', '.join(group)}) "
+                "or a discovery-backed fallback"
+            )
+    return errors
+
+
+def phase_check_errors(
+    root: Path,
+    state: dict[str, Any],
+    phase: str,
+    *,
+    require_current_workspace: bool,
+) -> list[str]:
+    if not uses_enforced_policy(state):
+        return []
+    phase_state = state.get("phases", {}).get(phase, {})
+    valid_names: set[str] = set()
+    errors: list[str] = []
+    for check in phase_state.get("checks", []):
+        if not check.get("valid"):
+            continue
+        if check.get("kind") == "automated" and check.get("exitCode") != 0:
+            continue
+        if evidence_integrity_ok(root, check, require_current_workspace=require_current_workspace):
+            valid_names.add(str(check.get("name")))
+    for name in PHASE_REQUIRED_CHECKS[phase]:
+        if name not in valid_names:
+            errors.append(f"{phase} gate requires fresh check evidence: {name}")
+    return errors
+
+
+def phase_summary_evidence_errors(root: Path, state: dict[str, Any], phase: str) -> list[str]:
+    if not uses_enforced_policy(state):
+        return []
+    phase_state = state.get("phases", {}).get(phase, {})
+    evidence = phase_state.get("evidence", [])
+    if len(evidence) != 1:
+        return [f"{phase} gate must have exactly one summary evidence file"]
+    record = {
+        "evidence": evidence[0],
+        "evidenceSha256": phase_state.get("evidenceSha256"),
+        "workspaceFingerprint": phase_state.get("workspaceFingerprint"),
+    }
+    require_current = phase in {"implementation", "integration", "security"}
+    if not evidence_integrity_ok(root, record, require_current_workspace=require_current):
+        return [f"{phase} gate summary evidence is missing, tampered, or stale"]
+    return []
+
+
+def project_source_suffixes(root: Path) -> set[str]:
+    suffixes: set[str] = set()
+    for path in root.rglob("*"):
+        if not path.is_file() or PROJECT_SCAN_EXCLUDES.intersection(path.relative_to(root).parts):
+            continue
+        if path.suffix.lower() in FRONTEND_CODE_SUFFIXES:
+            suffixes.add(path.suffix.lower())
+    return suffixes
+
+
+def project_tooling_errors(root: Path, state: dict[str, Any], phase: str) -> list[str]:
+    if not uses_enforced_policy(state) or phase not in {"implementation", "integration"}:
+        return []
+    suffixes = project_source_suffixes(root)
+    if not suffixes:
+        return []
+    valid_automated = {
+        check.get("name")
+        for check in state.get("phases", {}).get(phase, {}).get("checks", [])
+        if check.get("valid")
+        and check.get("kind") == "automated"
+        and check.get("exitCode") == 0
+        and evidence_integrity_ok(root, check, require_current_workspace=True)
+    }
+    errors: list[str] = []
+    if phase == "implementation":
+        for name in ("tests", "lint"):
+            if name not in valid_automated:
+                errors.append(f"Frontend source requires an automated passing {name} check")
+        if suffixes.intersection(TYPED_FRONTEND_SUFFIXES) and "typecheck" not in valid_automated:
+            errors.append("Typed frontend source requires an automated passing typecheck check")
+    if phase == "integration" and "build" not in valid_automated:
+        errors.append("Frontend source requires an automated passing build check")
+    return errors
+
+
+def security_classification_errors(root: Path, state: dict[str, Any]) -> list[str]:
+    if not uses_enforced_policy(state):
+        return []
+    classification = state.get("securityClassification")
+    if not isinstance(classification, dict):
+        return ["Security gate requires an explicit low/medium/high classification"]
+    errors: list[str] = []
+    if not evidence_integrity_ok(root, classification, require_current_workspace=True):
+        errors.append("Security classification evidence is missing, tampered, or stale")
+    if classification.get("level") == "high":
+        specialist_loaded = any(
+            entry.get("phase") == "security"
+            and entry.get("valid", True)
+            and skill_activation_valid(entry)
+            and entry.get("name") != "delivery-quality-gate"
+            and any(marker in str(entry.get("name", "")).lower() for marker in SECURITY_SPECIALIST_MARKERS)
+            for entry in state.get("skillsUsed", [])
+        )
+        if not specialist_loaded:
+            errors.append("High-risk security delivery requires a loaded Mantis or equivalent security specialist")
+    return errors
+
+
 def state_path(root: Path) -> Path:
     return root / STATE_REL
 
@@ -169,8 +399,15 @@ def load_state(root: Path) -> dict[str, Any]:
         state = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         raise WorkflowError(f"Cannot read workflow state: {exc}") from exc
-    if state.get("schemaVersion") != SCHEMA_VERSION or state.get("workflow") != WORKFLOW:
+    if state.get("schemaVersion") not in {1, SCHEMA_VERSION} or state.get("workflow") != WORKFLOW:
         raise WorkflowError("Unsupported or unrelated workflow-state.json")
+    # Keep v5 runs readable and resumable. New enforcement applies only to
+    # states initialized with policyVersion 2.
+    state.setdefault("policyVersion", 1)
+    state.setdefault("capabilityFallbacks", [])
+    state.setdefault("securityClassification", None)
+    for phase in PHASES:
+        state.setdefault("phases", {}).setdefault(phase, {}).setdefault("checks", [])
     return state
 
 
@@ -200,6 +437,9 @@ def audit(state: dict[str, Any], event: str, **details: Any) -> None:
 def set_next_action(state: dict[str, Any]) -> None:
     if state.get("status") == "done":
         state["nextAction"] = "Workflow complete; report verified results and residual risks."
+        return
+    if all(state.get("phases", {}).get(phase, {}).get("status") in {"passed", "skipped"} for phase in PHASES):
+        state["nextAction"] = "Run verify --finish, then finish the workflow."
         return
     current_task = state.get("currentTask")
     if current_task:
@@ -313,6 +553,9 @@ def validate_state(root: Path, state: dict[str, Any], *, for_finish: bool = Fals
     if not for_finish:
         return errors
 
+    if not uses_enforced_policy(state):
+        errors.append("Legacy workflow policy cannot finish under v6; run upgrade-policy and revalidate all gates")
+
     if not state.get("requirements"):
         errors.append("No requirements recorded")
     if not state.get("tasks"):
@@ -326,6 +569,25 @@ def validate_state(root: Path, state: dict[str, Any], *, for_finish: bool = Fals
             errors.append(f"Required phase has not passed: {phase}")
         if phase in OPTIONAL_PHASES and status not in {"passed", "skipped"}:
             errors.append(f"Optional phase needs pass or documented skip: {phase}")
+        if status == "passed":
+            errors.extend(
+                phase_capability_errors(
+                    root,
+                    state,
+                    phase,
+                    require_current_workspace=phase in {"implementation", "integration", "security"},
+                )
+            )
+            errors.extend(
+                phase_check_errors(
+                    root,
+                    state,
+                    phase,
+                    require_current_workspace=phase in {"implementation", "integration", "security"},
+                )
+            )
+            errors.extend(phase_summary_evidence_errors(root, state, phase))
+            errors.extend(project_tooling_errors(root, state, phase))
     current_fingerprint = workspace_fingerprint(root)
     for phase in ("integration", "security"):
         phase_state = state.get("phases", {}).get(phase, {})
@@ -338,6 +600,8 @@ def validate_state(root: Path, state: dict[str, Any], *, for_finish: bool = Fals
             errors.append(f"Unresolved {severity} risk: {risk.get('id')}")
         if severity == "medium" and status not in {"closed", "mitigated", "accepted"}:
             errors.append(f"Unresolved medium risk: {risk.get('id')}")
+    if state.get("phases", {}).get("security", {}).get("status") == "passed":
+        errors.extend(security_classification_errors(root, state))
     return errors
 
 
@@ -356,12 +620,15 @@ def command_init(root: Path, args: argparse.Namespace) -> None:
             "status": "in_progress" if phase == "contract" else "pending",
             "summary": None,
             "evidence": [],
+            "evidenceSha256": None,
+            "checks": [],
             "workspaceFingerprint": None,
         }
         for phase in PHASES
     }
     state: dict[str, Any] = {
         "schemaVersion": SCHEMA_VERSION,
+        "policyVersion": POLICY_VERSION,
         "workflow": WORKFLOW,
         "skillVersion": SKILL_VERSION,
         "runId": str(uuid.uuid4()),
@@ -383,11 +650,35 @@ def command_init(root: Path, args: argparse.Namespace) -> None:
         "tasks": {},
         "risks": [],
         "skillsUsed": [],
+        "capabilityFallbacks": [],
+        "securityClassification": None,
         "audit": [],
     }
     audit(state, "workflow-initialized", mode=args.mode)
     save_state(root, state)
     print(f"Initialized {path}")
+
+
+def command_upgrade_policy(root: Path, _args: argparse.Namespace) -> None:
+    state = load_state(root)
+    if uses_enforced_policy(state):
+        print("Workflow already uses the current policy")
+        return
+    for task in state.get("tasks", {}).values():
+        if task.get("status") == "completed":
+            invalidate_task(task, "Upgraded to v6 evidence policy")
+    state["schemaVersion"] = SCHEMA_VERSION
+    state["policyVersion"] = POLICY_VERSION
+    state["skillVersion"] = SKILL_VERSION
+    state["currentTask"] = None
+    state["skillsUsed"] = []
+    state["capabilityFallbacks"] = []
+    state["securityClassification"] = None
+    reset_phases_from(state, "contract")
+    set_next_action(state)
+    audit(state, "workflow-policy-upgraded", policyVersion=POLICY_VERSION)
+    save_state(root, state)
+    print("Upgraded workflow policy; all gates and task evidence require revalidation")
 
 
 def command_status(root: Path, args: argparse.Namespace) -> None:
@@ -496,6 +787,10 @@ def command_record_check(root: Path, args: argparse.Namespace) -> None:
     evidence_path = resolve_project_path(root, evidence)
     if not evidence_path.is_file():
         raise WorkflowError(f"Evidence file does not exist: {evidence}")
+    for previous in task.setdefault("checks", []):
+        if previous.get("name") == args.name and previous.get("valid"):
+            previous["valid"] = False
+            previous["invalidReason"] = "Superseded by a newer result for the same check"
     check = {
         "name": args.name,
         "command": args.command,
@@ -506,7 +801,7 @@ def command_record_check(root: Path, args: argparse.Namespace) -> None:
         "evidenceSha256": file_sha256(evidence_path),
         "valid": True,
     }
-    task.setdefault("checks", []).append(check)
+    task["checks"].append(check)
     audit(state, "check-recorded", task=task_id, name=args.name, exitCode=args.exit_code)
     save_state(root, state)
     outcome = "pass" if args.exit_code == 0 else "fail"
@@ -547,23 +842,24 @@ def command_complete_task(root: Path, args: argparse.Namespace) -> None:
 
 
 def phase_structural_errors(root: Path, state: dict[str, Any], phase: str) -> list[str]:
+    errors = phase_capability_errors(root, state, phase, require_current_workspace=True)
+    errors.extend(phase_check_errors(root, state, phase, require_current_workspace=True))
+    errors.extend(project_tooling_errors(root, state, phase))
     if phase == "contract" and not state.get("requirements"):
-        return ["Contract gate requires at least one requirement"]
+        errors.append("Contract gate requires at least one requirement")
     if phase == "plan":
-        errors = coverage_errors(state)
+        errors.extend(coverage_errors(state))
         if not state.get("tasks"):
             errors.append("Plan gate requires at least one task")
-        return errors
     if phase in {"implementation", "integration"}:
-        errors = coverage_errors(state)
+        errors.extend(coverage_errors(state))
         for task_id, task in state.get("tasks", {}).items():
             if task.get("status") != "completed":
                 errors.append(f"Task is not completed: {task_id}")
             elif not task_fresh(root, task):
                 errors.append(f"Task evidence is stale: {task_id}")
-        return errors
     if phase == "security":
-        errors: list[str] = []
+        errors.extend(security_classification_errors(root, state))
         for risk in state.get("risks", []):
             severity = risk.get("severity")
             status = risk.get("status")
@@ -571,8 +867,7 @@ def phase_structural_errors(root: Path, state: dict[str, Any], phase: str) -> li
                 errors.append(f"Security gate blocked by {severity} risk {risk.get('id')}")
             if severity == "medium" and status not in {"closed", "mitigated", "accepted"}:
                 errors.append(f"Security gate blocked by medium risk {risk.get('id')}")
-        return errors
-    return []
+    return errors
 
 
 def command_pass_gate(root: Path, args: argparse.Namespace) -> None:
@@ -582,7 +877,8 @@ def command_pass_gate(root: Path, args: argparse.Namespace) -> None:
     if state.get("currentTask"):
         raise WorkflowError(f"Complete current task before passing a gate: {state['currentTask']}")
     evidence = normalize_rel(args.evidence)
-    if not resolve_project_path(root, evidence).is_file():
+    evidence_path = resolve_project_path(root, evidence)
+    if not evidence_path.is_file():
         raise WorkflowError(f"Gate evidence file does not exist: {evidence}")
     errors = phase_structural_errors(root, state, phase)
     if errors:
@@ -591,6 +887,7 @@ def command_pass_gate(root: Path, args: argparse.Namespace) -> None:
     phase_state["status"] = "passed"
     phase_state["summary"] = args.summary.strip()
     phase_state["evidence"] = [evidence]
+    phase_state["evidenceSha256"] = file_sha256(evidence_path)
     phase_state["workspaceFingerprint"] = workspace_fingerprint(root)
     audit(state, "gate-passed", phase=phase, evidence=evidence)
     advance_after_gate(state, phase)
@@ -630,8 +927,16 @@ def reset_phases_from(state: dict[str, Any], phase: str) -> None:
             "status": "in_progress" if item == phase else "pending",
             "summary": None,
             "evidence": [],
+            "evidenceSha256": None,
+            "checks": [],
             "workspaceFingerprint": None,
         }
+    for entry in [*state.get("skillsUsed", []), *state.get("capabilityFallbacks", [])]:
+        entry_phase = entry.get("phase")
+        if entry_phase in PHASES and phase_index(entry_phase) >= start:
+            entry["valid"] = False
+    if phase_index(phase) <= phase_index("security"):
+        state["securityClassification"] = None
     state["currentPhase"] = phase
     state["status"] = "active"
 
@@ -656,8 +961,14 @@ def command_invalidate(root: Path, args: argparse.Namespace) -> None:
                     "status": "pending",
                     "summary": None,
                     "evidence": [],
+                    "evidenceSha256": None,
+                    "checks": [],
                     "workspaceFingerprint": None,
                 }
+            for entry in [*state.get("skillsUsed", []), *state.get("capabilityFallbacks", [])]:
+                if entry.get("phase") in {"integration", "security"}:
+                    entry["valid"] = False
+            state["securityClassification"] = None
     if args.phase:
         reset_phases_from(state, args.phase)
         if phase_index(args.phase) <= phase_index("implementation"):
@@ -702,17 +1013,139 @@ def command_add_risk(root: Path, args: argparse.Namespace) -> None:
 
 def command_log_skill(root: Path, args: argparse.Namespace) -> None:
     state = load_state(root)
+    phase = state.get("currentPhase")
+    resources = split_csv(args.resources)
+    if uses_enforced_policy(state) and "SKILL.md" not in resources:
+        raise WorkflowError("log-skill requires --resources SKILL.md to prove the skill instructions were loaded")
+    skill_file = Path(args.skill_file).expanduser().resolve()
+    if not skill_file.is_file() or skill_file.name != "SKILL.md":
+        raise WorkflowError(f"--skill-file must point to an existing SKILL.md: {skill_file}")
+    actual_name = skill_frontmatter_name(skill_file)
+    if actual_name != args.name:
+        raise WorkflowError(f"Skill name mismatch: command={args.name!r}, frontmatter={actual_name!r}")
+    for previous in state.setdefault("skillsUsed", []):
+        if previous.get("phase") == phase and previous.get("name") == args.name and previous.get("valid", True):
+            previous["valid"] = False
+            previous["invalidReason"] = "Superseded by a newer activation record"
     entry = {
         "name": args.name,
         "version": args.version,
-        "phase": state.get("currentPhase"),
+        "phase": phase,
         "loadedAt": now(),
-        "resources": split_csv(args.resources),
+        "resources": resources,
+        "source": args.source,
+        "skillFile": str(skill_file),
+        "skillFileSha256": file_sha256(skill_file),
+        "valid": True,
     }
-    state.setdefault("skillsUsed", []).append(entry)
+    state["skillsUsed"].append(entry)
     audit(state, "skill-loaded", skill=args.name, version=args.version)
     save_state(root, state)
     print(f"Logged skill {args.name}")
+
+
+def command_log_fallback(root: Path, args: argparse.Namespace) -> None:
+    state = load_state(root)
+    phase = state.get("currentPhase")
+    expected_reference = PHASE_FALLBACK_REFERENCES[phase]
+    reference = normalize_rel(args.reference)
+    if reference != expected_reference:
+        raise WorkflowError(f"{phase} fallback must use {expected_reference}")
+    if not (Path(__file__).resolve().parent.parent / reference).is_file():
+        raise WorkflowError(f"Bundled fallback reference does not exist: {reference}")
+    missing_skills = split_csv(args.missing_skills)
+    allowed = {name for group in PHASE_SKILL_GROUPS[phase] for name in group}
+    if not missing_skills or not set(missing_skills).issubset(allowed):
+        raise WorkflowError(f"Fallback must name unavailable {phase} skills from: {', '.join(sorted(allowed))}")
+    if len(args.reason.strip()) < 12:
+        raise WorkflowError("Fallback reason must explain why native skill loading was unavailable")
+    discovery = normalize_rel(args.discovery_evidence)
+    discovery_path = resolve_project_path(root, discovery)
+    if not discovery_path.is_file():
+        raise WorkflowError(f"Skill discovery evidence does not exist: {discovery}")
+    for previous in state.setdefault("capabilityFallbacks", []):
+        if (
+            previous.get("phase") == phase
+            and set(previous.get("missingSkills", [])).intersection(missing_skills)
+            and previous.get("valid", True)
+        ):
+            previous["valid"] = False
+            previous["invalidReason"] = "Superseded by newer discovery evidence"
+    entry = {
+        "phase": phase,
+        "missingSkills": missing_skills,
+        "reason": args.reason.strip(),
+        "reference": reference,
+        "evidence": discovery,
+        "evidenceSha256": file_sha256(discovery_path),
+        "workspaceFingerprint": workspace_fingerprint(root),
+        "recordedAt": now(),
+        "valid": True,
+    }
+    state["capabilityFallbacks"].append(entry)
+    audit(state, "capability-fallback-recorded", phase=phase, skills=missing_skills, evidence=discovery)
+    save_state(root, state)
+    print(f"Recorded {phase} capability fallback")
+
+
+def command_record_gate_check(root: Path, args: argparse.Namespace) -> None:
+    state = load_state(root)
+    phase = args.phase
+    require_current_phase(state, phase)
+    evidence = normalize_rel(args.evidence)
+    evidence_path = resolve_project_path(root, evidence)
+    if not evidence_path.is_file():
+        raise WorkflowError(f"Gate check evidence does not exist: {evidence}")
+    if args.kind == "automated" and (not args.command or args.exit_code is None):
+        raise WorkflowError("Automated gate checks require --command and --exit-code")
+    if args.kind != "automated" and args.exit_code not in (None, 0):
+        raise WorkflowError("Manual and not-applicable checks cannot record a failing exit code")
+    if args.kind == "not-applicable" and len(args.summary.strip()) < 12:
+        raise WorkflowError("Not-applicable checks require a concrete explanation")
+    phase_checks = state["phases"][phase].setdefault("checks", [])
+    for previous in phase_checks:
+        if previous.get("name") == args.name and previous.get("valid"):
+            previous["valid"] = False
+            previous["invalidReason"] = "Superseded by a newer result for the same check"
+    check = {
+        "name": args.name,
+        "kind": args.kind,
+        "command": args.command,
+        "exitCode": args.exit_code,
+        "evidence": evidence,
+        "summary": args.summary.strip(),
+        "recordedAt": now(),
+        "workspaceFingerprint": workspace_fingerprint(root),
+        "evidenceSha256": file_sha256(evidence_path),
+        "valid": True,
+    }
+    phase_checks.append(check)
+    audit(state, "gate-check-recorded", phase=phase, name=args.name, kind=args.kind, exitCode=args.exit_code)
+    save_state(root, state)
+    outcome = "pass" if args.kind != "automated" or args.exit_code == 0 else "fail"
+    print(f"Recorded {phase}/{args.name}: {outcome}")
+
+
+def command_classify_security(root: Path, args: argparse.Namespace) -> None:
+    state = load_state(root)
+    require_current_phase(state, "security")
+    evidence = normalize_rel(args.evidence)
+    evidence_path = resolve_project_path(root, evidence)
+    if not evidence_path.is_file():
+        raise WorkflowError(f"Security classification evidence does not exist: {evidence}")
+    if len(args.reason.strip()) < 12:
+        raise WorkflowError("Security classification requires a concrete data-flow and attack-surface reason")
+    state["securityClassification"] = {
+        "level": args.level,
+        "reason": args.reason.strip(),
+        "evidence": evidence,
+        "evidenceSha256": file_sha256(evidence_path),
+        "workspaceFingerprint": workspace_fingerprint(root),
+        "recordedAt": now(),
+    }
+    audit(state, "security-classified", level=args.level, evidence=evidence)
+    save_state(root, state)
+    print(f"Classified security risk as {args.level}")
 
 
 def command_verify(root: Path, args: argparse.Namespace) -> None:
@@ -747,6 +1180,9 @@ def parser() -> argparse.ArgumentParser:
     init.add_argument("--mode", choices=("full", "targeted"), default="full")
     init.add_argument("--force", action="store_true")
     init.set_defaults(handler=command_init)
+
+    upgrade = commands.add_parser("upgrade-policy")
+    upgrade.set_defaults(handler=command_upgrade_policy)
 
     status = commands.add_parser("status")
     status.add_argument("--json", action="store_true")
@@ -815,9 +1251,34 @@ def parser() -> argparse.ArgumentParser:
 
     skill = commands.add_parser("log-skill")
     skill.add_argument("name")
+    skill.add_argument("--skill-file", required=True)
     skill.add_argument("--version")
     skill.add_argument("--resources", action="append", default=[])
+    skill.add_argument("--source", choices=("native", "bridge", "manual"), default="native")
     skill.set_defaults(handler=command_log_skill)
+
+    fallback = commands.add_parser("log-fallback")
+    fallback.add_argument("--missing-skills", action="append", required=True)
+    fallback.add_argument("--reason", required=True)
+    fallback.add_argument("--reference", required=True)
+    fallback.add_argument("--discovery-evidence", required=True)
+    fallback.set_defaults(handler=command_log_fallback)
+
+    gate_check = commands.add_parser("record-gate-check")
+    gate_check.add_argument("phase", choices=PHASES)
+    gate_check.add_argument("--name", required=True)
+    gate_check.add_argument("--kind", choices=tuple(sorted(CHECK_KINDS)), required=True)
+    gate_check.add_argument("--command")
+    gate_check.add_argument("--exit-code", type=int)
+    gate_check.add_argument("--evidence", required=True)
+    gate_check.add_argument("--summary", required=True)
+    gate_check.set_defaults(handler=command_record_gate_check)
+
+    security_classification = commands.add_parser("classify-security")
+    security_classification.add_argument("--level", choices=("low", "medium", "high"), required=True)
+    security_classification.add_argument("--reason", required=True)
+    security_classification.add_argument("--evidence", required=True)
+    security_classification.set_defaults(handler=command_classify_security)
 
     verify = commands.add_parser("verify")
     verify.add_argument("--finish", action="store_true")

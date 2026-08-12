@@ -31,7 +31,7 @@ workflowctl start-task T-001
 
 ## 4. Verify：先小後大
 
-先執行最小相關測試，再依風險增加 typecheck、lint、build、整合和瀏覽器驗證。每次真實執行後記錄：
+先執行最小相關測試，再依風險增加 typecheck、lint、build、整合和瀏覽器驗證。implementation Gate 固定要求 tests、typecheck、lint 與 diff-review；專案真的不適用時要保存 `not-applicable` 證據、原因和替代檢查，不能因 package script 缺失而靜默跳過。每次真實執行後記錄：
 
 ```text
 workflowctl record-check T-001 --name unit --command "npm test -- feature" --exit-code 0 --evidence .agent/evidence/T-001-unit.txt

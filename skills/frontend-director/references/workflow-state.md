@@ -6,15 +6,20 @@
 
 ```text
 workflowctl init --mode full|targeted
+workflowctl upgrade-policy
 workflowctl status [--json]
 workflowctl add-requirement FR-001 --kind functional --text "..."
 workflowctl add-task T-001 --title "..." --requirements FR-001 --files src/a.ts,tests/a.test.ts --checks unit,typecheck
+workflowctl log-skill impeccable --skill-file /absolute/path/impeccable/SKILL.md --resources SKILL.md --source native
+workflowctl log-fallback --missing-skills impeccable --reason "宿主 discovery 找不到" --reference references/ui-quality.md --discovery-evidence .agent/evidence/ui-skill-discovery.txt
+workflowctl record-gate-check ui --name design-direction --kind manual --evidence .agent/evidence/ui-direction.md --summary "產品特異設計方向已審查"
 workflowctl start-task T-001
 workflowctl record-check T-001 --name unit --command "..." --exit-code 0 --evidence .agent/evidence/T-001-unit.txt
 workflowctl complete-task T-001 --summary "..."
 workflowctl pass-gate ui --evidence .agent/evidence/ui.md --summary "..."
 workflowctl skip-phase motion --reason "本任務不新增動效"
 workflowctl invalidate --files src/a.ts --reason "共用行為已修改"
+workflowctl classify-security --level low --reason "僅靜態本地資料，沒有新信任邊界" --evidence .agent/evidence/security-classification.md
 workflowctl verify
 workflowctl finish
 ```
@@ -29,9 +34,40 @@ python <skill-root>/scripts/workflowctl.py --root <project-root>
 
 - `start-task` 拒絕尚未滿足相依的任務。
 - `record-check` 保存退出碼、證據路徑、時間和目前工作樹指紋。
+- 同一任務或 Gate 重新記錄同名檢查時，新結果會使舊結果失效；後來的失敗不能被較早的通過掩蓋。
 - `complete-task` 要求至少一個退出碼為 0、證據內容未被改寫且檔案範圍指紋仍新鮮的檢查；任務有 `--checks` 時必須全部具備新鮮通過證據。
 - `invalidate` 依檔案交集使任務、檢查與下游 Gate 失效。
-- `finish` 要求需求全覆蓋、任務完成且證據新鮮、必要階段通過、可選階段通過或有理由跳過，且沒有 Critical／High 風險。
+- `pass-gate` 要求該階段的子 Skill 已用 `log-skill` 記錄；缺少能力時必須有 discovery 證據和對應內建 reference 的 `log-fallback`。
+- `pass-gate` 要求下表所有具名檢查都有完整、未被改寫且與工作區一致的證據；`not-applicable` 也要保存具體理由。
+- `finish` 要求需求全覆蓋、任務完成且證據新鮮、必要階段通過、可選階段通過或有理由跳過、安全已分級，且沒有 Critical／High 風險。
+- v5／policy v1 狀態可用 `status` 讀取，但 `verify --finish` 與 `finish` 會拒絕；`upgrade-policy` 保留需求／任務定義、使舊任務證據與所有 Gate 失效，再從 contract 重驗。
+
+## Gate 必要檢查
+
+| Phase | 必要檢查名稱 |
+|---|---|
+| contract | `requirements-review` |
+| plan | `coverage-review` |
+| ui | `design-direction`、`responsive-spec`、`state-inventory`、`product-specificity` |
+| ux | `primary-flow-model`、`failure-recovery-plan`、`accessibility-plan` |
+| motion | `motion-purpose`、`reduced-motion-plan`、`interruption-plan` |
+| implementation | `tests`、`typecheck`、`lint`、`diff-review` |
+| integration | `build`、`desktop-browser`、`mobile-browser`、`keyboard-focus`、`semantic-oracles`、`reduced-motion`、`console-clean` |
+| security | `security-baseline`、`negative-paths`、`dependency-review` |
+
+自動檢查使用 `--kind automated --command "..." --exit-code <code>`。人工渲染、鍵盤或審查使用 `--kind manual`。專案確實不適用時使用 `--kind not-applicable`，並在 `--summary` 說明替代驗證與限制；不得用它掩蓋缺少 lint、瀏覽器或安全工具。
+
+## 子 Skill 規則
+
+- contract：`define-acceptance-contract`
+- plan：`plan-implementation`
+- ui：`impeccable`、`taste`、`hue` 三者都要載入
+- ux：`interaction-experience-design`
+- motion：通過時至少載入一個與需求相符的 `gsap-*` 作為動效規格與性能審查能力；純 CSS 不等於缺少 Skill，也不要求把 GSAP 套件加入產品。只有 Skill 確實不可發現時才可使用 fallback
+- implementation／integration／security：各階段載入 `delivery-quality-gate`
+- high security：除 `delivery-quality-gate` 外，還要載入 Mantis 或同等 threat/security specialist
+
+控制器只接受 resources 中含 `SKILL.md` 且 `--skill-file` 指向真實檔案的 `log-skill`；會核對 frontmatter 名稱並保存檔案 hash，避免把「看見名稱」誤記成「讀取並使用」。fallback 必須保存 discovery 輸出 hash；外部 Skill 可用時不得選 fallback。
 
 ## 回退
 
