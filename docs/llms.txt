@@ -23,6 +23,7 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 同來源套件拆成多個資料夾（例如 GSAP 的 8 份）用 parts；跨來源、由入口 skill 統籌的精選組合包用 includes。includes 會展開成完整安裝清單，不能寫進 install.requires 假裝成可選相依。
 - includes 只表示要一起安裝哪些收錄項目；入口若能自動分階段執行，另用 runtime 描述 mode、狀態檔、stages、overlays 與 finalizers。runtime 裡引用的 skill 必須已被 includes 的完整安裝清單涵蓋，真正的路由、Gate、回退與續跑規則寫在入口 SKILL.md。
 - skill 改過資料夾或 frontmatter name 時，用 replaces 列出舊名稱。安裝提示詞會先比對自訂修改，驗證新版成功後才安全停用無自訂的舊入口，避免兩份同時觸發。
+- skill 依賴完整 references、scripts 或其他支援目錄時，用 install.directories 登記目錄，不要把其中檔案攤平或只列 SKILL.md；安裝提示詞會要求遞迴複製並比對相對路徑。
 
 ## 收錄清單
 

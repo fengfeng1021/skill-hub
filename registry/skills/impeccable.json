@@ -41,8 +41,12 @@
     "files": [
       "SKILL.md"
     ],
+    "directories": [
+      "reference",
+      "scripts"
+    ],
     "requires": [],
-    "notes": "repo 內含多個平台的設定檔；本收錄已標出 skill 的來源子目錄。請保留該資料夾內容，並依目前 Agent 的官方機制安裝。"
+    "notes": "repo 內含多個平台的設定檔；只從 .claude/skills/impeccable 取 SKILL.md、完整 reference 與完整 scripts。兩個子目錄含大量巢狀檔案和模組相依，必須遞迴複製並比對相對路徑，不能只拿 SKILL.md 或只抓它直接連結的檔案。"
   },
   "prompt": null,
   "links": [
@@ -56,5 +60,5 @@
     }
   ],
   "addedAt": "2026-08-08",
-  "updatedAt": "2026-08-10"
+  "updatedAt": "2026-08-12"
 }

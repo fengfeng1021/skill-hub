@@ -63,6 +63,7 @@
 - `tags`：3–6 個，小寫英文，同樣優先沿用現有標籤
 - `install.dirName`：安裝後的資料夾名，**必須等於 SKILL.md frontmatter 的 `name`**，否則 AI 認不出來
 - `install.files`：實際檔案清單，讓安裝的 AI 知道要拿哪些檔案
+- `install.directories`：需要遞迴完整複製的子目錄，例如 `references`、`scripts`。不要把目錄內的檔案逐一列進 `install.files`；提示詞會要求 clone／解壓來源、保留相對結構並比對遞迴路徑，避免上游新增檔案後漏裝或安裝器把內容攤平
 - `install.command`：有官方一行指令（`npx skills add <repo>`、`/plugin marketplace add <owner>/<repo>`）就填，安裝提示詞會請 AI 優先用它，省掉一個個抓檔案
 - `prompt`：留 `null`。自動產生的安裝提示詞已經夠用，除非安裝方式特殊（要跑 script、要裝套件、要設環境變數）才自己寫
 
