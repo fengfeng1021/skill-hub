@@ -120,6 +120,11 @@ const forAI = {
     bundles:
       '同來源套件拆成多個資料夾（例如 GSAP 的 8 份）用 parts；跨來源、由入口 skill 統籌的精選組合包用 includes。' +
       'includes 會展開成完整安裝清單，不能寫進 install.requires 假裝成可選相依。',
+    workflows:
+      'includes 只表示要一起安裝哪些收錄項目；入口若能自動分階段執行，另用 runtime 描述 mode、狀態檔、stages、overlays 與 finalizers。' +
+      'runtime 裡引用的 skill 必須已被 includes 的完整安裝清單涵蓋，真正的路由、Gate、回退與續跑規則寫在入口 SKILL.md。',
+    migrations:
+      'skill 改過資料夾或 frontmatter name 時，用 replaces 列出舊名稱。安裝提示詞會先比對自訂修改，驗證新版成功後才安全停用無自訂的舊入口，避免兩份同時觸發。',
   },
 };
 
@@ -180,6 +185,8 @@ const llms = [
   `- 好的寫法：${forAI.howToContribute.summaryGood}`,
   `- 不好的寫法：${forAI.howToContribute.summaryBad}`,
   `- ${forAI.howToContribute.bundles}`,
+  `- ${forAI.howToContribute.workflows}`,
+  `- ${forAI.howToContribute.migrations}`,
   '',
   '## 收錄清單',
   '',
@@ -201,6 +208,13 @@ for (const cat of categories) {
     if (s.includedSkills.length) {
       llms.push(`- 精選組合包：連同入口共 ${s.installCount} 個收錄項目、${s.installFolderCount} 個資料夾`);
       llms.push(`- 組合內容：${s.includedSkills.map((item) => `\`${item.name}\``).join('、')}`);
+    }
+    if (s.runtime) {
+      llms.push(`- 執行模式：${s.runtime.mode}`);
+      if (s.runtime.stateArtifact) llms.push(`- 續跑狀態：\`${s.runtime.stateArtifact}\``);
+      if (s.runtime.stages?.length) {
+        llms.push(`- 工作流階段：${s.runtime.stages.map((stage) => stage.name).join(' → ')}`);
+      }
     }
     if (s.install.command) llms.push(`- 一行裝完：\`${s.install.command}\``);
     if (s.source.rawBase) llms.push(`- 下載基底：\`${s.source.rawBase}\``);

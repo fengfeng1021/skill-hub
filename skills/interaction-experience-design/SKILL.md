@@ -1,7 +1,6 @@
 ---
 name: interaction-experience-design
 description: 專業級「使用者交互體驗」設計 skill。以學術理論為基礎（Nielsen 啟發式、Shneiderman 黃金法則、Norman 設計心理學、Fitts/Hick 定律、Miller 7±2、Gestalt、認知負荷理論、資訊架構學、WCAG、ISO 9241）。當任務涉及登入流程、多功能 App 組織、導覽與資訊架構、按鈕層級、疊頁與返回、可學習性、操作回饋、可用性審查、無障礙時使用。詳細理論在 references/ 各檔，依需要讀取。
-version: 3.0.0
 ---
 
 # 互動體驗設計（Interaction Experience Design）

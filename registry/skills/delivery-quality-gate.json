@@ -1,55 +1,66 @@
 {
   "id": "delivery-quality-gate",
-  "name": "交付品質閘門",
-  "summary": "寫完程式先驗證、再找人審查、最後檢查安全才交付。",
-  "description": "跨技術棧的交付品質總指揮：任何程式碼——前端、後端、腳本、基礎設施、資料處理——在「宣稱完成」之前，都先過這道閘門：驗證 → 審查 → 安全，三關全過才准交付。\n整合兩個來源：\n- 程式碼品質閘門（obra/superpowers，270k+ stars 開發方法論）：verification-before-completion（完成前驗證，證據先於斷言）、requesting-code-review（派審查員）、receiving-code-review（意見先驗證再實作）。\n- 安全審查（Google Mantis，官方 18-skill 流水線）：威脅建模 → 掃描 → 複核 → 重現 → 修補。\n內建調度機制：開場宣告、三關卡流程、最終交付清單（逐項打勾回報）、常見遺漏警示表，避免 AI 只跑一半流程就宣稱完成。\n安裝時會連同 includes 展開的兩個收錄項目一起裝齊。",
+  "name": "交付品質工作流",
+  "summary": "寫程式時一路驗證，交付前再檢查安全。",
+  "description": "跨技術棧的品質工作流 v2，分成兩種執行模式。持續品質 overlay 從首次寫碼開始，依需求 ID 規劃驗證，每次有意義的修改後跑最小相關測試，階段結束再跑適用的 lint、typecheck、build、整合或瀏覽器驗證，並在里程碑使用 Superpowers 的完成前驗證與程式碼審查方法。交付前的安全 finalizer 先把變更分為高、中、低風險，再由 Google Mantis 入口只載入需要的安全能力；修補後會使舊證據失效並回到品質 Gate 重驗。",
   "category": "程式品質",
   "tags": [
     "quality",
     "review",
     "security",
     "verification",
-    "workflow",
-    "methodology"
+    "traceability",
+    "workflow"
   ],
   "official": false,
   "featured": true,
   "author": "fengfeng1021",
   "license": "MIT",
+  "version": "2.0.0",
   "usage": [
-    "任何技術棧的程式碼交付前想要品質把關",
-    "後端、資料、DevOps 專案需要驗證、審查與安全檢查",
-    "AI 宣稱「寫完了」但沒有跑過驗證，需要強制驗證流程",
-    "與前端總指揮搭配：負責四階段流程中的「品質閘門」階段"
+    "任何程式碼任務中持續驗證，不想等寫完才發現整體壞掉",
+    "需要把每項需求連到實作、測試和最新證據",
+    "功能完成或重構後想取得第二視角的程式碼審查",
+    "交付前需要依實際風險決定安全檢查深度"
   ],
   "highlights": [
-    "不綁定技術棧：前端、後端、腳本、基礎設施都適用",
-    "三道關卡＋最終交付清單，AI 不容易漏步驟",
-    "組合 270k+ stars 品質方法論與 Google 官方安全審查"
+    "品質是全程覆蓋層，每次修改後更新證據",
+    "證據會隨程式變更失效，不能拿舊測試結果宣稱新版本完成",
+    "安全檢查按風險路由，不會一開始把全部安全內容塞進上下文"
   ],
   "includes": [
     "superpowers-code-quality",
     "mantis"
   ],
+  "runtime": {
+    "mode": "overlay",
+    "stateArtifact": ".agent/quality-state.md",
+    "continueWithoutUserInput": true,
+    "ambiguityPolicy": "ask-only-material"
+  },
   "source": {
     "kind": "local",
-    "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/delivery-quality-gate"
+    "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/delivery-quality-gate",
+    "path": "skills/delivery-quality-gate"
   },
   "install": {
     "scope": "user",
     "dirName": "delivery-quality-gate",
-    "files": [
-      "SKILL.md"
-    ],
-    "notes": "這是品質把關的協同入口；安裝時必須連同 includes 展開的兩個收錄項目（superpowers-code-quality、mantis）一起安裝。"
+    "files": ["SKILL.md"],
+    "requires": [],
+    "notes": "安裝時要連同 includes 的品質與安全能力裝齊；執行時依目前 Gate 與風險按需載入，不要預先讀完全部內容。"
   },
   "prompt": null,
   "links": [
     {
-      "label": "Skill Hub（收藏庫）",
-      "url": "https://fengfeng1021.github.io/skill-hub/"
+      "label": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers"
+    },
+    {
+      "label": "Google Mantis",
+      "url": "https://github.com/google/mantis"
     }
   ],
   "addedAt": "2026-08-10",
-  "updatedAt": "2026-08-10"
+  "updatedAt": "2026-08-12"
 }

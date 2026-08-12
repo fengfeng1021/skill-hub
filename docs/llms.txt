@@ -2,7 +2,7 @@
 
 > 收錄、整理、一鍵安裝各種 AI Agent Skills。挑好的 skill，複製提示詞，貼給 AI 就裝好。
 
-更新日期：2026-08-10　收錄數量：12
+更新日期：2026-08-12　收錄數量：14
 網站：https://fengfeng1021.github.io/skill-hub
 JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 
@@ -21,6 +21,8 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 好的寫法：讓網頁上的東西動起來，淡入、滑動、跟著捲動變化都能做。
 - 不好的寫法：GreenSock 官方動畫 skill 全套：tween、時間軸、ScrollTrigger、外掛與效能。
 - 同來源套件拆成多個資料夾（例如 GSAP 的 8 份）用 parts；跨來源、由入口 skill 統籌的精選組合包用 includes。includes 會展開成完整安裝清單，不能寫進 install.requires 假裝成可選相依。
+- includes 只表示要一起安裝哪些收錄項目；入口若能自動分階段執行，另用 runtime 描述 mode、狀態檔、stages、overlays 與 finalizers。runtime 裡引用的 skill 必須已被 includes 的完整安裝清單涵蓋，真正的路由、Gate、回退與續跑規則寫在入口 SKILL.md。
+- skill 改過資料夾或 frontmatter name 時，用 replaces 列出舊名稱。安裝提示詞會先比對自訂修改，驗證新版成功後才安全停用無自訂的舊入口，避免兩份同時觸發。
 
 ## 收錄清單
 
@@ -37,14 +39,17 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 
 #### 前端總指揮 `frontend-director`
 
-- 摘要：把六套設計能力一次裝齊，品質與安全也自動把關。
-- 標籤：design、ui、ux、director、frontend、integration、quality、review、security、workflow
+- 摘要：一個入口把需求、設計、動效和交付一路做完。
+- 標籤：frontend、design、workflow、requirements、quality、security
 - 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-director
 - 安裝資料夾名：`frontend-director`
-- 精選組合包：連同入口共 10 個收錄項目、42 個資料夾
-- 組合內容：`Impeccable`、`UI UX Pro Max`、`Taste`、`Hue`、`GSAP`、`互動體驗設計`、`交付品質閘門`、`程式碼品質閘門`、`Mantis 安全審查`
+- 精選組合包：連同入口共 12 個收錄項目、44 個資料夾
+- 組合內容：`需求契約`、`實作藍圖`、`Impeccable`、`UI UX Pro Max`、`Taste`、`Hue`、`GSAP`、`互動體驗設計`、`交付品質工作流`、`程式碼品質閘門`、`Mantis 安全審查`
+- 執行模式：pipeline
+- 續跑狀態：`.agent/frontend-workflow.md`
+- 工作流階段：需求契約 → 實作藍圖 → UI 設計與實作 → UX 互動 → 動效 → 整合驗證
 - 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/frontend-director`
-- 何時使用：美化或改版任何網頁、App 畫面，不確定該用哪個設計 skill 時；要模仿某網站風格、建立品牌設計系統、加動效，一次到位；設計任務需要同時兼顧判斷力、規則、風格、品牌、動效；交付前想要品質把關：程式碼驗證、審查與安全檢查
+- 何時使用：從一句需求開始完成整個網站、Web App 或重大前端改版；希望 Agent 自己接續需求、UI、UX、動效、驗證與安全，不要逐輪點名 Skill；長任務可能跨回合或被壓縮，需要保留階段狀態與最新證據；小型修正也想保留必要品質檢查，但自動略過無關設計階段
 
 #### Hue `hue`
 
@@ -84,16 +89,18 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 
 ### 程式品質
 
-#### 交付品質閘門 `delivery-quality-gate`
+#### 交付品質工作流 `delivery-quality-gate`
 
-- 摘要：寫完程式先驗證、再找人審查、最後檢查安全才交付。
-- 標籤：quality、review、security、verification、workflow、methodology
+- 摘要：寫程式時一路驗證，交付前再檢查安全。
+- 標籤：quality、review、security、verification、traceability、workflow
 - 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/delivery-quality-gate
 - 安裝資料夾名：`delivery-quality-gate`
 - 精選組合包：連同入口共 3 個收錄項目、22 個資料夾
 - 組合內容：`程式碼品質閘門`、`Mantis 安全審查`
+- 執行模式：overlay
+- 續跑狀態：`.agent/quality-state.md`
 - 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/delivery-quality-gate`
-- 何時使用：任何技術棧的程式碼交付前想要品質把關；後端、資料、DevOps 專案需要驗證、審查與安全檢查；AI 宣稱「寫完了」但沒有跑過驗證，需要強制驗證流程；與前端總指揮搭配：負責四階段流程中的「品質閘門」階段
+- 何時使用：任何程式碼任務中持續驗證，不想等寫完才發現整體壞掉；需要把每項需求連到實作、測試和最新證據；功能完成或重構後想取得第二視角的程式碼審查；交付前需要依實際風險決定安全檢查深度
 
 #### 程式碼品質閘門 `superpowers-code-quality`
 
@@ -103,6 +110,24 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 同來源套件含 3 個資料夾，要一起裝：`verification-before-completion`、`requesting-code-review`、`receiving-code-review`
 - 下載基底：`https://raw.githubusercontent.com/obra/superpowers/main/skills`
 - 何時使用：寫完功能準備交付或合併前，想要品質把關；AI 宣稱「寫完了」但沒有跑過驗證，需要強制驗證流程；希望程式碼有第二人（審查員）看過再上線；收到審查意見不知道該照單全收還是反駁
+
+#### 實作藍圖 `plan-implementation`
+
+- 摘要：把驗收需求拆成可照順序完成的開發任務。
+- 標籤：planning、implementation、requirements、architecture、testing、workflow
+- 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/plan-implementation
+- 安裝資料夾名：`plan-implementation`
+- 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/plan-implementation`
+- 何時使用：需求已確認，但還需要決定先改哪些檔案、模組與測試；跨多個元件或資料流的功能需要避免邊寫邊改架構；必須保留既有 API、資料格式或使用行為，先留下可比較基線；長任務需要另一個 Agent 也能接著同一份計畫執行
+
+#### 需求契約 `define-acceptance-contract`
+
+- 摘要：把模糊需求整理成可逐項驗收的完成條件。
+- 標籤：requirements、specification、acceptance、planning、traceability、workflow
+- 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/define-acceptance-contract
+- 安裝資料夾名：`define-acceptance-contract`
+- 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/define-acceptance-contract`
+- 何時使用：開始網站、App 或其他多階段開發前，先固定什麼才算完成；需求很長或很模糊，需要整理成可測試的條件；不希望 Agent 做到一半自行縮小範圍或改變成功標準；需要讓設計、實作、測試與安全審查追蹤同一組需求
 
 #### Mantis 安全審查 `mantis`
 

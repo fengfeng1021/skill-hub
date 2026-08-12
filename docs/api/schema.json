@@ -98,6 +98,93 @@
       },
       "description": "跨來源精選組合包引用的其他 registry id。建置時會遞迴展開、去重，安裝提示詞會把入口 skill 與所有引用項目一起安裝。這表示產品層級的組合，不是額外相依，也不是 parts。"
     },
+    "replaces": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+      },
+      "description": "此 skill 取代的舊資料夾／frontmatter name。安裝提示詞會要求偵測、比較並在新入口驗證後安全停用無自訂的舊入口，避免重複觸發。"
+    },
+    "runtime": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "可選的執行期工作流 metadata。includes 回答『要安裝什麼』；runtime 回答『入口執行時如何分階段、按需載入與續跑』。實際細節仍以入口 SKILL.md 為準。",
+      "required": ["mode"],
+      "properties": {
+        "mode": {
+          "enum": ["pipeline", "router", "overlay", "standalone"],
+          "description": "pipeline = 有序階段；router = 依條件選路；overlay = 全程覆蓋；standalone = 可獨立執行。"
+        },
+        "stateArtifact": {
+          "type": "string",
+          "description": "跨回合保存狀態的專案相對路徑，例如 .agent/frontend-workflow.md。"
+        },
+        "continueWithoutUserInput": {
+          "type": "boolean",
+          "description": "通過 Gate 後是否自動進入下一階段。"
+        },
+        "ambiguityPolicy": {
+          "enum": ["ask-only-material", "ask-before-change", "autonomous"],
+          "description": "什麼情況需要停下來向使用者確認。"
+        },
+        "stages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "name", "skills", "gate"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "name": { "type": "string" },
+              "skills": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                }
+              },
+              "optionalSkills": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                }
+              },
+              "when": { "type": "string" },
+              "outputs": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "gate": { "type": "string" }
+            }
+          }
+        },
+        "overlays": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          }
+        },
+        "finalizers": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          }
+        }
+      }
+    },
     "install": {
       "type": "object",
       "additionalProperties": false,

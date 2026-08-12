@@ -181,6 +181,21 @@ for (const s of skills) {
   if (s.install?.scope && !['user', 'project'].includes(s.install.scope)) {
     errors.push(`${at}：install.scope 必須是 user 或 project`);
   }
+  if (s.replaces !== undefined) {
+    if (!Array.isArray(s.replaces) || s.replaces.length === 0) {
+      errors.push(`${at}：replaces 必須是至少一個舊資料夾／frontmatter name 的陣列`);
+    } else {
+      const oldNames = new Set();
+      for (const oldName of s.replaces) {
+        if (typeof oldName !== 'string' || !DIR_NAME.test(oldName)) {
+          errors.push(`${at}：replaces 的值 "${oldName}" 不是合法的舊 Skill 名稱`);
+        }
+        if (oldName === s.install?.dirName) errors.push(`${at}：replaces 不能等於目前 install.dirName`);
+        if (oldNames.has(oldName)) errors.push(`${at}：replaces 的舊名稱 "${oldName}" 重複`);
+        oldNames.add(oldName);
+      }
+    }
+  }
 
   // 精選組合包（includes）引用其他收錄項目；它不是 parts，也不是 install.requires。
   if (s.includes !== undefined) {
@@ -197,6 +212,63 @@ for (const s of skills) {
         if (ids.has(id)) errors.push(`${at}：includes 的 registry id "${id}" 重複`);
         if (!allIds.has(id)) errors.push(`${at}：includes 引用了不存在的 registry id "${id}"`);
         ids.add(id);
+      }
+    }
+  }
+
+  // runtime 描述執行順序；所有 skill 引用都必須是 registry id，pipeline 必須有階段與 Gate。
+  if (s.runtime !== undefined) {
+    const runtime = s.runtime;
+    const modes = ['pipeline', 'router', 'overlay', 'standalone'];
+    if (!runtime || typeof runtime !== 'object' || Array.isArray(runtime)) {
+      errors.push(`${at}：runtime 必須是物件`);
+    } else {
+      if (!modes.includes(runtime.mode)) {
+        errors.push(`${at}：runtime.mode 必須是 ${modes.join(' / ')}，目前是 "${runtime.mode}"`);
+      }
+      if (runtime.stateArtifact !== undefined &&
+          (typeof runtime.stateArtifact !== 'string' || runtime.stateArtifact.startsWith('/') || /^[A-Za-z]:[\\/]/.test(runtime.stateArtifact))) {
+        errors.push(`${at}：runtime.stateArtifact 必須是專案相對路徑`);
+      }
+      if (runtime.mode === 'pipeline' && (!Array.isArray(runtime.stages) || runtime.stages.length === 0)) {
+        errors.push(`${at}：runtime.mode=pipeline 時必須有至少一個 stage`);
+      }
+      if (runtime.stages !== undefined && !Array.isArray(runtime.stages)) {
+        errors.push(`${at}：runtime.stages 必須是陣列`);
+      }
+      const stageIds = new Set();
+      for (const stage of Array.isArray(runtime.stages) ? runtime.stages : []) {
+        if (!stage?.id || !/^[a-z0-9][a-z0-9-]*$/.test(stage.id)) {
+          errors.push(`${at}：runtime stage 缺少合法的 kebab-case id`);
+        } else if (stageIds.has(stage.id)) {
+          errors.push(`${at}：runtime stage id "${stage.id}" 重複`);
+        }
+        if (stage?.id) stageIds.add(stage.id);
+        if (!stage?.name) errors.push(`${at}：runtime stage "${stage?.id ?? '?'}" 缺少 name`);
+        if (!stage?.gate) errors.push(`${at}：runtime stage "${stage?.id ?? '?'}" 缺少 gate`);
+        if (!Array.isArray(stage?.skills)) {
+          errors.push(`${at}：runtime stage "${stage?.id ?? '?'}" 的 skills 必須是陣列`);
+        }
+        const requiredCount = Array.isArray(stage?.skills) ? stage.skills.length : 0;
+        const optionalCount = Array.isArray(stage?.optionalSkills) ? stage.optionalSkills.length : 0;
+        if (requiredCount + optionalCount === 0) {
+          errors.push(`${at}：runtime stage "${stage?.id ?? '?'}" 必須指定至少一個必要或可選 skill`);
+        }
+      }
+      const runtimeRefs = [
+        ...(Array.isArray(runtime.stages) ? runtime.stages.flatMap((stage) => [
+          ...(Array.isArray(stage?.skills) ? stage.skills : []),
+          ...(Array.isArray(stage?.optionalSkills) ? stage.optionalSkills : []),
+        ]) : []),
+        ...(Array.isArray(runtime.overlays) ? runtime.overlays : []),
+        ...(Array.isArray(runtime.finalizers) ? runtime.finalizers : []),
+      ];
+      for (const id of runtimeRefs) {
+        if (typeof id !== 'string' || !/^[a-z0-9][a-z0-9-]*$/.test(id)) {
+          errors.push(`${at}：runtime skill 引用 "${id}" 不是合法的 registry id`);
+        } else if (!allIds.has(id)) {
+          errors.push(`${at}：runtime 引用了不存在的 registry id "${id}"`);
+        }
       }
     }
   }
@@ -221,6 +293,36 @@ function detectIncludeCycle(id, path = []) {
   visited.add(id);
 }
 for (const id of byId.keys()) detectIncludeCycle(id);
+
+// runtime 只能路由到安裝清單已涵蓋的項目，避免網站說是工作流但實際缺少子 Skill。
+function expandedIncludeIds(skill) {
+  const out = new Set();
+  const visit = (id) => {
+    if (out.has(id)) return;
+    out.add(id);
+    const item = byId.get(id);
+    for (const child of Array.isArray(item?.includes) ? item.includes : []) visit(child);
+  };
+  for (const id of Array.isArray(skill?.includes) ? skill.includes : []) visit(id);
+  return out;
+}
+for (const skill of skills) {
+  if (!skill.runtime) continue;
+  const installed = expandedIncludeIds(skill);
+  const refs = [
+    ...(Array.isArray(skill.runtime.stages) ? skill.runtime.stages.flatMap((stage) => [
+      ...(Array.isArray(stage?.skills) ? stage.skills : []),
+      ...(Array.isArray(stage?.optionalSkills) ? stage.optionalSkills : []),
+    ]) : []),
+    ...(Array.isArray(skill.runtime.overlays) ? skill.runtime.overlays : []),
+    ...(Array.isArray(skill.runtime.finalizers) ? skill.runtime.finalizers : []),
+  ];
+  for (const ref of new Set(refs)) {
+    if (ref !== skill.id && byId.has(ref) && !installed.has(ref)) {
+      errors.push(`${skill.__file}：runtime 會使用 "${ref}"，但 includes 的完整安裝清單沒有涵蓋它`);
+    }
+  }
+}
 
 // skills/ 底下有資料夾卻沒收錄
 if (existsSync(SKILLS_DIR)) {

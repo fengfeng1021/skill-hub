@@ -1,0 +1,60 @@
+{
+  "id": "define-acceptance-contract",
+  "name": "需求契約",
+  "summary": "把模糊需求整理成可逐項驗收的完成條件。",
+  "description": "在設計與實作前，把使用者原始要求整理成穩定的需求基準：包含範圍、排除項、主要與例外情境、FR／NFR 編號、可量測成功條件、假設、依賴、風險及變更紀錄。後續規劃、程式碼、測試和安全審查都以相同需求 ID 追蹤，防止 Agent 因為實作困難或既有測試而偷偷降低要求。方法參考 GitHub Spec Kit 的規格驅動與需求品質檢查，以及 obra/superpowers 的先澄清、再規格、再計畫流程；改寫成能在長任務中自主續跑的跨 Agent Skill。",
+  "category": "程式品質",
+  "tags": [
+    "requirements",
+    "specification",
+    "acceptance",
+    "planning",
+    "traceability",
+    "workflow"
+  ],
+  "official": false,
+  "featured": true,
+  "author": "fengfeng1021",
+  "license": "MIT",
+  "version": "1.0.0",
+  "usage": [
+    "開始網站、App 或其他多階段開發前，先固定什麼才算完成",
+    "需求很長或很模糊，需要整理成可測試的條件",
+    "不希望 Agent 做到一半自行縮小範圍或改變成功標準",
+    "需要讓設計、實作、測試與安全審查追蹤同一組需求"
+  ],
+  "highlights": [
+    "每項要求都有穩定編號、來源與驗收方式",
+    "只為真正影響範圍、安全或核心體驗的歧義中斷任務",
+    "需求變更要留下理由與授權來源，不能被實作反向改寫"
+  ],
+  "source": {
+    "kind": "local",
+    "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/define-acceptance-contract",
+    "path": "skills/define-acceptance-contract"
+  },
+  "install": {
+    "scope": "user",
+    "dirName": "define-acceptance-contract",
+    "files": [
+      "SKILL.md",
+      "agents/openai.yaml",
+      "references/requirements-method.md"
+    ],
+    "requires": [],
+    "notes": "可獨立使用，也會由前端總指揮在工作流第 0 階段自動載入。"
+  },
+  "prompt": null,
+  "links": [
+    {
+      "label": "GitHub Spec Kit",
+      "url": "https://github.com/github/spec-kit"
+    },
+    {
+      "label": "obra/superpowers",
+      "url": "https://github.com/obra/superpowers"
+    }
+  ],
+  "addedAt": "2026-08-12",
+  "updatedAt": "2026-08-12"
+}

@@ -1,39 +1,37 @@
 {
   "id": "frontend-director",
   "name": "前端總指揮",
-  "summary": "把六套設計能力一次裝齊，品質與安全也自動把關。",
-  "description": "這是一套跨來源的精選組合包，不是單一 skill。入口「前端總指揮」定位為前端體驗與交付的總指揮：「設計」涵蓋完整前端體驗——視覺（UI）、互動（UX）、動效（Motion）與交付品質（Quality）。\n整合六套設計能力（Impeccable 設計判斷力與打磨、UI UX Pro Max 設計規則與資料庫、Taste 模仿網站風格、Hue 品牌設計系統、GSAP 動效、interaction-experience-design 互動體驗）＋交付品質閘門（delivery-quality-gate，內部再展開 superpowers 品質三件套與 Google Mantis 安全審查）。\nv3.0.0 起內建調度機制：開場宣告（任務開始先宣告階段與產出）、每階段 DoD 完成標準（未過不進下一階段）、最終交付清單（宣告完成前逐項打勾回報）、常見遺漏警示表——解決「AI 只做 UI 就交差、忘了品質閘門」的漏做問題。\n依 UI → UX → 動效 → 品質閘門四階段協同；品質閘門是橫切關卡，純功能開發、修 bug、重構也會自動套用。\n安裝時會連同組合入口與所有收錄項目全部裝齊；執行任務時不再把其餘能力誤當成可選相依。",
+  "summary": "一個入口把需求、設計、動效和交付一路做完。",
+  "description": "可續跑的前端長任務工作流，而不是把多份提示詞堆在一起。v4 會先建立有 FR／NFR 編號的需求契約，再把它拆成含檔案邊界、相容性基線、依賴與測試順序的實作藍圖，之後才按任務條件依序路由 UI、UX 與動效能力；程式碼品質從首次寫碼起持續覆蓋每個階段，最後依風險選擇安全審查深度。工作流把目前階段、契約與計畫路徑、已通過 Gate、證據、風險與下一步寫入狀態檔，長任務被壓縮或換回合後仍能續跑。安裝時會裝齊全部可用能力，執行時只載入目前階段需要的 Skill，避免上下文一次塞滿。",
   "category": "前端 / 設計",
   "tags": [
-    "design",
-    "ui",
-    "ux",
-    "director",
     "frontend",
-    "integration",
+    "design",
+    "workflow",
+    "requirements",
     "quality",
-    "review",
-    "security",
-    "workflow"
+    "security"
   ],
   "official": false,
   "featured": true,
   "author": "fengfeng1021",
   "license": "MIT",
+  "version": "4.0.0",
   "usage": [
-    "美化或改版任何網頁、App 畫面，不確定該用哪個設計 skill 時",
-    "要模仿某網站風格、建立品牌設計系統、加動效，一次到位",
-    "設計任務需要同時兼顧判斷力、規則、風格、品牌、動效",
-    "交付前想要品質把關：程式碼驗證、審查與安全檢查"
+    "從一句需求開始完成整個網站、Web App 或重大前端改版",
+    "希望 Agent 自己接續需求、UI、UX、動效、驗證與安全，不要逐輪點名 Skill",
+    "長任務可能跨回合或被壓縮，需要保留階段狀態與最新證據",
+    "小型修正也想保留必要品質檢查，但自動略過無關設計階段"
   ],
   "highlights": [
-    "一個入口自動分配六套設計能力與品質閘門，不用自己選",
-    "內建調度機制：開場宣告、每階段 DoD、最終交付清單，不漏階段",
-    "安裝提示詞會展開完整清單並逐項驗證，不會只裝入口",
-    "依 UI、UX、動效、品質閘門四階段完成，不只美化畫面",
-    "品質閘門委派給通用入口，後端等其他專案也能獨立使用"
+    "單一入口自動續跑，只有重大範圍、安全或核心體驗歧義才會停下來問",
+    "先固定需求契約，再用需求編號追蹤設計、程式碼、測試與安全結果",
+    "UI、UX、動效依條件按需載入，階段失敗會回退到負責修正的位置",
+    "品質全程驗證，安全依風險收尾，不再等最後才一次檢查"
   ],
   "includes": [
+    "define-acceptance-contract",
+    "plan-implementation",
     "impeccable",
     "ui-ux-pro-max",
     "taste",
@@ -42,25 +40,87 @@
     "interaction-experience-design",
     "delivery-quality-gate"
   ],
+  "replaces": ["frontend-design-director"],
+  "runtime": {
+    "mode": "pipeline",
+    "stateArtifact": ".agent/frontend-workflow.md",
+    "continueWithoutUserInput": true,
+    "ambiguityPolicy": "ask-only-material",
+    "stages": [
+      {
+        "id": "contract",
+        "name": "需求契約",
+        "skills": ["define-acceptance-contract"],
+        "outputs": ["需求 ID、驗收條件、假設與風險"],
+        "gate": "需求完整、可測、無重大未決歧義"
+      },
+      {
+        "id": "plan",
+        "name": "實作藍圖",
+        "skills": ["plan-implementation"],
+        "outputs": ["相容性基線、檔案級任務、依賴與測試順序"],
+        "gate": "每個需求都有可執行任務、驗證證據與正確依賴"
+      },
+      {
+        "id": "ui",
+        "name": "UI 設計與實作",
+        "skills": ["impeccable"],
+        "optionalSkills": ["ui-ux-pro-max", "taste", "hue"],
+        "when": "任務會新增或改變可見介面",
+        "outputs": ["設計方向、tokens、元件與響應式畫面"],
+        "gate": "視覺需求已實作並通過桌機與手機渲染檢查"
+      },
+      {
+        "id": "ux",
+        "name": "UX 互動",
+        "skills": ["interaction-experience-design"],
+        "when": "任務包含使用流程、狀態或互動",
+        "outputs": ["主要與例外流程、狀態、回饋與可及性行為"],
+        "gate": "核心流程可完成、錯誤可恢復、鍵盤與觸控可用"
+      },
+      {
+        "id": "motion",
+        "name": "動效",
+        "skills": [],
+        "optionalSkills": ["gsap"],
+        "when": "先沿用可通過 Gate 的既有動畫棧；沒有合適方案且動效能改善引導、回饋或空間連續性時才載入 GSAP",
+        "outputs": ["按需選擇的動畫與 reduced-motion 行為"],
+        "gate": "動畫不阻礙操作、可中斷並保留 reduced-motion 功能"
+      },
+      {
+        "id": "integration",
+        "name": "整合驗證",
+        "skills": ["delivery-quality-gate"],
+        "outputs": ["需求追蹤矩陣與最新驗證證據"],
+        "gate": "每個需求 ID 都有實作與有效證據"
+      }
+    ],
+    "overlays": ["delivery-quality-gate"],
+    "finalizers": ["delivery-quality-gate"]
+  },
   "source": {
     "kind": "local",
-    "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-director"
+    "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-director",
+    "path": "skills/frontend-director"
   },
   "install": {
     "scope": "user",
     "dirName": "frontend-director",
-    "files": [
-      "SKILL.md"
-    ],
-    "notes": "這是前端體驗的協同入口；安裝時必須連同 includes 展開的七個收錄項目一起安裝（品質閘門會再展開品質與安全）。"
+    "files": ["SKILL.md"],
+    "requires": [],
+    "notes": "includes 是完整安裝清單；runtime 才是執行順序。replaces 會讓安裝提示詞偵測並安全停用無自訂的舊入口。安裝後由入口按階段載入所需 Skill，不要在任務開始時一次讀完全部內容。"
   },
   "prompt": null,
   "links": [
     {
       "label": "Skill Hub（收藏庫）",
       "url": "https://fengfeng1021.github.io/skill-hub/"
+    },
+    {
+      "label": "GitHub Spec Kit",
+      "url": "https://github.com/github/spec-kit"
     }
   ],
   "addedAt": "2026-08-08",
-  "updatedAt": "2026-08-10"
+  "updatedAt": "2026-08-12"
 }

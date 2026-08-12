@@ -109,6 +109,12 @@ export function buildBlock(skill, index = null) {
     lines.push(`- **注意**：${skill.install.notes}`);
   }
 
+  if (skill.replaces?.length) {
+    lines.push(`- **舊名稱遷移**：這個入口取代 ${skill.replaces.map((name) => `\`${name}\``).join('、')}。`);
+    lines.push(`  安裝前先在目前 Agent 的官方 skills 位置尋找這些舊資料夾或 frontmatter name。`);
+    lines.push(`  若找到，先與新版比較：有自訂修改就停止並列出差異讓使用者決定；沒有自訂時，先安裝並驗證新版可被發現，再把舊入口的 \`SKILL.md\` 改名為 \`SKILL.md.disabled\`，保留可恢復備份，避免兩份入口同時觸發。`);
+  }
+
   return lines.join('\n');
 }
 
