@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fengfeng1021.github.io/skill-hub/schemas/frontend-workflow-state-v1.json",
+  "title": "Frontend Director Workflow State",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "workflow",
+    "skillVersion",
+    "runId",
+    "mode",
+    "status",
+    "currentPhase",
+    "phases",
+    "requirements",
+    "tasks",
+    "risks",
+    "audit"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "workflow": { "const": "frontend-director" },
+    "skillVersion": { "type": "string" },
+    "runId": { "type": "string", "format": "uuid" },
+    "mode": { "enum": ["full", "targeted"] },
+    "status": { "enum": ["active", "done"] },
+    "projectRoot": { "const": "." },
+    "createdAt": { "type": "string" },
+    "updatedAt": { "type": "string" },
+    "currentPhase": {
+      "enum": ["contract", "plan", "ui", "ux", "motion", "implementation", "integration", "security"]
+    },
+    "currentTask": { "type": ["string", "null"] },
+    "nextAction": { "type": "string" },
+    "artifacts": { "type": "object" },
+    "phases": {
+      "type": "object",
+      "required": ["contract", "plan", "ui", "ux", "motion", "implementation", "integration", "security"],
+      "additionalProperties": {
+        "type": "object",
+        "required": ["status", "evidence"],
+        "properties": {
+          "status": { "enum": ["pending", "in_progress", "passed", "skipped", "invalid"] },
+          "summary": { "type": ["string", "null"] },
+          "evidence": { "type": "array", "items": { "type": "string" } },
+          "workspaceFingerprint": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "requirements": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["kind", "text", "source", "updatedAt"],
+        "properties": {
+          "kind": { "enum": ["functional", "nonfunctional"] },
+          "text": { "type": "string", "minLength": 1 },
+          "source": { "type": "string" },
+          "updatedAt": { "type": "string" }
+        }
+      }
+    },
+    "tasks": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["title", "requirements", "files", "dependsOn", "status", "checks"],
+        "properties": {
+          "title": { "type": "string", "minLength": 1 },
+          "requirements": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "files": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "dependsOn": { "type": "array", "items": { "type": "string" } },
+          "expectedChecks": { "type": "array", "items": { "type": "string" } },
+          "status": { "enum": ["pending", "in_progress", "completed"] },
+          "attempts": { "type": "integer", "minimum": 0 },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "command", "exitCode", "evidence", "recordedAt", "scopeFingerprint", "evidenceSha256", "valid"],
+              "properties": {
+                "name": { "type": "string" },
+                "command": { "type": "string" },
+                "exitCode": { "type": "integer" },
+                "evidence": { "type": "string" },
+                "recordedAt": { "type": "string" },
+                "scopeFingerprint": { "type": "string" },
+                "evidenceSha256": { "type": "string" },
+                "valid": { "type": "boolean" }
+              }
+            }
+          },
+          "summary": { "type": ["string", "null"] },
+          "startedAt": { "type": ["string", "null"] },
+          "completedAt": { "type": ["string", "null"] },
+          "invalidReason": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "risks": { "type": "array", "items": { "type": "object" } },
+    "skillsUsed": { "type": "array", "items": { "type": "object" } },
+    "audit": { "type": "array", "items": { "type": "object" } }
+  }
+}

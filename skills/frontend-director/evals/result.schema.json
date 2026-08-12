@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Frontend Director Benchmark Result",
+  "type": "object",
+  "required": ["schemaVersion", "runId", "variant", "agent", "model", "taskId", "seed", "metrics"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "runId": { "type": "string" },
+    "variant": { "enum": ["control", "skill", "ablation"] },
+    "agent": { "type": "string" },
+    "model": { "type": "string" },
+    "taskId": { "type": "string" },
+    "seed": { "type": ["string", "number"] },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "requirementsPassRate": { "type": "number", "minimum": 0, "maximum": 100 },
+        "automatedPassRate": { "type": "number", "minimum": 0, "maximum": 100 },
+        "designQuality": { "type": "number", "minimum": 0, "maximum": 100 },
+        "codeQuality": { "type": "number", "minimum": 0, "maximum": 100 },
+        "accessibilityScore": { "type": "number", "minimum": 0, "maximum": 100 },
+        "performanceScore": { "type": "number", "minimum": 0, "maximum": 100 },
+        "securityScore": { "type": "number", "minimum": 0, "maximum": 100 },
+        "criticalRegressions": { "type": "number", "minimum": 0 },
+        "durationSeconds": { "type": "number", "minimum": 0 },
+        "tokens": { "type": "number", "minimum": 0 }
+      }
+    },
+    "checks": { "type": "array", "items": { "type": "object" } },
+    "activatedSkills": { "type": "array", "items": { "type": "string" } },
+    "artifacts": { "type": "array", "items": { "type": "string" } }
+  }
+}

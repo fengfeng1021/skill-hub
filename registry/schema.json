@@ -121,6 +121,25 @@
           "type": "string",
           "description": "跨回合保存狀態的專案相對路徑，例如 .agent/frontend-workflow.md。"
         },
+        "portableCore": {
+          "type": "boolean",
+          "description": "入口是否只靠開放 Agent Skills 格式與相對資源就能完成基線工作流；平台專屬能力只能作增強。"
+        },
+        "controller": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["script", "stateSchema"],
+          "properties": {
+            "script": {
+              "type": "string",
+              "description": "相對於入口 skill 根目錄的可執行狀態控制器。"
+            },
+            "stateSchema": {
+              "type": "string",
+              "description": "相對於入口 skill 根目錄的狀態 JSON Schema。"
+            }
+          }
+        },
         "continueWithoutUserInput": {
           "type": "boolean",
           "description": "通過 Gate 後是否自動進入下一階段。"
@@ -157,6 +176,12 @@
                   "type": "string",
                   "pattern": "^[a-z0-9][a-z0-9-]*$"
                 }
+              },
+              "coreReferences": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": { "type": "string" },
+                "description": "入口 skill 內建、在沒有外部子 skill 時仍能執行此階段的相對 reference。"
               },
               "when": { "type": "string" },
               "outputs": {

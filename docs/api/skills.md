@@ -7,7 +7,7 @@
 | Skill | 摘要 | 標籤 | 來源 |
 | --- | --- | --- | --- |
 | **互動體驗設計** | 讓使用者一看就懂怎麼用，不會迷路也知道下一步。 | ux, interaction, heuristics, information-architecture, navigation, usability, accessibility, cognitive-load | [本庫託管](https://github.com/fengfeng1021/skill-hub/tree/main/skills/interaction-experience-design) |
-| **前端總指揮** | 一個入口把需求、設計、動效和交付一路做完。 | frontend, design, workflow, requirements, quality, security | [本庫託管](https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-director) |
+| **前端總指揮** | 一個入口把前端需求、設計、寫碼和驗證做完。 | frontend, design, workflow, requirements, quality, security | [本庫託管](https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-director) |
 | **Hue** | 學任何品牌的風格，之後做的東西都自動長那樣。 | design, brand, design-system, tokens, ui, theme | [dominikmartn/hue](https://github.com/dominikmartn/hue) |
 | **Impeccable** | 把網頁設計得有質感，也能幫你檢查哪裡不夠好。 | design, ui, ux, frontend, review, accessibility | [pbakaus/impeccable](https://github.com/pbakaus/impeccable/tree/main/.claude/skills/impeccable) |
 | **Taste** | 貼上任何網站的網址，就能學到它的設計風格與品味。 | design, taste, ui, analysis, tokens, extraction | [senlindesign/taste-skill](https://github.com/senlindesign/taste-skill) |
