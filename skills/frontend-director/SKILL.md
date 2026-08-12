@@ -82,7 +82,7 @@ description: 以單一入口完成高品質前端長任務。用於建立或大�
 1. 用控制器 `start-task T-###`，只讀該任務需要的程式、契約和 references。
 2. 建立修改前基線；可行時先建立會因缺陷而失敗的測試或重現步驟。
 3. 實作最小但完整的修改，不把無關重構混進同一任務。
-4. 執行最小相關測試；用 `record-check` 記錄真實指令、退出碼與證據。實作 Gate 另要求 tests、typecheck、lint 與 diff-review；不存在的命令只能以具體理由記為 not-applicable，不能靜默省略。
+4. 執行最小相關測試；用 `record-check` 記錄真實指令、退出碼與證據。實作 Gate 另要求 tests、typecheck、lint、format 與 diff-review；若專案已有 formatter 必須實際執行，不存在的命令只能以具體理由記為 not-applicable，不能靜默省略。
 5. 檢查 diff 的需求範圍、模組邊界、重複、錯誤處理、型別、無障礙、效能與安全。
 6. 只有控制器允許 `complete-task` 時才開始下一個任務。失敗就留在同一任務修正。
 
@@ -116,4 +116,4 @@ workflowctl validate-visual-evidence --manifest .agent/evidence/visual-evidence.
 
 ## 最終回報
 
-列出完成範圍、`skillsUsed` 與 fallbacks、需求覆蓋、實際 lint／typecheck／測試／build／桌面與手機瀏覽器結果、語意 oracle、安全分級、未驗證項目及殘留風險。不得只回報「已完成」，也不得把未執行的檢查寫成已通過。
+列出完成範圍、`skillsUsed` 與 fallbacks、需求覆蓋、實際 format／lint／typecheck／測試／build／桌面與手機瀏覽器結果、visual-fidelity、interaction-stress、語意 oracle、安全分級、未驗證項目及殘留風險。不得只回報「已完成」，也不得把未執行的檢查寫成已通過。
