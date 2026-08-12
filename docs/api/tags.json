@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-10",
+  "generatedAt": "2026-08-12",
   "categories": [
     {
       "name": "前端 / 設計",
@@ -7,7 +7,7 @@
     },
     {
       "name": "程式品質",
-      "count": 3
+      "count": 5
     },
     {
       "name": "前端 / 動效",
@@ -24,23 +24,19 @@
   ],
   "tags": [
     {
+      "name": "workflow",
+      "count": 7
+    },
+    {
       "name": "design",
       "count": 5
     },
     {
       "name": "review",
-      "count": 5
+      "count": 4
     },
     {
       "name": "ui",
-      "count": 5
-    },
-    {
-      "name": "workflow",
-      "count": 5
-    },
-    {
-      "name": "ux",
       "count": 4
     },
     {
@@ -56,7 +52,15 @@
       "count": 3
     },
     {
+      "name": "requirements",
+      "count": 3
+    },
+    {
       "name": "security",
+      "count": 3
+    },
+    {
+      "name": "ux",
       "count": 3
     },
     {
@@ -64,7 +68,7 @@
       "count": 2
     },
     {
-      "name": "methodology",
+      "name": "planning",
       "count": 2
     },
     {
@@ -72,8 +76,16 @@
       "count": 2
     },
     {
+      "name": "traceability",
+      "count": 2
+    },
+    {
       "name": "verification",
       "count": 2
+    },
+    {
+      "name": "acceptance",
+      "count": 1
     },
     {
       "name": "accounts",
@@ -93,6 +105,10 @@
     },
     {
       "name": "animation",
+      "count": 1
+    },
+    {
+      "name": "architecture",
       "count": 1
     },
     {
@@ -128,10 +144,6 @@
       "count": 1
     },
     {
-      "name": "director",
-      "count": 1
-    },
-    {
       "name": "extraction",
       "count": 1
     },
@@ -152,11 +164,11 @@
       "count": 1
     },
     {
-      "name": "information-architecture",
+      "name": "implementation",
       "count": 1
     },
     {
-      "name": "integration",
+      "name": "information-architecture",
       "count": 1
     },
     {
@@ -165,6 +177,10 @@
     },
     {
       "name": "javascript",
+      "count": 1
+    },
+    {
+      "name": "methodology",
       "count": 1
     },
     {
@@ -188,11 +204,19 @@
       "count": 1
     },
     {
+      "name": "specification",
+      "count": 1
+    },
+    {
       "name": "sso",
       "count": 1
     },
     {
       "name": "taste",
+      "count": 1
+    },
+    {
+      "name": "testing",
       "count": 1
     },
     {

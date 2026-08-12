@@ -2,7 +2,7 @@
   "id": "interaction-experience-design",
   "name": "互動體驗設計",
   "summary": "讓使用者一看就懂怎麼用，不會迷路也知道下一步。",
-  "description": "專業級「使用者交互體驗」設計 skill v5：SKILL.md 入口＋決策樹索引＋11 份 references＋scripts 工具＋benchmarks 案例集＋多平台目錄。學理基礎：Nielsen 10 啟發式、Shneiderman 8 法則、Fitts/Hick/Miller/Gestalt/Jakob/Norman、認知負荷、資訊架構學、WCAG 2.2、ISO 9241。references 含：nielsen-heuristics（10 條完整）、design-laws、information-architecture、cognitive-load、accessibility-wcag、evaluation-methods、scoring（評分閘門 <80 不交付，工具+人工合流）、case-studies（6 主題好壞案例）、desktop-apps（egui 桌面指引）、anti-patterns-checklist。scripts/audit.py（HTML 自動審查：對比/目標/placeholder/語意/雙主按鈕/焦點/aria/reduced-motion）、test_audit.py（12 項自測含 benchmark 回歸）。附 README、.codex/.cursor 多平台目錄。",
+  "description": "專業級「使用者交互體驗」設計 skill v3：SKILL.md 入口＋10 份 references＋scripts 工具＋benchmarks 案例集。學理基礎包含 Nielsen 10 啟發式、Shneiderman 8 法則、Fitts／Hick／Miller／Gestalt／Jakob／Norman、認知負荷、資訊架構學、WCAG 2.2 與 ISO 9241。入口明確要求只讀本次任務需要的 references，避免一次塞滿上下文。scripts/audit.py 可做 HTML 自動審查，test_audit.py 提供自測與 benchmark 回歸。",
   "category": "前端 / 設計",
   "tags": [
     "ux",
@@ -18,7 +18,7 @@
   "featured": true,
   "author": "fengfeng1021",
   "license": "MIT",
-  "version": "5.0.0",
+  "version": "3.0.0",
   "usage": [
     "設計登入流程、多功能 App 的導覽與分頁組織",
     "規劃按鈕層級、返回機制、頁面切換",
@@ -71,5 +71,5 @@
     }
   ],
   "addedAt": "2026-08-08",
-  "updatedAt": "2026-08-08"
+  "updatedAt": "2026-08-12"
 }

@@ -480,6 +480,7 @@ function detailHTML(skill) {
 
   const parts = skill.parts ?? [];
   const included = skill.includedSkills ?? [];
+  const runtime = skill.runtime ?? null;
 
   const badges = [
     skill.official ? '<span class="badge badge--official">官方</span>' : '',
@@ -557,6 +558,39 @@ function detailHTML(skill) {
        </div>`
     : '';
 
+  const workflowModes = {
+    pipeline: '分階段工作流',
+    router: '條件路由',
+    overlay: '全程覆蓋層',
+    standalone: '獨立執行',
+  };
+  const workflowStages = runtime?.stages ?? [];
+  const workflowHTML = runtime
+    ? `<div class="bundle-map">
+         ${workflowStages
+           .map(
+             (stage, index) => `
+               <div class="bundle-map__item">
+                 <span class="bundle-map__index">${String(index + 1).padStart(2, '0')}</span>
+                 <span class="bundle-map__content">
+                   <strong>${escapeHTML(stage.name)}</strong>
+                   <small>Gate：${escapeHTML(stage.gate)}</small>
+                 </span>
+                 <span class="bundle-map__count">${(stage.skills ?? []).length
+                   ? `${stage.skills.length} 個必要 Skill`
+                   : `${(stage.optionalSkills ?? []).length} 個按需 Skill`}</span>
+               </div>`
+           )
+           .join('')}
+       </div>
+       <div class="detail__prose">
+         <p>模式：${escapeHTML(workflowModes[runtime.mode] ?? runtime.mode)}</p>
+         ${runtime.stateArtifact ? `<p>續跑狀態：<code class="tag mono">${escapeHTML(runtime.stateArtifact)}</code></p>` : ''}
+         ${runtime.overlays?.length ? `<p>全程覆蓋：${runtime.overlays.map((id) => `<code class="tag mono">${escapeHTML(id)}</code>`).join(' ')}</p>` : ''}
+         ${runtime.finalizers?.length ? `<p>交付收尾：${runtime.finalizers.map((id) => `<code class="tag mono">${escapeHTML(id)}</code>`).join(' ')}</p>` : ''}
+       </div>`
+    : '';
+
   return `
     <div data-intro>
       <div class="row" style="gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-3)">
@@ -566,6 +600,7 @@ function detailHTML(skill) {
     </div>
 
     ${section('詳細說明', detailParas ? `<div class="detail__prose">${detailParas}</div>` : '')}
+    ${section('執行工作流', workflowHTML)}
     ${
       included.length
         ? section(
@@ -576,6 +611,7 @@ function detailHTML(skill) {
     }
     ${section('什麼時候會用到', list(skill.usage))}
     ${section('重點', list(skill.highlights))}
+    ${section('取代的舊名稱', list(skill.replaces))}
 
     ${
       parts.length

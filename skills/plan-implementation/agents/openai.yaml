@@ -1,0 +1,7 @@
+interface:
+  display_name: "實作藍圖"
+  short_description: "把驗收需求拆成檔案級任務、依賴順序與驗證方式"
+  default_prompt: "Use $plan-implementation to turn the acceptance contract into an executable file-level implementation plan."
+
+policy:
+  allow_implicit_invocation: true

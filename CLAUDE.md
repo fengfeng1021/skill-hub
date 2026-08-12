@@ -96,6 +96,32 @@
 - 建置後的 `installIds` 會遞迴展開並去重；`installPrompt` 會把入口與全部內容一起安裝
 - `parts` = 同一來源套件的實體資料夾；`includes` = 跨來源產品組合；`install.requires` = 執行期相依，三者不要混用
 
+#### 能自動續跑的入口，用 `runtime` 描述執行工作流
+
+`includes` 只解決安裝：保證入口會用到的 Skill 都裝齊。它不代表 Agent 執行時會自動依序調用。入口若有固定階段、條件路由、全程覆蓋層或最後收尾器，要另外加入 `runtime`：
+
+```jsonc
+"runtime": {
+  "mode": "pipeline",
+  "stateArtifact": ".agent/frontend-workflow.md",
+  "continueWithoutUserInput": true,
+  "ambiguityPolicy": "ask-only-material",
+  "stages": [
+    { "id": "contract", "name": "需求契約", "skills": ["define-acceptance-contract"], "gate": "需求完整且可測" },
+    { "id": "ui", "name": "UI", "skills": ["impeccable"], "optionalSkills": ["taste"], "gate": "雙尺寸渲染通過" }
+  ],
+  "overlays": ["delivery-quality-gate"],
+  "finalizers": ["delivery-quality-gate"]
+}
+```
+
+- `runtime` 引用的是 registry id，而且必須已被 `includes` 的遞迴安裝清單涵蓋
+- `runtime` 是給網站與 AI 快速理解的結構化 metadata；完整的路由條件、階段 Gate、失敗回退與續跑方式仍寫在入口 `SKILL.md`
+- 長任務入口要用 `stateArtifact` 留下目前階段、有效證據與下一步，避免跨回合後重做或漏做
+- 安裝時裝齊完整組合；執行時一次只讀目前階段需要的 Skill，不要把所有子 Skill 同時塞進上下文
+
+入口改過資料夾或 frontmatter `name` 時，用 `replaces` 列出舊名稱。產生的安裝提示詞會先比對舊入口是否有自訂修改；新版驗證成功後，才把無自訂的舊 `SKILL.md` 改名為 `SKILL.md.disabled`，保留可恢復備份並避免重複觸發。
+
 ### 4. local 託管的話，複製檔案
 
 放到 `skills/<id>/`，保留原本的目錄結構（`SKILL.md` + `references/` + `scripts/` 等）。
