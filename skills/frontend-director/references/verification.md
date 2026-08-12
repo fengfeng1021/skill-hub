@@ -23,6 +23,12 @@
 
 只執行專案真實存在且適用的命令。缺少某層時，用可重複人工步驟或其他證據替代並明確標示限制。
 
+## Adversarial visual and interaction checks
+
+If UI passed, create `.agent/evidence/visual-evidence.json`, run `workflowctl validate-visual-evidence`, and record it as automated `visual-fidelity`. Review actual desktop, mobile, and largest detail screenshots against source material. Prefer a blind independent agent or human; when unavailable, disclose degraded self-review. Any false binary check returns the workflow to UI or the owning implementation task.
+
+If UX passed, `interaction-stress` must be automated. Exercise sequences, not isolated clicks: play then drag then pause/reset; rapid tab or filter changes with focus tracking; repeated modal open/close and focus return; reload/storage denial/error recovery; interrupted animations and cleanup; reduced-motion functional equivalence. Assert state and output invariants after every transition.
+
 ## 證據要求
 
 每份證據包含需求／任務範圍、時間、版本或工作樹指紋、實際命令或步驟、退出碼、關鍵結果和有效狀態。截圖只能證明可見狀態，不能代替資料、安全或鍵盤行為測試。

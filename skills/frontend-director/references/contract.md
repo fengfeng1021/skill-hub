@@ -29,6 +29,10 @@
 ## Change log
 ```
 
+## Signature visual acceptance
+
+When visible UI is in scope, identify every signature visual and add measurable acceptance for its identity, truth mode, provenance, desktop/mobile/detail rendering, missing-asset behavior, and recognizability without a label. A factual visual must explicitly require `sourced` or `procedural-validated`; “realistic,” “premium,” and “looks like X” are not sufficient acceptance criteria. Follow [visual-truth.md](visual-truth.md).
+
 ## Gate
 
 - 所有明確要求都有 ID，沒有互相矛盾或不可驗證的條目。

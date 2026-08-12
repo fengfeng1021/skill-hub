@@ -29,9 +29,13 @@ workflowctl start-task T-001
 - 保持型別、命名、資料流和元件責任清楚，避免隱藏全域狀態與重複來源。
 - 不留 TODO、假資料、除錯輸出、停用測試或只為通過測試的特殊分支。
 
+### Visual task loop
+
+For a signature-visual task, save the source/reference and a failure-first render before implementation. After coding, capture desktop, mobile, and full-size detail views; compare them to the source/model and repair all failed binary checks from [visual-truth.md](visual-truth.md). No placeholder, broken-asset fallback, or unverified procedural geometry is a complete implementation.
+
 ## 4. Verify：先小後大
 
-先執行最小相關測試，再依風險增加 typecheck、lint、build、整合和瀏覽器驗證。implementation Gate 固定要求 tests、typecheck、lint 與 diff-review；專案真的不適用時要保存 `not-applicable` 證據、原因和替代檢查，不能因 package script 缺失而靜默跳過。每次真實執行後記錄：
+先執行最小相關測試，再依風險增加 typecheck、lint、format、build、整合和瀏覽器驗證。implementation Gate 固定要求 tests、typecheck、lint、format 與 diff-review；若專案已有 formatter，必須實際執行並以 exit 0 記錄，不能把格式錯誤留給 integration。專案真的不適用時要保存 `not-applicable` 證據、原因和替代檢查，不能因 package script 缺失而靜默跳過。每次真實執行後記錄：
 
 ```text
 workflowctl record-check T-001 --name unit --command "npm test -- feature" --exit-code 0 --evidence .agent/evidence/T-001-unit.txt

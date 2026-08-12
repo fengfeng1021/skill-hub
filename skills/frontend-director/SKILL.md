@@ -31,7 +31,7 @@ description: 以單一入口完成高品質前端長任務。用於建立或大�
    ```
 
    從 `currentPhase`、`currentTask` 和 `nextAction` 繼續；不要重做仍有效的工作。
-   若狀態來自 v5／policy v1，先執行 `upgrade-policy`；舊狀態仍可讀，但不得沿用空子 Skill 與舊 Gate 證據完成 v6。
+   若狀態來自 v5／policy v1 或 v6／policy v2，先執行 `upgrade-policy`；舊狀態仍可讀，但不得沿用舊 Gate 證據完成 v6.1。
 3. 若狀態不存在，依任務選擇 `full` 或 `targeted`，執行：
 
    ```text
@@ -66,11 +66,11 @@ description: 以單一入口完成高品質前端長任務。用於建立或大�
 |---|---|---|---|
 | contract | [需求契約](references/contract.md) | 必載 `define-acceptance-contract` | 所有明確要求已有可測 `FR/NFR` |
 | plan | [實作規劃](references/implementation-plan.md) | 必載 `plan-implementation` | 每項需求映射到檔案級 `T-###` 與驗證 |
-| ui | [UI 品質](references/ui-quality.md) | 必載 `impeccable` → `taste` → `hue`；按需 `ui-ux-pro-max` | 設計方向具產品特異性且雙尺寸可用 |
+| ui | [UI 品質](references/ui-quality.md) + [視覺真實性](references/visual-truth.md) | 必載 `impeccable` → `taste` → `hue`；按需 `ui-ux-pro-max` | 產品特異性、signature visual 計畫與雙尺寸規格完整 |
 | ux | [UX 互動](references/ux-interaction.md) | 必載 `interaction-experience-design` | 主要、錯誤、空白、載入與恢復流程可完成 |
 | motion | [動效](references/motion.md) | 通過時至少載入一個對應 GSAP Skill；即使用純 CSS 也用它審查目的、性能與降級；確實不需動效才 skip | 動效有目的、可中斷且支援 reduced motion |
-| implementation | [Coding Loop](references/coding-loop.md) | 必載 `delivery-quality-gate`，並保持品質 overlay | 每個任務都有最新驗證與 diff 審查 |
-| integration | [整合驗證](references/verification.md) | 再載 `delivery-quality-gate`，使用真實瀏覽器與語意 oracle | 每個需求都有實作與最新證據 |
+| implementation | [Coding Loop](references/coding-loop.md) | 必載 `delivery-quality-gate`，並保持品質 overlay | 每個任務都有最新驗證、format 與 diff 審查 |
+| integration | [整合驗證](references/verification.md) + [視覺真實性](references/visual-truth.md) | 再載 `delivery-quality-gate`，使用真實瀏覽器、語意 oracle 與證據 manifest | 每個需求、signature visual 與互動壓力路徑都有最新證據 |
 | security | [安全交付](references/security.md) | 再載 `delivery-quality-gate`；高風險必載 Mantis／同等 specialist | Critical/High 為零，其他風險已處理 |
 
 純 bug、重構或不改可見介面的任務可以跳過 `ui`、`ux`、`motion`，但必須記錄理由。新增或修改可見介面時不得跳過 `ui`；含狀態或互動時不得跳過 `ux`。`contract`、`plan`、`implementation`、`integration`、`security` 不可跳過。
@@ -99,6 +99,20 @@ description: 以單一入口完成高品質前端長任務。用於建立或大�
 ## 跨 Agent 行為
 
 核心只依賴開放的 `SKILL.md`、相對 references、JSON 和 Python 標準函式庫。各宿主的 hooks、plugins 或 tool events 只用於自動啟動、恢復與阻止提前完成，不得成為核心正確性的唯一來源。接入 Claude Code、Codex、OpenCode、Hermes 或自研 Agent 時讀 [平台轉接](references/platform-adapters.md)。模型容易漏步驟、工具結果判斷不穩或長上下文表現下降時，再讀 [較弱模型護欄](references/model-robustness.md)，每次只提供一張任務工作卡。
+
+## v6.1 核心視覺真實性硬閘門
+
+任何新增或修改可見 UI 的任務，都必須讀取並執行 [Signature Visual Truth](references/visual-truth.md)。先找出承載產品識別或事實主張的 signature visuals，再為每一項選擇 `sourced`、`procedural-validated`、`generated-illustration` 或 `intentional-abstraction`。科學、醫療、地理、金融、歷史、博物館與產品辨識等事實性畫面，只能使用前兩種。
+
+不得以 CSS 漸層圓球、無紋理幾何體、emoji、任意線條、假地圖、假資料、共用貼圖或小尺寸遮掩缺陷來冒充核心視覺。沒有可信資產時，改採明確標示的誠實抽象或改變視覺方向，不得偽造寫實感。
+
+UI Gate 必須記錄 `signature-visual-plan`。若 UI 階段通過，integration Gate 必須以 `.agent/evidence/visual-evidence.json` 記錄自動化 `visual-fidelity`，並執行：
+
+```text
+workflowctl validate-visual-evidence --manifest .agent/evidence/visual-evidence.json
+```
+
+同時執行 `interaction-stress`，覆蓋播放中拖曳、快速切換、重設、重複開關、焦點返回、動畫清理與 reduced-motion。implementation Gate 另外固定要求 `format`；若專案已有 formatter，必須實際執行並通過。核心視覺任何一項二元審查為 false，都要回到最早負責任務修正，不能用 Lighthouse、detector 分數、build 成功或自述報告抵銷。
 
 ## 最終回報
 

@@ -2,7 +2,7 @@
   "id": "frontend-director",
   "name": "前端總指揮",
   "summary": "一個入口把前端需求、設計、寫碼和驗證做完。",
-  "description": "跨 Agent 的前端工作流 v6。核心遵循開放 Agent Skills 格式，不依賴 Codex、Claude Code、OpenCode 或 Hermes 的專屬機制：先建立 FR/NFR 驗收契約與檔案級任務，再強制依序載入 UI、UX、動效與交付品質 Skills，之後對每個 T-### 執行理解、失敗證據、最小實作、相關測試、lint、diff 審查與新證據的 Coding Loop。Gate 會驗證子 Skill 載入紀錄、具名檢查、證據 hash、桌面／手機實測、跨元件語意 oracle 與安全分級；外部能力缺少時必須先保存 discovery 證據，才可使用內建 reference fallback。",
+  "description": "跨 Agent 的前端工作流 v6.1。核心遵循開放 Agent Skills 格式，不依賴 Codex、Claude Code、OpenCode 或 Hermes 的專屬機制：先建立 FR/NFR 驗收契約與檔案級任務，再依序載入 UI、UX、動效與交付品質 Skills，對每個 T-### 執行失敗證據、最小實作、測試、lint、format、diff 審查與新證據 Coding Loop。新增 Signature Visual Truth 硬閘門：事實性核心視覺必須有來源或經驗證的程序模型，並用桌面／手機／細節截圖、二元審查及可驗證 manifest 阻止假貼圖、通用漸層、假資料和 placeholder 冒充完成；另要求互動序列壓力測試、語意 oracle、證據 hash 與安全分級。",
   "category": "前端 / 設計",
   "tags": [
     "frontend",
@@ -16,7 +16,7 @@
   "featured": true,
   "author": "fengfeng1021",
   "license": "MIT",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "usage": [
     "從一句需求開始完成整個網站、Web App 或重大前端改版",
     "希望較弱但具備工具能力的模型按固定閉環提升設計與代碼品質",
@@ -25,6 +25,8 @@
     "小型修改也需要可驗證交付，但要自動略過不適用的設計階段"
   ],
   "highlights": [
+    "事實性核心視覺必須有來源或驗證模型，假貼圖、通用漸層、假資料與 placeholder 會被 Gate 拒絕",
+    "桌面、手機與完整細節截圖需通過盲審二元檢查，並寫入可機器驗證的 visual evidence manifest",
     "每個任務都要完成失敗證據、最小修改、測試、diff 審查與新證據閉環",
     "可執行控制器阻止空子 Skill、漏具名檢查、證據竄改、舊證據與空安全 Gate",
     "核心不綁單一 Agent，平台 hooks 和 plugins 只負責增強啟動與約束",
@@ -97,13 +99,14 @@
           "ui-ux-pro-max"
         ],
         "coreReferences": [
-          "references/ui-quality.md"
+          "references/ui-quality.md",
+          "references/visual-truth.md"
         ],
         "when": "任務新增或修改可見介面",
         "outputs": [
           "產品特異的設計方向、tokens、元件與響應式策略"
         ],
-        "gate": "產品特異設計方向、桌面／手機規格、狀態 inventory 與元件策略完整"
+        "gate": "產品特異設計方向、signature visual 真實性計畫、桌面／手機規格、狀態 inventory 與元件策略完整"
       },
       {
         "id": "ux",
@@ -151,7 +154,7 @@
         "outputs": [
           "逐 T-### 的最小實作、最新檢查、diff 審查與證據"
         ],
-        "gate": "每個任務完成 Coding Loop，tests、typecheck、lint、diff-review 與檔案指紋一致"
+        "gate": "每個任務完成 Coding Loop，tests、typecheck、lint、format、diff-review 與檔案指紋一致"
       },
       {
         "id": "integration",
@@ -161,12 +164,13 @@
         ],
         "optionalSkills": [],
         "coreReferences": [
-          "references/verification.md"
+          "references/verification.md",
+          "references/visual-truth.md"
         ],
         "outputs": [
           "需求追蹤矩陣與最新整合、瀏覽器、無障礙和效能證據"
         ],
-        "gate": "所有需求有最新證據，桌面／手機／鍵盤／reduced-motion／語意 oracle 通過且 console 乾淨"
+        "gate": "所有需求有最新證據，桌面／手機／鍵盤／reduced-motion／語意 oracle／visual-fidelity／interaction-stress 通過且 console 乾淨"
       },
       {
         "id": "security",
@@ -213,10 +217,12 @@
       "references/platform-adapters.md",
       "references/evaluation.md",
       "references/model-robustness.md",
+      "references/visual-truth.md",
       "scripts/workflowctl.py",
       "scripts/evaluate_runs.py",
       "scripts/agent_skill_bridge.py",
       "schemas/workflow-state.schema.json",
+      "schemas/visual-evidence.schema.json",
       "evals/frontend-benchmark.json",
       "evals/result.schema.json"
     ],

@@ -19,6 +19,10 @@
 - 不要只做正常狀態；載入、空白、錯誤、成功、disabled、focus 和長內容必須有策略。
 - 不要以單一桌面截圖宣稱響應式完成。
 
+## Signature visual hard fail
+
+Read [visual-truth.md](visual-truth.md) before approving the UI direction. Record `signature-visual-plan` with each core visual's claim, factual status, truth mode, provenance, detail behavior, and owning task. Reject generic gradient objects, fake textures/data/maps, repeated identities, unviewable scale/camera ranges, and any detail view that merely enlarges a placeholder. Detector or aesthetic scores cannot override this review.
+
 ## 必查項目
 
 - 文字層級、閱讀寬度、對比、焦點和觸控目標可用。

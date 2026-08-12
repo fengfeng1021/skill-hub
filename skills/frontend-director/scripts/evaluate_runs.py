@@ -17,6 +17,7 @@ QUALITY_METRICS = {
     "requirementsPassRate",
     "automatedPassRate",
     "designQuality",
+    "visualTruthScore",
     "codeQuality",
     "accessibilityScore",
     "performanceScore",

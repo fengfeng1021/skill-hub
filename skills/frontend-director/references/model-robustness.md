@@ -34,6 +34,12 @@ Done when: 可觀察條件
 - 每次 Gate 前先檢查目前 phase 的 `skillsUsed`／fallbacks 與必要 checks；任一為空就照 `nextAction` 補齊，不要嘗試直接 finish。
 - 失敗最多在同一策略修正兩次；第三次先縮小重現、檢查假設或換驗證方法，避免 doom loop。
 
+## Binary visual task card
+
+Weaker models must not decide that a signature visual “looks good.” Give the current model exactly one visual card: claim, factual flag, permitted truth mode, one source/model, implementation files, three required captures, and the six binary checks from [visual-truth.md](visual-truth.md). Do not let build, Lighthouse, detector, or aggregate gate scores compensate for a false visual check. A failed check produces a repair card for the same task, not a new design direction.
+
+For procedural scenes, calculate bounds, scale transforms, camera coverage, labels, and fallback before adding motion. For sourced assets, verify fetch, license, crop, density, failure fallback, and entity distinction. If tools or assets are missing, downgrade the claim to an honest labelled abstraction instead of inventing detail.
+
 ## 提升輸出品質
 
 - 用真實內容、極端長度和錯誤資料驗證設計，不只生成理想範例。

@@ -17,6 +17,7 @@
         "requirementsPassRate": { "type": "number", "minimum": 0, "maximum": 100 },
         "automatedPassRate": { "type": "number", "minimum": 0, "maximum": 100 },
         "designQuality": { "type": "number", "minimum": 0, "maximum": 100 },
+        "visualTruthScore": { "type": "number", "minimum": 0, "maximum": 100 },
         "codeQuality": { "type": "number", "minimum": 0, "maximum": 100 },
         "accessibilityScore": { "type": "number", "minimum": 0, "maximum": 100 },
         "performanceScore": { "type": "number", "minimum": 0, "maximum": 100 },

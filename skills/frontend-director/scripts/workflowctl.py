@@ -22,8 +22,8 @@ from typing import Any, Iterable, Optional
 
 
 SCHEMA_VERSION = 2
-SKILL_VERSION = "6.0.0"
-POLICY_VERSION = 2
+SKILL_VERSION = "6.1.0"
+POLICY_VERSION = 3
 WORKFLOW = "frontend-director"
 STATE_REL = Path(".agent") / "workflow-state.json"
 PHASES = (
@@ -67,10 +67,16 @@ PHASE_FALLBACK_REFERENCES = {
 PHASE_REQUIRED_CHECKS: dict[str, tuple[str, ...]] = {
     "contract": ("requirements-review",),
     "plan": ("coverage-review",),
-    "ui": ("design-direction", "responsive-spec", "state-inventory", "product-specificity"),
+    "ui": (
+        "design-direction",
+        "responsive-spec",
+        "state-inventory",
+        "product-specificity",
+        "signature-visual-plan",
+    ),
     "ux": ("primary-flow-model", "failure-recovery-plan", "accessibility-plan"),
     "motion": ("motion-purpose", "reduced-motion-plan", "interruption-plan"),
-    "implementation": ("tests", "typecheck", "lint", "diff-review"),
+    "implementation": ("tests", "typecheck", "lint", "format", "diff-review"),
     "integration": (
         "build",
         "desktop-browser",
@@ -79,13 +85,41 @@ PHASE_REQUIRED_CHECKS: dict[str, tuple[str, ...]] = {
         "semantic-oracles",
         "reduced-motion",
         "console-clean",
+        "visual-fidelity",
+        "interaction-stress",
     ),
     "security": ("security-baseline", "negative-paths", "dependency-review"),
 }
 SECURITY_SPECIALIST_MARKERS = ("mantis", "security", "threat")
-PROJECT_SCAN_EXCLUDES = {".git", ".agent", "node_modules", "dist", "build", ".next", "coverage"}
+PROJECT_SCAN_EXCLUDES = {
+    ".git",
+    ".agent",
+    "node_modules",
+    "dist",
+    "build",
+    ".next",
+    "coverage",
+    "__pycache__",
+}
+PROJECT_SCAN_EXCLUDED_SUFFIXES = {".pyc", ".pyo", ".tsbuildinfo"}
+PROJECT_SCAN_EXCLUDED_NAMES = {".DS_Store", "Thumbs.db"}
 FRONTEND_CODE_SUFFIXES = {".js", ".jsx", ".mjs", ".cjs", ".ts", ".tsx", ".vue", ".svelte"}
 TYPED_FRONTEND_SUFFIXES = {".ts", ".tsx", ".vue", ".svelte"}
+VISUAL_TRUTH_MODES = {
+    "sourced",
+    "procedural-validated",
+    "generated-illustration",
+    "intentional-abstraction",
+}
+VISUAL_REVIEW_MODES = {"independent-agent", "human", "degraded-self-review"}
+VISUAL_CHECK_NAMES = {
+    "recognizableWithoutLabel",
+    "entityDistinct",
+    "notPlaceholder",
+    "truthfulToClaim",
+    "referenceMatch",
+    "fullSizeCraft",
+}
 
 
 class WorkflowError(RuntimeError):
@@ -137,13 +171,29 @@ def run_git(root: Path, args: list[str]) -> Optional[bytes]:
     return completed.stdout if completed.returncode == 0 else None
 
 
+def fingerprint_ignored(relative: PurePosixPath) -> bool:
+    return bool(
+        PROJECT_SCAN_EXCLUDES.intersection(relative.parts)
+        or relative.suffix.lower() in PROJECT_SCAN_EXCLUDED_SUFFIXES
+        or relative.name in PROJECT_SCAN_EXCLUDED_NAMES
+    )
+
+
 def workspace_fingerprint(root: Path) -> str:
     """Hash source state while excluding controller artifacts and heavy build output."""
     digest = hashlib.sha256()
     head = run_git(root, ["rev-parse", "HEAD"])
     if head is not None:
         digest.update(head.strip())
-        pathspec = ["--", ".", ":(exclude).agent/**"]
+        pathspec = [
+            "--",
+            ".",
+            ":(exclude).agent/**",
+            ":(exclude)**/__pycache__/**",
+            ":(exclude)**/*.pyc",
+            ":(exclude)**/*.pyo",
+            ":(exclude)**/*.tsbuildinfo",
+        ]
         for args in (
             ["diff", "--no-ext-diff", "--binary", *pathspec],
             ["diff", "--no-ext-diff", "--binary", "--cached", *pathspec],
@@ -152,7 +202,7 @@ def workspace_fingerprint(root: Path) -> str:
         untracked = run_git(root, ["ls-files", "--others", "--exclude-standard", "-z"]) or b""
         for raw in sorted(filter(None, untracked.split(b"\0"))):
             rel = raw.decode("utf-8", errors="surrogateescape").replace("\\", "/")
-            if rel == ".agent" or rel.startswith(".agent/"):
+            if fingerprint_ignored(PurePosixPath(rel)):
                 continue
             digest.update(raw)
             file_path = root / Path(rel)
@@ -163,12 +213,16 @@ def workspace_fingerprint(root: Path) -> str:
                     digest.update(b"<unreadable>")
         return f"git:{digest.hexdigest()}"
 
-    excluded = {".git", ".agent", "node_modules", "dist", "build", ".next", "coverage"}
-    for path in sorted(p for p in root.rglob("*") if p.is_file() and not excluded.intersection(p.relative_to(root).parts)):
+    for path in sorted(
+        p
+        for p in root.rglob("*")
+        if p.is_file() and not fingerprint_ignored(PurePosixPath(p.relative_to(root).as_posix()))
+    ):
         rel = path.relative_to(root).as_posix()
         try:
-            stat = path.stat()
-            digest.update(f"{rel}\0{stat.st_size}\0{stat.st_mtime_ns}\n".encode("utf-8"))
+            digest.update(f"{rel}\0".encode("utf-8"))
+            digest.update(path.read_bytes())
+            digest.update(b"\n")
         except OSError:
             digest.update(f"{rel}\0<unreadable>\n".encode("utf-8"))
     return f"fs:{digest.hexdigest()}"
@@ -204,6 +258,166 @@ def file_sha256(path: Path) -> str:
     except OSError as exc:
         raise WorkflowError(f"Cannot hash evidence file {path}: {exc}") from exc
     return digest.hexdigest()
+
+
+def _required_text(value: Any) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def _local_visual_path_error(root: Path, value: Any, label: str) -> Optional[str]:
+    if not _required_text(value):
+        return f"{label} must be a non-empty project-relative path"
+    try:
+        target = resolve_project_path(root, str(value))
+    except WorkflowError as exc:
+        return f"{label}: {exc}"
+    if not target.is_file():
+        return f"{label} does not exist: {value}"
+    return None
+
+
+def _screenshot_visual_errors(root: Path, value: Any, label: str) -> list[str]:
+    if not isinstance(value, dict):
+        return [f"{label} must contain path and sha256"]
+    path_value = value.get("path")
+    path_error = _local_visual_path_error(root, path_value, f"{label}.path")
+    if path_error:
+        return [path_error]
+    expected = value.get("sha256")
+    if not isinstance(expected, str) or not re.fullmatch(r"[0-9a-f]{64}", expected):
+        return [f"{label}.sha256 must be a lowercase SHA-256 digest"]
+    target = resolve_project_path(root, str(path_value))
+    errors: list[str] = []
+    if file_sha256(target) != expected:
+        errors.append(f"{label} hash does not match the current screenshot")
+    try:
+        header = target.read_bytes()[:16]
+    except OSError as exc:
+        return [f"{label} cannot be read: {exc}"]
+    is_png = header.startswith(b"\x89PNG\r\n\x1a\n")
+    is_jpeg = header.startswith(b"\xff\xd8\xff")
+    is_webp = len(header) >= 12 and header.startswith(b"RIFF") and header[8:12] == b"WEBP"
+    if not (is_png or is_jpeg or is_webp):
+        errors.append(f"{label} must be an actual PNG, JPEG, or WebP image")
+    return errors
+
+
+def visual_evidence_errors(root: Path, manifest_path: Path) -> list[str]:
+    """Validate truthful signature-visual evidence without third-party packages."""
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return [f"Visual evidence manifest is unreadable: {exc}"]
+    if not isinstance(manifest, dict):
+        return ["Visual evidence manifest must be a JSON object"]
+
+    errors: list[str] = []
+    if manifest.get("schemaVersion") != 1:
+        errors.append("schemaVersion must be 1")
+    if not _required_text(manifest.get("surface")):
+        errors.append("surface must identify the reviewed interface")
+    if manifest.get("verdict") != "pass":
+        errors.append("verdict must be pass")
+    if manifest.get("issues") != []:
+        errors.append("issues must be an empty array before the visual-fidelity gate can pass")
+
+    reviewer = manifest.get("reviewer")
+    if not isinstance(reviewer, dict):
+        errors.append("reviewer must be an object")
+    else:
+        mode = reviewer.get("mode")
+        if mode not in VISUAL_REVIEW_MODES:
+            errors.append(f"reviewer.mode must be one of: {', '.join(sorted(VISUAL_REVIEW_MODES))}")
+        if not _required_text(reviewer.get("id")):
+            errors.append("reviewer.id must identify the reviewer")
+        if not isinstance(reviewer.get("blind"), bool):
+            errors.append("reviewer.blind must be a boolean")
+        elif mode in {"independent-agent", "human"} and reviewer.get("blind") is not True:
+            errors.append("independent-agent and human reviews must be blind to implementation claims")
+        if mode == "degraded-self-review" and (
+            not _required_text(reviewer.get("limitations")) or len(reviewer["limitations"].strip()) < 20
+        ):
+            errors.append("degraded-self-review requires a concrete limitations disclosure")
+
+    visuals = manifest.get("signatureVisuals")
+    if not isinstance(visuals, list) or not visuals:
+        errors.append("signatureVisuals must contain at least one core visual")
+        return errors
+
+    seen_ids: set[str] = set()
+    for index, visual in enumerate(visuals):
+        prefix = f"signatureVisuals[{index}]"
+        if not isinstance(visual, dict):
+            errors.append(f"{prefix} must be an object")
+            continue
+        visual_id = visual.get("id")
+        if not _required_text(visual_id):
+            errors.append(f"{prefix}.id is required")
+        elif visual_id in seen_ids:
+            errors.append(f"{prefix}.id is duplicated: {visual_id}")
+        else:
+            seen_ids.add(visual_id)
+        for field in ("role", "claim", "notes"):
+            if not _required_text(visual.get(field)):
+                errors.append(f"{prefix}.{field} is required")
+        if not isinstance(visual.get("factual"), bool):
+            errors.append(f"{prefix}.factual must be a boolean")
+        truth_mode = visual.get("truthMode")
+        if truth_mode not in VISUAL_TRUTH_MODES:
+            errors.append(f"{prefix}.truthMode must be one of: {', '.join(sorted(VISUAL_TRUTH_MODES))}")
+        if visual.get("factual") is True and truth_mode not in {"sourced", "procedural-validated"}:
+            errors.append(
+                f"{prefix} makes a factual claim and cannot use {truth_mode!r}; use sourced or procedural-validated"
+            )
+
+        sources = visual.get("sources")
+        if not isinstance(sources, list):
+            errors.append(f"{prefix}.sources must be an array")
+            sources = []
+        if not sources:
+            errors.append(f"{prefix} requires at least one provenance source")
+        for source_index, source in enumerate(sources):
+            source_prefix = f"{prefix}.sources[{source_index}]"
+            if not isinstance(source, dict):
+                errors.append(f"{source_prefix} must be an object")
+                continue
+            for field in ("uri", "license", "note"):
+                if not _required_text(source.get(field)):
+                    errors.append(f"{source_prefix}.{field} is required")
+            uri = source.get("uri")
+            if _required_text(uri) and not str(uri).startswith(("https://", "http://")):
+                path_error = _local_visual_path_error(root, uri, f"{source_prefix}.uri")
+                if path_error:
+                    errors.append(path_error)
+
+        implementation_files = visual.get("implementationFiles")
+        if not isinstance(implementation_files, list) or not implementation_files:
+            errors.append(f"{prefix}.implementationFiles must contain at least one file")
+        else:
+            for file_index, value in enumerate(implementation_files):
+                path_error = _local_visual_path_error(root, value, f"{prefix}.implementationFiles[{file_index}]")
+                if path_error:
+                    errors.append(path_error)
+
+        screenshots = visual.get("screenshots")
+        if not isinstance(screenshots, dict):
+            errors.append(f"{prefix}.screenshots must be an object")
+        else:
+            for viewport in ("desktop", "mobile", "detail"):
+                errors.extend(
+                    _screenshot_visual_errors(
+                        root, screenshots.get(viewport), f"{prefix}.screenshots.{viewport}"
+                    )
+                )
+
+        checks = visual.get("checks")
+        if not isinstance(checks, dict):
+            errors.append(f"{prefix}.checks must be an object")
+        else:
+            for name in sorted(VISUAL_CHECK_NAMES):
+                if checks.get(name) is not True:
+                    errors.append(f"{prefix}.checks.{name} must be true")
+    return errors
 
 
 def skill_frontmatter_name(path: Path) -> str:
@@ -307,6 +521,27 @@ def phase_check_errors(
     for name in PHASE_REQUIRED_CHECKS[phase]:
         if name not in valid_names:
             errors.append(f"{phase} gate requires fresh check evidence: {name}")
+    if phase == "integration":
+        latest = {
+            str(check.get("name")): check
+            for check in phase_state.get("checks", [])
+            if check.get("valid")
+            and evidence_integrity_ok(root, check, require_current_workspace=require_current_workspace)
+        }
+        visual_check = latest.get("visual-fidelity")
+        ui_status = state.get("phases", {}).get("ui", {}).get("status")
+        if ui_status == "passed" and visual_check:
+            if visual_check.get("kind") != "automated" or visual_check.get("exitCode") != 0:
+                errors.append("A passed UI phase requires automated passing visual-fidelity evidence")
+            else:
+                manifest_path = resolve_project_path(root, visual_check["evidence"])
+                errors.extend(f"visual-fidelity: {error}" for error in visual_evidence_errors(root, manifest_path))
+        interaction_check = latest.get("interaction-stress")
+        ux_status = state.get("phases", {}).get("ux", {}).get("status")
+        if ux_status == "passed" and interaction_check and (
+            interaction_check.get("kind") != "automated" or interaction_check.get("exitCode") != 0
+        ):
+            errors.append("A passed UX phase requires an automated passing interaction-stress check")
     return errors
 
 
@@ -331,11 +566,32 @@ def phase_summary_evidence_errors(root: Path, state: dict[str, Any], phase: str)
 def project_source_suffixes(root: Path) -> set[str]:
     suffixes: set[str] = set()
     for path in root.rglob("*"):
-        if not path.is_file() or PROJECT_SCAN_EXCLUDES.intersection(path.relative_to(root).parts):
+        if not path.is_file() or fingerprint_ignored(PurePosixPath(path.relative_to(root).as_posix())):
             continue
         if path.suffix.lower() in FRONTEND_CODE_SUFFIXES:
             suffixes.add(path.suffix.lower())
     return suffixes
+
+
+def project_has_format_script(root: Path) -> bool:
+    for package_path in root.rglob("package.json"):
+        relative = PurePosixPath(package_path.relative_to(root).as_posix())
+        if fingerprint_ignored(relative):
+            continue
+        try:
+            package = json.loads(package_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        scripts = package.get("scripts", {}) if isinstance(package, dict) else {}
+        if not isinstance(scripts, dict):
+            continue
+        for name, command in scripts.items():
+            normalized = str(name).lower().replace("_", "-")
+            if "format" in normalized or normalized in {"fmt", "fmt-check"}:
+                return True
+            if isinstance(command, str) and re.search(r"\b(prettier|biome\s+(?:check|format)|dprint)\b", command):
+                return True
+    return False
 
 
 def project_tooling_errors(root: Path, state: dict[str, Any], phase: str) -> list[str]:
@@ -359,6 +615,8 @@ def project_tooling_errors(root: Path, state: dict[str, Any], phase: str) -> lis
                 errors.append(f"Frontend source requires an automated passing {name} check")
         if suffixes.intersection(TYPED_FRONTEND_SUFFIXES) and "typecheck" not in valid_automated:
             errors.append("Typed frontend source requires an automated passing typecheck check")
+        if project_has_format_script(root) and "format" not in valid_automated:
+            errors.append("Detected formatting tooling requires an automated passing format check")
     if phase == "integration" and "build" not in valid_automated:
         errors.append("Frontend source requires an automated passing build check")
     return errors
@@ -401,8 +659,8 @@ def load_state(root: Path) -> dict[str, Any]:
         raise WorkflowError(f"Cannot read workflow state: {exc}") from exc
     if state.get("schemaVersion") not in {1, SCHEMA_VERSION} or state.get("workflow") != WORKFLOW:
         raise WorkflowError("Unsupported or unrelated workflow-state.json")
-    # Keep v5 runs readable and resumable. New enforcement applies only to
-    # states initialized with policyVersion 2.
+    # Keep earlier runs readable and resumable. Current enforcement applies
+    # only after an explicit policy upgrade.
     state.setdefault("policyVersion", 1)
     state.setdefault("capabilityFallbacks", [])
     state.setdefault("securityClassification", None)
@@ -435,6 +693,9 @@ def audit(state: dict[str, Any], event: str, **details: Any) -> None:
 
 
 def set_next_action(state: dict[str, Any]) -> None:
+    if not uses_enforced_policy(state):
+        state["nextAction"] = "Run upgrade-policy, then revalidate all tasks and gates under v6.1."
+        return
     if state.get("status") == "done":
         state["nextAction"] = "Workflow complete; report verified results and residual risks."
         return
@@ -554,7 +815,7 @@ def validate_state(root: Path, state: dict[str, Any], *, for_finish: bool = Fals
         return errors
 
     if not uses_enforced_policy(state):
-        errors.append("Legacy workflow policy cannot finish under v6; run upgrade-policy and revalidate all gates")
+        errors.append("Legacy workflow policy cannot finish under v6.1; run upgrade-policy and revalidate all gates")
 
     if not state.get("requirements"):
         errors.append("No requirements recorded")
@@ -644,6 +905,7 @@ def command_init(root: Path, args: argparse.Namespace) -> None:
             "contract": ".agent/acceptance-contract.md",
             "plan": ".agent/implementation-plan.md",
             "evidenceDirectory": ".agent/evidence",
+            "visualEvidence": ".agent/evidence/visual-evidence.json",
         },
         "phases": phases,
         "requirements": {},
@@ -666,10 +928,11 @@ def command_upgrade_policy(root: Path, _args: argparse.Namespace) -> None:
         return
     for task in state.get("tasks", {}).values():
         if task.get("status") == "completed":
-            invalidate_task(task, "Upgraded to v6 evidence policy")
+            invalidate_task(task, "Upgraded to v6.1 evidence policy")
     state["schemaVersion"] = SCHEMA_VERSION
     state["policyVersion"] = POLICY_VERSION
     state["skillVersion"] = SKILL_VERSION
+    state["status"] = "active"
     state["currentTask"] = None
     state["skillsUsed"] = []
     state["capabilityFallbacks"] = []
@@ -1102,6 +1365,23 @@ def command_record_gate_check(root: Path, args: argparse.Namespace) -> None:
         raise WorkflowError("Manual and not-applicable checks cannot record a failing exit code")
     if args.kind == "not-applicable" and len(args.summary.strip()) < 12:
         raise WorkflowError("Not-applicable checks require a concrete explanation")
+    if phase == "integration" and args.name == "visual-fidelity":
+        ui_status = state.get("phases", {}).get("ui", {}).get("status")
+        if ui_status == "passed":
+            if args.kind != "automated":
+                raise WorkflowError("A passed UI phase requires automated visual-fidelity validation")
+            if args.exit_code == 0:
+                manifest_errors = visual_evidence_errors(root, evidence_path)
+                if manifest_errors:
+                    raise WorkflowError("Visual evidence failed:\n- " + "\n- ".join(manifest_errors))
+        elif ui_status == "skipped" and args.kind != "not-applicable":
+            raise WorkflowError("A skipped UI phase must record visual-fidelity as not-applicable")
+    if phase == "integration" and args.name == "interaction-stress":
+        ux_status = state.get("phases", {}).get("ux", {}).get("status")
+        if ux_status == "passed" and args.kind != "automated":
+            raise WorkflowError("A passed UX phase requires an automated interaction-stress check")
+        if ux_status == "skipped" and args.kind != "not-applicable":
+            raise WorkflowError("A skipped UX phase must record interaction-stress as not-applicable")
     phase_checks = state["phases"][phase].setdefault("checks", [])
     for previous in phase_checks:
         if previous.get("name") == args.name and previous.get("valid"):
@@ -1124,6 +1404,17 @@ def command_record_gate_check(root: Path, args: argparse.Namespace) -> None:
     save_state(root, state)
     outcome = "pass" if args.kind != "automated" or args.exit_code == 0 else "fail"
     print(f"Recorded {phase}/{args.name}: {outcome}")
+
+
+def command_validate_visual_evidence(root: Path, args: argparse.Namespace) -> None:
+    manifest = normalize_rel(args.manifest)
+    manifest_path = resolve_project_path(root, manifest)
+    if not manifest_path.is_file():
+        raise WorkflowError(f"Visual evidence manifest does not exist: {manifest}")
+    errors = visual_evidence_errors(root, manifest_path)
+    if errors:
+        raise WorkflowError("Visual evidence failed:\n- " + "\n- ".join(errors))
+    print(f"Visual evidence is valid: {manifest}")
 
 
 def command_classify_security(root: Path, args: argparse.Namespace) -> None:
@@ -1273,6 +1564,14 @@ def parser() -> argparse.ArgumentParser:
     gate_check.add_argument("--evidence", required=True)
     gate_check.add_argument("--summary", required=True)
     gate_check.set_defaults(handler=command_record_gate_check)
+
+    visual_evidence = commands.add_parser("validate-visual-evidence")
+    visual_evidence.add_argument(
+        "--manifest",
+        default=".agent/evidence/visual-evidence.json",
+        help="Project-relative visual evidence manifest",
+    )
+    visual_evidence.set_defaults(handler=command_validate_visual_evidence)
 
     security_classification = commands.add_parser("classify-security")
     security_classification.add_argument("--level", choices=("low", "medium", "high"), required=True)

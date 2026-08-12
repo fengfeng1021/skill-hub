@@ -51,6 +51,18 @@
       "category": "security",
       "goal": "Integrate untrusted remote data without leaking secrets or introducing injection and authorization assumptions.",
       "primary": ["securityScore", "automatedPassRate", "codeQuality"]
+    },
+    {
+      "id": "factual-signature-visual",
+      "category": "visual-truth",
+      "goal": "Build a factual hero and detail experience whose core objects are source-backed or procedurally validated, recognizable without labels and honestly represented at full size.",
+      "primary": ["requirementsPassRate", "designQuality", "visualTruthScore", "criticalRegressions"]
+    },
+    {
+      "id": "interaction-sequence-stress",
+      "category": "interaction",
+      "goal": "Preserve state, focus and cleanup through play-drag-reset, rapid tab changes, repeated modal use, storage failure and reduced-motion sequences.",
+      "primary": ["automatedPassRate", "accessibilityScore", "codeQuality", "criticalRegressions"]
     }
   ],
   "regressions": [
@@ -59,6 +71,13 @@
     "modal-restores-focus",
     "reduced-motion-preserves-function",
     "mobile-targets-and-overflow-pass",
-    "charts-have-readable-fallback"
+    "charts-have-readable-fallback",
+    "signature-visual-is-not-a-placeholder",
+    "factual-visual-has-provenance",
+    "distinct-entities-do-not-share-fake-identity",
+    "procedural-scene-bounds-are-viewable",
+    "configured-formatter-passes",
+    "play-drag-reset-preserves-state",
+    "rapid-tabs-move-focus"
   ]
 }

@@ -23,7 +23,7 @@
   ],
   "properties": {
     "schemaVersion": { "const": 2 },
-    "policyVersion": { "const": 2 },
+    "policyVersion": { "const": 3 },
     "workflow": { "const": "frontend-director" },
     "skillVersion": { "type": "string" },
     "runId": { "type": "string", "format": "uuid" },

@@ -43,8 +43,12 @@ persistWorkspaceFile(relativePath, content)
 
 可直接參考 `scripts/agent_skill_bridge.py` 的唯讀 `list`、`load`、`read` 實作；執行任意第三方 Skill scripts 必須由宿主另行建立權限與信任機制，唯讀 bridge 不代為執行。
 
+## Windows UTF-8 boundary
+
+All Skill, state, contract, plan, manifest and evidence text is UTF-8. On Windows PowerShell, use `Get-Content -Encoding utf8`; when a Python host does not default to UTF-8, launch the controller with `python -X utf8`. If console output appears as mojibake, stop and correct the decoding before making decisions or writing text back. Never copy garbled terminal output into requirements, state or evidence.
+
 ## 沒有 Adapter 時
 
 Agent 仍可按 SKILL.md 與 references 工作，並手動維持狀態；最終報告要標示哪些 Gate 只由模型自檢。Adapter 提升執行確定性，但不能提高底層模型不知道的語言或框架知識，因此仍需專案文件、測試和外部技術 skill。
 
-即使沒有 Adapter，v6 控制器仍會阻止空 `skillsUsed`、無 discovery fallback、缺具名 Gate checks 或未分級安全的 workflow 完成。
+即使沒有 Adapter，v6.1 控制器仍會阻止空 `skillsUsed`、無 discovery fallback、缺具名 Gate checks、未驗證 signature visuals、未執行既有 formatter 或未分級安全的 workflow 完成。

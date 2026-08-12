@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import hashlib
+import importlib.util
 import json
 import subprocess
 import sys
@@ -23,10 +25,16 @@ PHASE_SKILLS = {
 PHASE_CHECKS = {
     "contract": ["requirements-review"],
     "plan": ["coverage-review"],
-    "ui": ["design-direction", "responsive-spec", "state-inventory", "product-specificity"],
+    "ui": [
+        "design-direction",
+        "responsive-spec",
+        "state-inventory",
+        "product-specificity",
+        "signature-visual-plan",
+    ],
     "ux": ["primary-flow-model", "failure-recovery-plan", "accessibility-plan"],
     "motion": ["motion-purpose", "reduced-motion-plan", "interruption-plan"],
-    "implementation": ["tests", "typecheck", "lint", "diff-review"],
+    "implementation": ["tests", "typecheck", "lint", "format", "diff-review"],
     "integration": [
         "build",
         "desktop-browser",
@@ -35,6 +43,8 @@ PHASE_CHECKS = {
         "semantic-oracles",
         "reduced-motion",
         "console-clean",
+        "visual-fidelity",
+        "interaction-stress",
     ],
     "security": ["security-baseline", "negative-paths", "dependency-review"],
 }
@@ -91,21 +101,95 @@ class WorkflowCtlTests(unittest.TestCase):
         for skill in PHASE_SKILLS[phase]:
             self.log_skill(skill)
         for name in PHASE_CHECKS[phase]:
+            skipped_dependency = (
+                phase == "integration"
+                and (
+                    (name == "visual-fidelity" and self.phase_status("ui") == "skipped")
+                    or (name == "interaction-stress" and self.phase_status("ux") == "skipped")
+                )
+            )
             args = [
                 "record-gate-check",
                 phase,
                 "--name",
                 name,
                 "--kind",
-                "automated" if name in {"tests", "typecheck", "lint", "build"} else "manual",
+                (
+                    "not-applicable"
+                    if skipped_dependency
+                    else "automated"
+                    if name in {"tests", "typecheck", "lint", "format", "build"}
+                    else "manual"
+                ),
                 "--evidence",
                 self.evidence(f"{phase}-{name}"),
                 "--summary",
-                f"verified {name}",
+                (
+                    f"verified {name}"
+                    if not skipped_dependency
+                    else f"{name} is not applicable because its design phase was skipped"
+                ),
             ]
-            if name in {"tests", "typecheck", "lint", "build"}:
+            if name in {"tests", "typecheck", "lint", "format", "build"} and not skipped_dependency:
                 args.extend(["--command", f"run-{name}", "--exit-code", "0"])
             self.run_ctl(*args)
+
+    def phase_status(self, phase: str) -> str:
+        path = self.root / ".agent" / "workflow-state.json"
+        if not path.is_file():
+            return "pending"
+        return json.loads(path.read_text(encoding="utf-8"))["phases"][phase]["status"]
+
+    def visual_manifest(self, *, factual: bool = True, truth_mode: str = "sourced") -> str:
+        screenshot_records = {}
+        for rel in ("reports/desktop.png", "reports/mobile.png", "reports/detail.png"):
+            path = self.root / rel
+            path.parent.mkdir(parents=True, exist_ok=True)
+            payload = b"\x89PNG\r\n\x1a\nforward-test-image"
+            path.write_bytes(payload)
+            screenshot_records[Path(rel).stem] = {
+                "path": rel,
+                "sha256": hashlib.sha256(payload).hexdigest(),
+            }
+        manifest = {
+            "schemaVersion": 1,
+            "surface": "test product surface",
+            "reviewer": {"mode": "independent-agent", "id": "reviewer-1", "blind": True},
+            "signatureVisuals": [
+                {
+                    "id": "hero-object",
+                    "role": "hero",
+                    "claim": "A factual hero object",
+                    "factual": factual,
+                    "truthMode": truth_mode,
+                    "sources": [
+                        {"uri": "https://example.com/source", "license": "CC0", "note": "reference asset"}
+                    ],
+                    "implementationFiles": ["src/app.js"],
+                    "screenshots": {
+                        "desktop": screenshot_records["desktop"],
+                        "mobile": screenshot_records["mobile"],
+                        "detail": screenshot_records["detail"],
+                    },
+                    "checks": {
+                        "recognizableWithoutLabel": True,
+                        "entityDistinct": True,
+                        "notPlaceholder": True,
+                        "truthfulToClaim": True,
+                        "referenceMatch": True,
+                        "fullSizeCraft": True,
+                    },
+                    "notes": "Reviewed against the cited source at all required sizes.",
+                }
+            ],
+            "verdict": "pass",
+            "issues": [],
+        }
+        rel = ".agent/evidence/visual-evidence.json"
+        path = self.root / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(manifest), encoding="utf-8")
+        return rel
 
     def pass_phase(self, phase: str) -> None:
         self.activate_phase(phase)
@@ -182,7 +266,7 @@ class WorkflowCtlTests(unittest.TestCase):
         state = json.loads((self.root / ".agent" / "workflow-state.json").read_text(encoding="utf-8"))
         self.assertEqual("done", state["status"])
         self.assertGreater(len(state["skillsUsed"]), 0)
-        self.assertEqual(2, state["policyVersion"])
+        self.assertEqual(3, state["policyVersion"])
         self.assertEqual("Workflow complete; report verified results and residual risks.", state["nextAction"])
 
     def test_source_change_makes_task_check_stale(self) -> None:
@@ -386,7 +470,8 @@ class WorkflowCtlTests(unittest.TestCase):
         self.run_ctl("upgrade-policy")
         upgraded = json.loads(path.read_text(encoding="utf-8"))
         self.assertEqual(2, upgraded["schemaVersion"])
-        self.assertEqual(2, upgraded["policyVersion"])
+        self.assertEqual(3, upgraded["policyVersion"])
+        self.assertEqual("active", upgraded["status"])
         self.assertEqual("contract", upgraded["currentPhase"])
         self.assertEqual("Complete and record the contract gate.", upgraded["nextAction"])
 
@@ -522,6 +607,82 @@ class WorkflowCtlTests(unittest.TestCase):
             expect=2,
         )
         self.assertIn("automated passing lint", failed.stderr)
+
+    def test_format_script_requires_automated_format_check(self) -> None:
+        (self.root / "package.json").write_text(
+            json.dumps({"scripts": {"format:check": "prettier --check ."}}), encoding="utf-8"
+        )
+        self.prepare_implementation()
+        self.run_ctl("start-task", "T-001")
+        self.run_ctl(
+            "record-check",
+            "T-001",
+            "--name",
+            "unit",
+            "--command",
+            "unit-test",
+            "--exit-code",
+            "0",
+            "--evidence",
+            self.evidence("T-001-unit"),
+        )
+        self.run_ctl("complete-task", "T-001", "--summary", "implemented")
+        self.log_skill("delivery-quality-gate")
+        for name in PHASE_CHECKS["implementation"]:
+            automated = name in {"tests", "typecheck", "lint"}
+            args = [
+                "record-gate-check",
+                "implementation",
+                "--name",
+                name,
+                "--kind",
+                "automated" if automated else "manual",
+                "--evidence",
+                self.evidence(f"implementation-{name}"),
+                "--summary",
+                f"verified {name}",
+            ]
+            if automated:
+                args.extend(["--command", f"run-{name}", "--exit-code", "0"])
+            self.run_ctl(*args)
+        failed = self.run_ctl(
+            "pass-gate",
+            "implementation",
+            "--evidence",
+            self.evidence("implementation-summary"),
+            "--summary",
+            "implementation",
+            expect=2,
+        )
+        self.assertIn("automated passing format", failed.stderr)
+
+    def test_visual_manifest_rejects_fake_factual_art(self) -> None:
+        manifest = self.visual_manifest(factual=True, truth_mode="intentional-abstraction")
+        failed = self.run_ctl("validate-visual-evidence", "--manifest", manifest, expect=2)
+        self.assertIn("cannot use 'intentional-abstraction'", failed.stderr)
+
+    def test_visual_manifest_accepts_sourced_factual_visual(self) -> None:
+        manifest = self.visual_manifest(factual=True, truth_mode="sourced")
+        self.run_ctl("validate-visual-evidence", "--manifest", manifest)
+
+    def test_visual_manifest_rejects_replaced_screenshot(self) -> None:
+        manifest = self.visual_manifest(factual=True, truth_mode="sourced")
+        (self.root / "reports" / "detail.png").write_bytes(b"\x89PNG\r\n\x1a\nreplaced")
+        failed = self.run_ctl("validate-visual-evidence", "--manifest", manifest, expect=2)
+        self.assertIn("hash does not match", failed.stderr)
+
+    def test_filesystem_fingerprint_ignores_generated_build_metadata(self) -> None:
+        spec = importlib.util.spec_from_file_location("workflowctl_under_test", SCRIPT)
+        self.assertIsNotNone(spec)
+        self.assertIsNotNone(spec.loader)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        generated = self.root / "tsconfig.tsbuildinfo"
+        generated.write_text("first", encoding="utf-8")
+        before = module.workspace_fingerprint(self.root)
+        generated.write_text("second", encoding="utf-8")
+        after = module.workspace_fingerprint(self.root)
+        self.assertEqual(before, after)
 
     def test_latest_failed_task_check_supersedes_older_pass(self) -> None:
         self.prepare_implementation()

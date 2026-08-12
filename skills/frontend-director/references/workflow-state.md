@@ -13,6 +13,7 @@ workflowctl add-task T-001 --title "..." --requirements FR-001 --files src/a.ts,
 workflowctl log-skill impeccable --skill-file /absolute/path/impeccable/SKILL.md --resources SKILL.md --source native
 workflowctl log-fallback --missing-skills impeccable --reason "宿主 discovery 找不到" --reference references/ui-quality.md --discovery-evidence .agent/evidence/ui-skill-discovery.txt
 workflowctl record-gate-check ui --name design-direction --kind manual --evidence .agent/evidence/ui-direction.md --summary "產品特異設計方向已審查"
+workflowctl validate-visual-evidence --manifest .agent/evidence/visual-evidence.json
 workflowctl start-task T-001
 workflowctl record-check T-001 --name unit --command "..." --exit-code 0 --evidence .agent/evidence/T-001-unit.txt
 workflowctl complete-task T-001 --summary "..."
@@ -40,7 +41,7 @@ python <skill-root>/scripts/workflowctl.py --root <project-root>
 - `pass-gate` 要求該階段的子 Skill 已用 `log-skill` 記錄；缺少能力時必須有 discovery 證據和對應內建 reference 的 `log-fallback`。
 - `pass-gate` 要求下表所有具名檢查都有完整、未被改寫且與工作區一致的證據；`not-applicable` 也要保存具體理由。
 - `finish` 要求需求全覆蓋、任務完成且證據新鮮、必要階段通過、可選階段通過或有理由跳過、安全已分級，且沒有 Critical／High 風險。
-- v5／policy v1 狀態可用 `status` 讀取，但 `verify --finish` 與 `finish` 會拒絕；`upgrade-policy` 保留需求／任務定義、使舊任務證據與所有 Gate 失效，再從 contract 重驗。
+- v5／policy v1 與 v6／policy v2 狀態可用 `status` 讀取，但 `verify --finish` 與 `finish` 會拒絕；`upgrade-policy` 保留需求／任務定義、使舊任務證據與所有 Gate 失效，再從 contract 依 v6.1 重驗。
 
 ## Gate 必要檢查
 
@@ -48,11 +49,11 @@ python <skill-root>/scripts/workflowctl.py --root <project-root>
 |---|---|
 | contract | `requirements-review` |
 | plan | `coverage-review` |
-| ui | `design-direction`、`responsive-spec`、`state-inventory`、`product-specificity` |
+| ui | `design-direction`、`responsive-spec`、`state-inventory`、`product-specificity`、`signature-visual-plan` |
 | ux | `primary-flow-model`、`failure-recovery-plan`、`accessibility-plan` |
 | motion | `motion-purpose`、`reduced-motion-plan`、`interruption-plan` |
-| implementation | `tests`、`typecheck`、`lint`、`diff-review` |
-| integration | `build`、`desktop-browser`、`mobile-browser`、`keyboard-focus`、`semantic-oracles`、`reduced-motion`、`console-clean` |
+| implementation | `tests`、`typecheck`、`lint`、`format`、`diff-review` |
+| integration | `build`、`desktop-browser`、`mobile-browser`、`keyboard-focus`、`semantic-oracles`、`reduced-motion`、`console-clean`、`visual-fidelity`、`interaction-stress` |
 | security | `security-baseline`、`negative-paths`、`dependency-review` |
 
 自動檢查使用 `--kind automated --command "..." --exit-code <code>`。人工渲染、鍵盤或審查使用 `--kind manual`。專案確實不適用時使用 `--kind not-applicable`，並在 `--summary` 說明替代驗證與限制；不得用它掩蓋缺少 lint、瀏覽器或安全工具。

@@ -32,6 +32,10 @@
 - 新相依、公開介面修改、資料遷移、認證、支付和持久化格式必須成為明確決策與風險。
 - 每個 `FR/NFR` 至少映射一個任務；每個任務也必須有來源需求。
 
+## Signature visual tasks
+
+Do not hide a signature visual inside a whole-page task. Give each core visual an owning `T-###` whose card names the source/model, license, failure-first comparison, implementation files, desktop/mobile/detail captures, binary review, and repair step. Asset acquisition or procedural validation must precede decorative polish. A task cannot finish while its core visual is still a placeholder.
+
 ## 控制器登錄
 
 ```text
