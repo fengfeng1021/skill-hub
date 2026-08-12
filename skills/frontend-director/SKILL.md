@@ -1,122 +1,81 @@
 ---
 name: frontend-director
-description: 以單一入口完成長篇前端任務的工作流總指揮。用於建立或大幅改版網站、Web App、互動頁面與前端功能時，自動依序執行需求契約、檔案級實作藍圖、UI、UX、動效、持續程式碼品質與最終安全審查；也會依小型任務裁剪不需要的階段。使用者不必逐輪指定子 skill，除非出現無法安全假設且會改變範圍、安全或核心體驗的重大歧義。
+description: 以單一入口完成高品質前端長任務。用於建立或大幅改版網站、Web App、互動頁面、設計系統或跨檔案前端功能，以及同時要求設計、UX、動效、程式品質、測試與安全交付時；會建立可恢復的需求與任務狀態，按任務執行理解、測試、實作、驗證、差異審查與證據閉環，並在 Claude Code、Codex、OpenCode、Hermes 或其他支援 Agent Skills 的環境使用同一套核心。也用於中小型前端修改，但會裁剪不適用階段。使用者只需啟動本 skill 一次。
 ---
 
-# 前端工作流總指揮
+# 前端總指揮
 
-接管一個前端任務直到可驗證交付。只負責路由、狀態、階段交接與 Gate；專業判斷交給當前階段的子 skill。
+接管前端任務直到可驗證交付。使用本檔作為唯一入口；按需讀取本 skill 的 references，並把已安裝的其他設計、UX、動效、品質或安全 skill 視為增強能力。外部 skill 缺失時，使用內建基線繼續，不得假裝已載入不存在的能力。
 
 ## 不可違反的規則
 
-1. 使用者只需啟動本 skill 一次。宣告工作流後立即繼續，不在階段之間要求使用者再次指定 skill 或例行批准。
-2. 先建立需求契約，再設計或寫程式。不得依照後來的實作或測試降低原始需求。
-3. 一次只載入當前階段需要的子 skill；不要在開場讀完所有已安裝 skill，也不要複製它們的完整內容到本上下文。
-4. 程式碼品質是全程 overlay，不是最後才執行的階段。每次有意義的修改後都要取得新證據。
-5. 每階段必須更新工作流狀態、留下產物並通過 Gate；失敗時回到負責修正的階段，不得帶病向後推進。
-   下游發現若改變檔案範圍、元件／模組邊界、資料流、公開介面或任務依賴，必須先更新實作藍圖並重跑 Plan Gate，再重驗受影響階段。
-6. 除非缺少會實質改變範圍、安全／隱私或核心體驗的決策，否則採用合理預設並記錄假設後自主前進。
-7. 使用 Agent 原生 skill 發現／調用機制按名稱定位子 skill，不猜固定路徑。需求契約、實作藍圖、品質驗證或高風險安全入口屬必要能力，缺失時不得宣稱 production-ready；可選設計輔助缺失時才可記錄降級並以 Gate 繼續。不得假裝已使用不存在的 skill。
+1. 先固定需求，再設計或寫碼。不得為了配合現有實作或測試而降低需求。
+2. 使用者只需啟動本 skill 一次。除非決策會改變範圍、安全、隱私或核心體驗，否則採取合理可逆假設並繼續。
+3. 一次只載入目前階段需要的 reference 或外部 skill；不要在任務開始時讀完全部內容。
+4. 寫碼時一次只處理一個 `T-###`，完整跑完 Coding Loop 才進入下一項。
+5. 任何影響已驗證範圍的修改都會使舊證據失效；沒有新證據不得宣稱通過。
+6. 優先遵守專案既有架構、命令與規範。不要猜測不存在的檔案、工具或測試指令。
+7. 外部增強 skill 不得改寫本工作流的需求、任務、狀態與 Gate；有衝突時以使用者要求和驗收契約為準。
 
-## 啟動與續跑
+## 啟動或恢復
 
-建立或讀取 `.agent/frontend-workflow.md`。若長任務被中斷、壓縮或換回合，先從此檔恢復，不重做已通過且證據仍有效的階段。
+把本 `SKILL.md` 所在資料夾記為 `<skill-root>`，不要假設 `.codex`、`.claude`、`.opencode` 或 `.hermes` 等固定安裝路徑。
 
-```markdown
-# Frontend Workflow
-- Mode: full | targeted
-- Current phase: contract | plan | ui | ux | motion | integration | security | done
-- Contract: <path>
-- Implementation plan: <path>
-- Selected skills: <phase → skill names>
-- Evidence directory: .agent/evidence/
-- Completed gates: <gate + evidence id/path/time + valid/invalid>
-- Pending requirements: <FR/NFR IDs>
-- Assumptions/risks: <items>
-- Next action: <one concrete action>
-```
+1. 讀取專案指示、使用者要求、現有程式與測試入口。
+2. 若 `.agent/workflow-state.json` 存在，執行：
 
-先把任務分類：
+   ```text
+   python <skill-root>/scripts/workflowctl.py --root <project-root> status
+   ```
 
-- 新網站、新 Web App、跨多個畫面的功能或重大改版：`full`，執行完整鏈路。
-- 小型視覺調整、單一互動、單一動效或局部修正：`targeted`，只跑契約、必要的輕量實作計畫、相關專業階段、品質 overlay 與按風險決定的安全收尾。
-- 純 bug／重構且不改變畫面：跳過 UI／UX／動效，保留契約、品質與安全。
+   從 `currentPhase`、`currentTask` 和 `nextAction` 繼續；不要重做仍有效的工作。
+3. 若狀態不存在，依任務選擇 `full` 或 `targeted`，執行：
 
-## Phase 0：需求契約
+   ```text
+   python <skill-root>/scripts/workflowctl.py --root <project-root> init --mode full
+   ```
 
-載入 `define-acceptance-contract`，產生可追蹤的 `FR-###`／`NFR-###`、範圍、排除、假設、情境與成功條件。
+4. 若環境不能執行 Python，依 [狀態與控制器](references/workflow-state.md) 維持相同 JSON；可繼續工作，但最終報告必須標示控制器未自動驗證。
 
-Gate：
+## 階段路由
 
-- 沒有重大未決歧義、矛盾或不可測量條目。
-- 所有使用者明確要求都有需求 ID。
-- 契約路徑已寫入工作流狀態。
+| 階段 | 必讀 | 外部增強（存在才載入） | Gate |
+|---|---|---|---|
+| contract | [需求契約](references/contract.md) | `define-acceptance-contract` | 所有明確要求已有可測 `FR/NFR` |
+| plan | [實作規劃](references/implementation-plan.md) | `plan-implementation` | 每項需求映射到檔案級 `T-###` 與驗證 |
+| ui | [UI 品質](references/ui-quality.md) | `impeccable`；按需 `ui-ux-pro-max`、`taste`、`hue` | 設計方向具產品特異性且雙尺寸可用 |
+| ux | [UX 互動](references/ux-interaction.md) | `interaction-experience-design` | 主要、錯誤、空白、載入與恢復流程可完成 |
+| motion | [動效](references/motion.md) | 對應的 GSAP skill | 動效有目的、可中斷且支援 reduced motion |
+| implementation | [Coding Loop](references/coding-loop.md) | `delivery-quality-gate`、專案技術棧 skill | 每個任務都有最新驗證與 diff 審查 |
+| integration | [整合驗證](references/verification.md) | 瀏覽器、無障礙、效能與 code review 能力 | 每個需求都有實作與最新證據 |
+| security | [安全交付](references/security.md) | `delivery-quality-gate` 路由的安全能力 | Critical/High 為零，其他風險已處理 |
 
-## Phase 0.5：實作藍圖
+純 bug、重構或不改可見介面的任務可以跳過 `ui`、`ux`、`motion`，但必須記錄理由。新增或修改可見介面時不得跳過 `ui`；含狀態或互動時不得跳過 `ux`。`contract`、`plan`、`implementation`、`integration`、`security` 不可跳過。
 
-載入 `plan-implementation`。先探索現有架構與測試，再保存使用者要求保持相容的 API、資料格式、事件與行為基線；把每個需求 ID 拆成 `T-###` 檔案級任務、元件／模組邊界、依賴、驗證順序與回滾方式。
+## 逐任務執行
 
-Gate：每個 `FR`／`NFR` 都被任務覆蓋；路徑真實或明確標為待建立；每項任務有驗證證據；公開介面與「必須保留」行為有修改前基線。計畫路徑已寫入工作流狀態。若規劃發現需求衝突，回到契約，不自行改寫。
+進入 `implementation` 後，依計畫順序處理每個任務：
 
-## Phase 1：UI
+1. 用控制器 `start-task T-###`，只讀該任務需要的程式、契約和 references。
+2. 建立修改前基線；可行時先建立會因缺陷而失敗的測試或重現步驟。
+3. 實作最小但完整的修改，不把無關重構混進同一任務。
+4. 執行最小相關測試；用 `record-check` 記錄真實指令、退出碼與證據。
+5. 檢查 diff 的需求範圍、模組邊界、重複、錯誤處理、型別、無障礙、效能與安全。
+6. 只有控制器允許 `complete-task` 時才開始下一個任務。失敗就留在同一任務修正。
 
-按需求選擇，不要全部載入：
+完整命令與失效規則見 [Coding Loop](references/coding-loop.md) 和 [狀態與控制器](references/workflow-state.md)。
 
-| 條件 | 主 skill | 可選輔助 |
-|---|---|---|
-| 新介面、整體視覺、現有畫面打磨 | `impeccable` | `ui-ux-pro-max` |
-| 使用者提供要模仿的網站／截圖 | `taste` | `impeccable` |
-| 明確要求品牌系統或跨頁一致性 | `hue` | `ui-ux-pro-max` |
+## Gate 與回退
 
-先產生設計方向、tokens、元件層級與響應式策略，再實作 UI。完成後以實際渲染結果檢查，不只讀程式碼。
+- 用 `pass-gate <phase> --evidence <path> --summary <text>` 記錄已通過的階段；用 `skip-phase` 記錄不適用的可選階段。
+- Gate 失敗時回到造成問題的最早階段。UX 修正若改變視覺結構，回到 UI；實作發現契約衝突，回到 contract；安全修補後回到 implementation 與 integration 重驗。
+- 需求、公開介面、元件邊界、資料流或任務依賴被修改時，執行 `invalidate`，不可沿用舊證據。
+- 只有 `workflowctl finish` 成功後，才可把狀態標為 `done`。
 
-Gate：契約中的視覺／內容需求有對應畫面；主要與次要層級清楚；桌機與手機沒有溢出；文字可讀、焦點可見；沒有用通用檢查表取代產品特異性。
+## 跨 Agent 行為
 
-## Phase 2：UX
-
-載入 `interaction-experience-design`，只讀與本任務類型對應的 references。以契約和實際渲染頁面檢查主要流程、替代／錯誤／空狀態、導覽、返回、鍵盤、焦點與操作回饋。
-
-Gate：核心任務可以走完；每個互動有狀態與回饋；錯誤可恢復；鍵盤與觸控有可用路徑。若 UX 修正會改變畫面，回到 UI 更新並重新通過 UI Gate。
-
-## Phase 3：動效
-
-先檢查專案既有動畫方案；若它能通過本階段 Gate，沿用現有技術，不為了使用 GSAP 替換動畫棧。需要 GSAP 時只載入對應 skill：
-
-- 基本 tween：`gsap-core`
-- React：加 `gsap-react`；Vue／Svelte：加 `gsap-frameworks`
-- 多段編排：加 `gsap-timeline`
-- 捲動驅動：加 `gsap-scrolltrigger`
-- 特殊外掛：確定用到才加 `gsap-plugins`
-- 出現卡頓或大量動畫：加 `gsap-performance`
-
-Gate：動效服務引導、回饋或空間連續性；不遮擋操作；中斷／重入狀態正確；`prefers-reduced-motion` 保留功能；優先使用 transform／opacity。若動效暴露 UX 問題，回到 UX。
-
-## 全程 Quality Overlay
-
-首次寫碼前啟動 `delivery-quality-gate` 的持續品質模式：
-
-- 從需求 ID 先建立驗證策略，不能按錯誤實作倒推測試標準。
-- 每次有意義的修改後跑最小相關測試；每個階段結束跑適用的 lint、typecheck、build 與瀏覽器驗證。
-- 每個里程碑檢查 diff、檔案責任、重複、耦合、錯誤處理與需求覆蓋；有審查能力時使用 `requesting-code-review`，再用 `receiving-code-review` 驗證意見。
-- 把指令、結果、截圖或報告路徑寫入工作流狀態；舊證據在程式變更後不得沿用。
-
-證據統一放在 `.agent/evidence/` 或專案既有證據目錄。預設一份證據一個 Markdown 檔，ID／檔名用 `E-YYYYMMDD-HHMMSS-<scope>.md`；每筆至少記錄需求／任務範圍、指令或人工步驟、時間、相關版本／commit、結果與 `valid` 狀態。後續修改影響該範圍時標成 `invalid` 並寫下失效原因，再重新取得證據。
-
-## Phase 4：整合驗證
-
-從需求契約建立追蹤矩陣：
-
-| 需求 ID | 實作位置 | 驗證方式 | 最新證據 | 狀態 |
-|---|---|---|---|---|
-
-Gate：每個 `FR`／`NFR` 都有實作與最新證據；瀏覽器實測核心流程與雙尺寸；測試數量、README 與實際輸出一致；控制台錯誤和殘留風險已記錄。
-
-## Phase 5：安全與交付
-
-讓 `delivery-quality-gate` 進入最終安全模式。先做風險分級，再由 Mantis 入口選擇需要的安全 skill；不要預先載入全部 Mantis。高風險認證、權限、金流、個資或外部輸入變更必須做威脅建模與深入審查，純靜態低風險變更至少檢查秘密、依賴、XSS／注入面與外部資源。
-
-未解決的 Critical／High 安全問題會阻擋交付；Medium 必須有已驗證緩解措施或使用者明確接受風險；Low 可以在最終報告揭露。只有需求追蹤矩陣全數通過、品質證據有效、安全門檻符合時，才能把 Current phase 標為 `done` 並交付。
+核心只依賴開放的 `SKILL.md`、相對 references、JSON 和 Python 標準函式庫。各宿主的 hooks、plugins 或 tool events 只用於自動啟動、恢復與阻止提前完成，不得成為核心正確性的唯一來源。接入 Claude Code、Codex、OpenCode、Hermes 或自研 Agent 時讀 [平台轉接](references/platform-adapters.md)。模型容易漏步驟、工具結果判斷不穩或長上下文表現下降時，再讀 [較弱模型護欄](references/model-robustness.md)，每次只提供一張任務工作卡。
 
 ## 最終回報
 
-用一份精簡報告列出：完成範圍、使用過的子 skill、各 Gate 證據、需求覆蓋、測試／build 結果、安全結果與殘留風險。不要只回報「已完成」。
+列出完成範圍、使用過的內建 references 與外部 skills、需求覆蓋、實際測試／build／瀏覽器結果、安全結論、未驗證項目及殘留風險。不得只回報「已完成」，也不得把未執行的檢查寫成已通過。

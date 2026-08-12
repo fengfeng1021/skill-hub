@@ -1,8 +1,8 @@
 {
   "id": "frontend-director",
   "name": "前端總指揮",
-  "summary": "一個入口把需求、設計、動效和交付一路做完。",
-  "description": "可續跑的前端長任務工作流，而不是把多份提示詞堆在一起。v4 會先建立有 FR／NFR 編號的需求契約，再把它拆成含檔案邊界、相容性基線、依賴與測試順序的實作藍圖，之後才按任務條件依序路由 UI、UX 與動效能力；程式碼品質從首次寫碼起持續覆蓋每個階段，最後依風險選擇安全審查深度。工作流把目前階段、契約與計畫路徑、已通過 Gate、證據、風險與下一步寫入狀態檔，長任務被壓縮或換回合後仍能續跑。安裝時會裝齊全部可用能力，執行時只載入目前階段需要的 Skill，避免上下文一次塞滿。",
+  "summary": "一個入口把前端需求、設計、寫碼和驗證做完。",
+  "description": "跨 Agent 的前端工作流 v5。核心遵循開放 Agent Skills 格式，不依賴 Codex、Claude Code、OpenCode 或 Hermes 的專屬機制：先建立 FR/NFR 驗收契約與檔案級任務，再按需完成 UI、UX、動效，之後對每個 T-### 執行理解、失敗證據、最小實作、相關測試、diff 審查與新證據的 Coding Loop。隨附 Python 標準函式庫狀態控制器、JSON Schema、平台轉接規格和跨模型 A/B 評測工具；外部設計、品質與安全 Skills 可加深結果，缺少時仍能使用入口內建 references 完成基線工作流。",
   "category": "前端 / 設計",
   "tags": [
     "frontend",
@@ -16,87 +16,173 @@
   "featured": true,
   "author": "fengfeng1021",
   "license": "MIT",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "usage": [
     "從一句需求開始完成整個網站、Web App 或重大前端改版",
-    "希望 Agent 自己接續需求、UI、UX、動效、驗證與安全，不要逐輪點名 Skill",
-    "長任務可能跨回合或被壓縮，需要保留階段狀態與最新證據",
-    "小型修正也想保留必要品質檢查，但自動略過無關設計階段"
+    "希望較弱但具備工具能力的模型按固定閉環提升設計與代碼品質",
+    "在 Claude Code、Codex、OpenCode、Hermes 或自研 Agent 共用同一工作流",
+    "長任務跨回合、壓縮或更換模型後仍要從有效狀態繼續",
+    "小型修改也需要可驗證交付，但要自動略過不適用的設計階段"
   ],
   "highlights": [
-    "單一入口自動續跑，只有重大範圍、安全或核心體驗歧義才會停下來問",
-    "先固定需求契約，再用需求編號追蹤設計、程式碼、測試與安全結果",
-    "UI、UX、動效依條件按需載入，階段失敗會回退到負責修正的位置",
-    "品質全程驗證，安全依風險收尾，不再等最後才一次檢查"
+    "每個任務都要完成失敗證據、最小修改、測試、diff 審查與新證據閉環",
+    "可執行控制器阻止漏需求、用舊證據交付或跳過必要 Gate",
+    "核心不綁單一 Agent，平台 hooks 和 plugins 只負責增強啟動與約束",
+    "設計、UX、動效、品質與安全能力按階段載入，缺少外部能力仍有內建基線",
+    "隨附跨 Agent／跨模型 A/B 評測格式，品質提升必須由結果證明"
   ],
   "includes": [
     "define-acceptance-contract",
     "plan-implementation",
     "impeccable",
-    "ui-ux-pro-max",
     "taste",
     "hue",
-    "gsap",
-    "interaction-experience-design",
-    "delivery-quality-gate"
+    "interaction-experience-design"
   ],
-  "replaces": ["frontend-design-director"],
+  "replaces": [
+    "frontend-design-director"
+  ],
   "runtime": {
     "mode": "pipeline",
-    "stateArtifact": ".agent/frontend-workflow.md",
+    "stateArtifact": ".agent/workflow-state.json",
+    "portableCore": true,
+    "controller": {
+      "script": "scripts/workflowctl.py",
+      "stateSchema": "schemas/workflow-state.schema.json"
+    },
     "continueWithoutUserInput": true,
     "ambiguityPolicy": "ask-only-material",
     "stages": [
       {
         "id": "contract",
         "name": "需求契約",
-        "skills": ["define-acceptance-contract"],
-        "outputs": ["需求 ID、驗收條件、假設與風險"],
-        "gate": "需求完整、可測、無重大未決歧義"
+        "skills": [],
+        "optionalSkills": [
+          "define-acceptance-contract"
+        ],
+        "coreReferences": [
+          "references/contract.md"
+        ],
+        "outputs": [
+          "FR/NFR、驗收條件、假設與風險"
+        ],
+        "gate": "所有明確要求都有可測需求 ID，沒有重大未澄清矛盾"
       },
       {
         "id": "plan",
         "name": "實作藍圖",
-        "skills": ["plan-implementation"],
-        "outputs": ["相容性基線、檔案級任務、依賴與測試順序"],
-        "gate": "每個需求都有可執行任務、驗證證據與正確依賴"
+        "skills": [],
+        "optionalSkills": [
+          "plan-implementation"
+        ],
+        "coreReferences": [
+          "references/implementation-plan.md"
+        ],
+        "outputs": [
+          "檔案級任務、相依、基線、驗證順序與回滾"
+        ],
+        "gate": "每個需求都映射到可獨立驗證的 T-###"
       },
       {
         "id": "ui",
-        "name": "UI 設計與實作",
-        "skills": ["impeccable"],
-        "optionalSkills": ["ui-ux-pro-max", "taste", "hue"],
-        "when": "任務會新增或改變可見介面",
-        "outputs": ["設計方向、tokens、元件與響應式畫面"],
-        "gate": "視覺需求已實作並通過桌機與手機渲染檢查"
+        "name": "UI 設計",
+        "skills": [],
+        "optionalSkills": [
+          "impeccable",
+          "ui-ux-pro-max",
+          "taste",
+          "hue"
+        ],
+        "coreReferences": [
+          "references/ui-quality.md"
+        ],
+        "when": "任務新增或修改可見介面",
+        "outputs": [
+          "產品特異的設計方向、tokens、元件與響應式策略"
+        ],
+        "gate": "實際內容在桌面與手機可用，層級、焦點、狀態與產品特異性通過"
       },
       {
         "id": "ux",
         "name": "UX 互動",
-        "skills": ["interaction-experience-design"],
+        "skills": [],
+        "optionalSkills": [
+          "interaction-experience-design"
+        ],
+        "coreReferences": [
+          "references/ux-interaction.md"
+        ],
         "when": "任務包含使用流程、狀態或互動",
-        "outputs": ["主要與例外流程、狀態、回饋與可及性行為"],
-        "gate": "核心流程可完成、錯誤可恢復、鍵盤與觸控可用"
+        "outputs": [
+          "主要與例外流程、狀態、回饋、焦點和恢復行為"
+        ],
+        "gate": "核心流程可完成，錯誤可恢復，鍵盤、焦點與觸控可用"
       },
       {
         "id": "motion",
         "name": "動效",
         "skills": [],
-        "optionalSkills": ["gsap"],
-        "when": "先沿用可通過 Gate 的既有動畫棧；沒有合適方案且動效能改善引導、回饋或空間連續性時才載入 GSAP",
-        "outputs": ["按需選擇的動畫與 reduced-motion 行為"],
-        "gate": "動畫不阻礙操作、可中斷並保留 reduced-motion 功能"
+        "optionalSkills": [
+          "gsap"
+        ],
+        "coreReferences": [
+          "references/motion.md"
+        ],
+        "when": "動效能改善引導、狀態回饋或空間連續性",
+        "outputs": [
+          "按需選擇的動效、清理與 reduced-motion 行為"
+        ],
+        "gate": "動效有目的、可中斷、不阻礙操作並保留 reduced-motion 功能"
+      },
+      {
+        "id": "implementation",
+        "name": "逐任務實作",
+        "skills": [],
+        "optionalSkills": [
+          "delivery-quality-gate"
+        ],
+        "coreReferences": [
+          "references/coding-loop.md",
+          "references/workflow-state.md"
+        ],
+        "outputs": [
+          "逐 T-### 的最小實作、最新檢查、diff 審查與證據"
+        ],
+        "gate": "每個任務完成 Coding Loop，且證據與目前檔案指紋一致"
       },
       {
         "id": "integration",
         "name": "整合驗證",
-        "skills": ["delivery-quality-gate"],
-        "outputs": ["需求追蹤矩陣與最新驗證證據"],
-        "gate": "每個需求 ID 都有實作與有效證據"
+        "skills": [],
+        "optionalSkills": [
+          "delivery-quality-gate"
+        ],
+        "coreReferences": [
+          "references/verification.md"
+        ],
+        "outputs": [
+          "需求追蹤矩陣與最新整合、瀏覽器、無障礙和效能證據"
+        ],
+        "gate": "所有需求都有實作與最新證據，沒有未解釋的測試或 console 錯誤"
+      },
+      {
+        "id": "security",
+        "name": "安全交付",
+        "skills": [],
+        "optionalSkills": [
+          "delivery-quality-gate"
+        ],
+        "coreReferences": [
+          "references/security.md"
+        ],
+        "outputs": [
+          "風險分級、安全證據、處置和殘留風險"
+        ],
+        "gate": "Critical/High 為零，Medium 已緩解或明確接受，修補後已重驗"
       }
     ],
-    "overlays": ["delivery-quality-gate"],
-    "finalizers": ["delivery-quality-gate"]
+    "overlays": [],
+    "finalizers": []
   },
   "source": {
     "kind": "local",
@@ -106,19 +192,43 @@
   "install": {
     "scope": "user",
     "dirName": "frontend-director",
-    "files": ["SKILL.md"],
+    "files": [
+      "SKILL.md",
+      "references/contract.md",
+      "references/implementation-plan.md",
+      "references/ui-quality.md",
+      "references/ux-interaction.md",
+      "references/motion.md",
+      "references/coding-loop.md",
+      "references/verification.md",
+      "references/security.md",
+      "references/workflow-state.md",
+      "references/platform-adapters.md",
+      "references/evaluation.md",
+      "references/model-robustness.md",
+      "scripts/workflowctl.py",
+      "scripts/evaluate_runs.py",
+      "scripts/agent_skill_bridge.py",
+      "schemas/workflow-state.schema.json",
+      "evals/frontend-benchmark.json",
+      "evals/result.schema.json"
+    ],
     "requires": [],
-    "notes": "includes 是完整安裝清單；runtime 才是執行順序。replaces 會讓安裝提示詞偵測並安全停用無自訂的舊入口。安裝後由入口按階段載入所需 Skill，不要在任務開始時一次讀完全部內容。"
+    "notes": "入口核心遵循 Agent Skills 開放格式；必須保留 references、scripts、schemas 與 evals 相對結構。workflowctl 使用 Python 3.9+ 標準函式庫；若宿主無 Python，仍可按 schema 手動維持狀態，但要揭露未自動驗證。預設只安裝 7 個聚焦資料夾；UI UX Pro Max、GSAP 與 delivery-quality-gate 是已安裝才載入的可選增強，不會為入口強制暴露其大型子套件。runtime 是可視化路由，真正的狀態推進與完成阻擋由 scripts/workflowctl.py 執行。"
   },
   "prompt": null,
   "links": [
     {
-      "label": "Skill Hub（收藏庫）",
-      "url": "https://fengfeng1021.github.io/skill-hub/"
+      "label": "Agent Skills 開放規格",
+      "url": "https://agentskills.io/specification"
     },
     {
       "label": "GitHub Spec Kit",
       "url": "https://github.com/github/spec-kit"
+    },
+    {
+      "label": "Skill Hub（收藏庫）",
+      "url": "https://fengfeng1021.github.io/skill-hub/"
     }
   ],
   "addedAt": "2026-08-08",

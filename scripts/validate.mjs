@@ -230,6 +230,22 @@ for (const s of skills) {
           (typeof runtime.stateArtifact !== 'string' || runtime.stateArtifact.startsWith('/') || /^[A-Za-z]:[\\/]/.test(runtime.stateArtifact))) {
         errors.push(`${at}：runtime.stateArtifact 必須是專案相對路徑`);
       }
+      if (runtime.controller !== undefined) {
+        for (const key of ['script', 'stateSchema']) {
+          const value = runtime.controller?.[key];
+          if (typeof value !== 'string' || !value || value.startsWith('/') || /^[A-Za-z]:[\\/]/.test(value) || value.split(/[\\/]/).includes('..')) {
+            errors.push(`${at}：runtime.controller.${key} 必須是入口 skill 內的相對路徑`);
+          } else if (s.source?.kind === 'local') {
+            const rel = s.source.path ?? `skills/${s.id}`;
+            if (!existsSync(join(ROOT, rel, value))) {
+              errors.push(`${at}：runtime.controller.${key} 指向不存在的檔案 ${rel}/${value}`);
+            }
+            if (!new Set(s.install?.files ?? []).has(value)) {
+              errors.push(`${at}：runtime.controller.${key} 使用 ${value}，但 install.files 沒有包含它`);
+            }
+          }
+        }
+      }
       if (runtime.mode === 'pipeline' && (!Array.isArray(runtime.stages) || runtime.stages.length === 0)) {
         errors.push(`${at}：runtime.mode=pipeline 時必須有至少一個 stage`);
       }
@@ -251,8 +267,22 @@ for (const s of skills) {
         }
         const requiredCount = Array.isArray(stage?.skills) ? stage.skills.length : 0;
         const optionalCount = Array.isArray(stage?.optionalSkills) ? stage.optionalSkills.length : 0;
-        if (requiredCount + optionalCount === 0) {
-          errors.push(`${at}：runtime stage "${stage?.id ?? '?'}" 必須指定至少一個必要或可選 skill`);
+        const coreCount = Array.isArray(stage?.coreReferences) ? stage.coreReferences.length : 0;
+        if (requiredCount + optionalCount + coreCount === 0) {
+          errors.push(`${at}：runtime stage "${stage?.id ?? '?'}" 必須指定至少一個必要 skill、可選 skill 或內建 reference`);
+        }
+        for (const reference of Array.isArray(stage?.coreReferences) ? stage.coreReferences : []) {
+          if (typeof reference !== 'string' || !reference || reference.startsWith('/') || /^[A-Za-z]:[\\/]/.test(reference) || reference.split(/[\\/]/).includes('..')) {
+            errors.push(`${at}：runtime stage "${stage?.id ?? '?'}" 的 coreReference 必須是相對路徑`);
+          } else if (s.source?.kind === 'local') {
+            const rel = s.source.path ?? `skills/${s.id}`;
+            if (!existsSync(join(ROOT, rel, reference))) {
+              errors.push(`${at}：runtime stage "${stage?.id ?? '?'}" 引用了不存在的 ${rel}/${reference}`);
+            }
+            if (!new Set(s.install?.files ?? []).has(reference)) {
+              errors.push(`${at}：runtime stage "${stage?.id ?? '?'}" 使用 ${reference}，但 install.files 沒有包含它`);
+            }
+          }
         }
       }
       const runtimeRefs = [
@@ -294,7 +324,8 @@ function detectIncludeCycle(id, path = []) {
 }
 for (const id of byId.keys()) detectIncludeCycle(id);
 
-// runtime 只能路由到安裝清單已涵蓋的項目，避免網站說是工作流但實際缺少子 Skill。
+// 必要 runtime 能力必須由安裝清單涵蓋。portableCore 階段若有內建 reference，
+// optionalSkills 可以只做「已安裝才加強」的能力發現，避免為了一個入口暴露大量子 Skill。
 function expandedIncludeIds(skill) {
   const out = new Set();
   const visit = (id) => {
@@ -312,14 +343,18 @@ for (const skill of skills) {
   const refs = [
     ...(Array.isArray(skill.runtime.stages) ? skill.runtime.stages.flatMap((stage) => [
       ...(Array.isArray(stage?.skills) ? stage.skills : []),
-      ...(Array.isArray(stage?.optionalSkills) ? stage.optionalSkills : []),
+      ...(
+        skill.runtime.portableCore && Array.isArray(stage?.coreReferences) && stage.coreReferences.length
+          ? []
+          : (Array.isArray(stage?.optionalSkills) ? stage.optionalSkills : [])
+      ),
     ]) : []),
     ...(Array.isArray(skill.runtime.overlays) ? skill.runtime.overlays : []),
     ...(Array.isArray(skill.runtime.finalizers) ? skill.runtime.finalizers : []),
   ];
   for (const ref of new Set(refs)) {
     if (ref !== skill.id && byId.has(ref) && !installed.has(ref)) {
-      errors.push(`${skill.__file}：runtime 會使用 "${ref}"，但 includes 的完整安裝清單沒有涵蓋它`);
+      errors.push(`${skill.__file}：runtime 必須使用 "${ref}"，但 includes 的完整安裝清單沒有涵蓋它`);
     }
   }
 }

@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "name": "frontend-director-portable-benchmark",
+  "variants": ["control", "skill"],
+  "pairBy": ["agent", "model", "taskId", "seed"],
+  "tasks": [
+    {
+      "id": "new-product-page",
+      "category": "new-ui",
+      "goal": "Build a product-specific responsive page from a written brief, including loading, empty and error states.",
+      "primary": ["requirementsPassRate", "designQuality", "codeQuality", "automatedPassRate"]
+    },
+    {
+      "id": "existing-app-redesign",
+      "category": "redesign",
+      "goal": "Improve an existing interface without changing its public behavior or data contract.",
+      "primary": ["requirementsPassRate", "designQuality", "criticalRegressions"]
+    },
+    {
+      "id": "accessible-form-recovery",
+      "category": "interaction",
+      "goal": "Implement validation, asynchronous failure recovery, keyboard use and focus management.",
+      "primary": ["automatedPassRate", "accessibilityScore", "codeQuality"]
+    },
+    {
+      "id": "dashboard-mobile-fallback",
+      "category": "data-ui",
+      "goal": "Build a dashboard whose charts, units and tables remain understandable on mobile and without animation.",
+      "primary": ["requirementsPassRate", "designQuality", "accessibilityScore"]
+    },
+    {
+      "id": "regression-bug-fix",
+      "category": "bugfix",
+      "goal": "Reproduce and fix a cross-file state bug while preserving unrelated behavior.",
+      "primary": ["automatedPassRate", "codeQuality", "criticalRegressions"]
+    },
+    {
+      "id": "component-refactor",
+      "category": "refactor",
+      "goal": "Reduce duplication and clarify component boundaries without changing behavior.",
+      "primary": ["automatedPassRate", "codeQuality", "criticalRegressions"]
+    },
+    {
+      "id": "interruptible-motion",
+      "category": "motion",
+      "goal": "Add purposeful interruptible motion with cleanup, responsive behavior and reduced-motion support.",
+      "primary": ["automatedPassRate", "designQuality", "performanceScore"]
+    },
+    {
+      "id": "api-security-boundary",
+      "category": "security",
+      "goal": "Integrate untrusted remote data without leaking secrets or introducing injection and authorization assumptions.",
+      "primary": ["securityScore", "automatedPassRate", "codeQuality"]
+    }
+  ],
+  "regressions": [
+    "unit-format-is-unambiguous",
+    "progress-is-visually-perceptible",
+    "modal-restores-focus",
+    "reduced-motion-preserves-function",
+    "mobile-targets-and-overflow-pass",
+    "charts-have-readable-fallback"
+  ]
+}

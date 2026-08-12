@@ -578,14 +578,18 @@ function detailHTML(skill) {
                  </span>
                  <span class="bundle-map__count">${(stage.skills ?? []).length
                    ? `${stage.skills.length} 個必要 Skill`
-                   : `${(stage.optionalSkills ?? []).length} 個按需 Skill`}</span>
+                   : (stage.coreReferences ?? []).length
+                     ? `${stage.coreReferences.length} 份內建核心`
+                     : `${(stage.optionalSkills ?? []).length} 個按需 Skill`}</span>
                </div>`
            )
            .join('')}
        </div>
        <div class="detail__prose">
          <p>模式：${escapeHTML(workflowModes[runtime.mode] ?? runtime.mode)}</p>
+         ${runtime.portableCore ? '<p>可攜核心：不綁定單一 Agent</p>' : ''}
          ${runtime.stateArtifact ? `<p>續跑狀態：<code class="tag mono">${escapeHTML(runtime.stateArtifact)}</code></p>` : ''}
+         ${runtime.controller?.script ? `<p>執行控制器：<code class="tag mono">${escapeHTML(runtime.controller.script)}</code></p>` : ''}
          ${runtime.overlays?.length ? `<p>全程覆蓋：${runtime.overlays.map((id) => `<code class="tag mono">${escapeHTML(id)}</code>`).join(' ')}</p>` : ''}
          ${runtime.finalizers?.length ? `<p>交付收尾：${runtime.finalizers.map((id) => `<code class="tag mono">${escapeHTML(id)}</code>`).join(' ')}</p>` : ''}
        </div>`

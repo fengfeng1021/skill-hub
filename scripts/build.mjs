@@ -211,7 +211,9 @@ for (const cat of categories) {
     }
     if (s.runtime) {
       llms.push(`- 執行模式：${s.runtime.mode}`);
+      if (s.runtime.portableCore) llms.push('- 可攜核心：不依賴單一 Agent 的專屬機制');
       if (s.runtime.stateArtifact) llms.push(`- 續跑狀態：\`${s.runtime.stateArtifact}\``);
+      if (s.runtime.controller?.script) llms.push(`- 工作流控制器：\`${s.runtime.controller.script}\``);
       if (s.runtime.stages?.length) {
         llms.push(`- 工作流階段：${s.runtime.stages.map((stage) => stage.name).join(' → ')}`);
       }

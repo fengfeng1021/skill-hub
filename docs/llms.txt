@@ -39,17 +39,19 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 
 #### 前端總指揮 `frontend-director`
 
-- 摘要：一個入口把需求、設計、動效和交付一路做完。
+- 摘要：一個入口把前端需求、設計、寫碼和驗證做完。
 - 標籤：frontend、design、workflow、requirements、quality、security
 - 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-director
 - 安裝資料夾名：`frontend-director`
-- 精選組合包：連同入口共 12 個收錄項目、44 個資料夾
-- 組合內容：`需求契約`、`實作藍圖`、`Impeccable`、`UI UX Pro Max`、`Taste`、`Hue`、`GSAP`、`互動體驗設計`、`交付品質工作流`、`程式碼品質閘門`、`Mantis 安全審查`
+- 精選組合包：連同入口共 7 個收錄項目、7 個資料夾
+- 組合內容：`需求契約`、`實作藍圖`、`Impeccable`、`Taste`、`Hue`、`互動體驗設計`
 - 執行模式：pipeline
-- 續跑狀態：`.agent/frontend-workflow.md`
-- 工作流階段：需求契約 → 實作藍圖 → UI 設計與實作 → UX 互動 → 動效 → 整合驗證
+- 可攜核心：不依賴單一 Agent 的專屬機制
+- 續跑狀態：`.agent/workflow-state.json`
+- 工作流控制器：`scripts/workflowctl.py`
+- 工作流階段：需求契約 → 實作藍圖 → UI 設計 → UX 互動 → 動效 → 逐任務實作 → 整合驗證 → 安全交付
 - 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/frontend-director`
-- 何時使用：從一句需求開始完成整個網站、Web App 或重大前端改版；希望 Agent 自己接續需求、UI、UX、動效、驗證與安全，不要逐輪點名 Skill；長任務可能跨回合或被壓縮，需要保留階段狀態與最新證據；小型修正也想保留必要品質檢查，但自動略過無關設計階段
+- 何時使用：從一句需求開始完成整個網站、Web App 或重大前端改版；希望較弱但具備工具能力的模型按固定閉環提升設計與代碼品質；在 Claude Code、Codex、OpenCode、Hermes 或自研 Agent 共用同一工作流；長任務跨回合、壓縮或更換模型後仍要從有效狀態繼續；小型修改也需要可驗證交付，但要自動略過不適用的設計階段
 
 #### Hue `hue`
 

@@ -103,7 +103,12 @@
 ```jsonc
 "runtime": {
   "mode": "pipeline",
-  "stateArtifact": ".agent/frontend-workflow.md",
+  "stateArtifact": ".agent/workflow-state.json",
+  "portableCore": true,
+  "controller": {
+    "script": "scripts/workflowctl.py",
+    "stateSchema": "schemas/workflow-state.schema.json"
+  },
   "continueWithoutUserInput": true,
   "ambiguityPolicy": "ask-only-material",
   "stages": [
@@ -115,8 +120,12 @@
 }
 ```
 
-- `runtime` 引用的是 registry id，而且必須已被 `includes` 的遞迴安裝清單涵蓋
+- `runtime.stages[].skills`、`overlays` 與 `finalizers` 引用的是必要 registry id，必須被 `includes` 的遞迴安裝清單涵蓋
+- `portableCore: true` 且階段有 `coreReferences` 時，`optionalSkills` 可以不放進 `includes`，表示「目前環境已安裝才增強」；找不到時必須使用內建 reference，不得中斷或假裝載入
 - `runtime` 是給網站與 AI 快速理解的結構化 metadata；完整的路由條件、階段 Gate、失敗回退與續跑方式仍寫在入口 `SKILL.md`
+- `portableCore: true` 時，每個階段可用 `coreReferences` 指向入口內建基線；外部子 Skill 只能增強，缺少時工作流仍要能執行
+- `controller` 只描述入口隨附的跨平台狀態控制器與 schema；仍要把這些檔案列進 `install.files`，並實際測試腳本
+- `coreReferences` 與 `controller` 指向的檔案都必須列入 `install.files`；validate 會阻止網站發布一個能展示但安裝後缺檔的工作流
 - 長任務入口要用 `stateArtifact` 留下目前階段、有效證據與下一步，避免跨回合後重做或漏做
 - 安裝時裝齊完整組合；執行時一次只讀目前階段需要的 Skill，不要把所有子 Skill 同時塞進上下文
 
