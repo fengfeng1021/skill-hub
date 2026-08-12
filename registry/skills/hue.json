@@ -39,8 +39,12 @@
     "files": [
       "SKILL.md"
     ],
+    "directories": [
+      "references",
+      "scripts"
+    ],
     "requires": [],
-    "notes": "clone 整個 repo 即可，SKILL.md 在根目錄。"
+    "notes": "SKILL.md 在 repo 根目錄；references 與 scripts 必須整個遞迴複製並保留結構，不要把模板或 validate.mjs 攤平到 skill 根目錄。docs 與 examples 不是執行期必要內容。"
   },
   "prompt": null,
   "links": [
@@ -54,5 +58,5 @@
     }
   ],
   "addedAt": "2026-08-08",
-  "updatedAt": "2026-08-10"
+  "updatedAt": "2026-08-12"
 }

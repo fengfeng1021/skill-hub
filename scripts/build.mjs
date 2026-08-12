@@ -125,6 +125,8 @@ const forAI = {
       'runtime 裡引用的 skill 必須已被 includes 的完整安裝清單涵蓋，真正的路由、Gate、回退與續跑規則寫在入口 SKILL.md。',
     migrations:
       'skill 改過資料夾或 frontmatter name 時，用 replaces 列出舊名稱。安裝提示詞會先比對自訂修改，驗證新版成功後才安全停用無自訂的舊入口，避免兩份同時觸發。',
+    directoryTrees:
+      'skill 依賴完整 references、scripts 或其他支援目錄時，用 install.directories 登記目錄，不要把其中檔案攤平或只列 SKILL.md；安裝提示詞會要求遞迴複製並比對相對路徑。',
   },
 };
 
@@ -187,6 +189,7 @@ const llms = [
   `- ${forAI.howToContribute.bundles}`,
   `- ${forAI.howToContribute.workflows}`,
   `- ${forAI.howToContribute.migrations}`,
+  `- ${forAI.howToContribute.directoryTrees}`,
   '',
   '## 收錄清單',
   '',

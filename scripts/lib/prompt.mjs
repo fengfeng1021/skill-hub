@@ -17,9 +17,9 @@ export function buildHeader(count) {
 1. **先辨識目前環境** — 讀取你自己的官方說明、系統設定或既有 skills，確認這個 Agent 支援的 skill 格式、安裝方式與可用範圍。不要預設任何品牌，也不要自行猜一個 \`~/.<名稱>/skills\` 路徑。
 2. **自動選擇正確位置** — 我有指定全域或專案範圍時照做；沒有指定時，沿用目前 Agent 的既有慣例。若這個 Agent 只支援其中一種，就使用它官方支援的方式。只有真的無法判定時才停下來問我。
 3. **保持原始結構** — 每個 skill 都是獨立資料夾；資料夾名、SKILL.md frontmatter 的 \`name\`／\`description\` 與相對檔案結構都不要改。
-4. **取得檔案的優先順序**：
-   a. 直接抓下面給的 raw 下載網址
-   b. 抓不到就 \`git clone\` 整個 repo 到暫存目錄，複製出需要的子目錄，再刪暫存
+4. **依每筆的取檔形式安裝**：
+   a. 有列「完整複製的子目錄」時，先把 repo clone 到暫存目錄（沒有 git 才下載並解壓官方分支封存檔），從指定的來源根目錄遞迴複製所列檔案與子目錄；不得逐檔猜測、漏掉巢狀檔案或把內容攤平
+   b. 只有檔案清單時，優先抓下面給的 raw 下載網址；抓不到再 clone repo 取檔
    c. 都不行（無網路等）就直接告訴我，我把檔案貼給你
 5. 來源若提供綁定特定 Agent 或固定路徑的安裝指令，只把它當作來源線索；請改用目前 Agent 的官方安裝方式，不要原樣執行。
 6. 目標資料夾**已存在**時，先比較版本與差異，再問我要更新、覆蓋或跳過，不要直接蓋掉。`;
@@ -48,6 +48,7 @@ export function buildBlock(skill, index = null) {
   const title = index === null ? `### ${skill.name}` : `### ${index}. ${skill.name}`;
   const scope = skill.install.scope === 'project' ? '專案內（只給目前專案用）' : '全域（所有專案共用）';
   const files = skill.install.files?.length ? skill.install.files : ['SKILL.md'];
+  const directories = skill.install.directories ?? [];
   const parts = skill.parts ?? [];
 
   const head = parts.length
@@ -91,6 +92,10 @@ export function buildBlock(skill, index = null) {
     }
     lines.push(`- **每個資料夾都要拿的檔案**：`);
     for (const f of files) lines.push(`  - \`<下載基底>/${f}\``);
+    if (directories.length) {
+      lines.push(`- **每個資料夾都要完整複製的子目錄**（遞迴保留相對結構）：`);
+      for (const d of directories) lines.push(`  - \`${d}/\``);
+    }
   } else {
     if (skill.source.rawBase) {
       lines.push(`- **下載基底網址**：\`${skill.source.rawBase}\``);
@@ -98,6 +103,14 @@ export function buildBlock(skill, index = null) {
     }
     lines.push(`- **要拿的檔案**（相對於 skill 資料夾）：`);
     for (const f of files) lines.push(`  - \`${f}\``);
+    if (directories.length) {
+      const sourceRoot = skill.source.kind === 'github'
+        ? (skill.source.subdir ? `repo 內的 \`${skill.source.subdir}\`` : 'repo 根目錄')
+        : '來源 skill 根目錄';
+      lines.push(`- **完整複製的子目錄**（從${sourceRoot}遞迴複製，保留相對結構）：`);
+      for (const d of directories) lines.push(`  - \`${d}/\``);
+      lines.push(`- **目錄完整性檢查**：安裝後逐一比較上述來源目錄與目標目錄的遞迴相對路徑；數量或路徑不同就算失敗。不得把子目錄內容攤平到 skill 根目錄。`);
+    }
   }
 
   if (skill.install.requires?.length) {

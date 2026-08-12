@@ -228,8 +228,15 @@
         },
         "files": {
           "type": "array",
+          "uniqueItems": true,
           "items": { "type": "string" },
           "description": "此 skill 包含的檔案清單（相對於 skill 資料夾），例如 [\"SKILL.md\", \"references/api.md\"]。"
+        },
+        "directories": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string" },
+          "description": "必須從來源遞迴複製且保留結構的完整子目錄，例如 [\"references\", \"scripts\"]。上游日後在目錄內新增檔案也屬安裝內容；不得把檔案攤平到 skill 根目錄。"
         },
         "requires": {
           "type": "array",

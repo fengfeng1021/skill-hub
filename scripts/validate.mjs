@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /** 檢查 registry 資料是否合法。收錄完一定要跑過。 */
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, basename } from 'node:path';
 import { loadConfig, loadSkills, ROOT, SKILLS_DIR } from './lib/registry.mjs';
 
@@ -14,6 +14,7 @@ const allIds = new Set(skills.map((s) => s.id).filter(Boolean));
 
 const REQUIRED = ['id', 'name', 'summary', 'category', 'tags', 'source', 'install'];
 const DIR_NAME = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
+const RELATIVE_PATH = /^(?!\/)(?![A-Za-z]:[\\/])(?!.*(?:^|[\\/])\.\.(?:[\\/]|$))[^\\]+$/;
 
 /**
  * summary 是卡片上唯一會被看到的說明，必須白話到不需要任何專業知識就看得懂。
@@ -121,6 +122,14 @@ for (const s of skills) {
           }
         }
       }
+      for (const d of s.install?.directories ?? []) {
+        for (const p of s.parts) {
+          const target = join(dir, p.dirName, d);
+          if (!existsSync(target) || !statSync(target).isDirectory()) {
+            warnings.push(`${at}：install.directories 列了 ${d}，但 ${rel}/${p.dirName}/${d}/ 不存在`);
+          }
+        }
+      }
     } else if (!existsSync(join(dir, 'SKILL.md'))) {
       errors.push(`${at}：${rel}/ 底下沒有 SKILL.md`);
     } else {
@@ -145,6 +154,12 @@ for (const s of skills) {
       for (const f of s.install?.files ?? []) {
         if (!existsSync(join(dir, f))) {
           warnings.push(`${at}：install.files 列了 ${f}，但 ${rel}/${f} 不存在`);
+        }
+      }
+      for (const d of s.install?.directories ?? []) {
+        const target = join(dir, d);
+        if (!existsSync(target) || !statSync(target).isDirectory()) {
+          warnings.push(`${at}：install.directories 列了 ${d}，但 ${rel}/${d}/ 不存在`);
         }
       }
     }
@@ -180,6 +195,39 @@ for (const s of skills) {
   }
   if (s.install?.scope && !['user', 'project'].includes(s.install.scope)) {
     errors.push(`${at}：install.scope 必須是 user 或 project`);
+  }
+  for (const field of ['files', 'directories']) {
+    const values = s.install?.[field];
+    if (values !== undefined && !Array.isArray(values)) {
+      errors.push(`${at}：install.${field} 必須是陣列`);
+      continue;
+    }
+    const seenPaths = new Set();
+    for (const value of values ?? []) {
+      if (typeof value !== 'string' || !value || !RELATIVE_PATH.test(value) || value.endsWith('/')) {
+        errors.push(`${at}：install.${field} 的「${value}」必須是使用 / 分隔、不含 .. 且不以 / 結尾的相對路徑`);
+        continue;
+      }
+      if (seenPaths.has(value)) errors.push(`${at}：install.${field} 的路徑「${value}」重複`);
+      seenPaths.add(value);
+    }
+  }
+  const installFiles = new Set(s.install?.files ?? []);
+  const installDirectories = new Set(s.install?.directories ?? []);
+  for (const directory of installDirectories) {
+    for (const file of installFiles) {
+      if (file === directory || file.startsWith(`${directory}/`)) {
+        errors.push(`${at}：install.files 的 ${file} 已被 install.directories 的 ${directory}/ 涵蓋，不能重複列出`);
+      }
+    }
+    for (const other of installDirectories) {
+      if (other !== directory && other.startsWith(`${directory}/`)) {
+        errors.push(`${at}：install.directories 的 ${directory}/ 已涵蓋 ${other}/，不能重複列出巢狀目錄`);
+      }
+    }
+  }
+  if ((s.install?.directories?.length ?? 0) > 0 && s.source?.kind !== 'github' && s.source?.kind !== 'local') {
+    errors.push(`${at}：install.directories 只支援 github 或 local 來源`);
   }
   if (s.replaces !== undefined) {
     if (!Array.isArray(s.replaces) || s.replaces.length === 0) {

@@ -658,8 +658,11 @@ function detailHTML(skill) {
     )}
 
     ${section(
-      included.length ? '組合入口包含的檔案' : '包含的檔案',
-      list(skill.install?.files) || '<p class="faint" style="font-size: var(--text-sm)">未特別註明，預設為整個 skill 資料夾</p>'
+      included.length ? '組合入口包含的檔案與目錄' : '包含的檔案與目錄',
+      list([
+        ...(skill.install?.files ?? []),
+        ...(skill.install?.directories ?? []).map((directory) => `${directory}/（完整目錄）`),
+      ]) || '<p class="faint" style="font-size: var(--text-sm)">未特別註明，預設為整個 skill 資料夾</p>'
     )}
 
     ${skill.install?.requires?.length ? section('需要先有', list(skill.install.requires)) : ''}
