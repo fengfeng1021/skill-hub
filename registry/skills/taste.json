@@ -1,63 +1,62 @@
 {
-  "id": "taste",
-  "name": "Taste",
-  "summary": "貼上任何網站的網址，就能學到它的設計風格與品味。",
-  "description": "設計 DNA 提取器：貼一個網站網址，它會用真實瀏覽器抓取 DOM 資料與截圖，跑 4 步驟分析，產出兩份檔案——{domain}.md 與 {domain}.json，內容包含兩層：\n1. 具體設計 tokens：色彩、字體、間距、圓角、陰影、格線。\n2. Taste DNA：Trigger → Decision → Reason → Evidence 的取捨說明，解釋「為什麼」這個設計有效。\n有了這兩層，AI 就不只是照抄數值，而是理解設計背後的決策邏輯，遇到沒看過的頁面也能做出對的判斷。",
-  "category": "前端 / 設計",
-  "tags": [
-    "design",
-    "taste",
-    "ui",
-    "analysis",
-    "tokens",
-    "extraction"
+ "id": "taste",
+ "name": "Taste",
+ "summary": "貼上任何網站的網址，就能學到它的設計風格與品味。",
+ "description": "本庫客製版 v1.2：新增「使用條件（調度約定）」——本 skill 需要參考網站（URL 是輸入）才能運作，因此僅在使用者提供參考網站或明確要模仿某站風格時由調度器載入；一般創意專案由 impeccable＋ui-ux-pro-max 承擔。\n設計 DNA 提取器：貼一個網站網址，它會用真實瀏覽器抓取 DOM 資料與截圖，跑 4 步驟分析，產出兩份檔案——{domain}.md 與 {domain}.json，內容包含兩層：\n1. 具體設計 tokens：色彩、字體、間距、圓角、陰影、格線。\n2. Taste DNA：Trigger → Decision → Reason → Evidence 的取捨說明，解釋「為什麼」這個設計有效。\n有了這兩層，AI 就不只是照抄數值，而是理解設計背後的決策邏輯，遇到沒看過的頁面也能做出對的判斷。",
+ "category": "前端 / 設計",
+ "tags": [
+  "design",
+  "taste",
+  "ui",
+  "analysis",
+  "tokens",
+  "extraction"
+ ],
+ "official": false,
+ "featured": false,
+ "author": "senlindesign",
+ "license": "MIT",
+ "version": "1.2.0",
+ "usage": [
+  "看到一個網站設計得很好，想學它背後的設計邏輯",
+  "要模仿某個品牌的視覺風格，需要具體的色票、字體、間距數值",
+  "要理解「為什麼」這個設計好看，而不只是複製參數"
+ ],
+ "highlights": [
+  "不只給數值：連設計決策的「為什麼」都分析出來",
+  "任何網站都能扒，產出 markdown + JSON 兩份檔案",
+  "跟 Impeccable 互補：一個學別人的品味，一個建立自己的品味標準"
+ ],
+ "source": {
+  "kind": "local",
+  "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/taste",
+  "path": "skills/taste"
+ },
+ "install": {
+  "scope": "user",
+  "dirName": "taste",
+  "files": [
+   "SKILL.md"
   ],
-  "official": false,
-  "featured": false,
-  "author": "senlindesign",
-  "license": "MIT",
-  "version": "1.1.0",
-  "usage": [
-    "看到一個網站設計得很好，想學它背後的設計邏輯",
-    "要模仿某個品牌的視覺風格，需要具體的色票、字體、間距數值",
-    "要理解「為什麼」這個設計好看，而不只是複製參數"
+  "directories": [
+   "references"
   ],
-  "highlights": [
-    "不只給數值：連設計決策的「為什麼」都分析出來",
-    "任何網站都能扒，產出 markdown + JSON 兩份檔案",
-    "跟 Impeccable 互補：一個學別人的品味，一個建立自己的品味標準"
+  "requires": [
+   "Playwright MCP"
   ],
-  "source": {
-    "kind": "github",
-    "url": "https://github.com/senlindesign/taste-skill",
-    "branch": "main"
+  "notes": "本庫自製託管客製版。需要先安裝 Playwright MCP 才能抓取網站。references 必須整個遞迴複製，不能把其中 6 個檔案攤平到 skill 根目錄；安裝後用 /taste <網址> 開始分析。"
+ },
+ "prompt": null,
+ "links": [
+  {
+   "label": "taste-skill（原 GitHub repo）",
+   "url": "https://github.com/senlindesign/taste-skill"
   },
-  "install": {
-    "command": "git clone --depth 1 https://github.com/senlindesign/taste-skill %USERPROFILE%\\.claude\\skills\\taste",
-    "scope": "user",
-    "dirName": "taste",
-    "files": [
-      "SKILL.md"
-    ],
-    "directories": [
-      "references"
-    ],
-    "requires": [
-      "Playwright MCP"
-    ],
-    "notes": "需要先安裝 Playwright MCP 才能抓取網站。references 必須整個遞迴複製，不能把其中 6 個檔案攤平到 skill 根目錄；安裝後用 /taste <網址> 開始分析。"
-  },
-  "prompt": null,
-  "links": [
-    {
-      "label": "taste-skill（GitHub repo）",
-      "url": "https://github.com/senlindesign/taste-skill"
-    },
-    {
-      "label": "Taste Lab 官方網站",
-      "url": "https://www.tastelab.xyz"
-    }
-  ],
-  "addedAt": "2026-08-08",
-  "updatedAt": "2026-08-12"
+  {
+   "label": "Taste Lab 官方網站",
+   "url": "https://www.tastelab.xyz"
+  }
+ ],
+ "addedAt": "2026-08-08",
+ "updatedAt": "2026-08-13"
 }

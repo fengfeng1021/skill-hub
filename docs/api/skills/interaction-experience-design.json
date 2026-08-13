@@ -2,7 +2,7 @@
   "id": "interaction-experience-design",
   "name": "互動體驗設計",
   "summary": "讓使用者一看就懂怎麼用，不會迷路也知道下一步。",
-  "description": "專業級「使用者交互體驗」設計 skill v3：SKILL.md 入口＋10 份 references＋scripts 工具＋benchmarks 案例集。學理基礎包含 Nielsen 10 啟發式、Shneiderman 8 法則、Fitts／Hick／Miller／Gestalt／Jakob／Norman、認知負荷、資訊架構學、WCAG 2.2 與 ISO 9241。入口明確要求只讀本次任務需要的 references，避免一次塞滿上下文。scripts/audit.py 可做 HTML 自動審查，test_audit.py 提供自測與 benchmark 回歸。",
+  "description": "專業級「使用者交互體驗」設計 skill v3：SKILL.md 入口＋10 份 references＋scripts 工具＋benchmarks 案例集。學理基礎包含 Nielsen 10 啟發式、Shneiderman 8 法則、Fitts／Hick／Miller／Gestalt／Jakob／Norman、認知負荷、資訊架構學、WCAG 2.2 與 ISO 9241。入口明確要求只讀本次任務需要的 references，避免一次塞滿上下文。scripts/audit.py 可做 HTML 自動審查，test_audit.py 提供自測與 benchmark 回歸。\nv3.1 變更：明確與創意設計的關係——本 skill 定位是「做 UI 前先設計好交互邏輯」，不評判視覺風格；創意互動（拖曳、手勢、cursor 互動、動效敘事）加分不扣分；評分閘門只評任務完整性、迷路、錯誤恢復與狀態可感知，不是「夠不夠克制」。",
   "category": "前端 / 設計",
   "tags": [
     "ux",
@@ -18,7 +18,7 @@
   "featured": true,
   "author": "fengfeng1021",
   "license": "MIT",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "usage": [
     "設計登入流程、多功能 App 的導覽與分頁組織",
     "規劃按鈕層級、返回機制、頁面切換",
@@ -75,7 +75,7 @@
     }
   ],
   "addedAt": "2026-08-08",
-  "updatedAt": "2026-08-12",
+  "updatedAt": "2026-08-13",
   "includes": [],
   "parts": [],
   "dirNames": [

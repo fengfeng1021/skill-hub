@@ -1,6 +1,6 @@
 # Skill Hub 收錄清單
 
-共 14 個，更新於 2026-08-12。此檔由 `npm run build` 產生，請勿手改。
+共 14 個，更新於 2026-08-13。此檔由 `npm run build` 產生，請勿手改。
 
 ## 前端 / 設計（6）
 
@@ -8,9 +8,9 @@
 | --- | --- | --- | --- |
 | **互動體驗設計** | 讓使用者一看就懂怎麼用，不會迷路也知道下一步。 | ux, interaction, heuristics, information-architecture, navigation, usability, accessibility, cognitive-load | [本庫託管](https://github.com/fengfeng1021/skill-hub/tree/main/skills/interaction-experience-design) |
 | **前端總指揮** | 一個入口把前端需求、設計、寫碼和驗證做完。 | frontend, design, workflow, requirements, quality, security | [本庫託管](https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-director) |
-| **Hue** | 學任何品牌的風格，之後做的東西都自動長那樣。 | design, brand, design-system, tokens, ui, theme | [dominikmartn/hue](https://github.com/dominikmartn/hue) |
-| **Impeccable** | 把網頁設計得有質感，也能幫你檢查哪裡不夠好。 | design, ui, ux, frontend, review, accessibility | [pbakaus/impeccable](https://github.com/pbakaus/impeccable/tree/main/.claude/skills/impeccable) |
-| **Taste** | 貼上任何網站的網址，就能學到它的設計風格與品味。 | design, taste, ui, analysis, tokens, extraction | [senlindesign/taste-skill](https://github.com/senlindesign/taste-skill) |
+| **Hue** | 學任何品牌的風格，之後做的東西都自動長那樣。 | design, brand, design-system, tokens, ui, theme | [本庫託管](https://github.com/fengfeng1021/skill-hub/tree/main/skills/hue) |
+| **Impeccable** | 把網頁設計得有質感，也能幫你檢查哪裡不夠好。 | design, ui, ux, frontend, review, accessibility | [本庫託管](https://github.com/fengfeng1021/skill-hub/tree/main/skills/impeccable) |
+| **Taste** | 貼上任何網站的網址，就能學到它的設計風格與品味。 | design, taste, ui, analysis, tokens, extraction | [本庫託管](https://github.com/fengfeng1021/skill-hub/tree/main/skills/taste) |
 | **UI UX Pro Max** | 設計網站和手機 App，配色字體排版都幫你想好。 | design, ui, ux, frontend, mobile, brand, accessibility | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/tree/main/.claude/skills) |
 
 ## 程式品質（5）

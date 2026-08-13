@@ -1,249 +1,250 @@
 {
-  "id": "frontend-director",
-  "name": "前端總指揮",
-  "summary": "一個入口把前端需求、設計、寫碼和驗證做完。",
-  "description": "跨 Agent 的前端工作流 v6.1。核心遵循開放 Agent Skills 格式，不依賴 Codex、Claude Code、OpenCode 或 Hermes 的專屬機制：先建立 FR/NFR 驗收契約與檔案級任務，再依序載入 UI、UX、動效與交付品質 Skills，對每個 T-### 執行失敗證據、最小實作、測試、lint、format、diff 審查與新證據 Coding Loop。新增 Signature Visual Truth 硬閘門：事實性核心視覺必須有來源或經驗證的程序模型，並用桌面／手機／細節截圖、二元審查及可驗證 manifest 阻止假貼圖、通用漸層、假資料和 placeholder 冒充完成；另要求互動序列壓力測試、語意 oracle、證據 hash 與安全分級。",
-  "category": "前端 / 設計",
-  "tags": [
-    "frontend",
-    "design",
-    "workflow",
-    "requirements",
-    "quality",
-    "security"
-  ],
-  "official": false,
-  "featured": true,
-  "author": "fengfeng1021",
-  "license": "MIT",
-  "version": "6.1.0",
-  "usage": [
-    "從一句需求開始完成整個網站、Web App 或重大前端改版",
-    "希望較弱但具備工具能力的模型按固定閉環提升設計與代碼品質",
-    "在 Claude Code、Codex、OpenCode、Hermes 或自研 Agent 共用同一工作流",
-    "長任務跨回合、壓縮或更換模型後仍要從有效狀態繼續",
-    "小型修改也需要可驗證交付，但要自動略過不適用的設計階段"
-  ],
-  "highlights": [
-    "事實性核心視覺必須有來源或驗證模型，假貼圖、通用漸層、假資料與 placeholder 會被 Gate 拒絕",
-    "桌面、手機與完整細節截圖需通過盲審二元檢查，並寫入可機器驗證的 visual evidence manifest",
-    "每個任務都要完成失敗證據、最小修改、測試、diff 審查與新證據閉環",
-    "可執行控制器阻止空子 Skill、漏具名檢查、證據竄改、舊證據與空安全 Gate",
-    "核心不綁單一 Agent，平台 hooks 和 plugins 只負責增強啟動與約束",
-    "設計、UX、動效、品質與安全能力按階段載入，缺少外部能力仍有內建基線",
-    "隨附跨 Agent／跨模型 A/B 評測格式，品質提升必須由結果證明"
-  ],
-  "includes": [
-    "define-acceptance-contract",
-    "plan-implementation",
-    "impeccable",
-    "taste",
-    "hue",
-    "interaction-experience-design",
-    "gsap",
-    "delivery-quality-gate"
-  ],
-  "replaces": [
-    "frontend-design-director"
-  ],
-  "runtime": {
-    "mode": "pipeline",
-    "stateArtifact": ".agent/workflow-state.json",
-    "portableCore": true,
-    "controller": {
-      "script": "scripts/workflowctl.py",
-      "stateSchema": "schemas/workflow-state.schema.json"
-    },
-    "continueWithoutUserInput": true,
-    "ambiguityPolicy": "ask-only-material",
-    "stages": [
-      {
-        "id": "contract",
-        "name": "需求契約",
-        "skills": [
-          "define-acceptance-contract"
-        ],
-        "optionalSkills": [],
-        "coreReferences": [
-          "references/contract.md"
-        ],
-        "outputs": [
-          "FR/NFR、驗收條件、假設與風險"
-        ],
-        "gate": "所有明確要求都有可測需求 ID，沒有重大未澄清矛盾"
-      },
-      {
-        "id": "plan",
-        "name": "實作藍圖",
-        "skills": [
-          "plan-implementation"
-        ],
-        "optionalSkills": [],
-        "coreReferences": [
-          "references/implementation-plan.md"
-        ],
-        "outputs": [
-          "檔案級任務、相依、基線、驗證順序與回滾"
-        ],
-        "gate": "每個需求都映射到可獨立驗證的 T-###"
-      },
-      {
-        "id": "ui",
-        "name": "UI 設計",
-        "skills": [
-          "impeccable",
-          "taste",
-          "hue"
-        ],
-        "optionalSkills": [
-          "ui-ux-pro-max"
-        ],
-        "coreReferences": [
-          "references/ui-quality.md",
-          "references/visual-truth.md"
-        ],
-        "when": "任務新增或修改可見介面",
-        "outputs": [
-          "產品特異的設計方向、tokens、元件與響應式策略"
-        ],
-        "gate": "產品特異設計方向、signature visual 真實性計畫、桌面／手機規格、狀態 inventory 與元件策略完整"
-      },
-      {
-        "id": "ux",
-        "name": "UX 互動",
-        "skills": [
-          "interaction-experience-design"
-        ],
-        "optionalSkills": [],
-        "coreReferences": [
-          "references/ux-interaction.md"
-        ],
-        "when": "任務包含使用流程、狀態或互動",
-        "outputs": [
-          "主要與例外流程、狀態、回饋、焦點和恢復行為"
-        ],
-        "gate": "主要、替代、錯誤、恢復、鍵盤、焦點與觸控行為已有可測模型"
-      },
-      {
-        "id": "motion",
-        "name": "動效",
-        "skills": [
-          "gsap"
-        ],
-        "optionalSkills": [],
-        "coreReferences": [
-          "references/motion.md"
-        ],
-        "when": "動效能改善引導、狀態回饋或空間連續性",
-        "outputs": [
-          "按需選擇的動效、清理與 reduced-motion 行為"
-        ],
-        "gate": "每段動效有目的、reduced-motion 等價行為及中斷／清理策略"
-      },
-      {
-        "id": "implementation",
-        "name": "逐任務實作",
-        "skills": [
-          "delivery-quality-gate"
-        ],
-        "optionalSkills": [],
-        "coreReferences": [
-          "references/coding-loop.md",
-          "references/workflow-state.md"
-        ],
-        "outputs": [
-          "逐 T-### 的最小實作、最新檢查、diff 審查與證據"
-        ],
-        "gate": "每個任務完成 Coding Loop，tests、typecheck、lint、format、diff-review 與檔案指紋一致"
-      },
-      {
-        "id": "integration",
-        "name": "整合驗證",
-        "skills": [
-          "delivery-quality-gate"
-        ],
-        "optionalSkills": [],
-        "coreReferences": [
-          "references/verification.md",
-          "references/visual-truth.md"
-        ],
-        "outputs": [
-          "需求追蹤矩陣與最新整合、瀏覽器、無障礙和效能證據"
-        ],
-        "gate": "所有需求有最新證據，桌面／手機／鍵盤／reduced-motion／語意 oracle／visual-fidelity／interaction-stress 通過且 console 乾淨"
-      },
-      {
-        "id": "security",
-        "name": "安全交付",
-        "skills": [
-          "delivery-quality-gate"
-        ],
-        "optionalSkills": [],
-        "coreReferences": [
-          "references/security.md"
-        ],
-        "outputs": [
-          "風險分級、安全證據、處置和殘留風險"
-        ],
-        "gate": "安全已明確分級並有基線、負向路徑與依賴證據；Critical/High 為零，Medium 已處理"
-      }
-    ],
-    "overlays": [
-      "delivery-quality-gate"
-    ],
-    "finalizers": [
-      "delivery-quality-gate"
-    ]
+ "id": "frontend-director",
+ "name": "前端總指揮",
+ "summary": "一個入口把前端需求、設計、寫碼和驗證做完。",
+ "description": "跨 Agent 的前端工作流 v6.1。核心遵循開放 Agent Skills 格式，不依賴 Codex、Claude Code、OpenCode 或 Hermes 的專屬機制：先建立 FR/NFR 驗收契約與檔案級任務，再依序載入 UI、UX、動效與交付品質 Skills，對每個 T-### 執行失敗證據、最小實作、測試、lint、format、diff 審查與新證據 Coding Loop。新增 Signature Visual Truth 硬閘門：事實性核心視覺必須有來源或經驗證的程序模型，並用桌面／手機／細節截圖、二元審查及可驗證 manifest 阻止假貼圖、通用漸層、假資料和 placeholder 冒充完成；另要求互動序列壓力測試、語意 oracle、證據 hash 與安全分級。\nv6.2 變更：定位調整為純調度器（階段路由、子 skill 載入、狀態與證據管理），不再承載具體設計限制。新增創意等級（Creative Tier 1–3）：Tier 3 強制 GSAP 敘事動效（M2/M3 檔位）、signature moment、bolder 對照審查；motion／ui-quality 改寫為調度層語義；hue 僅在要求模仿品牌或建立可重用設計語言時載入，taste 僅在提供參考網站時載入，一般創意專案由 impeccable＋ui-ux-pro-max 承擔。新增 references/creative-tier.md。",
+ "category": "前端 / 設計",
+ "tags": [
+  "frontend",
+  "design",
+  "workflow",
+  "requirements",
+  "quality",
+  "security"
+ ],
+ "official": false,
+ "featured": true,
+ "author": "fengfeng1021",
+ "license": "MIT",
+ "version": "6.2.0",
+ "usage": [
+  "從一句需求開始完成整個網站、Web App 或重大前端改版",
+  "希望較弱但具備工具能力的模型按固定閉環提升設計與代碼品質",
+  "在 Claude Code、Codex、OpenCode、Hermes 或自研 Agent 共用同一工作流",
+  "長任務跨回合、壓縮或更換模型後仍要從有效狀態繼續",
+  "小型修改也需要可驗證交付，但要自動略過不適用的設計階段"
+ ],
+ "highlights": [
+  "事實性核心視覺必須有來源或驗證模型，假貼圖、通用漸層、假資料與 placeholder 會被 Gate 拒絕",
+  "桌面、手機與完整細節截圖需通過盲審二元檢查，並寫入可機器驗證的 visual evidence manifest",
+  "每個任務都要完成失敗證據、最小修改、測試、diff 審查與新證據閉環",
+  "可執行控制器阻止空子 Skill、漏具名檢查、證據竄改、舊證據與空安全 Gate",
+  "核心不綁單一 Agent，平台 hooks 和 plugins 只負責增強啟動與約束",
+  "設計、UX、動效、品質與安全能力按階段載入，缺少外部能力仍有內建基線",
+  "隨附跨 Agent／跨模型 A/B 評測格式，品質提升必須由結果證明"
+ ],
+ "includes": [
+  "define-acceptance-contract",
+  "plan-implementation",
+  "impeccable",
+  "taste",
+  "hue",
+  "interaction-experience-design",
+  "gsap",
+  "delivery-quality-gate"
+ ],
+ "replaces": [
+  "frontend-design-director"
+ ],
+ "runtime": {
+  "mode": "pipeline",
+  "stateArtifact": ".agent/workflow-state.json",
+  "portableCore": true,
+  "controller": {
+   "script": "scripts/workflowctl.py",
+   "stateSchema": "schemas/workflow-state.schema.json"
   },
-  "source": {
-    "kind": "local",
-    "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-director",
-    "path": "skills/frontend-director"
-  },
-  "install": {
-    "scope": "user",
-    "dirName": "frontend-director",
-    "files": [
-      "SKILL.md",
-      "references/contract.md",
-      "references/implementation-plan.md",
-      "references/ui-quality.md",
-      "references/ux-interaction.md",
-      "references/motion.md",
-      "references/coding-loop.md",
-      "references/verification.md",
-      "references/security.md",
-      "references/workflow-state.md",
-      "references/platform-adapters.md",
-      "references/evaluation.md",
-      "references/model-robustness.md",
-      "references/visual-truth.md",
-      "scripts/workflowctl.py",
-      "scripts/evaluate_runs.py",
-      "scripts/agent_skill_bridge.py",
-      "schemas/workflow-state.schema.json",
-      "schemas/visual-evidence.schema.json",
-      "evals/frontend-benchmark.json",
-      "evals/result.schema.json"
+  "continueWithoutUserInput": true,
+  "ambiguityPolicy": "ask-only-material",
+  "stages": [
+   {
+    "id": "contract",
+    "name": "需求契約",
+    "skills": [
+     "define-acceptance-contract"
     ],
-    "requires": [],
-    "notes": "入口核心遵循 Agent Skills 開放格式；必須保留 references、scripts、schemas 與 evals 相對結構。workflowctl 使用 Python 3.9+ 標準函式庫；若宿主無 Python，仍可按 schema 手動維持狀態，但要揭露未自動驗證。完整組合會安裝需求、規劃、Impeccable、Taste、Hue、互動體驗、GSAP、交付品質及其程式品質／Mantis 安全能力；執行時按階段逐一載入，不會同時塞入上下文。runtime 是可視化路由，真正的子 Skill、具名證據、安全分級與完成阻擋由 scripts/workflowctl.py 執行。"
-  },
-  "prompt": null,
-  "links": [
-    {
-      "label": "Agent Skills 開放規格",
-      "url": "https://agentskills.io/specification"
-    },
-    {
-      "label": "GitHub Spec Kit",
-      "url": "https://github.com/github/spec-kit"
-    },
-    {
-      "label": "Skill Hub（收藏庫）",
-      "url": "https://fengfeng1021.github.io/skill-hub/"
-    }
+    "optionalSkills": [],
+    "coreReferences": [
+     "references/contract.md"
+    ],
+    "outputs": [
+     "FR/NFR、驗收條件、假設與風險"
+    ],
+    "gate": "所有明確要求都有可測需求 ID，沒有重大未澄清矛盾"
+   },
+   {
+    "id": "plan",
+    "name": "實作藍圖",
+    "skills": [
+     "plan-implementation"
+    ],
+    "optionalSkills": [],
+    "coreReferences": [
+     "references/implementation-plan.md"
+    ],
+    "outputs": [
+     "檔案級任務、相依、基線、驗證順序與回滾"
+    ],
+    "gate": "每個需求都映射到可獨立驗證的 T-###"
+   },
+   {
+    "id": "ui",
+    "name": "UI 設計",
+    "skills": [
+     "impeccable",
+     "taste",
+     "hue"
+    ],
+    "optionalSkills": [
+     "ui-ux-pro-max"
+    ],
+    "coreReferences": [
+     "references/ui-quality.md",
+     "references/visual-truth.md"
+    ],
+    "when": "任務新增或修改可見介面",
+    "outputs": [
+     "產品特異的設計方向、tokens、元件與響應式策略"
+    ],
+    "gate": "產品特異設計方向、signature visual 真實性計畫、桌面／手機規格、狀態 inventory 與元件策略完整"
+   },
+   {
+    "id": "ux",
+    "name": "UX 互動",
+    "skills": [
+     "interaction-experience-design"
+    ],
+    "optionalSkills": [],
+    "coreReferences": [
+     "references/ux-interaction.md"
+    ],
+    "when": "任務包含使用流程、狀態或互動",
+    "outputs": [
+     "主要與例外流程、狀態、回饋、焦點和恢復行為"
+    ],
+    "gate": "主要、替代、錯誤、恢復、鍵盤、焦點與觸控行為已有可測模型"
+   },
+   {
+    "id": "motion",
+    "name": "動效",
+    "skills": [
+     "gsap"
+    ],
+    "optionalSkills": [],
+    "coreReferences": [
+     "references/motion.md"
+    ],
+    "when": "動效能改善引導、狀態回饋或空間連續性",
+    "outputs": [
+     "按需選擇的動效、清理與 reduced-motion 行為"
+    ],
+    "gate": "每段動效有目的、reduced-motion 等價行為及中斷／清理策略"
+   },
+   {
+    "id": "implementation",
+    "name": "逐任務實作",
+    "skills": [
+     "delivery-quality-gate"
+    ],
+    "optionalSkills": [],
+    "coreReferences": [
+     "references/coding-loop.md",
+     "references/workflow-state.md"
+    ],
+    "outputs": [
+     "逐 T-### 的最小實作、最新檢查、diff 審查與證據"
+    ],
+    "gate": "每個任務完成 Coding Loop，tests、typecheck、lint、format、diff-review 與檔案指紋一致"
+   },
+   {
+    "id": "integration",
+    "name": "整合驗證",
+    "skills": [
+     "delivery-quality-gate"
+    ],
+    "optionalSkills": [],
+    "coreReferences": [
+     "references/verification.md",
+     "references/visual-truth.md"
+    ],
+    "outputs": [
+     "需求追蹤矩陣與最新整合、瀏覽器、無障礙和效能證據"
+    ],
+    "gate": "所有需求有最新證據，桌面／手機／鍵盤／reduced-motion／語意 oracle／visual-fidelity／interaction-stress 通過且 console 乾淨"
+   },
+   {
+    "id": "security",
+    "name": "安全交付",
+    "skills": [
+     "delivery-quality-gate"
+    ],
+    "optionalSkills": [],
+    "coreReferences": [
+     "references/security.md"
+    ],
+    "outputs": [
+     "風險分級、安全證據、處置和殘留風險"
+    ],
+    "gate": "安全已明確分級並有基線、負向路徑與依賴證據；Critical/High 為零，Medium 已處理"
+   }
   ],
-  "addedAt": "2026-08-08",
-  "updatedAt": "2026-08-12"
+  "overlays": [
+   "delivery-quality-gate"
+  ],
+  "finalizers": [
+   "delivery-quality-gate"
+  ]
+ },
+ "source": {
+  "kind": "local",
+  "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/frontend-director",
+  "path": "skills/frontend-director"
+ },
+ "install": {
+  "scope": "user",
+  "dirName": "frontend-director",
+  "files": [
+   "SKILL.md",
+   "evals/frontend-benchmark.json",
+   "evals/result.schema.json",
+   "references/coding-loop.md",
+   "references/contract.md",
+   "references/creative-tier.md",
+   "references/evaluation.md",
+   "references/implementation-plan.md",
+   "references/model-robustness.md",
+   "references/motion.md",
+   "references/platform-adapters.md",
+   "references/security.md",
+   "references/ui-quality.md",
+   "references/ux-interaction.md",
+   "references/verification.md",
+   "references/visual-truth.md",
+   "references/workflow-state.md",
+   "schemas/visual-evidence.schema.json",
+   "schemas/workflow-state.schema.json",
+   "scripts/agent_skill_bridge.py",
+   "scripts/evaluate_runs.py",
+   "scripts/workflowctl.py"
+  ],
+  "requires": [],
+  "notes": "入口核心遵循 Agent Skills 開放格式；必須保留 references、scripts、schemas 與 evals 相對結構。workflowctl 使用 Python 3.9+ 標準函式庫；若宿主無 Python，仍可按 schema 手動維持狀態，但要揭露未自動驗證。完整組合會安裝需求、規劃、Impeccable、Taste、Hue、互動體驗、GSAP、交付品質及其程式品質／Mantis 安全能力；執行時按階段逐一載入，不會同時塞入上下文。runtime 是可視化路由，真正的子 Skill、具名證據、安全分級與完成阻擋由 scripts/workflowctl.py 執行。"
+ },
+ "prompt": null,
+ "links": [
+  {
+   "label": "Agent Skills 開放規格",
+   "url": "https://agentskills.io/specification"
+  },
+  {
+   "label": "GitHub Spec Kit",
+   "url": "https://github.com/github/spec-kit"
+  },
+  {
+   "label": "Skill Hub（收藏庫）",
+   "url": "https://fengfeng1021.github.io/skill-hub/"
+  }
+ ],
+ "addedAt": "2026-08-08",
+ "updatedAt": "2026-08-13"
 }

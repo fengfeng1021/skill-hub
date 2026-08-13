@@ -1,64 +1,62 @@
 {
-  "id": "impeccable",
-  "name": "Impeccable",
-  "summary": "把網頁設計得有質感，也能幫你檢查哪裡不夠好。",
-  "description": "由 Paul Bakaus 打造的設計語言與品質審查 skill（GitHub 56k+ stars，持續維護）。涵蓋網站、登陸頁、儀表板、產品介面、元件、表單、設定頁、引導流程、空白狀態等所有前端介面。\n能力包含：UX 審查、視覺層級、資訊架構、認知負荷、無障礙（a11y）、效能、響應式行為、主題、反模式偵測、字體排版、間距、格線、對齊、色彩、動態與微互動、UX 文案、錯誤狀態、邊界情況、i18n，以及可重用的設計系統與 tokens。\n支援的指令：audit（全面審查）、critique（批評式回饋）、polish（打磨）、animate（動效）、bolder／quieter（調整強度）、colorize（配色）、typeset（排版）、distill（簡化）、harden（強化）、optimize（最佳化）、extract（提取設計系統）等，也可直接對 live 頁面做迭代修改。",
-  "category": "前端 / 設計",
-  "tags": [
-    "design",
-    "ui",
-    "ux",
-    "frontend",
-    "review",
-    "accessibility"
+ "id": "impeccable",
+ "name": "Impeccable",
+ "summary": "把網頁設計得有質感，也能幫你檢查哪裡不夠好。",
+ "description": "本庫客製版 v4.1：在 Paul Bakaus 原版（GitHub 56k+ stars，持續維護）之上新增「大膽導向（Bold-by-Default）」——被 frontend-director 等調度器載入時，bolder 是強制流程（Tier 2/3 必執行）；craft-floor 是品質底線不是創意上限；「克制、安全、工整而沒有記憶點」視為失敗特徵；對真實性規則僅適用於事實性主張。\n由 Paul Bakaus 打造的設計語言與品質審查 skill（GitHub 56k+ stars，持續維護）。涵蓋網站、登陸頁、儀表板、產品介面、元件、表單、設定頁、引導流程、空白狀態等所有前端介面。\n能力包含：UX 審查、視覺層級、資訊架構、認知負荷、無障礙（a11y）、效能、響應式行為、主題、反模式偵測、字體排版、間距、格線、對齊、色彩、動態與微互動、UX 文案、錯誤狀態、邊界情況、i18n，以及可重用的設計系統與 tokens。\n支援的指令：audit（全面審查）、critique（批評式回饋）、polish（打磨）、animate（動效）、bolder／quieter（調整強度）、colorize（配色）、typeset（排版）、distill（簡化）、harden（強化）、optimize（最佳化）、extract（提取設計系統）等，也可直接對 live 頁面做迭代修改。",
+ "category": "前端 / 設計",
+ "tags": [
+  "design",
+  "ui",
+  "ux",
+  "frontend",
+  "review",
+  "accessibility"
+ ],
+ "official": false,
+ "featured": true,
+ "author": "Paul Bakaus",
+ "license": "Apache 2.0",
+ "version": "4.1.0",
+ "usage": [
+  "覺得介面不好看、說不上哪裡怪，想要具體的修改建議",
+  "要設計新頁面或元件，希望一開始就有設計品質",
+  "要審查現有網站或介面，找出 UX、無障礙、視覺問題",
+  "要把整個網站調成某種風格（更活潑、更安靜、更有質感）"
+ ],
+ "highlights": [
+  "GitHub 56k+ stars，目前最受歡迎的 AI 介面設計 skill",
+  "不是模板：是一套設計判斷力，任何頁面都適用",
+  "支援 live 瀏覽器迭代，直接看修改效果"
+ ],
+ "source": {
+  "kind": "local",
+  "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/impeccable",
+  "path": "skills/impeccable"
+ },
+ "install": {
+  "scope": "user",
+  "dirName": "impeccable",
+  "files": [
+   "SKILL.md"
   ],
-  "official": false,
-  "featured": true,
-  "author": "Paul Bakaus",
-  "license": "Apache 2.0",
-  "version": "4.0.4",
-  "usage": [
-    "覺得介面不好看、說不上哪裡怪，想要具體的修改建議",
-    "要設計新頁面或元件，希望一開始就有設計品質",
-    "要審查現有網站或介面，找出 UX、無障礙、視覺問題",
-    "要把整個網站調成某種風格（更活潑、更安靜、更有質感）"
+  "directories": [
+   "reference",
+   "scripts"
   ],
-  "highlights": [
-    "GitHub 56k+ stars，目前最受歡迎的 AI 介面設計 skill",
-    "不是模板：是一套設計判斷力，任何頁面都適用",
-    "支援 live 瀏覽器迭代，直接看修改效果"
-  ],
-  "source": {
-    "kind": "github",
-    "url": "https://github.com/pbakaus/impeccable",
-    "branch": "main",
-    "subdir": ".claude/skills/impeccable"
+  "requires": [],
+  "notes": "本庫自製託管客製版（含完整 reference 與 scripts，需遞迴複製並比對相對路徑）；新增的「大膽導向」段落以本庫版本為準。"
+ },
+ "prompt": null,
+ "links": [
+  {
+   "label": "impeccable（原 GitHub repo）",
+   "url": "https://github.com/pbakaus/impeccable"
   },
-  "install": {
-    "command": "git clone --depth 1 https://github.com/pbakaus/impeccable %TEMP%/impeccable-repo && xcopy /E /I /Y %TEMP%\\impeccable-repo\\.claude\\skills\\impeccable %USERPROFILE%\\.claude\\skills\\impeccable",
-    "scope": "user",
-    "dirName": "impeccable",
-    "files": [
-      "SKILL.md"
-    ],
-    "directories": [
-      "reference",
-      "scripts"
-    ],
-    "requires": [],
-    "notes": "repo 內含多個平台的設定檔；只從 .claude/skills/impeccable 取 SKILL.md、完整 reference 與完整 scripts。兩個子目錄含大量巢狀檔案和模組相依，必須遞迴複製並比對相對路徑，不能只拿 SKILL.md 或只抓它直接連結的檔案。"
-  },
-  "prompt": null,
-  "links": [
-    {
-      "label": "impeccable（GitHub repo）",
-      "url": "https://github.com/pbakaus/impeccable"
-    },
-    {
-      "label": "impeccable 官方網站",
-      "url": "https://impeccable.design"
-    }
-  ],
-  "addedAt": "2026-08-08",
-  "updatedAt": "2026-08-12"
+  {
+   "label": "impeccable 官方網站",
+   "url": "https://impeccable.design"
+  }
+ ],
+ "addedAt": "2026-08-08",
+ "updatedAt": "2026-08-13"
 }

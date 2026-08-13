@@ -2,7 +2,7 @@
   "id": "delivery-quality-gate",
   "name": "交付品質工作流",
   "summary": "寫程式時一路驗證，交付前再檢查安全。",
-  "description": "跨技術棧的品質工作流 v3，分成持續品質 overlay 與安全 finalizer。每個 T-### 都要獨立完成理解範圍、失敗證據、最小完整修改、最小相關測試、diff 審查和最新證據，不能累積多個任務到最後一起驗證；存在 frontend-director 狀態時會沿用其控制器。階段結束再跑 lint、typecheck、build、整合或瀏覽器驗證，交付前依高、中、低風險路由安全能力，修補後使舊證據失效並重新驗證。",
+  "description": "跨技術棧的品質工作流 v3，分成持續品質 overlay 與安全 finalizer。每個 T-### 都要獨立完成理解範圍、失敗證據、最小完整修改、最小相關測試、diff 審查和最新證據，不能累積多個任務到最後一起驗證；存在 frontend-director 狀態時會沿用其控制器。階段結束再跑 lint、typecheck、build、整合或瀏覽器驗證，交付前依高、中、低風險路由安全能力，修補後使舊證據失效並重新驗證。\nv3.1 變更：明確職責邊界——本閘門只驗證程式品質與安全（測試／lint／build／錯誤處理／審查／風險），不審查設計；設計標準由 UI 階段的設計 skills 與創意等級負責；安全審查修正的是實作方式，不是退回保守設計。",
   "category": "程式品質",
   "tags": [
     "quality",
@@ -16,7 +16,7 @@
   "featured": true,
   "author": "fengfeng1021",
   "license": "MIT",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "usage": [
     "任何程式碼任務中持續驗證，不想等寫完才發現整體壞掉",
     "需要把每項需求連到實作、測試和最新證據",
@@ -69,7 +69,7 @@
     }
   ],
   "addedAt": "2026-08-10",
-  "updatedAt": "2026-08-12",
+  "updatedAt": "2026-08-13",
   "parts": [],
   "dirNames": [
     "delivery-quality-gate"

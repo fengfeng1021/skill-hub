@@ -1,67 +1,69 @@
 {
-  "id": "delivery-quality-gate",
-  "name": "交付品質工作流",
-  "summary": "寫程式時一路驗證，交付前再檢查安全。",
-  "description": "跨技術棧的品質工作流 v3，分成持續品質 overlay 與安全 finalizer。每個 T-### 都要獨立完成理解範圍、失敗證據、最小完整修改、最小相關測試、diff 審查和最新證據，不能累積多個任務到最後一起驗證；存在 frontend-director 狀態時會沿用其控制器。階段結束再跑 lint、typecheck、build、整合或瀏覽器驗證，交付前依高、中、低風險路由安全能力，修補後使舊證據失效並重新驗證。",
-  "category": "程式品質",
-  "tags": [
-    "quality",
-    "review",
-    "security",
-    "verification",
-    "traceability",
-    "workflow"
+ "id": "delivery-quality-gate",
+ "name": "交付品質工作流",
+ "summary": "寫程式時一路驗證，交付前再檢查安全。",
+ "description": "跨技術棧的品質工作流 v3，分成持續品質 overlay 與安全 finalizer。每個 T-### 都要獨立完成理解範圍、失敗證據、最小完整修改、最小相關測試、diff 審查和最新證據，不能累積多個任務到最後一起驗證；存在 frontend-director 狀態時會沿用其控制器。階段結束再跑 lint、typecheck、build、整合或瀏覽器驗證，交付前依高、中、低風險路由安全能力，修補後使舊證據失效並重新驗證。\nv3.1 變更：明確職責邊界——本閘門只驗證程式品質與安全（測試／lint／build／錯誤處理／審查／風險），不審查設計；設計標準由 UI 階段的設計 skills 與創意等級負責；安全審查修正的是實作方式，不是退回保守設計。",
+ "category": "程式品質",
+ "tags": [
+  "quality",
+  "review",
+  "security",
+  "verification",
+  "traceability",
+  "workflow"
+ ],
+ "official": false,
+ "featured": true,
+ "author": "fengfeng1021",
+ "license": "MIT",
+ "version": "3.1.0",
+ "usage": [
+  "任何程式碼任務中持續驗證，不想等寫完才發現整體壞掉",
+  "需要把每項需求連到實作、測試和最新證據",
+  "功能完成或重構後想取得第二視角的程式碼審查",
+  "交付前需要依實際風險決定安全檢查深度"
+ ],
+ "highlights": [
+  "每個任務獨立跑完失敗證據、實作、驗證、diff 審查與新證據",
+  "品質是全程覆蓋層，每次修改後更新證據",
+  "證據會隨程式變更失效，不能拿舊測試結果宣稱新版本完成",
+  "安全檢查按風險路由，不會一開始把全部安全內容塞進上下文"
+ ],
+ "includes": [
+  "superpowers-code-quality",
+  "mantis"
+ ],
+ "runtime": {
+  "mode": "overlay",
+  "stateArtifact": ".agent/quality-state.md",
+  "continueWithoutUserInput": true,
+  "ambiguityPolicy": "ask-only-material"
+ },
+ "source": {
+  "kind": "local",
+  "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/delivery-quality-gate",
+  "path": "skills/delivery-quality-gate"
+ },
+ "install": {
+  "scope": "user",
+  "dirName": "delivery-quality-gate",
+  "files": [
+   "SKILL.md"
   ],
-  "official": false,
-  "featured": true,
-  "author": "fengfeng1021",
-  "license": "MIT",
-  "version": "3.0.0",
-  "usage": [
-    "任何程式碼任務中持續驗證，不想等寫完才發現整體壞掉",
-    "需要把每項需求連到實作、測試和最新證據",
-    "功能完成或重構後想取得第二視角的程式碼審查",
-    "交付前需要依實際風險決定安全檢查深度"
-  ],
-  "highlights": [
-    "每個任務獨立跑完失敗證據、實作、驗證、diff 審查與新證據",
-    "品質是全程覆蓋層，每次修改後更新證據",
-    "證據會隨程式變更失效，不能拿舊測試結果宣稱新版本完成",
-    "安全檢查按風險路由，不會一開始把全部安全內容塞進上下文"
-  ],
-  "includes": [
-    "superpowers-code-quality",
-    "mantis"
-  ],
-  "runtime": {
-    "mode": "overlay",
-    "stateArtifact": ".agent/quality-state.md",
-    "continueWithoutUserInput": true,
-    "ambiguityPolicy": "ask-only-material"
+  "requires": [],
+  "notes": "安裝時要連同 includes 的品質與安全能力裝齊；執行時依目前 Gate 與風險按需載入，不要預先讀完全部內容。"
+ },
+ "prompt": null,
+ "links": [
+  {
+   "label": "obra/superpowers",
+   "url": "https://github.com/obra/superpowers"
   },
-  "source": {
-    "kind": "local",
-    "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/delivery-quality-gate",
-    "path": "skills/delivery-quality-gate"
-  },
-  "install": {
-    "scope": "user",
-    "dirName": "delivery-quality-gate",
-    "files": ["SKILL.md"],
-    "requires": [],
-    "notes": "安裝時要連同 includes 的品質與安全能力裝齊；執行時依目前 Gate 與風險按需載入，不要預先讀完全部內容。"
-  },
-  "prompt": null,
-  "links": [
-    {
-      "label": "obra/superpowers",
-      "url": "https://github.com/obra/superpowers"
-    },
-    {
-      "label": "Google Mantis",
-      "url": "https://github.com/google/mantis"
-    }
-  ],
-  "addedAt": "2026-08-10",
-  "updatedAt": "2026-08-12"
+  {
+   "label": "Google Mantis",
+   "url": "https://github.com/google/mantis"
+  }
+ ],
+ "addedAt": "2026-08-10",
+ "updatedAt": "2026-08-13"
 }

@@ -7,6 +7,17 @@ description: 以單一入口完成高品質前端長任務。用於建立或大�
 
 接管前端任務直到可驗證交付。使用本檔作為唯一入口；每到一個階段，先用宿主原生機制發現並載入該階段的子 Skill，再執行工作。完整組合包內的子 Skill 是必須實際使用的能力，不是只安裝備用。只有 discovery 證據確認能力不存在或不可讀時，才使用內建 reference fallback；不得跳過載入後仍宣稱用了 Skills。
 
+## 定位聲明：本 skill 是調度器，不是設計標準
+
+frontend-director 只做四件事：
+1. 階段路由（contract → plan → ui → ux → motion → implementation → integration → security）
+2. 子 Skill 的發現與載入協議
+3. 狀態、任務與證據的管理（workflowctl）
+4. Gate 的記錄與通過機制（骨架，不承載具體設計標準）
+
+**本 skill 不持有具體設計限制**：設計標準的分工為——`impeccable`（craft 與大膽導向）、`ui-ux-pro-max`（設計模式資料庫，一般創意專案默認）、`taste`（僅在使用者提供參考網站時，逆向工程該站品味）、`hue`（僅在使用者要求模仿品牌或建立可重用設計語言時）、`interaction-experience-design`（交互邏輯）、`gsap-*`（動效實作）、`delivery-quality-gate`（程式品質與安全）。references/ 內的非劣檢查清單若與子 skill 的標準衝突，以子 skill 與 [創意等級](references/creative-tier.md) 為準。設計創意度的下限由 [creative-tier.md](references/creative-tier.md) 決定，本 skill 的 Gate 只驗證「該階段該有的工作與證據存在」，不驗證「設計是否夠克制」。
+
+
 ## 不可違反的規則
 
 1. 先固定需求，再設計或寫碼。不得為了配合現有實作或測試而降低需求。
@@ -58,17 +69,18 @@ description: 以單一入口完成高品質前端長任務。用於建立或大�
      --reference <表格中的必讀 reference> --discovery-evidence .agent/evidence/<phase>-skill-discovery.txt
    ```
 
-4. 不得在子 Skill 可用時選 fallback。UI 階段的 `impeccable`、`taste`、`hue` 要依序載入並分工；implementation 起讓 `delivery-quality-gate` 全程作為品質 overlay；security 階段再依風險讓它路由 Mantis 或同等能力。
+4. 不得在子 Skill 可用時選 fallback。UI 階段的載入規則：`impeccable`、`ui-ux-pro-max` 必載並分工（一般創意專案默認）；`taste` 僅在使用者提供參考網站時載入；`hue` 僅在明確要求模仿品牌或建立設計語言時載入（見階段路由表）；implementation 起讓 `delivery-quality-gate` 全程作為品質 overlay；security 階段再依風險讓它路由 Mantis 或同等能力。
 
 ## 階段路由
 
 | 階段 | 必讀 | 階段能力（依序實際載入） | Gate |
 |---|---|---|---|
-| contract | [需求契約](references/contract.md) | 必載 `define-acceptance-contract` | 所有明確要求已有可測 `FR/NFR` |
+| contract | [需求契約](references/contract.md)＋[創意等級](references/creative-tier.md) | 必載 `define-acceptance-contract`，判定並記錄 Creative Tier（Tier 3 必填） | 所有明確要求已有可測 `FR/NFR`；Tier 已判定 |
 | plan | [實作規劃](references/implementation-plan.md) | 必載 `plan-implementation` | 每項需求映射到檔案級 `T-###` 與驗證 |
-| ui | [UI 品質](references/ui-quality.md) + [視覺真實性](references/visual-truth.md) | 必載 `impeccable` → `taste` → `hue`；按需 `ui-ux-pro-max` | 產品特異性、signature visual 計畫與雙尺寸規格完整 |
-| ux | [UX 互動](references/ux-interaction.md) | 必載 `interaction-experience-design` | 主要、錯誤、空白、載入與恢復流程可完成 |
-| motion | [動效](references/motion.md) | 通過時至少載入一個對應 GSAP Skill；即使用純 CSS 也用它審查目的、性能與降級；確實不需動效才 skip | 動效有目的、可中斷且支援 reduced motion |
+| ui | [創意等級](references/creative-tier.md) | 必載 `impeccable` → `ui-ux-pro-max`（一般創意專案默認組合）；`taste` **只在**使用者提供參考網站時載入；`hue` **只在**使用者明確要求模仿某品牌網站或建立可重用設計語言時載入 | signature visual 計畫與雙尺寸規格完整（標準依子 skill 與 tier） |
+| ux | [UX 互動](references/ux-interaction.md) | 必載 `interaction-experience-design`（交互邏輯先行；創意互動不受其扣分制限制） | 主要、錯誤、空白、載入與恢復流程可完成 |
+| ux | [UX 互動](references/ux-interaction.md) | 必載 `interaction-experience-design`（交互邏輯先行；創意互動不受其扣分制限制） | 主要、錯誤、空白、載入與恢復流程可完成 |
+| motion | [動效](references/motion.md)＋[創意等級](references/creative-tier.md) | Tier ≥2 必載 GSAP 對應 skill（timeline／scrolltrigger／performance 依檔位）；用其審查與實作敘事動效 | 動效達檔位（M2/M3）、可中斷且支援 reduced motion；Tier 3 有 signature moment |
 | implementation | [Coding Loop](references/coding-loop.md) | 必載 `delivery-quality-gate`，並保持品質 overlay | 每個任務都有最新驗證、format 與 diff 審查 |
 | integration | [整合驗證](references/verification.md) + [視覺真實性](references/visual-truth.md) | 再載 `delivery-quality-gate`，使用真實瀏覽器、語意 oracle 與證據 manifest | 每個需求、signature visual 與互動壓力路徑都有最新證據 |
 | security | [安全交付](references/security.md) | 再載 `delivery-quality-gate`；高風險必載 Mantis／同等 specialist | Critical/High 為零，其他風險已處理 |
