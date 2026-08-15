@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-13",
+  "generatedAt": "2026-08-15",
   "categories": [
     {
       "name": "前端 / 設計",
@@ -10,11 +10,11 @@
       "count": 5
     },
     {
-      "name": "前端 / 動效",
-      "count": 1
+      "name": "AI 工具",
+      "count": 2
     },
     {
-      "name": "AI 工具",
+      "name": "前端 / 動效",
       "count": 1
     },
     {
@@ -25,7 +25,7 @@
   "tags": [
     {
       "name": "workflow",
-      "count": 7
+      "count": 8
     },
     {
       "name": "design",
@@ -64,6 +64,14 @@
       "count": 3
     },
     {
+      "name": "ai",
+      "count": 2
+    },
+    {
+      "name": "automation",
+      "count": 2
+    },
+    {
       "name": "brand",
       "count": 2
     },
@@ -96,10 +104,6 @@
       "count": 1
     },
     {
-      "name": "ai",
-      "count": 1
-    },
-    {
       "name": "analysis",
       "count": 1
     },
@@ -113,10 +117,6 @@
     },
     {
       "name": "audit",
-      "count": 1
-    },
-    {
-      "name": "automation",
       "count": 1
     },
     {
@@ -188,7 +188,15 @@
       "count": 1
     },
     {
+      "name": "multimodal",
+      "count": 1
+    },
+    {
       "name": "navigation",
+      "count": 1
+    },
+    {
+      "name": "opencode",
       "count": 1
     },
     {
@@ -225,6 +233,10 @@
     },
     {
       "name": "usability",
+      "count": 1
+    },
+    {
+      "name": "vision",
       "count": 1
     },
     {

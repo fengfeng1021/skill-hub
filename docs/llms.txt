@@ -2,7 +2,7 @@
 
 > 收錄、整理、一鍵安裝各種 AI Agent Skills。挑好的 skill，複製提示詞，貼給 AI 就裝好。
 
-更新日期：2026-08-13　收錄數量：14
+更新日期：2026-08-15　收錄數量：15
 網站：https://fengfeng1021.github.io/skill-hub
 JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 
@@ -141,6 +141,26 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 下載基底：`https://raw.githubusercontent.com/google/mantis/main`
 - 何時使用：交付前想自動檢查程式有沒有安全漏洞；需要從找漏洞、重現、到修補的完整流程；要對程式碼做深度審查，不只是跑掃描器
 
+### AI 工具
+
+#### 視覺預處理注入 `vision-preprocess`
+
+- 摘要：貼圖給 AI 看，文字模型也能認得圖片。
+- 標籤：ai、vision、opencode、multimodal、workflow、automation
+- 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/vision-preprocess
+- 安裝資料夾名：`vision-preprocess`
+- 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/vision-preprocess`
+- 何時使用：想貼圖讓文字模型看懂，又不想換多模態模型；opencode 桌面版／TUI 貼圖被「model does not support image input」擋下；希望貼圖後 AI 自動識別、不需要給路徑或切換模型；需要免費方案（不想燒付費視覺模型的額度）
+
+#### AgentChat 免費網頁 AI 工具箱 `agentchat`
+
+- 摘要：叫免費網頁 AI 幫你寫程式、想事情、檢查品質。
+- 標籤：ai、browser、automation、chatgpt、gemini、workflow
+- 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/agentchat
+- 同來源套件含 3 個資料夾，要一起裝：`AgentChat-OneWeb`、`AgentChat-WebSubAgent`、`AgentChat-IndependentTasks`
+- 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/agentchat`
+- 何時使用：想要免費的網頁 AI 幫你寫程式、回答問題、生成圖片；複雜任務要走「查資料 → 深度思考 → 品質審查」的完整流程；大量獨立子任務想並行分給多家 AI 一起處理
+
 ### 前端 / 動效
 
 #### GSAP `gsap`
@@ -152,17 +172,6 @@ JSON 接口：https://fengfeng1021.github.io/skill-hub/api/index.json
 - 一行裝完：`npx skills add https://github.com/greensock/gsap-skills`
 - 下載基底：`https://raw.githubusercontent.com/greensock/gsap-skills/main/skills`
 - 何時使用：要寫任何 JS 動畫，不論 vanilla 還是 React／Vue／Svelte；要做捲動驅動的動畫、pin 釘住或視差；要編排多步驟、可播放／倒轉／中斷的動畫序列；要處理 prefers-reduced-motion 與動畫效能
-
-### AI 工具
-
-#### AgentChat 免費網頁 AI 工具箱 `agentchat`
-
-- 摘要：叫免費網頁 AI 幫你寫程式、想事情、檢查品質。
-- 標籤：ai、browser、automation、chatgpt、gemini、workflow
-- 來源：https://github.com/fengfeng1021/skill-hub/tree/main/skills/agentchat
-- 同來源套件含 3 個資料夾，要一起裝：`AgentChat-OneWeb`、`AgentChat-WebSubAgent`、`AgentChat-IndependentTasks`
-- 下載基底：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/agentchat`
-- 何時使用：想要免費的網頁 AI 幫你寫程式、回答問題、生成圖片；複雜任務要走「查資料 → 深度思考 → 品質審查」的完整流程；大量獨立子任務想並行分給多家 AI 一起處理
 
 ### Google 管理
 

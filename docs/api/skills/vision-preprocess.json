@@ -1,0 +1,81 @@
+{
+  "id": "vision-preprocess",
+  "name": "視覺預處理注入",
+  "summary": "貼圖給 AI 看，文字模型也能認得圖片。",
+  "description": "為純文字模型（如 DeepSeek）在 opencode 中注入視覺能力：使用者貼圖（Ctrl+V／拖曳／CLI -f）→ plugin 攔截 → 免費視覺模型備援鏈識別（gemini-3.5-flash-lite → 3.1-flash-lite → 3.1-flash-lite-preview → mimo-v2.5-free，全部免費）→ 文字描述原位替換圖片 → 文字模型照常回答。全程自動、零操作。\n包含：plugin 原始碼（Node 版，相容 opencode Desktop sidecar）、opencode.json 設定範例（model modalities 覆寫讓 client 允許貼圖）、完整技術架構文件、踩坑記錄（Bun vs Node runtime、client 貼圖擋截、image_url 400）、免費視覺模型實測數據與備援鏈設計。",
+  "category": "AI 工具",
+  "tags": [
+    "ai",
+    "vision",
+    "opencode",
+    "multimodal",
+    "workflow",
+    "automation"
+  ],
+  "official": false,
+  "featured": true,
+  "author": "fengfeng1021",
+  "license": "MIT",
+  "version": "1.0.0",
+  "usage": [
+    "想貼圖讓文字模型看懂，又不想換多模態模型",
+    "opencode 桌面版／TUI 貼圖被「model does not support image input」擋下",
+    "希望貼圖後 AI 自動識別、不需要給路徑或切換模型",
+    "需要免費方案（不想燒付費視覺模型的額度）"
+  ],
+  "highlights": [
+    "貼圖即識別，零操作：不需要路徑、不需要切換模型、不需要手動轉文字",
+    "全免費視覺備援鏈：Gemini Lite 免費額度 + mimo-v2.5-free 兜底",
+    "同時支援 opencode CLI、TUI 與桌面版（Node 相容）",
+    "內建快取與除錯日誌，同圖不重複識別",
+    "附完整踩坑記錄，避免重蹈 Bun／Node runtime 覆轍"
+  ],
+  "source": {
+    "branch": "main",
+    "kind": "local",
+    "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/vision-preprocess",
+    "path": "skills/vision-preprocess",
+    "displayUrl": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/vision-preprocess",
+    "rawBase": "https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/vision-preprocess",
+    "label": "本庫託管"
+  },
+  "install": {
+    "scope": "user",
+    "files": [
+      "SKILL.md",
+      "README.md",
+      "plugin/vision-preprocess.ts",
+      "config/opencode.json.example",
+      "references/architecture.md",
+      "references/troubleshooting.md",
+      "references/model-chain.md"
+    ],
+    "requires": [
+      "opencode"
+    ],
+    "dirName": "vision-preprocess",
+    "notes": "本 skill 是 opencode 專用（plugin 機制）。安裝後需在 opencode.json 覆寫主模型 modalities 並重啟 opencode，詳見 SKILL.md。"
+  },
+  "links": [
+    {
+      "label": "opencode",
+      "url": "https://opencode.ai"
+    }
+  ],
+  "addedAt": "2026-08-15",
+  "updatedAt": "2026-08-15",
+  "includes": [],
+  "parts": [],
+  "dirNames": [
+    "vision-preprocess"
+  ],
+  "includedSkills": [],
+  "installIds": [
+    "vision-preprocess"
+  ],
+  "installCount": 1,
+  "installFolderCount": 1,
+  "promptBlockSingle": "### 視覺預處理注入  →  資料夾名 `vision-preprocess`\n\n- **這個 skill 做什麼**：貼圖給 AI 看，文字模型也能認得圖片。\n- **詳細一點**：為純文字模型（如 DeepSeek）在 opencode 中注入視覺能力：使用者貼圖（Ctrl+V／拖曳／CLI -f）→ plugin 攔截 → 免費視覺模型備援鏈識別（gemini-3.5-flash-lite → 3.1-flash-lite → 3.1-flash-lite-preview → mimo-v2.5-free，全部免費）→ 文字描述原位替換圖片 → 文字模型照常回答。全程自動、零操作。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/vision-preprocess\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/vision-preprocess`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n  - `README.md`\n  - `plugin/vision-preprocess.ts`\n  - `config/opencode.json.example`\n  - `references/architecture.md`\n  - `references/troubleshooting.md`\n  - `references/model-chain.md`\n- **額外相依**（先確認有沒有，缺的話問我要不要裝）：\n  - `opencode`\n- **注意**：本 skill 是 opencode 專用（plugin 機制）。安裝後需在 opencode.json 覆寫主模型 modalities 並重啟 opencode，詳見 SKILL.md。",
+  "promptBlock": "### 視覺預處理注入  →  資料夾名 `vision-preprocess`\n\n- **這個 skill 做什麼**：貼圖給 AI 看，文字模型也能認得圖片。\n- **詳細一點**：為純文字模型（如 DeepSeek）在 opencode 中注入視覺能力：使用者貼圖（Ctrl+V／拖曳／CLI -f）→ plugin 攔截 → 免費視覺模型備援鏈識別（gemini-3.5-flash-lite → 3.1-flash-lite → 3.1-flash-lite-preview → mimo-v2.5-free，全部免費）→ 文字描述原位替換圖片 → 文字模型照常回答。全程自動、零操作。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/vision-preprocess\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/vision-preprocess`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n  - `README.md`\n  - `plugin/vision-preprocess.ts`\n  - `config/opencode.json.example`\n  - `references/architecture.md`\n  - `references/troubleshooting.md`\n  - `references/model-chain.md`\n- **額外相依**（先確認有沒有，缺的話問我要不要裝）：\n  - `opencode`\n- **注意**：本 skill 是 opencode 專用（plugin 機制）。安裝後需在 opencode.json 覆寫主模型 modalities 並重啟 opencode，詳見 SKILL.md。",
+  "installPrompt": "你是我的 Skill 安裝助手。請幫我把下面這個 AI Agent Skill 安裝到「你目前所在的 Agent 環境」。\n\n## 安裝規則\n\n1. **先辨識目前環境** — 讀取你自己的官方說明、系統設定或既有 skills，確認這個 Agent 支援的 skill 格式、安裝方式與可用範圍。不要預設任何品牌，也不要自行猜一個 `~/.<名稱>/skills` 路徑。\n2. **自動選擇正確位置** — 我有指定全域或專案範圍時照做；沒有指定時，沿用目前 Agent 的既有慣例。若這個 Agent 只支援其中一種，就使用它官方支援的方式。只有真的無法判定時才停下來問我。\n3. **保持原始結構** — 每個 skill 都是獨立資料夾；資料夾名、SKILL.md frontmatter 的 `name`／`description` 與相對檔案結構都不要改。\n4. **依每筆的取檔形式安裝**：\n   a. 有列「完整複製的子目錄」時，先把 repo clone 到暫存目錄（沒有 git 才下載並解壓官方分支封存檔），從指定的來源根目錄遞迴複製所列檔案與子目錄；不得逐檔猜測、漏掉巢狀檔案或把內容攤平\n   b. 只有檔案清單時，優先抓下面給的 raw 下載網址；抓不到再 clone repo 取檔\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n5. 來源若提供綁定特定 Agent 或固定路徑的安裝指令，只把它當作來源線索；請改用目前 Agent 的官方安裝方式，不要原樣執行。\n6. 目標資料夾**已存在**時，先比較版本與差異，再問我要更新、覆蓋或跳過，不要直接蓋掉。\n\n---\n\n### 視覺預處理注入  →  資料夾名 `vision-preprocess`\n\n- **這個 skill 做什麼**：貼圖給 AI 看，文字模型也能認得圖片。\n- **詳細一點**：為純文字模型（如 DeepSeek）在 opencode 中注入視覺能力：使用者貼圖（Ctrl+V／拖曳／CLI -f）→ plugin 攔截 → 免費視覺模型備援鏈識別（gemini-3.5-flash-lite → 3.1-flash-lite → 3.1-flash-lite-preview → mimo-v2.5-free，全部免費）→ 文字描述原位替換圖片 → 文字模型照常回答。全程自動、零操作。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/vision-preprocess\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/vision-preprocess`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n  - `README.md`\n  - `plugin/vision-preprocess.ts`\n  - `config/opencode.json.example`\n  - `references/architecture.md`\n  - `references/troubleshooting.md`\n  - `references/model-chain.md`\n- **額外相依**（先確認有沒有，缺的話問我要不要裝）：\n  - `opencode`\n- **注意**：本 skill 是 opencode 專用（plugin 機制）。安裝後需在 opencode.json 覆寫主模型 modalities 並重啟 opencode，詳見 SKILL.md。\n\n---\n\n## 完成後請做這幾件事\n\n1. 說明你辨識到的 Agent 與採用的官方 skill 機制，不要只回報「已完成」\n2. 列出每個 skill 實際安裝的位置，以及該資料夾下的檔案\n3. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n4. 依目前 Agent 的載入方式驗證 skill 已可被發現；只有官方流程確實要求時，才提醒我重新載入或重啟\n5. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
+}

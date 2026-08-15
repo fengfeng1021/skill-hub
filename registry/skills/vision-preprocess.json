@@ -1,0 +1,63 @@
+{
+  "id": "vision-preprocess",
+  "name": "視覺預處理注入",
+  "summary": "貼圖給 AI 看，文字模型也能認得圖片。",
+  "description": "為純文字模型（如 DeepSeek）在 opencode 中注入視覺能力：使用者貼圖（Ctrl+V／拖曳／CLI -f）→ plugin 攔截 → 免費視覺模型備援鏈識別（gemini-3.5-flash-lite → 3.1-flash-lite → 3.1-flash-lite-preview → mimo-v2.5-free，全部免費）→ 文字描述原位替換圖片 → 文字模型照常回答。全程自動、零操作。\n包含：plugin 原始碼（Node 版，相容 opencode Desktop sidecar）、opencode.json 設定範例（model modalities 覆寫讓 client 允許貼圖）、完整技術架構文件、踩坑記錄（Bun vs Node runtime、client 貼圖擋截、image_url 400）、免費視覺模型實測數據與備援鏈設計。",
+  "category": "AI 工具",
+  "tags": [
+    "ai",
+    "vision",
+    "opencode",
+    "multimodal",
+    "workflow",
+    "automation"
+  ],
+  "official": false,
+  "featured": true,
+  "author": "fengfeng1021",
+  "license": "MIT",
+  "version": "1.0.0",
+  "usage": [
+    "想貼圖讓文字模型看懂，又不想換多模態模型",
+    "opencode 桌面版／TUI 貼圖被「model does not support image input」擋下",
+    "希望貼圖後 AI 自動識別、不需要給路徑或切換模型",
+    "需要免費方案（不想燒付費視覺模型的額度）"
+  ],
+  "highlights": [
+    "貼圖即識別，零操作：不需要路徑、不需要切換模型、不需要手動轉文字",
+    "全免費視覺備援鏈：Gemini Lite 免費額度 + mimo-v2.5-free 兜底",
+    "同時支援 opencode CLI、TUI 與桌面版（Node 相容）",
+    "內建快取與除錯日誌，同圖不重複識別",
+    "附完整踩坑記錄，避免重蹈 Bun／Node runtime 覆轍"
+  ],
+  "source": {
+    "branch": "main",
+    "kind": "local",
+    "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/vision-preprocess"
+  },
+  "install": {
+    "scope": "user",
+    "dirName": "vision-preprocess",
+    "files": [
+      "SKILL.md",
+      "README.md",
+      "plugin/vision-preprocess.ts",
+      "config/opencode.json.example",
+      "references/architecture.md",
+      "references/troubleshooting.md",
+      "references/model-chain.md"
+    ],
+    "requires": [
+      "opencode"
+    ],
+    "notes": "本 skill 是 opencode 專用（plugin 機制）。安裝後需在 opencode.json 覆寫主模型 modalities 並重啟 opencode，詳見 SKILL.md。"
+  },
+  "links": [
+    {
+      "label": "opencode",
+      "url": "https://opencode.ai"
+    }
+  ],
+  "addedAt": "2026-08-15",
+  "updatedAt": "2026-08-15"
+}
