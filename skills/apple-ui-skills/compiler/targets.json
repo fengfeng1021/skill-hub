@@ -1,0 +1,35 @@
+{
+  "version": "3.0.0",
+  "targets": {
+    "web": {
+      "spring": "custom m/k/c or verified library",
+      "bezier": "CSS/WAAPI"
+    },
+    "swiftui": {
+      "spring": "duration+bounce or physical interpolating spring",
+      "bezier": "timingCurve"
+    },
+    "compose": {
+      "spring": "dampingRatio+stiffness when compatible",
+      "bezier": "CubicBezierEasing"
+    },
+    "flutter": {
+      "spring": "SpringDescription/SpringSimulation",
+      "bezier": "Cubic"
+    },
+    "react-native": {
+      "spring": "physical Animated/Reanimated equivalent",
+      "bezier": "Easing.bezier"
+    },
+    "winui": {
+      "spring": "Composition/Natural Motion or canonical integrator"
+    },
+    "qml": {
+      "spring": "canonical integrator for exactness"
+    },
+    "generic": {
+      "spring": "canonical m/k/c integrator",
+      "bezier": "standard cubic sampler"
+    }
+  }
+}

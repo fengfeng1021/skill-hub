@@ -1,0 +1,214 @@
+{
+  "version": "3.0.0",
+  "records": [
+    {
+      "id": "ios16.dynamic-island.expand-collapse.community-replica",
+      "title": "Dynamic Island expand/collapse community replica",
+      "category": "component",
+      "target": {
+        "platform": "iOS",
+        "component": "Dynamic Island",
+        "app": "system status area",
+        "interaction": "expand/collapse"
+      },
+      "applicability": {
+        "status": "historical",
+        "osVersions": [
+          "iOS 16-era"
+        ],
+        "notes": "Single community replica; useful as a low-confidence starting recipe, not measured system data."
+      },
+      "evidence": {
+        "class": "OPEN-SOURCE-REPLICA",
+        "confidence": 0.54,
+        "exactness": "replica",
+        "sources": [
+          {
+            "title": "Dynamic Island in SwiftUI (Closing and Open the Dynamic Island)",
+            "url": "https://gist.github.com/haneenmahd/c1a176b32f9da498af37faddaa80752d",
+            "date": "2022-10-05",
+            "note": "Community SwiftUI replica."
+          }
+        ]
+      },
+      "behavior": {
+        "driver": "spring",
+        "properties": [
+          "width",
+          "height",
+          "position",
+          "cornerRadius",
+          "shadow"
+        ]
+      },
+      "parameters": {
+        "response": 0.7,
+        "dampingFraction": 0.7,
+        "blendDuration": 0.75,
+        "canonicalPhysicalApprox": {
+          "mass": 1.0,
+          "stiffness": 80.568199,
+          "damping": 12.566371,
+          "dampingRatio": 0.7,
+          "response": 0.7
+        }
+      },
+      "portability": {
+        "canonical": "geometry morph with low/moderate bounce",
+        "rule": "Prefer geometry continuity and corner morph; treat these numbers only as a replica preset."
+      },
+      "warnings": [
+        "Low-confidence single-source replica.",
+        "Do not claim these are Dynamic Island system parameters."
+      ],
+      "tags": [
+        "ios16.dynamic-island.expand-collapse.community-replica",
+        "dynamic",
+        "island",
+        "expand",
+        "collapse",
+        "community",
+        "replica",
+        "ios",
+        "status",
+        "area",
+        "16-era",
+        "open-source-replica"
+      ],
+      "shard": "macos-community"
+    },
+    {
+      "id": "macos26.2.control-center.menu-resize.replica",
+      "title": "macOS 26.2 Control Center menu resize replica",
+      "category": "component",
+      "target": {
+        "platform": "macOS",
+        "component": "Control Center menu",
+        "app": "Control Center",
+        "interaction": "menu height resize"
+      },
+      "applicability": {
+        "status": "version-specific",
+        "osVersions": [
+          "macOS 26.2"
+        ],
+        "notes": "Current open-source library explicitly says the preset closely mimics macOS 26.2 menu height resize."
+      },
+      "evidence": {
+        "class": "OPEN-SOURCE-REPLICA",
+        "confidence": 0.82,
+        "exactness": "replica",
+        "sources": [
+          {
+            "title": "MacControlCenterUI — macControlCenterMenuResize",
+            "url": "https://github.com/orchetect/MacControlCenterUI/blob/main/Sources/MacControlCenterUI/Utilities/VisualEffect.swift",
+            "date": "2026",
+            "note": "Code comment says it closely mimics macOS 26.2."
+          }
+        ]
+      },
+      "behavior": {
+        "driver": "SwiftUI smooth spring",
+        "purpose": "menu window/content resize"
+      },
+      "parameters": {
+        "springPreset": "smooth",
+        "duration": 0.2,
+        "extraBounce": 0.25
+      },
+      "portability": {
+        "canonical": "short geometry resize spring",
+        "rule": "For desktop cross-platform menus, use short non-dramatic resize; avoid mobile sheet behavior."
+      },
+      "warnings": [
+        "Replica is tuned around SwiftUI/macOS 26.2 window resize behavior; other desktop engines may need less bounce."
+      ],
+      "tags": [
+        "macos26.2.control-center.menu-resize.replica",
+        "macos",
+        "26.2",
+        "control",
+        "center",
+        "menu",
+        "resize",
+        "replica",
+        "height",
+        "open-source-replica"
+      ],
+      "shard": "macos-community"
+    },
+    {
+      "id": "crossplatform.ios-style.sheet.vaul-curve",
+      "title": "iOS-style web/mobile sheet curve used by motion practitioners",
+      "category": "motion",
+      "target": {
+        "platform": "Web / React Native",
+        "component": "Sheet/drawer",
+        "app": null,
+        "interaction": "open/close"
+      },
+      "applicability": {
+        "status": "current",
+        "osVersions": [],
+        "notes": "A practitioner/implementation heuristic widely used for iOS-style sheets, not an Apple-sourced curve."
+      },
+      "evidence": {
+        "class": "OPEN-SOURCE-REPLICA",
+        "confidence": 0.58,
+        "exactness": "approximation",
+        "sources": [
+          {
+            "title": "Emil Kowalski animate-expo skill",
+            "url": "https://github.com/emilkowalski/skills/blob/main/skills/animate-expo/SKILL.md",
+            "date": "2026",
+            "note": "Recommends iOS sheet curve and spring choices."
+          }
+        ]
+      },
+      "behavior": {
+        "driver": "cubic/timed when not gesture-settling",
+        "shape": "strong fast-start slow-end"
+      },
+      "parameters": {
+        "cubicBezier": [
+          0.32,
+          0.72,
+          0.0,
+          1.0
+        ],
+        "typicalSheetSpring": {
+          "durationMs": 300,
+          "dampingRatio": 0.8,
+          "inheritVelocity": true
+        }
+      },
+      "portability": {
+        "canonical": "cubic-bezier or duration+dampingRatio spring",
+        "rule": "Use as a design heuristic only; prefer evidence-backed component record when exact reconstruction is requested."
+      },
+      "warnings": [
+        "Not an Apple official curve.",
+        "For gesture release, use a true spring with velocity rather than the cubic."
+      ],
+      "tags": [
+        "crossplatform.ios-style.sheet.vaul-curve",
+        "ios-style",
+        "web",
+        "mobile",
+        "sheet",
+        "curve",
+        "used",
+        "by",
+        "motion",
+        "practitioners",
+        "react",
+        "native",
+        "drawer",
+        "open",
+        "close",
+        "open-source-replica"
+      ],
+      "shard": "macos-community"
+    }
+  ]
+}

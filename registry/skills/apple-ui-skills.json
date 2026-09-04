@@ -1,0 +1,66 @@
+{
+  "id": "apple-ui-skills",
+  "name": "Apple UI 設計與動效",
+  "summary": "不用給參考圖，直接做出像蘋果一樣精緻流暢的畫面。",
+  "description": "跨平台的 Apple 質感介面設計、動態效果工程與視覺驗收 skill v3.1.1。支援 Web、iOS、macOS、Android、Flutter、React Native 等多種環境。具備自主無參考設計推導能力，即使使用者未提供截圖或設計稿，也能依產品需求推導出一致的 Apple 品質設計規範；包含動效編譯器（Motion IR）、實機動態物理法則、視覺與互動品質閘門（20 項標準至少達標 17 項）。\nv3.1.1 變更：正式更名為 Apple UI Skills，新增自主實作與即時預覽驗收迴圈（Visual QA Loop），維持既有技術架構，綠色新建專案遵循現代化元件與狀態設計原則，不以單一巨大樣式表為預設架構。",
+  "category": "前端 / 設計",
+  "tags": [
+    "design",
+    "ui",
+    "animation",
+    "frontend",
+    "mobile"
+  ],
+  "official": false,
+  "featured": true,
+  "author": "fengfeng1021",
+  "license": "MIT",
+  "version": "3.1.1",
+  "usage": [
+    "想要產品擁有 Apple 風格的高質感視覺、排版與細膩動態",
+    "沒有提供任何截圖或設計圖，希望 AI 自動推導出符合 Apple 設計水準的成品",
+    "跨平台專案（Web、iOS、macOS、Android、Flutter 等）需要一致的動效物理原則",
+    "需要自動化驗收介面完成度，透過 20 項 Apple 品質標準進行把關"
+  ],
+  "highlights": [
+    "自主無參考設計：不需要截圖或參考網站，自動推導完整設計規範並直接實作",
+    "跨平台動效編譯：透過 Motion IR 將物理彈簧與手勢動態無縫對接至各平台",
+    "視覺驗收品質閘門：內建 20 項 Apple 標準，達 17 項以上才視為完成",
+    "漸進式上下文載入：依任務動態擴展所需知識包，避免一次塞滿對話上下文"
+  ],
+  "source": {
+    "kind": "local",
+    "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/apple-ui-skills"
+  },
+  "install": {
+    "scope": "user",
+    "dirName": "apple-ui-skills",
+    "directories": [
+      "adapters",
+      "compiler",
+      "data",
+      "examples",
+      "packs",
+      "references",
+      "scripts"
+    ],
+    "files": [
+      "SKILL.md",
+      "README.md",
+      "CHANGELOG.md",
+      "NOTICE.md",
+      "VALIDATION.md",
+      "manifest.json",
+      "checksums.sha256.json"
+    ],
+    "notes": "本 skill 依賴多個資料夾（adapters、compiler、data、examples、packs、references、scripts），安裝時需完整遞迴複製保持目錄結構。依循漸進式載入原則，執行時只按需讀取當前任務所需模組，勿一次遞迴讀取全部檔案。"
+  },
+  "links": [
+    {
+      "label": "Skill Hub（收藏庫）",
+      "url": "https://fengfeng1021.github.io/skill-hub/"
+    }
+  ],
+  "addedAt": "2026-09-04",
+  "updatedAt": "2026-09-04"
+}

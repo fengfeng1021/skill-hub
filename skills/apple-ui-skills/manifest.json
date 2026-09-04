@@ -1,0 +1,86 @@
+{
+  "name": "apple-ui-skills",
+  "version": "3.1.1",
+  "release": "Stable Rename — Autonomous Build & Visual QA",
+  "entrypoint": "SKILL.md",
+  "targets": [
+    "web",
+    "apple",
+    "android",
+    "flutter",
+    "react-native",
+    "windows",
+    "linux",
+    "qt-qml",
+    "electron-tauri",
+    "custom-engine",
+    "any-language"
+  ],
+  "architecture": {
+    "tier1": "YAML name/description only",
+    "tier2": "lean SKILL.md router",
+    "tier3": "adaptive progressive disclosure with autonomous build/QA expansion",
+    "databaseAccess": "query script first; catalog+shard fallback"
+  },
+  "contextBudget": {
+    "mode": "adaptive",
+    "initialKnowledgePacks": 1,
+    "initialAdapters": 1,
+    "initialReconstructionRecords": 3,
+    "hardMaximum": "none defined by skill; relevance and task complexity determine expansion",
+    "userPermissionForExpansion": false,
+    "recursiveDirectoryRead": "forbidden; expand selectively",
+    "stoppingRule": "stop when additional context would not materially improve correctness/fidelity"
+  },
+  "compiler": {
+    "ir": "compiler/motion-ir.schema.json",
+    "script": "scripts/compile_motion.py",
+    "targets": "compiler/targets.json",
+    "unknownLanguageFallback": "generic canonical physics + pseudocode"
+  },
+  "database": {
+    "catalog": "data/catalog.json",
+    "query": "scripts/query_records.py",
+    "shards": [
+      "data/apple-official.json",
+      "data/ios-fluid.json",
+      "data/ios26.json",
+      "data/macos-community.json",
+      "data/visual.json"
+    ]
+  },
+  "evidenceClasses": [
+    "APPLE-PRIMARY",
+    "PLATFORM-PRIMARY",
+    "THIRD-PARTY-REVERSE-ENGINEERED",
+    "OPEN-SOURCE-REPLICA",
+    "ACADEMIC",
+    "SKILL-DERIVED"
+  ],
+  "adaptiveExpansionTriggers": [
+    "confidence below approximately 0.75",
+    "source disagreement",
+    "high-fidelity reconstruction",
+    "multiple components or eras",
+    "framework semantic mismatch",
+    "runtime-vs-historical reconciliation",
+    "visual+motion+gesture coordination",
+    "validation failure"
+  ],
+  "capabilities": [
+    "autonomous no-reference design synthesis",
+    "technology-stack selection",
+    "direct implementation/build mode",
+    "render-and-inspect visual QA loop",
+    "responsive and interaction-state quality gate"
+  ],
+  "buildMode": {
+    "userReferenceRequired": false,
+    "adviceOnlyAllowedWhenBuildRequested": false,
+    "visualInspectionPreferredWhenToolsAvailable": true,
+    "qualityGateTarget": 17,
+    "qualityGateMax": 20,
+    "stackPolicy": "preserve existing stack; choose modern fit-for-purpose stack for greenfield; raw monolithic CSS is not the default architecture"
+  },
+  "displayName": "Apple UI Skills"
+}

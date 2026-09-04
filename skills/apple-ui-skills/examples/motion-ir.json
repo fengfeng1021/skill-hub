@@ -1,0 +1,38 @@
+{
+  "version": "3.0",
+  "name": "gesture-settle-panel",
+  "sourceRecordIds": [
+    "ios.facetime.pip.corner-snap.replica-2018"
+  ],
+  "trigger": "gesture-release",
+  "timing": {
+    "type": "spring-perceptual",
+    "duration": 0.4,
+    "bounce": 0.0,
+    "initialVelocity": 1.2
+  },
+  "properties": [
+    {
+      "name": "translateX",
+      "from": "current",
+      "to": "selectedAnchorX",
+      "unit": "px"
+    },
+    {
+      "name": "translateY",
+      "from": "current",
+      "to": "selectedAnchorY",
+      "unit": "px"
+    }
+  ],
+  "interaction": {
+    "directManipulation": true,
+    "inheritVelocity": true,
+    "interruptible": true,
+    "projectBeforeTargetSelection": true
+  },
+  "reducedMotion": {
+    "strategy": "local-motion",
+    "duration": 0.12
+  }
+}

@@ -1,0 +1,312 @@
+{
+  "version": "3.0.0",
+  "records": [
+    {
+      "id": "ios26.liquid-glass.tab-indicator.approx",
+      "title": "iOS 26 Liquid Glass tab indicator approximation",
+      "category": "component",
+      "target": {
+        "platform": "iOS/iPadOS",
+        "component": "Liquid Glass tab indicator",
+        "app": "system-style tab bar",
+        "interaction": "selection morph"
+      },
+      "applicability": {
+        "status": "version-specific",
+        "osVersions": [
+          "iOS 26 design era"
+        ],
+        "notes": "Third-party reconstruction of iOS 26 design system behavior."
+      },
+      "evidence": {
+        "class": "THIRD-PARTY-REVERSE-ENGINEERED",
+        "confidence": 0.66,
+        "exactness": "approximation",
+        "sources": [
+          {
+            "title": "ios26-design-system — animations.json",
+            "url": "https://github.com/seunghan91/ios26-design-system/blob/main/packages/tokens/src/animations.json",
+            "date": "2026-03-28 extraction",
+            "note": "Repository states Figma MCP cannot export curves; values are derived from Apple HIG/WWDC and measured approximations."
+          }
+        ]
+      },
+      "behavior": {
+        "driver": "spring/keyframe approximation",
+        "properties": [
+          "width",
+          "height",
+          "borderRadius",
+          "transform",
+          "backdropFilter"
+        ],
+        "stretchPeak": "~40% travel"
+      },
+      "parameters": {
+        "duration": 0.45,
+        "spring": "snappy",
+        "cssApprox": [
+          0.34,
+          1.56,
+          0.64,
+          1.0
+        ],
+        "backdropBlurPx": 7,
+        "keyframe": {
+          "startWidth": "base",
+          "at40Percent": "~1.25x width",
+          "endWidth": "base"
+        }
+      },
+      "portability": {
+        "canonical": "property composition + spring/tween",
+        "rule": "Good non-Apple reconstruction starting point; validate on target refresh rate and input method."
+      },
+      "warnings": [
+        "The source explicitly labels curves as derived/measured approximations, not Figma-exported Apple animation values."
+      ],
+      "tags": [
+        "ios26.liquid-glass.tab-indicator.approx",
+        "ios",
+        "26",
+        "liquid",
+        "glass",
+        "tab",
+        "indicator",
+        "approximation",
+        "ipados",
+        "system-style",
+        "bar",
+        "selection",
+        "morph",
+        "design",
+        "era",
+        "third-party-reverse-engineered"
+      ],
+      "shard": "ios26"
+    },
+    {
+      "id": "ios26.liquid-glass.morph.approx",
+      "title": "iOS 26 Liquid Glass shape morph approximation",
+      "category": "component",
+      "target": {
+        "platform": "iOS/iPadOS",
+        "component": "Liquid Glass surface",
+        "app": "system-style UI",
+        "interaction": "state morph"
+      },
+      "applicability": {
+        "status": "version-specific",
+        "osVersions": [
+          "iOS 26 design era"
+        ],
+        "notes": "Third-party reconstruction of iOS 26 design system behavior."
+      },
+      "evidence": {
+        "class": "THIRD-PARTY-REVERSE-ENGINEERED",
+        "confidence": 0.66,
+        "exactness": "approximation",
+        "sources": [
+          {
+            "title": "ios26-design-system — animations.json",
+            "url": "https://github.com/seunghan91/ios26-design-system/blob/main/packages/tokens/src/animations.json",
+            "date": "2026-03-28 extraction",
+            "note": "Repository states Figma MCP cannot export curves; values are derived from Apple HIG/WWDC and measured approximations."
+          }
+        ]
+      },
+      "behavior": {
+        "driver": "gentle spring / cubic approximation",
+        "properties": [
+          "position",
+          "size",
+          "cornerRadius",
+          "material"
+        ]
+      },
+      "parameters": {
+        "duration": 0.35,
+        "spring": "gentle",
+        "cssApprox": [
+          0.25,
+          0.46,
+          0.45,
+          0.94
+        ]
+      },
+      "portability": {
+        "canonical": "property composition + spring/tween",
+        "rule": "Good non-Apple reconstruction starting point; validate on target refresh rate and input method."
+      },
+      "warnings": [
+        "Approximation from a third-party design-system reconstruction."
+      ],
+      "tags": [
+        "ios26.liquid-glass.morph.approx",
+        "ios",
+        "26",
+        "liquid",
+        "glass",
+        "shape",
+        "morph",
+        "approximation",
+        "ipados",
+        "surface",
+        "system-style",
+        "ui",
+        "state",
+        "design",
+        "era",
+        "third-party-reverse-engineered"
+      ],
+      "shard": "ios26"
+    },
+    {
+      "id": "ios26.sheet.present-dismiss.approx",
+      "title": "iOS 26 sheet timing approximation",
+      "category": "component",
+      "target": {
+        "platform": "iOS/iPadOS",
+        "component": "Modal sheet",
+        "app": "system-style UI",
+        "interaction": "present/dismiss"
+      },
+      "applicability": {
+        "status": "version-specific",
+        "osVersions": [
+          "iOS 26 design era"
+        ],
+        "notes": "Third-party reconstruction of iOS 26 design system behavior."
+      },
+      "evidence": {
+        "class": "THIRD-PARTY-REVERSE-ENGINEERED",
+        "confidence": 0.66,
+        "exactness": "approximation",
+        "sources": [
+          {
+            "title": "ios26-design-system — animations.json",
+            "url": "https://github.com/seunghan91/ios26-design-system/blob/main/packages/tokens/src/animations.json",
+            "date": "2026-03-28 extraction",
+            "note": "Repository states Figma MCP cannot export curves; values are derived from Apple HIG/WWDC and measured approximations."
+          }
+        ]
+      },
+      "behavior": {
+        "present": "translateY edge -> 0",
+        "dismiss": "0 -> edge",
+        "presentDriver": "gentle spring",
+        "dismissDriver": "timed"
+      },
+      "parameters": {
+        "presentDuration": 0.5,
+        "dismissDuration": 0.3,
+        "presentPreset": "gentle"
+      },
+      "portability": {
+        "canonical": "property composition + spring/tween",
+        "rule": "Good non-Apple reconstruction starting point; validate on target refresh rate and input method."
+      },
+      "warnings": [
+        "Use actual platform sheet APIs when available; this record is for reconstruction on non-Apple platforms."
+      ],
+      "tags": [
+        "ios26.sheet.present-dismiss.approx",
+        "ios",
+        "26",
+        "sheet",
+        "timing",
+        "approximation",
+        "ipados",
+        "modal",
+        "system-style",
+        "ui",
+        "present",
+        "dismiss",
+        "design",
+        "era",
+        "third-party-reverse-engineered"
+      ],
+      "shard": "ios26"
+    },
+    {
+      "id": "ios26.context-menu.open-close.approx",
+      "title": "iOS 26 context-menu scale/fade approximation",
+      "category": "component",
+      "target": {
+        "platform": "iOS/iPadOS",
+        "component": "Context menu/popover",
+        "app": "system-style UI",
+        "interaction": "open/close"
+      },
+      "applicability": {
+        "status": "version-specific",
+        "osVersions": [
+          "iOS 26 design era"
+        ],
+        "notes": "Third-party reconstruction of iOS 26 design system behavior."
+      },
+      "evidence": {
+        "class": "THIRD-PARTY-REVERSE-ENGINEERED",
+        "confidence": 0.66,
+        "exactness": "approximation",
+        "sources": [
+          {
+            "title": "ios26-design-system — animations.json",
+            "url": "https://github.com/seunghan91/ios26-design-system/blob/main/packages/tokens/src/animations.json",
+            "date": "2026-03-28 extraction",
+            "note": "Repository states Figma MCP cannot export curves; values are derived from Apple HIG/WWDC and measured approximations."
+          }
+        ]
+      },
+      "behavior": {
+        "open": "scale+fade",
+        "close": "scale+fade"
+      },
+      "parameters": {
+        "open": {
+          "scaleFrom": 0.85,
+          "scaleTo": 1.0,
+          "opacityFrom": 0,
+          "opacityTo": 1,
+          "duration": 0.25,
+          "spring": "snappy"
+        },
+        "close": {
+          "scaleFrom": 1.0,
+          "scaleTo": 0.85,
+          "opacityFrom": 1,
+          "opacityTo": 0,
+          "duration": 0.15
+        }
+      },
+      "portability": {
+        "canonical": "property composition + spring/tween",
+        "rule": "Good non-Apple reconstruction starting point; validate on target refresh rate and input method."
+      },
+      "warnings": [
+        "Treat as a third-party measured approximation, not an Apple HIG numeric spec."
+      ],
+      "tags": [
+        "ios26.context-menu.open-close.approx",
+        "ios",
+        "26",
+        "context-menu",
+        "scale",
+        "fade",
+        "approximation",
+        "ipados",
+        "context",
+        "menu",
+        "popover",
+        "system-style",
+        "ui",
+        "open",
+        "close",
+        "design",
+        "era",
+        "third-party-reverse-engineered"
+      ],
+      "shard": "ios26"
+    }
+  ]
+}

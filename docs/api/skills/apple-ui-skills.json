@@ -1,0 +1,86 @@
+{
+  "id": "apple-ui-skills",
+  "name": "Apple UI 設計與動效",
+  "summary": "不用給參考圖，直接做出像蘋果一樣精緻流暢的畫面。",
+  "description": "跨平台的 Apple 質感介面設計、動態效果工程與視覺驗收 skill v3.1.1。支援 Web、iOS、macOS、Android、Flutter、React Native 等多種環境。具備自主無參考設計推導能力，即使使用者未提供截圖或設計稿，也能依產品需求推導出一致的 Apple 品質設計規範；包含動效編譯器（Motion IR）、實機動態物理法則、視覺與互動品質閘門（20 項標準至少達標 17 項）。\nv3.1.1 變更：正式更名為 Apple UI Skills，新增自主實作與即時預覽驗收迴圈（Visual QA Loop），維持既有技術架構，綠色新建專案遵循現代化元件與狀態設計原則，不以單一巨大樣式表為預設架構。",
+  "category": "前端 / 設計",
+  "tags": [
+    "design",
+    "ui",
+    "animation",
+    "frontend",
+    "mobile"
+  ],
+  "official": false,
+  "featured": true,
+  "author": "fengfeng1021",
+  "license": "MIT",
+  "version": "3.1.1",
+  "usage": [
+    "想要產品擁有 Apple 風格的高質感視覺、排版與細膩動態",
+    "沒有提供任何截圖或設計圖，希望 AI 自動推導出符合 Apple 設計水準的成品",
+    "跨平台專案（Web、iOS、macOS、Android、Flutter 等）需要一致的動效物理原則",
+    "需要自動化驗收介面完成度，透過 20 項 Apple 品質標準進行把關"
+  ],
+  "highlights": [
+    "自主無參考設計：不需要截圖或參考網站，自動推導完整設計規範並直接實作",
+    "跨平台動效編譯：透過 Motion IR 將物理彈簧與手勢動態無縫對接至各平台",
+    "視覺驗收品質閘門：內建 20 項 Apple 標準，達 17 項以上才視為完成",
+    "漸進式上下文載入：依任務動態擴展所需知識包，避免一次塞滿對話上下文"
+  ],
+  "source": {
+    "branch": "main",
+    "kind": "local",
+    "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/apple-ui-skills",
+    "path": "skills/apple-ui-skills",
+    "displayUrl": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/apple-ui-skills",
+    "rawBase": "https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/apple-ui-skills",
+    "label": "本庫託管"
+  },
+  "install": {
+    "scope": "user",
+    "files": [
+      "SKILL.md",
+      "README.md",
+      "CHANGELOG.md",
+      "NOTICE.md",
+      "VALIDATION.md",
+      "manifest.json",
+      "checksums.sha256.json"
+    ],
+    "requires": [],
+    "dirName": "apple-ui-skills",
+    "directories": [
+      "adapters",
+      "compiler",
+      "data",
+      "examples",
+      "packs",
+      "references",
+      "scripts"
+    ],
+    "notes": "本 skill 依賴多個資料夾（adapters、compiler、data、examples、packs、references、scripts），安裝時需完整遞迴複製保持目錄結構。依循漸進式載入原則，執行時只按需讀取當前任務所需模組，勿一次遞迴讀取全部檔案。"
+  },
+  "links": [
+    {
+      "label": "Skill Hub（收藏庫）",
+      "url": "https://fengfeng1021.github.io/skill-hub/"
+    }
+  ],
+  "addedAt": "2026-09-04",
+  "updatedAt": "2026-09-04",
+  "includes": [],
+  "parts": [],
+  "dirNames": [
+    "apple-ui-skills"
+  ],
+  "includedSkills": [],
+  "installIds": [
+    "apple-ui-skills"
+  ],
+  "installCount": 1,
+  "installFolderCount": 1,
+  "promptBlockSingle": "### Apple UI 設計與動效  →  資料夾名 `apple-ui-skills`\n\n- **這個 skill 做什麼**：不用給參考圖，直接做出像蘋果一樣精緻流暢的畫面。\n- **詳細一點**：跨平台的 Apple 質感介面設計、動態效果工程與視覺驗收 skill v3.1.1。支援 Web、iOS、macOS、Android、Flutter、React Native 等多種環境。具備自主無參考設計推導能力，即使使用者未提供截圖或設計稿，也能依產品需求推導出一致的 Apple 品質設計規範；包含動效編譯器（Motion IR）、實機動態物理法則、視覺與互動品質閘門（20 項標準至少達標 17 項）。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/apple-ui-skills\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/apple-ui-skills`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n  - `README.md`\n  - `CHANGELOG.md`\n  - `NOTICE.md`\n  - `VALIDATION.md`\n  - `manifest.json`\n  - `checksums.sha256.json`\n- **完整複製的子目錄**（從來源 skill 根目錄遞迴複製，保留相對結構）：\n  - `adapters/`\n  - `compiler/`\n  - `data/`\n  - `examples/`\n  - `packs/`\n  - `references/`\n  - `scripts/`\n- **目錄完整性檢查**：安裝後逐一比較上述來源目錄與目標目錄的遞迴相對路徑；數量或路徑不同就算失敗。不得把子目錄內容攤平到 skill 根目錄。\n- **注意**：本 skill 依賴多個資料夾（adapters、compiler、data、examples、packs、references、scripts），安裝時需完整遞迴複製保持目錄結構。依循漸進式載入原則，執行時只按需讀取當前任務所需模組，勿一次遞迴讀取全部檔案。",
+  "promptBlock": "### Apple UI 設計與動效  →  資料夾名 `apple-ui-skills`\n\n- **這個 skill 做什麼**：不用給參考圖，直接做出像蘋果一樣精緻流暢的畫面。\n- **詳細一點**：跨平台的 Apple 質感介面設計、動態效果工程與視覺驗收 skill v3.1.1。支援 Web、iOS、macOS、Android、Flutter、React Native 等多種環境。具備自主無參考設計推導能力，即使使用者未提供截圖或設計稿，也能依產品需求推導出一致的 Apple 品質設計規範；包含動效編譯器（Motion IR）、實機動態物理法則、視覺與互動品質閘門（20 項標準至少達標 17 項）。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/apple-ui-skills\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/apple-ui-skills`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n  - `README.md`\n  - `CHANGELOG.md`\n  - `NOTICE.md`\n  - `VALIDATION.md`\n  - `manifest.json`\n  - `checksums.sha256.json`\n- **完整複製的子目錄**（從來源 skill 根目錄遞迴複製，保留相對結構）：\n  - `adapters/`\n  - `compiler/`\n  - `data/`\n  - `examples/`\n  - `packs/`\n  - `references/`\n  - `scripts/`\n- **目錄完整性檢查**：安裝後逐一比較上述來源目錄與目標目錄的遞迴相對路徑；數量或路徑不同就算失敗。不得把子目錄內容攤平到 skill 根目錄。\n- **注意**：本 skill 依賴多個資料夾（adapters、compiler、data、examples、packs、references、scripts），安裝時需完整遞迴複製保持目錄結構。依循漸進式載入原則，執行時只按需讀取當前任務所需模組，勿一次遞迴讀取全部檔案。",
+  "installPrompt": "你是我的 Skill 安裝助手。請幫我把下面這個 AI Agent Skill 安裝到「你目前所在的 Agent 環境」。\n\n## 安裝規則\n\n1. **先辨識目前環境** — 讀取你自己的官方說明、系統設定或既有 skills，確認這個 Agent 支援的 skill 格式、安裝方式與可用範圍。不要預設任何品牌，也不要自行猜一個 `~/.<名稱>/skills` 路徑。\n2. **自動選擇正確位置** — 我有指定全域或專案範圍時照做；沒有指定時，沿用目前 Agent 的既有慣例。若這個 Agent 只支援其中一種，就使用它官方支援的方式。只有真的無法判定時才停下來問我。\n3. **保持原始結構** — 每個 skill 都是獨立資料夾；資料夾名、SKILL.md frontmatter 的 `name`／`description` 與相對檔案結構都不要改。\n4. **依每筆的取檔形式安裝**：\n   a. 有列「完整複製的子目錄」時，先把 repo clone 到暫存目錄（沒有 git 才下載並解壓官方分支封存檔），從指定的來源根目錄遞迴複製所列檔案與子目錄；不得逐檔猜測、漏掉巢狀檔案或把內容攤平\n   b. 只有檔案清單時，優先抓下面給的 raw 下載網址；抓不到再 clone repo 取檔\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n5. 來源若提供綁定特定 Agent 或固定路徑的安裝指令，只把它當作來源線索；請改用目前 Agent 的官方安裝方式，不要原樣執行。\n6. 目標資料夾**已存在**時，先比較版本與差異，再問我要更新、覆蓋或跳過，不要直接蓋掉。\n\n---\n\n### Apple UI 設計與動效  →  資料夾名 `apple-ui-skills`\n\n- **這個 skill 做什麼**：不用給參考圖，直接做出像蘋果一樣精緻流暢的畫面。\n- **詳細一點**：跨平台的 Apple 質感介面設計、動態效果工程與視覺驗收 skill v3.1.1。支援 Web、iOS、macOS、Android、Flutter、React Native 等多種環境。具備自主無參考設計推導能力，即使使用者未提供截圖或設計稿，也能依產品需求推導出一致的 Apple 品質設計規範；包含動效編譯器（Motion IR）、實機動態物理法則、視覺與互動品質閘門（20 項標準至少達標 17 項）。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/apple-ui-skills\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/apple-ui-skills`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n  - `README.md`\n  - `CHANGELOG.md`\n  - `NOTICE.md`\n  - `VALIDATION.md`\n  - `manifest.json`\n  - `checksums.sha256.json`\n- **完整複製的子目錄**（從來源 skill 根目錄遞迴複製，保留相對結構）：\n  - `adapters/`\n  - `compiler/`\n  - `data/`\n  - `examples/`\n  - `packs/`\n  - `references/`\n  - `scripts/`\n- **目錄完整性檢查**：安裝後逐一比較上述來源目錄與目標目錄的遞迴相對路徑；數量或路徑不同就算失敗。不得把子目錄內容攤平到 skill 根目錄。\n- **注意**：本 skill 依賴多個資料夾（adapters、compiler、data、examples、packs、references、scripts），安裝時需完整遞迴複製保持目錄結構。依循漸進式載入原則，執行時只按需讀取當前任務所需模組，勿一次遞迴讀取全部檔案。\n\n---\n\n## 完成後請做這幾件事\n\n1. 說明你辨識到的 Agent 與採用的官方 skill 機制，不要只回報「已完成」\n2. 列出每個 skill 實際安裝的位置，以及該資料夾下的檔案\n3. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n4. 依目前 Agent 的載入方式驗證 skill 已可被發現；只有官方流程確實要求時，才提醒我重新載入或重啟\n5. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
+}

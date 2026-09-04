@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-08-15",
+  "generatedAt": "2026-09-04",
   "categories": [
     {
       "name": "前端 / 設計",
-      "count": 6
+      "count": 7
     },
     {
       "name": "程式品質",
@@ -29,22 +29,22 @@
     },
     {
       "name": "design",
+      "count": 6
+    },
+    {
+      "name": "ui",
       "count": 5
+    },
+    {
+      "name": "frontend",
+      "count": 4
     },
     {
       "name": "review",
       "count": 4
     },
     {
-      "name": "ui",
-      "count": 4
-    },
-    {
       "name": "accessibility",
-      "count": 3
-    },
-    {
-      "name": "frontend",
       "count": 3
     },
     {
@@ -68,11 +68,19 @@
       "count": 2
     },
     {
+      "name": "animation",
+      "count": 2
+    },
+    {
       "name": "automation",
       "count": 2
     },
     {
       "name": "brand",
+      "count": 2
+    },
+    {
+      "name": "mobile",
       "count": 2
     },
     {
@@ -105,10 +113,6 @@
     },
     {
       "name": "analysis",
-      "count": 1
-    },
-    {
-      "name": "animation",
       "count": 1
     },
     {
@@ -181,10 +185,6 @@
     },
     {
       "name": "methodology",
-      "count": 1
-    },
-    {
-      "name": "mobile",
       "count": 1
     },
     {

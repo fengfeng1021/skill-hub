@@ -1,0 +1,759 @@
+{
+  "version": "3.0.0",
+  "records": [
+    {
+      "id": "apple.coreanimation.linear",
+      "title": "Core Animation linear",
+      "category": "motion",
+      "target": {
+        "platform": "Apple platforms",
+        "component": "Core Animation timing function",
+        "app": null,
+        "interaction": "timed interpolation"
+      },
+      "applicability": {
+        "status": "cross-era",
+        "osVersions": [],
+        "notes": "Named Core Animation timing functions; usable as reference curves cross-platform."
+      },
+      "evidence": {
+        "class": "APPLE-PRIMARY",
+        "confidence": 1.0,
+        "exactness": "official",
+        "sources": [
+          {
+            "title": "Apple Developer Documentation — CAMediaTimingFunction",
+            "url": "https://developer.apple.com/documentation/quartzcore/camediatimingfunction",
+            "date": null,
+            "note": "Named timing functions and control points."
+          }
+        ]
+      },
+      "behavior": {
+        "driver": "cubic-bezier",
+        "interruptible": "depends-on-animation-engine",
+        "velocityContinuity": false
+      },
+      "parameters": {
+        "controlPoints": [
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "portability": {
+        "canonical": "cubic-bezier",
+        "web": "cubic-bezier(0.0, 0.0, 1.0, 1.0)",
+        "rule": "Safe numeric translation because cubic Bézier definition is standard."
+      },
+      "warnings": [
+        "Do not call these the curve of every Apple system transition."
+      ],
+      "tags": [
+        "apple.coreanimation.linear",
+        "core",
+        "animation",
+        "linear",
+        "motion",
+        "apple",
+        "platforms",
+        "timing",
+        "function",
+        "timed",
+        "interpolation",
+        "apple-primary"
+      ],
+      "shard": "apple-official"
+    },
+    {
+      "id": "apple.coreanimation.default",
+      "title": "Core Animation default",
+      "category": "motion",
+      "target": {
+        "platform": "Apple platforms",
+        "component": "Core Animation timing function",
+        "app": null,
+        "interaction": "timed interpolation"
+      },
+      "applicability": {
+        "status": "cross-era",
+        "osVersions": [],
+        "notes": "Named Core Animation timing functions; usable as reference curves cross-platform."
+      },
+      "evidence": {
+        "class": "APPLE-PRIMARY",
+        "confidence": 1.0,
+        "exactness": "official",
+        "sources": [
+          {
+            "title": "Apple Developer Documentation — CAMediaTimingFunction",
+            "url": "https://developer.apple.com/documentation/quartzcore/camediatimingfunction",
+            "date": null,
+            "note": "Named timing functions and control points."
+          }
+        ]
+      },
+      "behavior": {
+        "driver": "cubic-bezier",
+        "interruptible": "depends-on-animation-engine",
+        "velocityContinuity": false
+      },
+      "parameters": {
+        "controlPoints": [
+          0.25,
+          0.1,
+          0.25,
+          1.0
+        ]
+      },
+      "portability": {
+        "canonical": "cubic-bezier",
+        "web": "cubic-bezier(0.25, 0.1, 0.25, 1.0)",
+        "rule": "Safe numeric translation because cubic Bézier definition is standard."
+      },
+      "warnings": [
+        "Do not call these the curve of every Apple system transition."
+      ],
+      "tags": [
+        "apple.coreanimation.default",
+        "core",
+        "animation",
+        "default",
+        "motion",
+        "apple",
+        "platforms",
+        "timing",
+        "function",
+        "timed",
+        "interpolation",
+        "apple-primary"
+      ],
+      "shard": "apple-official"
+    },
+    {
+      "id": "apple.coreanimation.ease-in",
+      "title": "Core Animation easeIn",
+      "category": "motion",
+      "target": {
+        "platform": "Apple platforms",
+        "component": "Core Animation timing function",
+        "app": null,
+        "interaction": "timed interpolation"
+      },
+      "applicability": {
+        "status": "cross-era",
+        "osVersions": [],
+        "notes": "Named Core Animation timing functions; usable as reference curves cross-platform."
+      },
+      "evidence": {
+        "class": "APPLE-PRIMARY",
+        "confidence": 1.0,
+        "exactness": "official",
+        "sources": [
+          {
+            "title": "Apple Developer Documentation — CAMediaTimingFunction",
+            "url": "https://developer.apple.com/documentation/quartzcore/camediatimingfunction",
+            "date": null,
+            "note": "Named timing functions and control points."
+          }
+        ]
+      },
+      "behavior": {
+        "driver": "cubic-bezier",
+        "interruptible": "depends-on-animation-engine",
+        "velocityContinuity": false
+      },
+      "parameters": {
+        "controlPoints": [
+          0.42,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "portability": {
+        "canonical": "cubic-bezier",
+        "web": "cubic-bezier(0.42, 0.0, 1.0, 1.0)",
+        "rule": "Safe numeric translation because cubic Bézier definition is standard."
+      },
+      "warnings": [
+        "Do not call these the curve of every Apple system transition."
+      ],
+      "tags": [
+        "apple.coreanimation.ease-in",
+        "core",
+        "animation",
+        "easein",
+        "motion",
+        "apple",
+        "platforms",
+        "timing",
+        "function",
+        "timed",
+        "interpolation",
+        "apple-primary"
+      ],
+      "shard": "apple-official"
+    },
+    {
+      "id": "apple.coreanimation.ease-out",
+      "title": "Core Animation easeOut",
+      "category": "motion",
+      "target": {
+        "platform": "Apple platforms",
+        "component": "Core Animation timing function",
+        "app": null,
+        "interaction": "timed interpolation"
+      },
+      "applicability": {
+        "status": "cross-era",
+        "osVersions": [],
+        "notes": "Named Core Animation timing functions; usable as reference curves cross-platform."
+      },
+      "evidence": {
+        "class": "APPLE-PRIMARY",
+        "confidence": 1.0,
+        "exactness": "official",
+        "sources": [
+          {
+            "title": "Apple Developer Documentation — CAMediaTimingFunction",
+            "url": "https://developer.apple.com/documentation/quartzcore/camediatimingfunction",
+            "date": null,
+            "note": "Named timing functions and control points."
+          }
+        ]
+      },
+      "behavior": {
+        "driver": "cubic-bezier",
+        "interruptible": "depends-on-animation-engine",
+        "velocityContinuity": false
+      },
+      "parameters": {
+        "controlPoints": [
+          0.0,
+          0.0,
+          0.58,
+          1.0
+        ]
+      },
+      "portability": {
+        "canonical": "cubic-bezier",
+        "web": "cubic-bezier(0.0, 0.0, 0.58, 1.0)",
+        "rule": "Safe numeric translation because cubic Bézier definition is standard."
+      },
+      "warnings": [
+        "Do not call these the curve of every Apple system transition."
+      ],
+      "tags": [
+        "apple.coreanimation.ease-out",
+        "core",
+        "animation",
+        "easeout",
+        "motion",
+        "apple",
+        "platforms",
+        "timing",
+        "function",
+        "timed",
+        "interpolation",
+        "apple-primary"
+      ],
+      "shard": "apple-official"
+    },
+    {
+      "id": "apple.coreanimation.ease-in-out",
+      "title": "Core Animation easeInEaseOut",
+      "category": "motion",
+      "target": {
+        "platform": "Apple platforms",
+        "component": "Core Animation timing function",
+        "app": null,
+        "interaction": "timed interpolation"
+      },
+      "applicability": {
+        "status": "cross-era",
+        "osVersions": [],
+        "notes": "Named Core Animation timing functions; usable as reference curves cross-platform."
+      },
+      "evidence": {
+        "class": "APPLE-PRIMARY",
+        "confidence": 1.0,
+        "exactness": "official",
+        "sources": [
+          {
+            "title": "Apple Developer Documentation — CAMediaTimingFunction",
+            "url": "https://developer.apple.com/documentation/quartzcore/camediatimingfunction",
+            "date": null,
+            "note": "Named timing functions and control points."
+          }
+        ]
+      },
+      "behavior": {
+        "driver": "cubic-bezier",
+        "interruptible": "depends-on-animation-engine",
+        "velocityContinuity": false
+      },
+      "parameters": {
+        "controlPoints": [
+          0.42,
+          0.0,
+          0.58,
+          1.0
+        ]
+      },
+      "portability": {
+        "canonical": "cubic-bezier",
+        "web": "cubic-bezier(0.42, 0.0, 0.58, 1.0)",
+        "rule": "Safe numeric translation because cubic Bézier definition is standard."
+      },
+      "warnings": [
+        "Do not call these the curve of every Apple system transition."
+      ],
+      "tags": [
+        "apple.coreanimation.ease-in-out",
+        "core",
+        "animation",
+        "easeineaseout",
+        "motion",
+        "apple",
+        "platforms",
+        "timing",
+        "function",
+        "timed",
+        "interpolation",
+        "apple-primary"
+      ],
+      "shard": "apple-official"
+    },
+    {
+      "id": "apple.swiftui.spring.smooth",
+      "title": "SwiftUI smooth spring",
+      "category": "motion",
+      "target": {
+        "platform": "SwiftUI",
+        "component": "Spring preset",
+        "app": null,
+        "interaction": "state transition"
+      },
+      "applicability": {
+        "status": "current",
+        "osVersions": [
+          "iOS 17+ aligned releases"
+        ],
+        "notes": "Default duration comes from tunable preset API; base bounce documented for snappy/bouncy, smooth has no bounce."
+      },
+      "evidence": {
+        "class": "APPLE-PRIMARY",
+        "confidence": 0.98,
+        "exactness": "official",
+        "sources": [
+          {
+            "title": "Apple Developer Documentation — Spring / snappy / bouncy / smooth",
+            "url": "https://developer.apple.com/documentation/SwiftUI/Spring",
+            "date": null,
+            "note": "Spring representations and presets."
+          },
+          {
+            "title": "WWDC23 — Explore SwiftUI animation",
+            "url": "https://developer.apple.com/videos/play/wwdc2023/10156/",
+            "date": "2023",
+            "note": "Explains smooth/snappy/bouncy and velocity preservation."
+          }
+        ]
+      },
+      "behavior": {
+        "driver": "spring",
+        "interruptible": true,
+        "velocityContinuity": true
+      },
+      "parameters": {
+        "duration": 0.5,
+        "bounce": 0.0,
+        "canonicalPhysical": {
+          "mass": 1.0,
+          "stiffness": 157.9137,
+          "damping": 25.1327,
+          "dampingRatio": 1.0
+        }
+      },
+      "portability": {
+        "canonical": "duration+bounce -> physical spring",
+        "rule": "Translate through spring-conversion.md; do not paste into engines with incompatible semantics."
+      },
+      "warnings": [
+        "Built-in preset implementation can evolve; use documented duration/bounce interface as the stable intent."
+      ],
+      "tags": [
+        "apple.swiftui.spring.smooth",
+        "swiftui",
+        "smooth",
+        "spring",
+        "motion",
+        "preset",
+        "state",
+        "transition",
+        "ios",
+        "17+",
+        "aligned",
+        "releases",
+        "apple-primary"
+      ],
+      "shard": "apple-official"
+    },
+    {
+      "id": "apple.swiftui.spring.snappy",
+      "title": "SwiftUI snappy spring",
+      "category": "motion",
+      "target": {
+        "platform": "SwiftUI",
+        "component": "Spring preset",
+        "app": null,
+        "interaction": "state transition"
+      },
+      "applicability": {
+        "status": "current",
+        "osVersions": [
+          "iOS 17+ aligned releases"
+        ],
+        "notes": "Default duration comes from tunable preset API; base bounce documented for snappy/bouncy, smooth has no bounce."
+      },
+      "evidence": {
+        "class": "APPLE-PRIMARY",
+        "confidence": 0.98,
+        "exactness": "official",
+        "sources": [
+          {
+            "title": "Apple Developer Documentation — Spring / snappy / bouncy / smooth",
+            "url": "https://developer.apple.com/documentation/SwiftUI/Spring",
+            "date": null,
+            "note": "Spring representations and presets."
+          },
+          {
+            "title": "WWDC23 — Explore SwiftUI animation",
+            "url": "https://developer.apple.com/videos/play/wwdc2023/10156/",
+            "date": "2023",
+            "note": "Explains smooth/snappy/bouncy and velocity preservation."
+          }
+        ]
+      },
+      "behavior": {
+        "driver": "spring",
+        "interruptible": true,
+        "velocityContinuity": true
+      },
+      "parameters": {
+        "duration": 0.5,
+        "bounce": 0.15,
+        "canonicalPhysical": {
+          "mass": 1.0,
+          "stiffness": 157.9137,
+          "damping": 21.3628,
+          "dampingRatio": 0.85
+        }
+      },
+      "portability": {
+        "canonical": "duration+bounce -> physical spring",
+        "rule": "Translate through spring-conversion.md; do not paste into engines with incompatible semantics."
+      },
+      "warnings": [
+        "Built-in preset implementation can evolve; use documented duration/bounce interface as the stable intent."
+      ],
+      "tags": [
+        "apple.swiftui.spring.snappy",
+        "swiftui",
+        "snappy",
+        "spring",
+        "motion",
+        "preset",
+        "state",
+        "transition",
+        "ios",
+        "17+",
+        "aligned",
+        "releases",
+        "apple-primary"
+      ],
+      "shard": "apple-official"
+    },
+    {
+      "id": "apple.swiftui.spring.bouncy",
+      "title": "SwiftUI bouncy spring",
+      "category": "motion",
+      "target": {
+        "platform": "SwiftUI",
+        "component": "Spring preset",
+        "app": null,
+        "interaction": "state transition"
+      },
+      "applicability": {
+        "status": "current",
+        "osVersions": [
+          "iOS 17+ aligned releases"
+        ],
+        "notes": "Default duration comes from tunable preset API; base bounce documented for snappy/bouncy, smooth has no bounce."
+      },
+      "evidence": {
+        "class": "APPLE-PRIMARY",
+        "confidence": 0.98,
+        "exactness": "official",
+        "sources": [
+          {
+            "title": "Apple Developer Documentation — Spring / snappy / bouncy / smooth",
+            "url": "https://developer.apple.com/documentation/SwiftUI/Spring",
+            "date": null,
+            "note": "Spring representations and presets."
+          },
+          {
+            "title": "WWDC23 — Explore SwiftUI animation",
+            "url": "https://developer.apple.com/videos/play/wwdc2023/10156/",
+            "date": "2023",
+            "note": "Explains smooth/snappy/bouncy and velocity preservation."
+          }
+        ]
+      },
+      "behavior": {
+        "driver": "spring",
+        "interruptible": true,
+        "velocityContinuity": true
+      },
+      "parameters": {
+        "duration": 0.5,
+        "bounce": 0.3,
+        "canonicalPhysical": {
+          "mass": 1.0,
+          "stiffness": 157.9137,
+          "damping": 17.5929,
+          "dampingRatio": 0.7
+        }
+      },
+      "portability": {
+        "canonical": "duration+bounce -> physical spring",
+        "rule": "Translate through spring-conversion.md; do not paste into engines with incompatible semantics."
+      },
+      "warnings": [
+        "Built-in preset implementation can evolve; use documented duration/bounce interface as the stable intent."
+      ],
+      "tags": [
+        "apple.swiftui.spring.bouncy",
+        "swiftui",
+        "bouncy",
+        "spring",
+        "motion",
+        "preset",
+        "state",
+        "transition",
+        "ios",
+        "17+",
+        "aligned",
+        "releases",
+        "apple-primary"
+      ],
+      "shard": "apple-official"
+    },
+    {
+      "id": "ios.navigation.transition-duration.runtime",
+      "title": "UINavigationController transition duration via transition coordinator",
+      "category": "runtime",
+      "target": {
+        "platform": "iOS",
+        "component": "UINavigationController",
+        "app": "system navigation",
+        "interaction": "push/pop duration"
+      },
+      "applicability": {
+        "status": "cross-era",
+        "osVersions": [
+          "iOS 7+"
+        ],
+        "notes": "Runtime query is preferred over hard-coding."
+      },
+      "evidence": {
+        "class": "APPLE-PRIMARY",
+        "confidence": 0.96,
+        "exactness": "runtime-exposed",
+        "sources": [
+          {
+            "title": "UIViewControllerTransitionCoordinatorContext transitionDuration",
+            "url": "https://developer.apple.com/documentation/uikit/uiviewcontrollertransitioncoordinatorcontext/transitionduration",
+            "date": null,
+            "note": "Runtime transition duration API."
+          },
+          {
+            "title": "Community observation of 0.35s default and transitionCoordinator use",
+            "url": "https://stackoverflow.com/questions/7609072/how-long-is-the-animation-of-the-transition-between-views-on-a-uinavigationcontr",
+            "date": "2011-2015",
+            "note": "Historical observed value."
+          }
+        ]
+      },
+      "behavior": {
+        "driver": "system",
+        "rule": "query transition coordinator"
+      },
+      "parameters": {
+        "historicalObservedDuration": 0.35
+      },
+      "portability": {
+        "canonical": "duration only",
+        "rule": "On Apple target query runtime; on non-Apple reconstruction 0.35s is a historical starting point, not a current contract."
+      },
+      "warnings": [
+        "Never hard-code 0.35 as an eternal iOS navigation duration."
+      ],
+      "tags": [
+        "ios.navigation.transition-duration.runtime",
+        "uinavigationcontroller",
+        "transition",
+        "duration",
+        "via",
+        "coordinator",
+        "runtime",
+        "ios",
+        "navigation",
+        "push",
+        "pop",
+        "7+",
+        "apple-primary"
+      ],
+      "shard": "apple-official"
+    },
+    {
+      "id": "ios.scroll.deceleration.normal-fast",
+      "title": "UIScrollView-style deceleration and projection",
+      "category": "scroll",
+      "target": {
+        "platform": "iOS",
+        "component": "UIScrollView deceleration",
+        "app": "system scrolling",
+        "interaction": "release inertia"
+      },
+      "applicability": {
+        "status": "cross-era",
+        "osVersions": [],
+        "notes": "Projection is shown in WWDC18; raw normal/fast mappings are also documented by React Native's iOS mapping and longstanding developer references."
+      },
+      "evidence": {
+        "class": "APPLE-PRIMARY",
+        "confidence": 0.93,
+        "exactness": "official",
+        "sources": [
+          {
+            "title": "WWDC18 — Designing Fluid Interfaces",
+            "url": "https://developer.apple.com/videos/play/wwdc2018/803/",
+            "date": "2018",
+            "note": "Projection technique using UIScrollView.DecelerationRate."
+          },
+          {
+            "title": "React Native ScrollView documentation",
+            "url": "https://reactnative.dev/docs/scrollview",
+            "date": null,
+            "note": "Documents iOS normal=0.998 and fast=0.99 shortcut mapping."
+          }
+        ]
+      },
+      "behavior": {
+        "release": "exponential decay / projected endpoint",
+        "velocityContinuity": true
+      },
+      "parameters": {
+        "normal": 0.998,
+        "fast": 0.99,
+        "projectionFormula": "(velocity/1000)*rate/(1-rate)",
+        "rateInterpretation": "per millisecond in the matching exponential model"
+      },
+      "portability": {
+        "canonical": "per-ms exponential decay",
+        "rule": "Evaluate by elapsed time, never once per rendered frame."
+      },
+      "warnings": [
+        "Treat 0.998/0.99 as compatibility mappings rather than an eternal private implementation contract."
+      ],
+      "tags": [
+        "ios.scroll.deceleration.normal-fast",
+        "uiscrollview-style",
+        "deceleration",
+        "projection",
+        "scroll",
+        "ios",
+        "uiscrollview",
+        "scrolling",
+        "release",
+        "inertia",
+        "apple-primary"
+      ],
+      "shard": "apple-official"
+    },
+    {
+      "id": "ios.keyboard.animation.runtime",
+      "title": "iOS keyboard animation runtime curve and duration",
+      "category": "runtime",
+      "target": {
+        "platform": "iOS",
+        "component": "Software keyboard",
+        "app": "system keyboard",
+        "interaction": "show/hide/frame change"
+      },
+      "applicability": {
+        "status": "current",
+        "osVersions": [
+          "UIKit systems"
+        ],
+        "notes": "Always prefer notification-provided runtime values."
+      },
+      "evidence": {
+        "class": "APPLE-PRIMARY",
+        "confidence": 1.0,
+        "exactness": "runtime-exposed",
+        "sources": [
+          {
+            "title": "UIResponder.keyboardAnimationCurveUserInfoKey",
+            "url": "https://developer.apple.com/documentation/uikit/uiresponder/keyboardanimationcurveuserinfokey",
+            "date": null,
+            "note": "Apple instructs using the system-provided curve to match keyboard animation."
+          },
+          {
+            "title": "UIResponder.keyboardAnimationDurationUserInfoKey",
+            "url": "https://developer.apple.com/documentation/uikit/uiresponder/keyboardanimationdurationuserinfokey",
+            "date": null,
+            "note": "System-provided duration."
+          }
+        ]
+      },
+      "behavior": {
+        "driver": "system-provided",
+        "rule": "read notification values per transition"
+      },
+      "parameters": {
+        "curve": "runtime notification value",
+        "duration": "runtime notification value",
+        "historicalNote": "iOS 7 developer reports observed undocumented curve raw value 7; do not hard-code"
+      },
+      "portability": {
+        "canonical": "capture actual curve/duration when Apple target; otherwise coordinate UI using host keyboard/inset APIs",
+        "rule": "On web/Android/desktop do not copy historical iOS keyboard curve blindly."
+      },
+      "warnings": [
+        "Historical raw curve value 7 is undocumented and version-dependent."
+      ],
+      "tags": [
+        "ios.keyboard.animation.runtime",
+        "ios",
+        "keyboard",
+        "animation",
+        "runtime",
+        "curve",
+        "duration",
+        "software",
+        "show",
+        "hide",
+        "frame",
+        "change",
+        "uikit",
+        "systems",
+        "apple-primary"
+      ],
+      "shard": "apple-official"
+    }
+  ]
+}

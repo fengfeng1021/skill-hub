@@ -1,0 +1,628 @@
+{
+  "version": "3.0.0",
+  "records": [
+    {
+      "id": "ios10.navigation.push-pop.parallax-replica",
+      "title": "iOS 10 UINavigationController push/pop parallax replica",
+      "category": "component",
+      "target": {
+        "platform": "iOS",
+        "component": "UINavigationController",
+        "app": "system navigation",
+        "interaction": "push/pop"
+      },
+      "applicability": {
+        "status": "historical",
+        "osVersions": [
+          "iOS 10"
+        ],
+        "notes": "Third-party re-creation of default iOS 10 transition; do not present as current iOS."
+      },
+      "evidence": {
+        "class": "OPEN-SOURCE-REPLICA",
+        "confidence": 0.82,
+        "exactness": "replica",
+        "sources": [
+          {
+            "title": "Re-create the Default UINavigationController Transition in iOS 10",
+            "url": "https://gist.github.com/ws2356/02dc3dd6c7505468f5a08a5f8778a8a9",
+            "date": "2017/2021 fork",
+            "note": "Explicit default transition reconstruction."
+          }
+        ]
+      },
+      "behavior": {
+        "driver": "composed-timing",
+        "incoming": "100% -> 0% x",
+        "outgoing": "0 -> -25% width x",
+        "overlayAlpha": "0 -> 0.1",
+        "edgeShadow": true,
+        "duration": 0.35
+      },
+      "parameters": {
+        "duration": 0.35,
+        "cubicBezier": [
+          0.1878,
+          0.0023,
+          0.5399,
+          0.9629
+        ],
+        "spring": {
+          "mass": 3.0,
+          "stiffness": 1000.0,
+          "damping": 500.0,
+          "initialVelocity": [
+            0,
+            0
+          ]
+        },
+        "parallax": {
+          "outgoingDistanceFraction": -0.25
+        },
+        "overlay": {
+          "blackAlpha": 0.1
+        },
+        "shadowWidthPoints": 6
+      },
+      "portability": {
+        "canonical": "coordinated navigation composition",
+        "web": "incoming translateX(100%->0); outgoing translateX(0->-25%); 350ms; use recorded cubic as approximation",
+        "rule": "Prefer host-native navigation semantics; use this only when explicitly reconstructing iOS 10 style."
+      },
+      "warnings": [
+        "The record is a public replica, not private UIKit source.",
+        "Modern iOS navigation behavior may differ."
+      ],
+      "tags": [
+        "ios10.navigation.push-pop.parallax-replica",
+        "ios",
+        "10",
+        "uinavigationcontroller",
+        "push",
+        "pop",
+        "parallax",
+        "replica",
+        "navigation",
+        "open-source-replica"
+      ],
+      "shard": "ios-fluid"
+    },
+    {
+      "id": "ios.calculator.button.replica-2018",
+      "title": "iOS Calculator button highlight/release replica",
+      "category": "component",
+      "target": {
+        "platform": "iOS",
+        "component": "Calculator button",
+        "app": "Calculator",
+        "interaction": "press/release"
+      },
+      "applicability": {
+        "status": "historical",
+        "osVersions": [
+          "iPhone X-era / 2018 reference"
+        ],
+        "notes": "Explicitly described by repo as mimicking iOS Calculator button behavior."
+      },
+      "evidence": {
+        "class": "OPEN-SOURCE-REPLICA",
+        "confidence": 0.88,
+        "exactness": "replica",
+        "sources": [
+          {
+            "title": "nathangitter/fluid-interfaces",
+            "url": "https://github.com/nathangitter/fluid-interfaces",
+            "date": "2018",
+            "note": "Open-source replicas inspired by Apple's WWDC18 Designing Fluid Interfaces."
+          }
+        ]
+      },
+      "behavior": {
+        "touchDown": "highlight immediately and stop previous animator",
+        "touchUp": "ease-out color return"
+      },
+      "parameters": {
+        "normalColor": "#333333",
+        "highlightColor": "#737373",
+        "release": {
+          "duration": 0.5,
+          "curve": "easeOut"
+        }
+      },
+      "portability": {
+        "canonical": "immediate press + slow visual release",
+        "rule": "Use same-state behavior on any platform; adapt colors to brand/theme."
+      },
+      "warnings": [
+        "Color values are replica code values, not a universal Apple token."
+      ],
+      "tags": [
+        "ios.calculator.button.replica-2018",
+        "ios",
+        "calculator",
+        "button",
+        "highlight",
+        "release",
+        "replica",
+        "press",
+        "iphone",
+        "x-era",
+        "2018",
+        "reference",
+        "open-source-replica"
+      ],
+      "shard": "ios-fluid"
+    },
+    {
+      "id": "ios.lockscreen.flashlight.replica-2018",
+      "title": "iPhone X lock-screen flashlight button spring-back replica",
+      "category": "interaction",
+      "target": {
+        "platform": "iOS",
+        "component": "Lock-screen flashlight button",
+        "app": "Lock Screen",
+        "interaction": "force/press feedback"
+      },
+      "applicability": {
+        "status": "historical",
+        "osVersions": [
+          "iPhone X / iOS 11-era concept"
+        ],
+        "notes": "Uses 3D Touch-style force logic; modern devices require alternative gesture input."
+      },
+      "evidence": {
+        "class": "OPEN-SOURCE-REPLICA",
+        "confidence": 0.86,
+        "exactness": "replica",
+        "sources": [
+          {
+            "title": "nathangitter/fluid-interfaces",
+            "url": "https://github.com/nathangitter/fluid-interfaces",
+            "date": "2018",
+            "note": "Open-source replicas inspired by Apple's WWDC18 Designing Fluid Interfaces."
+          }
+        ]
+      },
+      "behavior": {
+        "activeInput": "direct scale from pressure",
+        "release": "interruptible spring to rest",
+        "hapticStages": true
+      },
+      "parameters": {
+        "minWidth": 50,
+        "maxWidth": 92,
+        "forceThresholds": {
+          "activation": 0.5,
+          "confirmation": 0.49,
+          "reset": 0.4
+        },
+        "releaseSpring": {
+          "response": 0.2,
+          "dampingRatio": 0.4,
+          "canonicalPhysical": {
+            "mass": 1.0,
+            "stiffness": 986.96044,
+            "damping": 25.132741,
+            "dampingRatio": 0.4,
+            "response": 0.2
+          }
+        }
+      },
+      "portability": {
+        "canonical": "direct pressure/progress -> spring-back",
+        "rule": "Replace pressure with long-press/progress on hardware without force sensing."
+      },
+      "warnings": [
+        "Force thresholds are replica choices and hardware-specific."
+      ],
+      "tags": [
+        "ios.lockscreen.flashlight.replica-2018",
+        "iphone",
+        "lock-screen",
+        "flashlight",
+        "button",
+        "spring-back",
+        "replica",
+        "interaction",
+        "ios",
+        "lock",
+        "screen",
+        "force",
+        "press",
+        "feedback",
+        "11-era",
+        "concept",
+        "open-source-replica"
+      ],
+      "shard": "ios-fluid"
+    },
+    {
+      "id": "ios.fluid.rubberband-power.replica-2018",
+      "title": "WWDC18-inspired rubber-band demo",
+      "category": "interaction",
+      "target": {
+        "platform": "iOS",
+        "component": "Generic draggable object",
+        "app": "Fluid Interfaces demo",
+        "interaction": "rubber-band drag"
+      },
+      "applicability": {
+        "status": "historical",
+        "osVersions": [
+          "2018 demo"
+        ],
+        "notes": "This demo uses a power curve, distinct from the UIScrollView 0.55 rational rubber-band reconstruction."
+      },
+      "evidence": {
+        "class": "OPEN-SOURCE-REPLICA",
+        "confidence": 0.9,
+        "exactness": "replica",
+        "sources": [
+          {
+            "title": "nathangitter/fluid-interfaces",
+            "url": "https://github.com/nathangitter/fluid-interfaces",
+            "date": "2018",
+            "note": "Open-source replicas inspired by Apple's WWDC18 Designing Fluid Interfaces."
+          }
+        ]
+      },
+      "behavior": {
+        "active": "direct touch delta transformed by signed power",
+        "release": "interruptible spring to identity"
+      },
+      "parameters": {
+        "rubberBand": {
+          "formula": "sign(x)*abs(x)^0.7",
+          "exponent": 0.7
+        },
+        "releaseSpring": {
+          "response": 0.3,
+          "dampingRatio": 0.6,
+          "canonicalPhysical": {
+            "mass": 1.0,
+            "stiffness": 438.649084,
+            "damping": 25.132741,
+            "dampingRatio": 0.6,
+            "response": 0.3
+          }
+        }
+      },
+      "portability": {
+        "canonical": "nonlinear resistance + spring return",
+        "rule": "Use this for generic elastic drag; use ios.scroll.rubberband-0.55 for UIScrollView-like edge behavior."
+      },
+      "warnings": [
+        "Do not confuse this demonstration curve with UIScrollView's commonly reconstructed formula."
+      ],
+      "tags": [
+        "ios.fluid.rubberband-power.replica-2018",
+        "wwdc18-inspired",
+        "rubber-band",
+        "demo",
+        "interaction",
+        "ios",
+        "generic",
+        "draggable",
+        "object",
+        "fluid",
+        "interfaces",
+        "drag",
+        "2018",
+        "open-source-replica"
+      ],
+      "shard": "ios-fluid"
+    },
+    {
+      "id": "ios.fluid.momentum-drawer.replica-2018",
+      "title": "WWDC18-inspired rewarding-momentum drawer",
+      "category": "interaction",
+      "target": {
+        "platform": "iOS",
+        "component": "Drawer",
+        "app": "Fluid Interfaces demo",
+        "interaction": "drag/release"
+      },
+      "applicability": {
+        "status": "historical",
+        "osVersions": [
+          "2018 demo"
+        ],
+        "notes": "Replica source itself notes projection would be preferable to simple velocity sign."
+      },
+      "evidence": {
+        "class": "OPEN-SOURCE-REPLICA",
+        "confidence": 0.9,
+        "exactness": "replica",
+        "sources": [
+          {
+            "title": "nathangitter/fluid-interfaces",
+            "url": "https://github.com/nathangitter/fluid-interfaces",
+            "date": "2018",
+            "note": "Open-source replicas inspired by Apple's WWDC18 Designing Fluid Interfaces."
+          }
+        ]
+      },
+      "behavior": {
+        "active": "interactive animator fraction",
+        "release": "spring with relative velocity",
+        "interruptible": true
+      },
+      "parameters": {
+        "baseSpring": {
+          "response": 0.4,
+          "dampingRatio": 1.0,
+          "canonicalPhysical": {
+            "mass": 1.0,
+            "stiffness": 246.74011,
+            "damping": 31.415927,
+            "dampingRatio": 1.0,
+            "response": 0.4
+          }
+        },
+        "releaseSpring": {
+          "response": 0.3,
+          "dampingRatio": 0.8,
+          "canonicalPhysical": {
+            "mass": 1.0,
+            "stiffness": 438.649084,
+            "damping": 33.510322,
+            "dampingRatio": 0.8,
+            "response": 0.3
+          }
+        },
+        "relativeVelocity": "abs(gestureVelocity)/distanceRemaining",
+        "relativeVelocityClamp": 30
+      },
+      "portability": {
+        "canonical": "direct progress + relative release velocity + spring",
+        "rule": "For new implementations improve target selection using projected position."
+      },
+      "warnings": [
+        "The source marks parts of this implementation as a demo with known jank; copy principles and parameters selectively."
+      ],
+      "tags": [
+        "ios.fluid.momentum-drawer.replica-2018",
+        "wwdc18-inspired",
+        "rewarding-momentum",
+        "drawer",
+        "interaction",
+        "ios",
+        "fluid",
+        "interfaces",
+        "demo",
+        "drag",
+        "release",
+        "2018",
+        "open-source-replica"
+      ],
+      "shard": "ios-fluid"
+    },
+    {
+      "id": "ios.facetime.pip.corner-snap.replica-2018",
+      "title": "FaceTime PiP corner-snap replica",
+      "category": "interaction",
+      "target": {
+        "platform": "iOS",
+        "component": "Picture-in-picture floating video",
+        "app": "FaceTime",
+        "interaction": "drag to corner"
+      },
+      "applicability": {
+        "status": "historical",
+        "osVersions": [
+          "iPhone X-era / 2018 reference"
+        ],
+        "notes": "Open-source re-creation presented alongside WWDC18 fluid-interface principles."
+      },
+      "evidence": {
+        "class": "OPEN-SOURCE-REPLICA",
+        "confidence": 0.92,
+        "exactness": "replica",
+        "sources": [
+          {
+            "title": "nathangitter/fluid-interfaces",
+            "url": "https://github.com/nathangitter/fluid-interfaces",
+            "date": "2018",
+            "note": "Open-source replicas inspired by Apple's WWDC18 Designing Fluid Interfaces."
+          }
+        ]
+      },
+      "behavior": {
+        "active": "1:1 drag",
+        "release": "project position using scroll deceleration, select nearest corner, spring with relative velocity"
+      },
+      "parameters": {
+        "deceleration": "UIScrollView.DecelerationRate.normal",
+        "projectionFormula": "(velocity/1000)*rate/(1-rate)",
+        "snapSpring": {
+          "response": 0.4,
+          "dampingRatio": 1.0,
+          "canonicalPhysical": {
+            "mass": 1.0,
+            "stiffness": 246.74011,
+            "damping": 31.415927,
+            "dampingRatio": 1.0,
+            "response": 0.4
+          }
+        },
+        "relativeVelocityFormula": "velocity/(target-current)"
+      },
+      "portability": {
+        "canonical": "project -> choose nearest anchor -> critically damped spring with inherited normalized velocity",
+        "rule": "Excellent generic pattern for floating panels/PiP on all platforms."
+      },
+      "warnings": [
+        "Use native PiP behavior when the platform provides it."
+      ],
+      "tags": [
+        "ios.facetime.pip.corner-snap.replica-2018",
+        "facetime",
+        "pip",
+        "corner-snap",
+        "replica",
+        "interaction",
+        "ios",
+        "picture-in-picture",
+        "floating",
+        "video",
+        "drag",
+        "to",
+        "corner",
+        "iphone",
+        "x-era",
+        "2018",
+        "reference",
+        "open-source-replica"
+      ],
+      "shard": "ios-fluid"
+    },
+    {
+      "id": "ios.scroll.rubberband-0.55",
+      "title": "UIScrollView-like rubber-band reconstruction",
+      "category": "scroll",
+      "target": {
+        "platform": "iOS",
+        "component": "UIScrollView edge resistance",
+        "app": "system scrolling",
+        "interaction": "overscroll"
+      },
+      "applicability": {
+        "status": "cross-era",
+        "osVersions": [
+          "historical reconstruction; widely reused"
+        ],
+        "notes": "Independent reconstruction, not Apple-published constant."
+      },
+      "evidence": {
+        "class": "THIRD-PARTY-REVERSE-ENGINEERED",
+        "confidence": 0.91,
+        "exactness": "reverse-engineered",
+        "sources": [
+          {
+            "title": "UIScrollView's Inertia, Bouncing and Rubber-Banding with UIKit Dynamics",
+            "url": "https://holko.pl/2014/07/06/inertia-bouncing-rubber-banding-uikit-dynamics/",
+            "date": "2014-07-06",
+            "note": "States UIScrollView uses c=0.55 in the reconstructed equation."
+          }
+        ]
+      },
+      "behavior": {
+        "active": "nonlinear resistance beyond legal edge",
+        "release": "spring back from current visual state with velocity"
+      },
+      "parameters": {
+        "formula": "f(x,d,c)=(x*d*c)/(d+c*x)",
+        "coefficient": 0.55,
+        "x": "distance beyond edge",
+        "d": "viewport dimension"
+      },
+      "portability": {
+        "canonical": "rational rubber-band",
+        "rule": "Implement identically in any language; preserve units and sign externally."
+      },
+      "warnings": [
+        "c=0.55 is reverse-engineered evidence, not an Apple API guarantee."
+      ],
+      "tags": [
+        "ios.scroll.rubberband-0.55",
+        "uiscrollview-like",
+        "rubber-band",
+        "reconstruction",
+        "scroll",
+        "ios",
+        "uiscrollview",
+        "edge",
+        "resistance",
+        "scrolling",
+        "overscroll",
+        "widely",
+        "reused",
+        "third-party-reverse-engineered"
+      ],
+      "shard": "ios-fluid"
+    },
+    {
+      "id": "ios.appstore.card-expand.hero-replica",
+      "title": "App Store expanding card transition replica (Hero example)",
+      "category": "component",
+      "target": {
+        "platform": "iOS",
+        "component": "Expanding App Store-style card",
+        "app": "App Store-inspired",
+        "interaction": "card -> detail"
+      },
+      "applicability": {
+        "status": "historical",
+        "osVersions": [
+          "iOS 11/12-era visual pattern"
+        ],
+        "notes": "Hero project example explicitly named App Store Card Transition."
+      },
+      "evidence": {
+        "class": "OPEN-SOURCE-REPLICA",
+        "confidence": 0.84,
+        "exactness": "replica",
+        "sources": [
+          {
+            "title": "Hero — AppStoreCardExample.swift",
+            "url": "https://github.com/HeroTransitions/Hero/blob/develop/Examples/AppStoreCardExample.swift",
+            "date": null,
+            "note": "Explicit App Store Card Transition example."
+          }
+        ]
+      },
+      "behavior": {
+        "press": "card scales to 0.96",
+        "expand": "shared-element geometry; content/blur coordinated",
+        "primary": "spring geometry"
+      },
+      "parameters": {
+        "press": {
+          "scale": 0.96,
+          "duration": 0.3,
+          "dampingRatio": 0.8,
+          "initialSpringVelocity": 0
+        },
+        "transitionSpring": {
+          "stiffness": 250,
+          "damping": 25,
+          "massAssumption": 1.0
+        },
+        "cardCornerRadius": 16,
+        "shadow": {
+          "radius": 12,
+          "opacity": 0.15,
+          "offsetY": 8
+        }
+      },
+      "portability": {
+        "canonical": "shared geometry + spring(k=250,c=25 if mass=1-compatible) + blur fade",
+        "rule": "If target spring API is incompatible, reproduce with canonical integrator."
+      },
+      "warnings": [
+        "Hero's spring parameters are library parameters; mass is not specified in the call, so canonical mass=1 is an implementation assumption for cross-engine approximation."
+      ],
+      "tags": [
+        "ios.appstore.card-expand.hero-replica",
+        "app",
+        "store",
+        "expanding",
+        "card",
+        "transition",
+        "replica",
+        "hero",
+        "example",
+        "ios",
+        "store-style",
+        "store-inspired",
+        "detail",
+        "11",
+        "12-era",
+        "visual",
+        "pattern",
+        "open-source-replica"
+      ],
+      "shard": "ios-fluid"
+    }
+  ]
+}

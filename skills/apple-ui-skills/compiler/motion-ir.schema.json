@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/apple-quality-v3/motion-ir.schema.json",
+  "title": "Universal Motion IR v3",
+  "type": "object",
+  "required": [
+    "version",
+    "name",
+    "timing",
+    "properties"
+  ],
+  "properties": {
+    "version": {
+      "const": "3.0"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceRecordIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "trigger": {
+      "type": "string"
+    },
+    "timing": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "duration",
+            "bounce"
+          ],
+          "properties": {
+            "type": {
+              "const": "spring-perceptual"
+            },
+            "duration": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "bounce": {
+              "type": "number",
+              "minimum": -0.99,
+              "maximum": 0.99
+            },
+            "initialVelocity": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "mass",
+            "stiffness",
+            "damping"
+          ],
+          "properties": {
+            "type": {
+              "const": "spring-physical"
+            },
+            "mass": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "stiffness": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "damping": {
+              "type": "number",
+              "minimum": 0
+            },
+            "initialVelocity": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "duration",
+            "controlPoints"
+          ],
+          "properties": {
+            "type": {
+              "const": "bezier"
+            },
+            "duration": {
+              "type": "number",
+              "minimum": 0
+            },
+            "controlPoints": {
+              "type": "array",
+              "minItems": 4,
+              "maxItems": 4,
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "const": "direct"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "properties": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "from",
+          "to"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "from": {},
+          "to": {},
+          "unit": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "interaction": {
+      "type": "object",
+      "properties": {
+        "directManipulation": {
+          "type": "boolean"
+        },
+        "inheritVelocity": {
+          "type": "boolean"
+        },
+        "interruptible": {
+          "type": "boolean"
+        },
+        "projectBeforeTargetSelection": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "reducedMotion": {
+      "type": "object",
+      "properties": {
+        "strategy": {
+          "enum": [
+            "fade",
+            "local-motion",
+            "instant",
+            "custom"
+          ]
+        },
+        "duration": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

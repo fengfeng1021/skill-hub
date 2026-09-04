@@ -1,0 +1,204 @@
+{
+  "version": "3.0.0",
+  "records": [
+    {
+      "id": "ios26.liquid-glass.material.approx",
+      "title": "iOS 26 Liquid Glass material reconstruction",
+      "category": "material",
+      "target": {
+        "platform": "iOS/iPadOS",
+        "component": "Liquid Glass material",
+        "app": null,
+        "interaction": null
+      },
+      "applicability": {
+        "status": "version-specific",
+        "osVersions": [
+          "iOS 26 design era"
+        ],
+        "notes": "Third-party extraction/reconstruction based on Apple HIG, WWDC and Figma community kit."
+      },
+      "evidence": {
+        "class": "THIRD-PARTY-REVERSE-ENGINEERED",
+        "confidence": 0.62,
+        "exactness": "approximation",
+        "sources": [
+          {
+            "title": "ios26-design-system README",
+            "url": "https://github.com/seunghan91/ios26-design-system",
+            "date": "2026",
+            "note": "Repository documents source and approximation limits."
+          }
+        ]
+      },
+      "behavior": {
+        "purpose": "context-preserving translucent chrome with depth/refraction cues"
+      },
+      "parameters": {
+        "lightAngleDegrees": -45,
+        "opacity": 0.6,
+        "refractionRelative": 1.0,
+        "frostRadiusPx": {
+          "small": 7,
+          "medium": 12,
+          "large": 14
+        },
+        "depth": 16,
+        "splay": 6,
+        "shadowBlurPx": {
+          "layer": 40,
+          "background": 80
+        }
+      },
+      "portability": {
+        "rule": "Approximate with bounded backdrop blur + tint + edge highlight + depth shadow; never require proprietary shader behavior."
+      },
+      "warnings": [
+        "These values are third-party reconstruction values, not Apple's proprietary rendering specification.",
+        "Reduce blur/shadow substantially on low-power hardware."
+      ],
+      "tags": [
+        "ios26.liquid-glass.material.approx",
+        "ios",
+        "26",
+        "liquid",
+        "glass",
+        "material",
+        "reconstruction",
+        "ipados",
+        "design",
+        "era",
+        "third-party-reverse-engineered"
+      ],
+      "shard": "visual"
+    },
+    {
+      "id": "hero.appstore.card.visual-replica",
+      "title": "App Store-style card visual recipe from Hero example",
+      "category": "visual",
+      "target": {
+        "platform": "iOS",
+        "component": "Expanding content card",
+        "app": "App Store-inspired",
+        "interaction": null
+      },
+      "applicability": {
+        "status": "historical",
+        "osVersions": [
+          "iOS 11/12-era style"
+        ],
+        "notes": "Open-source App Store Card Transition example."
+      },
+      "evidence": {
+        "class": "OPEN-SOURCE-REPLICA",
+        "confidence": 0.78,
+        "exactness": "replica",
+        "sources": [
+          {
+            "title": "Hero AppStoreCardExample.swift",
+            "url": "https://github.com/HeroTransitions/Hero/blob/develop/Examples/AppStoreCardExample.swift",
+            "date": null,
+            "note": "Replica example code."
+          }
+        ]
+      },
+      "behavior": {
+        "purpose": "rounded content card that becomes a full detail surface"
+      },
+      "parameters": {
+        "cornerRadius": 16,
+        "shadowRadius": 12,
+        "shadowOpacity": 0.15,
+        "shadowOffsetY": 8,
+        "headerBlurHeight": 90
+      },
+      "portability": {
+        "rule": "Use as historical visual recipe; adapt typography/image treatment to target platform."
+      },
+      "warnings": [
+        "Not a current App Store visual specification."
+      ],
+      "tags": [
+        "hero.appstore.card.visual-replica",
+        "app",
+        "store-style",
+        "card",
+        "visual",
+        "recipe",
+        "from",
+        "hero",
+        "example",
+        "ios",
+        "expanding",
+        "content",
+        "store-inspired",
+        "11",
+        "12-era",
+        "open-source-replica"
+      ],
+      "shard": "visual"
+    },
+    {
+      "id": "macos.control-center.material.profile",
+      "title": "macOS Control Center material strategy from MacControlCenterUI",
+      "category": "material",
+      "target": {
+        "platform": "macOS",
+        "component": "Control Center/system menu background",
+        "app": "Control Center",
+        "interaction": null
+      },
+      "applicability": {
+        "status": "version-specific",
+        "osVersions": [
+          "macOS 11+",
+          "macOS 26+"
+        ],
+        "notes": "Replica library maps older visual effect material and newer SwiftUI materials."
+      },
+      "evidence": {
+        "class": "OPEN-SOURCE-REPLICA",
+        "confidence": 0.8,
+        "exactness": "replica",
+        "sources": [
+          {
+            "title": "MacControlCenterUI VisualEffect.swift",
+            "url": "https://github.com/orchetect/MacControlCenterUI/blob/main/Sources/MacControlCenterUI/Utilities/VisualEffect.swift",
+            "date": "2026",
+            "note": "Uses .popover pre-26, ultraThinMaterial on macOS 26, regularMaterial for later branch."
+          }
+        ]
+      },
+      "behavior": {
+        "purpose": "desktop translucent system menu"
+      },
+      "parameters": {
+        "pre26": "NSVisualEffectView.Material.popover",
+        "macOS26": "ultraThinMaterial",
+        "futureBranchInReplica": "regularMaterial"
+      },
+      "portability": {
+        "rule": "On Windows/Linux use native material or a restrained translucent panel; desktop density should remain compact."
+      },
+      "warnings": [
+        "Do not translate material names numerically; match contrast and hierarchy."
+      ],
+      "tags": [
+        "macos.control-center.material.profile",
+        "macos",
+        "control",
+        "center",
+        "material",
+        "strategy",
+        "from",
+        "maccontrolcenterui",
+        "menu",
+        "background",
+        "11+",
+        "26+",
+        "open-source-replica"
+      ],
+      "shard": "visual"
+    }
+  ]
+}
