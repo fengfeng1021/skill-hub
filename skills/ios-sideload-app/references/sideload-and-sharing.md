@@ -113,24 +113,36 @@ guard let profile = context.useMainProfile ? profiles.values.first : profiles[id
 
 ---
 
-## 3. 更新時擴展會被剔除
+## 3. 更新時擴展會被剔除（而且幾乎是必然）
 
 側載工具在安裝時會比對「新版本的擴展」與「裝置上已安裝版本的擴展」，
 **只保留兩邊都有的**，多的視為 excess 直接刪除；如果是全新安裝（資料庫沒有這個 App）
 則全部保留。
 
-連鎖反應：某一版第一次沒帶上擴展 → 被刪 → 之後每次更新都比對不到 → 再刪一次。
-使用者會覺得「我明明每次都有選保留」。
+### 為什麼「幾乎是必然」
+
+比對用的是**完整 bundle ID 字串相等**，但兩邊的 ID 根本不會相等：
+
+| 來源 | 擴展 bundle ID |
+|---|---|
+| 下載的 IPA（側載前的原始狀態） | `com.example.app.widget` |
+| 裝置上已安裝的版本 | `com.example.app.<TEAMID>.widget` |
+
+（側載工具在簽名時會把 App 的 bundle ID 改成帶 Team ID 的版本，
+擴展的 ID 也跟著被改寫，所以裝置上的那個永遠多一層 Team ID。）
+
+判定結果：新版本的擴展在裝置上「找不到相同 ID」→ **一律視為 excess → 刪除**。
+這不是偶發，是每次更新都會發生。
 
 ### 處理方式
 
 1. **先打開開關**：側載工具「設定 → User Customizations → GENERAL →
    開啟 `Customize App Extensions`」。
-   沒打開時，更新流程是「不詢問、直接刪」。
-   （不同版本可能放在 `Advanced` 或 `Experimental Features` 底下，依實際介面尋找。）
-2. **刪除 App 後重新安裝**，不要用更新覆蓋。
-3. 安裝完**開啟 App 至少一次**（系統才會向 WidgetKit 註冊擴展）。
-4. 免費帳號的 App ID 有數量上限（例如 3 個），小工具會額外佔用 1 個；
+   沒打開時，更新流程是「不詢問、直接刪」；打開後才會跳出對話框讓你選。
+2. 安裝時選 **`Keep App Extensions (Register App ID for Each Extension)`**（就會跳過移除）。
+3. 如果已經被刪掉（小工具突然消失）→ **刪除 App 後重新安裝**即可恢復。
+4. 安裝完**開啟 App 至少一次**（系統才會向 WidgetKit 註冊擴展）。
+5. 免費帳號的 App ID 有數量上限（例如 3 個），小工具會額外佔用 1 個；
    額度用完時擴展相關流程會失敗，可在側載工具的 App IDs / DIAGNOSTICS 頁面清理。
 
 ---
