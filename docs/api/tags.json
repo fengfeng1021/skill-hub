@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04",
+  "generatedAt": "2026-09-15",
   "categories": [
     {
       "name": "前端 / 設計",
@@ -20,12 +20,16 @@
     {
       "name": "Google 管理",
       "count": 1
+    },
+    {
+      "name": "iOS / 出貨",
+      "count": 1
     }
   ],
   "tags": [
     {
       "name": "workflow",
-      "count": 8
+      "count": 9
     },
     {
       "name": "design",
@@ -48,6 +52,10 @@
       "count": 3
     },
     {
+      "name": "mobile",
+      "count": 3
+    },
+    {
       "name": "quality",
       "count": 3
     },
@@ -61,6 +69,10 @@
     },
     {
       "name": "ux",
+      "count": 3
+    },
+    {
+      "name": "verification",
       "count": 3
     },
     {
@@ -80,10 +92,6 @@
       "count": 2
     },
     {
-      "name": "mobile",
-      "count": 2
-    },
-    {
       "name": "planning",
       "count": 2
     },
@@ -93,10 +101,6 @@
     },
     {
       "name": "traceability",
-      "count": 2
-    },
-    {
-      "name": "verification",
       "count": 2
     },
     {
@@ -180,6 +184,10 @@
       "count": 1
     },
     {
+      "name": "ios",
+      "count": 1
+    },
+    {
       "name": "javascript",
       "count": 1
     },
@@ -212,6 +220,14 @@
       "count": 1
     },
     {
+      "name": "sideload",
+      "count": 1
+    },
+    {
+      "name": "signing",
+      "count": 1
+    },
+    {
       "name": "specification",
       "count": 1
     },
@@ -241,6 +257,10 @@
     },
     {
       "name": "vulnerability",
+      "count": 1
+    },
+    {
+      "name": "widget",
       "count": 1
     },
     {

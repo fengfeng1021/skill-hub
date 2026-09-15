@@ -1,0 +1,70 @@
+{
+  "id": "ios-sideload-app",
+  "name": "iOS 側載出貨",
+  "summary": "沒 Mac 也能打包手機 App，小工具不會消失。",
+  "description": "把 iPhone／iPad App 打包成可側載（SideStore／AltStore）安裝的 IPA，並確保 WidgetKit 桌面小工具真的會出現在小工具庫、主程式與小工具能共享資料、外觀使用 iOS 26 原生液態玻璃。\n核心是一份實際踩過坑之後留下的七條鐵則：(1) 小工具擴展一律用真正的 Xcode app-extension target（XcodeGen）建置，不要用 swiftc 手工組裝 .appex，因為手工組裝會缺 Xcode 才會產生的 App Intents 中介資料 Metadata.appintents，而 iOS 26 的 WidgetKit 列舉擴展能力時會讀它 —— 症狀是檔案都在、簽章也對、沒有任何錯誤訊息，但小工具庫完全找不到；(2) 擴展點只宣告 NSExtension 的 com.apple.widgetkit-extension，不要加 ExtensionKit 的 EXAppExtensionAttributes；(3) App 與擴展都要宣告同一個 App Group，且執行期必須讀 Info.plist 的 ALTAppGroups（側載後 group 會被改寫成 group.<原 id>.<TeamID>），而且只能探測簽章授權過的群組；(4) 側載安裝時要選 Keep App Extensions (Register App ID for Each Extension)，選 Use Main Profile 會讓擴展沿用主程式簽章、被 installd 拒絕註冊；(5) 要用 macOS 26 + Xcode 26（iOS 26 SDK）建置，Liquid Glass 才會被系統啟用；(6) 動過擴展後要刪除 App 重新安裝，並先開啟 Customize App Extensions；(7) 小工具沒出現時先做對照實驗（同一台裝置上其他側載 App 的小工具在不在），再決定要不要改程式。\n內容：SKILL.md 入口（鐵則、標準流程、症狀對照表）、references/ 六份（build-pipeline 建置流程與 CI 驗證關卡、widget-extension 擴展 target 與內容時間邏輯、sideload-and-sharing 側載與 App Group 共享、native-look 液態玻璃與 ProMotion、dual-track-build Swift Playgrounds 與 CI 雙軌、troubleshooting 決策樹與 App 內診斷面板程式碼及交付前檢查清單）、scripts/inspect_ipa.py（純 Python、不需 Xcode 或 macOS，可體檢 IPA 的擴展安裝狀態、簽章 entitlements、Metadata.appintents 與 Mach-O 的 LC_MAIN／platform／SDK／連結框架，並在最後列出問題與修法）。",
+  "category": "iOS / 出貨",
+  "tags": [
+    "mobile",
+    "ios",
+    "widget",
+    "sideload",
+    "workflow",
+    "verification",
+    "signing"
+  ],
+  "official": false,
+  "featured": true,
+  "author": "fengfeng1021",
+  "license": "MIT",
+  "version": "1.0.0",
+  "usage": [
+    "要把 iPhone／iPad App 打包成可側載安裝的 IPA（尤其手邊沒有 Mac）",
+    "小工具「裝了卻在小工具庫找不到」，需要系統性診斷",
+    "要讓主程式與桌面小工具共享同一份資料",
+    "Swift Playgrounds 專案要出 IPA，同時保留在 iPad 上直接執行的能力",
+    "自製 App 的原生外觀（液態玻璃、120Hz）與參考裝置不一致"
+  ],
+  "highlights": [
+    "七條鐵則：每一條都對應一個「看起來正常卻完全不會動、且沒有任何錯誤訊息」的真實問題",
+    "小工具沒出現的四步決策樹，先做對照實驗再決定要不要改程式，不浪費輪次",
+    "側載安裝選項、App Group 改寫（ALTAppGroups）與「更新會剔除擴展」的完整解法",
+    "附 inspect_ipa.py：不裝 Xcode 也能體檢 IPA，並直接給出問題與修法",
+    "內建 App 診斷面板程式碼，讓使用者一鍵複製報告，不必接電腦",
+    "小工具內容的時間感知寫法，避免顯示已經結束的行程"
+  ],
+  "source": {
+    "branch": "main",
+    "kind": "local",
+    "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/ios-sideload-app",
+    "path": "skills/ios-sideload-app"
+  },
+  "install": {
+    "scope": "user",
+    "dirName": "ios-sideload-app",
+    "files": [
+      "SKILL.md",
+      "README.md"
+    ],
+    "directories": [
+      "references",
+      "scripts"
+    ],
+    "requires": [
+      "python>=3.8"
+    ],
+    "notes": "本 skill 由 Skill Hub 自製託管，依賴 references/ 與 scripts/ 兩個目錄（安裝時需完整遞迴複製）。執行時只讀當前任務需要的 reference，不要一次載入全部。scripts/inspect_ipa.py 只用 Python 標準函式庫：python scripts/inspect_ipa.py App.ipa。"
+  },
+  "links": [
+    {
+      "label": "實作範例：ClassSchedule",
+      "url": "https://github.com/fengfeng1021/ClassSchedule"
+    },
+    {
+      "label": "Skill Hub（收藏庫）",
+      "url": "https://fengfeng1021.github.io/skill-hub/"
+    }
+  ],
+  "addedAt": "2026-09-15",
+  "updatedAt": "2026-09-15"
+}

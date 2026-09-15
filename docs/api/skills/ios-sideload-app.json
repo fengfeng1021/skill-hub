@@ -1,0 +1,87 @@
+{
+  "id": "ios-sideload-app",
+  "name": "iOS 側載出貨",
+  "summary": "沒 Mac 也能打包手機 App，小工具不會消失。",
+  "description": "把 iPhone／iPad App 打包成可側載（SideStore／AltStore）安裝的 IPA，並確保 WidgetKit 桌面小工具真的會出現在小工具庫、主程式與小工具能共享資料、外觀使用 iOS 26 原生液態玻璃。\n核心是一份實際踩過坑之後留下的七條鐵則：(1) 小工具擴展一律用真正的 Xcode app-extension target（XcodeGen）建置，不要用 swiftc 手工組裝 .appex，因為手工組裝會缺 Xcode 才會產生的 App Intents 中介資料 Metadata.appintents，而 iOS 26 的 WidgetKit 列舉擴展能力時會讀它 —— 症狀是檔案都在、簽章也對、沒有任何錯誤訊息，但小工具庫完全找不到；(2) 擴展點只宣告 NSExtension 的 com.apple.widgetkit-extension，不要加 ExtensionKit 的 EXAppExtensionAttributes；(3) App 與擴展都要宣告同一個 App Group，且執行期必須讀 Info.plist 的 ALTAppGroups（側載後 group 會被改寫成 group.<原 id>.<TeamID>），而且只能探測簽章授權過的群組；(4) 側載安裝時要選 Keep App Extensions (Register App ID for Each Extension)，選 Use Main Profile 會讓擴展沿用主程式簽章、被 installd 拒絕註冊；(5) 要用 macOS 26 + Xcode 26（iOS 26 SDK）建置，Liquid Glass 才會被系統啟用；(6) 動過擴展後要刪除 App 重新安裝，並先開啟 Customize App Extensions；(7) 小工具沒出現時先做對照實驗（同一台裝置上其他側載 App 的小工具在不在），再決定要不要改程式。\n內容：SKILL.md 入口（鐵則、標準流程、症狀對照表）、references/ 六份（build-pipeline 建置流程與 CI 驗證關卡、widget-extension 擴展 target 與內容時間邏輯、sideload-and-sharing 側載與 App Group 共享、native-look 液態玻璃與 ProMotion、dual-track-build Swift Playgrounds 與 CI 雙軌、troubleshooting 決策樹與 App 內診斷面板程式碼及交付前檢查清單）、scripts/inspect_ipa.py（純 Python、不需 Xcode 或 macOS，可體檢 IPA 的擴展安裝狀態、簽章 entitlements、Metadata.appintents 與 Mach-O 的 LC_MAIN／platform／SDK／連結框架，並在最後列出問題與修法）。",
+  "category": "iOS / 出貨",
+  "tags": [
+    "mobile",
+    "ios",
+    "widget",
+    "sideload",
+    "workflow",
+    "verification",
+    "signing"
+  ],
+  "official": false,
+  "featured": true,
+  "author": "fengfeng1021",
+  "license": "MIT",
+  "version": "1.0.0",
+  "usage": [
+    "要把 iPhone／iPad App 打包成可側載安裝的 IPA（尤其手邊沒有 Mac）",
+    "小工具「裝了卻在小工具庫找不到」，需要系統性診斷",
+    "要讓主程式與桌面小工具共享同一份資料",
+    "Swift Playgrounds 專案要出 IPA，同時保留在 iPad 上直接執行的能力",
+    "自製 App 的原生外觀（液態玻璃、120Hz）與參考裝置不一致"
+  ],
+  "highlights": [
+    "七條鐵則：每一條都對應一個「看起來正常卻完全不會動、且沒有任何錯誤訊息」的真實問題",
+    "小工具沒出現的四步決策樹，先做對照實驗再決定要不要改程式，不浪費輪次",
+    "側載安裝選項、App Group 改寫（ALTAppGroups）與「更新會剔除擴展」的完整解法",
+    "附 inspect_ipa.py：不裝 Xcode 也能體檢 IPA，並直接給出問題與修法",
+    "內建 App 診斷面板程式碼，讓使用者一鍵複製報告，不必接電腦",
+    "小工具內容的時間感知寫法，避免顯示已經結束的行程"
+  ],
+  "source": {
+    "branch": "main",
+    "kind": "local",
+    "url": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/ios-sideload-app",
+    "path": "skills/ios-sideload-app",
+    "displayUrl": "https://github.com/fengfeng1021/skill-hub/tree/main/skills/ios-sideload-app",
+    "rawBase": "https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/ios-sideload-app",
+    "label": "本庫託管"
+  },
+  "install": {
+    "scope": "user",
+    "files": [
+      "SKILL.md",
+      "README.md"
+    ],
+    "requires": [
+      "python>=3.8"
+    ],
+    "dirName": "ios-sideload-app",
+    "directories": [
+      "references",
+      "scripts"
+    ],
+    "notes": "本 skill 由 Skill Hub 自製託管，依賴 references/ 與 scripts/ 兩個目錄（安裝時需完整遞迴複製）。執行時只讀當前任務需要的 reference，不要一次載入全部。scripts/inspect_ipa.py 只用 Python 標準函式庫：python scripts/inspect_ipa.py App.ipa。"
+  },
+  "links": [
+    {
+      "label": "實作範例：ClassSchedule",
+      "url": "https://github.com/fengfeng1021/ClassSchedule"
+    },
+    {
+      "label": "Skill Hub（收藏庫）",
+      "url": "https://fengfeng1021.github.io/skill-hub/"
+    }
+  ],
+  "addedAt": "2026-09-15",
+  "updatedAt": "2026-09-15",
+  "includes": [],
+  "parts": [],
+  "dirNames": [
+    "ios-sideload-app"
+  ],
+  "includedSkills": [],
+  "installIds": [
+    "ios-sideload-app"
+  ],
+  "installCount": 1,
+  "installFolderCount": 1,
+  "promptBlockSingle": "### iOS 側載出貨  →  資料夾名 `ios-sideload-app`\n\n- **這個 skill 做什麼**：沒 Mac 也能打包手機 App，小工具不會消失。\n- **詳細一點**：把 iPhone／iPad App 打包成可側載（SideStore／AltStore）安裝的 IPA，並確保 WidgetKit 桌面小工具真的會出現在小工具庫、主程式與小工具能共享資料、外觀使用 iOS 26 原生液態玻璃。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/ios-sideload-app\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/ios-sideload-app`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n  - `README.md`\n- **完整複製的子目錄**（從來源 skill 根目錄遞迴複製，保留相對結構）：\n  - `references/`\n  - `scripts/`\n- **目錄完整性檢查**：安裝後逐一比較上述來源目錄與目標目錄的遞迴相對路徑；數量或路徑不同就算失敗。不得把子目錄內容攤平到 skill 根目錄。\n- **額外相依**（先確認有沒有，缺的話問我要不要裝）：\n  - `python>=3.8`\n- **注意**：本 skill 由 Skill Hub 自製託管，依賴 references/ 與 scripts/ 兩個目錄（安裝時需完整遞迴複製）。執行時只讀當前任務需要的 reference，不要一次載入全部。scripts/inspect_ipa.py 只用 Python 標準函式庫：python scripts/inspect_ipa.py App.ipa。",
+  "promptBlock": "### iOS 側載出貨  →  資料夾名 `ios-sideload-app`\n\n- **這個 skill 做什麼**：沒 Mac 也能打包手機 App，小工具不會消失。\n- **詳細一點**：把 iPhone／iPad App 打包成可側載（SideStore／AltStore）安裝的 IPA，並確保 WidgetKit 桌面小工具真的會出現在小工具庫、主程式與小工具能共享資料、外觀使用 iOS 26 原生液態玻璃。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/ios-sideload-app\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/ios-sideload-app`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n  - `README.md`\n- **完整複製的子目錄**（從來源 skill 根目錄遞迴複製，保留相對結構）：\n  - `references/`\n  - `scripts/`\n- **目錄完整性檢查**：安裝後逐一比較上述來源目錄與目標目錄的遞迴相對路徑；數量或路徑不同就算失敗。不得把子目錄內容攤平到 skill 根目錄。\n- **額外相依**（先確認有沒有，缺的話問我要不要裝）：\n  - `python>=3.8`\n- **注意**：本 skill 由 Skill Hub 自製託管，依賴 references/ 與 scripts/ 兩個目錄（安裝時需完整遞迴複製）。執行時只讀當前任務需要的 reference，不要一次載入全部。scripts/inspect_ipa.py 只用 Python 標準函式庫：python scripts/inspect_ipa.py App.ipa。",
+  "installPrompt": "你是我的 Skill 安裝助手。請幫我把下面這個 AI Agent Skill 安裝到「你目前所在的 Agent 環境」。\n\n## 安裝規則\n\n1. **先辨識目前環境** — 讀取你自己的官方說明、系統設定或既有 skills，確認這個 Agent 支援的 skill 格式、安裝方式與可用範圍。不要預設任何品牌，也不要自行猜一個 `~/.<名稱>/skills` 路徑。\n2. **自動選擇正確位置** — 我有指定全域或專案範圍時照做；沒有指定時，沿用目前 Agent 的既有慣例。若這個 Agent 只支援其中一種，就使用它官方支援的方式。只有真的無法判定時才停下來問我。\n3. **保持原始結構** — 每個 skill 都是獨立資料夾；資料夾名、SKILL.md frontmatter 的 `name`／`description` 與相對檔案結構都不要改。\n4. **依每筆的取檔形式安裝**：\n   a. 有列「完整複製的子目錄」時，先把 repo clone 到暫存目錄（沒有 git 才下載並解壓官方分支封存檔），從指定的來源根目錄遞迴複製所列檔案與子目錄；不得逐檔猜測、漏掉巢狀檔案或把內容攤平\n   b. 只有檔案清單時，優先抓下面給的 raw 下載網址；抓不到再 clone repo 取檔\n   c. 都不行（無網路等）就直接告訴我，我把檔案貼給你\n5. 來源若提供綁定特定 Agent 或固定路徑的安裝指令，只把它當作來源線索；請改用目前 Agent 的官方安裝方式，不要原樣執行。\n6. 目標資料夾**已存在**時，先比較版本與差異，再問我要更新、覆蓋或跳過，不要直接蓋掉。\n\n---\n\n### iOS 側載出貨  →  資料夾名 `ios-sideload-app`\n\n- **這個 skill 做什麼**：沒 Mac 也能打包手機 App，小工具不會消失。\n- **詳細一點**：把 iPhone／iPad App 打包成可側載（SideStore／AltStore）安裝的 IPA，並確保 WidgetKit 桌面小工具真的會出現在小工具庫、主程式與小工具能共享資料、外觀使用 iOS 26 原生液態玻璃。\n- **使用範圍偏好**：全域（所有專案共用）；若目前 Agent 不支援此範圍，採用它官方提供的等效方式\n- **來源**：Skill Hub 託管\n- **瀏覽位置**：https://github.com/fengfeng1021/skill-hub/tree/main/skills/ios-sideload-app\n- **下載基底網址**：`https://raw.githubusercontent.com/fengfeng1021/skill-hub/main/skills/ios-sideload-app`\n  取檔方式：`<下載基底網址>/<下面的檔案路徑>`\n- **要拿的檔案**（相對於 skill 資料夾）：\n  - `SKILL.md`\n  - `README.md`\n- **完整複製的子目錄**（從來源 skill 根目錄遞迴複製，保留相對結構）：\n  - `references/`\n  - `scripts/`\n- **目錄完整性檢查**：安裝後逐一比較上述來源目錄與目標目錄的遞迴相對路徑；數量或路徑不同就算失敗。不得把子目錄內容攤平到 skill 根目錄。\n- **額外相依**（先確認有沒有，缺的話問我要不要裝）：\n  - `python>=3.8`\n- **注意**：本 skill 由 Skill Hub 自製託管，依賴 references/ 與 scripts/ 兩個目錄（安裝時需完整遞迴複製）。執行時只讀當前任務需要的 reference，不要一次載入全部。scripts/inspect_ipa.py 只用 Python 標準函式庫：python scripts/inspect_ipa.py App.ipa。\n\n---\n\n## 完成後請做這幾件事\n\n1. 說明你辨識到的 Agent 與採用的官方 skill 機制，不要只回報「已完成」\n2. 列出每個 skill 實際安裝的位置，以及該資料夾下的檔案\n3. 逐一讀取 SKILL.md 的 frontmatter，確認 `name` 與資料夾名一致、`description` 沒有空白\n4. 依目前 Agent 的載入方式驗證 skill 已可被發現；只有官方流程確實要求時，才提醒我重新載入或重啟\n5. 只要有任何一個沒裝成功，明確講是哪一個、卡在哪一步 —— 不要為了看起來完成而略過"
+}

@@ -1,6 +1,6 @@
 # Skill Hub 收錄清單
 
-共 16 個，更新於 2026-09-04。此檔由 `npm run build` 產生，請勿手改。
+共 17 個，更新於 2026-09-15。此檔由 `npm run build` 產生，請勿手改。
 
 ## 前端 / 設計（7）
 
@@ -42,3 +42,9 @@
 | Skill | 摘要 | 標籤 | 來源 |
 | --- | --- | --- | --- |
 | **Cloud Identity 帳號與登入管理** | 批量建立帳號，處理登入驗證並部署安全 SSO。 | google, cloud-identity, workspace, accounts, sso, admin | [本庫託管](https://github.com/fengfeng1021/skill-hub/tree/main/skills/cloud-identity-account-ops) |
+
+## iOS / 出貨（1）
+
+| Skill | 摘要 | 標籤 | 來源 |
+| --- | --- | --- | --- |
+| **iOS 側載出貨** | 沒 Mac 也能打包手機 App，小工具不會消失。 | mobile, ios, widget, sideload, workflow, verification, signing | [本庫託管](https://github.com/fengfeng1021/skill-hub/tree/main/skills/ios-sideload-app) |
